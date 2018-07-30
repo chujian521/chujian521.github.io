@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | X&#39;s blog</title>
+  <title>Python对象以及将对象序列化 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="今天开始继续学习一下python，熟悉一门脚本语言">
+<meta name="keywords" content="python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python对象以及将对象序列化">
+<meta property="og:url" content="http://yoursite.com/blog/2018/07/30/Python-对象以及将对象序列化/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天开始继续学习一下python，熟悉一门脚本语言">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fengjing.jpg">
+<meta property="og:image" content="http://yoursite.com/images/xuliehua.png">
+<meta property="og:image" content="http://yoursite.com/images/fanxuliehua.png">
+<meta property="og:updated_time" content="2018-07-30T09:35:47.965Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Python对象以及将对象序列化">
+<meta name="twitter:description" content="今天开始继续学习一下python，熟悉一门脚本语言">
+<meta name="twitter:image" content="http://yoursite.com/images/fengjing.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -150,36 +159,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Python-对象以及将对象序列化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
-  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/30/Python-对象以及将对象序列化/">Python对象以及将对象序列化</a>
+    <h1 class="article-title" itemprop="name">
+      Python对象以及将对象序列化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
+  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>今天开始继续学习一下python，熟悉一门脚本语言</strong><br><img src="/images/fengjing.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="Python对象类型"><a href="#Python对象类型" class="headerlink" title="Python对象类型"></a>Python对象类型</h2><p>  Python的内置的对象类型主要有数字、字符串、列表、元组、字典、集合等等。其实在Python中，一切皆为对象。</p>
+<h2 id="pickle函数"><a href="#pickle函数" class="headerlink" title="pickle函数"></a>pickle函数</h2><h3 id="pickle腌制"><a href="#pickle腌制" class="headerlink" title="pickle腌制"></a>pickle腌制</h3><p><code>#dumps(object)将对象序列化</code><br><code>import pickle</code><br><code>lista=[&quot;mingyue&quot;,&quot;jishi&quot;,&quot;you&quot;]</code><br><code>listb=pickle.dumps(lista)</code><br><code>print listb</code></p>
+<p><img src="/images/xuliehua.png" alt=""></p>
+<p><code>#loads(string)将对象原样恢复，并且对象类型也恢复为原来的格式</code><br><code>listc=pickle.loads(listb)</code><br><code>print listc</code></p>
+<p><img src="/images/fanxuliehua.png" alt=""></p>
+<p><code>#dump(object,file),将对象存储到文件里面序列化</code><br><code>group1=(&quot;bajiu&quot;,&quot;wen&quot;,&quot;qingtian&quot;)</code><br><code>f1=file(&#39;1.txt&#39;,&#39;wb&#39;)</code><br><code>pickle.dump(group1,f1,True)</code><br><code>f1.close()</code></p>
+<p><code>#load(object,file)将dump()存储在文件里面的数据恢复</code><br><code>f2=file(&#39;1.txt&#39;,&#39;rb&#39;)</code><br><code>t=pickle.load(f2)</code><br><code>print t</code><br><code>f2.close()</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>慢慢学吧，一口也吃不成大胖子，每天用时间去学习，一点点积累，慢慢进步，一步一步往上爬，坚持下去就好了~~~</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,73 +229,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/07/30/Python-对象以及将对象序列化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/28/My-First-Blog/" class="archive-article-date">
-  	<time datetime="2018-07-28T02:54:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-28</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/07/28/My-First-Blog/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">My First Blog</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/28/My-First-Blog/">My First Blog</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/25/hello-world/" class="archive-article-date">
-  	<time datetime="2018-07-25T11:32:49.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/25/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -289,8 +360,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
