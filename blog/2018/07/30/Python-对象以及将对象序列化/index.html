@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/images/fengjing.jpg">
 <meta property="og:image" content="http://yoursite.com/images/xuliehua.png">
 <meta property="og:image" content="http://yoursite.com/images/fanxuliehua.png">
-<meta property="og:updated_time" content="2018-07-30T09:35:47.965Z">
+<meta property="og:updated_time" content="2018-07-30T09:43:37.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python对象以及将对象序列化">
 <meta name="twitter:description" content="今天开始继续学习一下python，熟悉一门脚本语言">
@@ -188,6 +188,7 @@
 <p><img src="/images/fanxuliehua.png" alt=""></p>
 <p><code>#dump(object,file),将对象存储到文件里面序列化</code><br><code>group1=(&quot;bajiu&quot;,&quot;wen&quot;,&quot;qingtian&quot;)</code><br><code>f1=file(&#39;1.txt&#39;,&#39;wb&#39;)</code><br><code>pickle.dump(group1,f1,True)</code><br><code>f1.close()</code></p>
 <p><code>#load(object,file)将dump()存储在文件里面的数据恢复</code><br><code>f2=file(&#39;1.txt&#39;,&#39;rb&#39;)</code><br><code>t=pickle.load(f2)</code><br><code>print t</code><br><code>f2.close()</code></p>
+<h3 id="详解pickle"><a href="#详解pickle" class="headerlink" title="详解pickle"></a>详解pickle</h3><p>在Python中如果我们有一些对象需要持久性存储，并且不丢失我们这个对象的类型与数据，我们则需要将这些对象进行序列化，序列化之后，需要使用的时候，我们再恢复为原来的数据。序列化的这种过程，我们将其称为pickle。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>慢慢学吧，一口也吃不成大胖子，每天用时间去学习，一点点积累，慢慢进步，一步一步往上爬，坚持下去就好了~~~</p>
 
       
