@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018 | X&#39;s blog</title>
+  <title>Python基础学习 基本数据类型 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+  <meta name="description" content="今天继续学习一下python，了解一下python的基本数据类型。">
+<meta name="keywords" content="python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础学习 基本数据类型">
+<meta property="og:url" content="http://yoursite.com/blog/2018/08/03/Python基础学习-基本数据类型/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天继续学习一下python，了解一下python的基本数据类型。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fengjing1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/yunsuanfu.png">
+<meta property="og:image" content="http://yoursite.com/images/eryuancaozuofu.png">
+<meta property="og:image" content="http://yoursite.com/images/szys.png">
+<meta property="og:image" content="http://yoursite.com/images/lxzh.png">
+<meta property="og:updated_time" content="2018-08-03T10:40:13.591Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Python基础学习 基本数据类型">
+<meta name="twitter:description" content="今天继续学习一下python，了解一下python的基本数据类型。">
+<meta name="twitter:image" content="http://yoursite.com/images/fengjing1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -157,36 +168,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Python基础学习-基本数据类型" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Python基础学习 基本数据类型
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python基础学习-基本数据类型/" class="archive-article-date">
+
+        
+        <a href="/blog/2018/08/03/Python基础学习-基本数据类型/" class="archive-article-date">
   	<time datetime="2018-08-03T05:41:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python基础学习-基本数据类型/">Python基础学习 基本数据类型</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>今天继续学习一下python，了解一下python的基本数据类型。</strong><br><img src="/images/fengjing1.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="数字类型及操作"><a href="#数字类型及操作" class="headerlink" title="数字类型及操作"></a>数字类型及操作</h2><h3 id="1-整数类型"><a href="#1-整数类型" class="headerlink" title="1.整数类型"></a>1.整数类型</h3><ul>
+<li>Python中的整数类型与数学中整数概念一致，可正可负，没有取值范围的限制。下面介绍一下<strong>pow(x,y)</strong>函数：同C语言一致，计算x的y次方，想算多大就算多大。</li>
+<li>四种进制表示：十进制；二进制：以0b开头；八进制：以0o开头；十六进制：以0x开头。<h3 id="2-浮点类型"><a href="#2-浮点类型" class="headerlink" title="2.浮点类型"></a>2.浮点类型</h3></li>
+<li>Python中的浮点类型与数学中实数概念一致，是指带有小数点及小数的数字，它的取值范围和小数精度都存在限制，但是常规计算可以忽略。浮点数间运算存在不确定尾数，这并不是bug。</li>
+<li>由于浮点数间运算存在不确定尾数（不确定尾数通常出现在10的-16次方），可用<strong>round(x,d)</strong>:对x四舍五入，d是小数截取位数。</li>
+<li>科学记数法：<a>e<b> 表示a乘以10的b次方。<h3 id="3-复数类型"><a href="#3-复数类型" class="headerlink" title="3.复数类型"></a>3.复数类型</h3></b></a></li>
+<li>实例：z=1.23e-4+5.6e+89j<br>实部： z.real<br>虚部： z.imag<br>常规计算很少使用，但到了复变函数那里会经常使用。<h3 id="4-数值运算操作符"><a href="#4-数值运算操作符" class="headerlink" title="4.数值运算操作符"></a>4.数值运算操作符</h3></li>
+<li>x%y：取余运算</li>
+<li>x**y：x的y次方</li>
+<li>如下图：<br><img src="/images/yunsuanfu.png" alt=""></li>
+<li>二元操作符：<br><img src="/images/eryuancaozuofu.png" alt=""><h3 id="5-数值运算函数"><a href="#5-数值运算函数" class="headerlink" title="5.数值运算函数"></a>5.数值运算函数</h3></li>
+<li>绝对值，商余，幂余：<br><img src="/images/szys.png" alt=""></li>
+<li>类型转换<br><img src="/images/lxzh.png" alt=""></li>
+</ul>
+<h2 id="实例：天天向上的力量"><a href="#实例：天天向上的力量" class="headerlink" title="实例：天天向上的力量"></a>实例：天天向上的力量</h2><h3 id="持续的价值"><a href="#持续的价值" class="headerlink" title="持续的价值"></a>持续的价值</h3><ul>
+<li>一年365天，每天进步1%，累计可以进步多少呢？<br>pow(1.01,365)=37.78343433288728;</li>
+<li>一年365天，每天退步1%，累计可以剩下多少呢？<br>pow(0.99,365)=0.025517964452291125；</li>
+</ul>
+<p><strong>每天努力一点点，一年之后将会有很大的不同！相反，每天退步一点点，一年之后便所剩无几。</strong></p>
+<h3 id="利用Python代码实现计算工作日努力参数"><a href="#利用Python代码实现计算工作日努力参数" class="headerlink" title="利用Python代码实现计算工作日努力参数"></a>利用Python代码实现计算工作日努力参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def dayUp(df):</span><br><span class="line">    dayup = 1</span><br><span class="line">    for i in range(365):</span><br><span class="line">        if i % 7 in [6,0]:</span><br><span class="line">            dayup=dayup*(1-0.01)</span><br><span class="line">        else:</span><br><span class="line">            dayup=dayup*(1+df)</span><br><span class="line">    return dayup</span><br><span class="line">dayfactor = 0.01</span><br><span class="line">while dayUp(dayfactor) &lt; 37.78:</span><br><span class="line">    dayfactor += 0.001</span><br><span class="line">print(&quot;工作日的努力参数是:&#123;:.3f&#125;&quot;.format(dayfactor))</span><br></pre></td></tr></table></figure>
+<p>最后得出工作日的努力参数是:0.019（相比于每天多努力0.01的人来说）</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>认识了一下python的基础数据类型</li>
+<li>意识到了每天进步一点点的重要性</li>
+<li>以后坚持每天进步一点点</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -198,191 +256,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/03/Python基础学习-基本数据类型/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/01/python绘图/" class="archive-article-date">
-  	<time datetime="2018-08-01T13:11:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/08/01/python绘图/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python绘图</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/01/python绘图/">python绘图</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/31/常见图片格式分析总结/" class="archive-article-date">
-  	<time datetime="2018-07-31T04:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/31/常见图片格式分析总结/">常见图片格式分析总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MISC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
-  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/30/Python-对象以及将对象序列化/">Python对象以及将对象序列化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/28/My-First-Blog/" class="archive-article-date">
-  	<time datetime="2018-07-28T02:54:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/28/My-First-Blog/">My First Blog</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/25/hello-world/" class="archive-article-date">
-  	<time datetime="2018-07-25T11:32:49.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -414,8 +387,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
