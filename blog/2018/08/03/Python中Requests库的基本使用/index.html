@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: python学习 | X&#39;s blog</title>
+  <title>Python中Requests库的基本使用 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/python学习/index.html">
+  <meta name="description" content="python爬虫从入门到放弃">
+<meta name="keywords" content="python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中Requests库的基本使用">
+<meta property="og:url" content="http://yoursite.com/blog/2018/08/03/Python中Requests库的基本使用/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="python爬虫从入门到放弃">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj2.jpg">
+<meta property="og:updated_time" content="2018-08-03T13:44:32.113Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Python中Requests库的基本使用">
+<meta name="twitter:description" content="python爬虫从入门到放弃">
+<meta name="twitter:image" content="http://yoursite.com/images/fj2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -157,36 +164,87 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Python中Requests库的基本使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Python中Requests库的基本使用
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python中Requests库的基本使用/" class="archive-article-date">
+
+        
+        <a href="/blog/2018/08/03/Python中Requests库的基本使用/" class="archive-article-date">
   	<time datetime="2018-08-03T12:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python中Requests库的基本使用/">Python中Requests库的基本使用</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>python爬虫从入门到放弃</strong><br><img src="/images/fj2.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="什么是Requests库"><a href="#什么是Requests库" class="headerlink" title="什么是Requests库"></a>什么是Requests库</h2><ul>
+<li>Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库</li>
+<li>其实urllib还是非常不方便的，而Requests它会比urllib更加方便，可以节约我们大量的工作。（用了requests之后，你基本都不愿意用urllib了）一句话，requests是python实现的最简单易用的HTTP库，建议爬虫使用requests库。</li>
+<li>默认安装好python之后，是没有安装requests模块的，需要单独通过pip安装<h2 id="Requests功能"><a href="#Requests功能" class="headerlink" title="Requests功能"></a>Requests功能</h2><h3 id="1-总体功能"><a href="#1-总体功能" class="headerlink" title="1.总体功能"></a>1.总体功能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">response  = requests.get(&quot;https://www.baidu.com&quot;)</span><br><span class="line">print(type(response))</span><br><span class="line">print(response.status_code)</span><br><span class="line">print(type(response.text))</span><br><span class="line">print(response.text)</span><br><span class="line">print(response.cookies)</span><br><span class="line">print(response.content)</span><br><span class="line">print(response.content.decode(&quot;utf-8&quot;))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>response使用起来确实非常方便，这里有个问题需要注意一下：</strong></p>
+<ul>
+<li>很多情况下的网站如果直接response.text会出现乱码的问题，所以这个使用response.content，这样返回的数据格式其实是二进制格式，然后通过decode()转换为utf-8，这样就解决了通过response.text直接返回显示乱码的问题。</li>
+<li>请求发出后，Requests 会基于 HTTP 头部对响应的编码作出有根据的推测。当你访问 response.text 之时，Requests 会使用其推测的文本编码。你可以找出 Requests 使用了什么编码，并且能够使用response.encoding 属性来改变它.如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response =requests.get(&quot;http://www.baidu.com&quot;)</span><br><span class="line">response.encoding=&quot;utf-8&quot;</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>不管是通过<strong>response.content.decode(“utf-8”)</strong>的方式还是通过<strong>response.encoding=”utf-8”</strong>的方式都可以避免乱码的问题发生。</p>
+<h3 id="2-各种请求方式"><a href="#2-各种请求方式" class="headerlink" title="2.各种请求方式"></a>2.各种请求方式</h3><ul>
+<li><p>基本GET请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">response = requests.get(&apos;https://doubler.cn/get&apos;)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>含参数的GET请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">response = requests.get(&quot;https://doubler.cn/get?name=zhujialei&amp;age=20&quot;)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解析json</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">response = requests.get(&quot;http://httpbin.org/get&quot;)</span><br><span class="line">print(type(response.text))</span><br><span class="line">print(response.json())</span><br><span class="line">print(json.loads(response.text))</span><br><span class="line">print(type(response.json()))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加headers</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">headers = &#123;</span><br><span class="line">    &quot;User-Agent&quot;:&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</span><br><span class="line">&#125;</span><br><span class="line">response =requests.get(&quot;https://www.zhihu.com&quot;,headers=headers)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基本POST请求<br>通过在发送post请求时添加一个data参数，这个data参数可以通过字典构造成，这样对于发送post请求就非常方便:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">data = &#123;</span><br><span class="line">    &quot;name&quot;:&quot;zhujialei&quot;,</span><br><span class="line">    &quot;age&quot;:20</span><br><span class="line">&#125;</span><br><span class="line">response = requests.post(&quot;https://doubler.cn/post&quot;,data=data)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -198,133 +256,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/03/Python中Requests库的基本使用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python基础学习-基本数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-03T05:41:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/08/03/Python基础学习-基本数据类型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python基础学习 基本数据类型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python基础学习-基本数据类型/">Python基础学习 基本数据类型</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/01/python绘图/" class="archive-article-date">
-  	<time datetime="2018-08-01T13:11:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/01/python绘图/">python绘图</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
-  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/30/Python-对象以及将对象序列化/">Python对象以及将对象序列化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -356,9 +387,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
