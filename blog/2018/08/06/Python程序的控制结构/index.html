@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Python程序的控制结构 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天学习一下python程序的分支和循环结构以及random库的使用。 程序的分支结构单分支结构if &amp;lt;条件&amp;gt; :    &amp;lt;语句块&amp;gt;实例：123guess = eval(input())if guess == 99:	print(&quot;猜对了&quot;) 二分支结构if &amp;lt;条件&amp;gt; :    &amp;lt;语句块1&amp;gt;else:    &amp;lt;语句块2&amp;gt;实例：12345g">
+  <meta name="description" content="今天学习一下python程序的分支和循环结构以及random库的使用。">
 <meta name="keywords" content="python学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python程序的控制结构">
 <meta property="og:url" content="http://yoursite.com/blog/2018/08/06/Python程序的控制结构/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="今天学习一下python程序的分支和循环结构以及random库的使用。 程序的分支结构单分支结构if &amp;lt;条件&amp;gt; :    &amp;lt;语句块&amp;gt;实例：123guess = eval(input())if guess == 99:	print(&quot;猜对了&quot;) 二分支结构if &amp;lt;条件&amp;gt; :    &amp;lt;语句块1&amp;gt;else:    &amp;lt;语句块2&amp;gt;实例：12345g">
+<meta property="og:description" content="今天学习一下python程序的分支和循环结构以及random库的使用。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj4.jpg">
 <meta property="og:image" content="http://yoursite.com/images/suiji1.png">
 <meta property="og:image" content="http://yoursite.com/images/suiji2.png">
 <meta property="og:image" content="http://yoursite.com/images/suiji3.png">
-<meta property="og:updated_time" content="2018-08-07T07:30:13.617Z">
+<meta property="og:updated_time" content="2018-08-07T07:32:53.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python程序的控制结构">
-<meta name="twitter:description" content="今天学习一下python程序的分支和循环结构以及random库的使用。 程序的分支结构单分支结构if &amp;lt;条件&amp;gt; :    &amp;lt;语句块&amp;gt;实例：123guess = eval(input())if guess == 99:	print(&quot;猜对了&quot;) 二分支结构if &amp;lt;条件&amp;gt; :    &amp;lt;语句块1&amp;gt;else:    &amp;lt;语句块2&amp;gt;实例：12345g">
+<meta name="twitter:description" content="今天学习一下python程序的分支和循环结构以及random库的使用。">
 <meta name="twitter:image" content="http://yoursite.com/images/fj4.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
@@ -188,6 +188,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>今天学习一下python程序的分支和循环结构以及random库的使用。</strong><br><img src="/images/fj4.jpg" alt=""></p>
+<a id="more"></a>
 <h2 id="程序的分支结构"><a href="#程序的分支结构" class="headerlink" title="程序的分支结构"></a>程序的分支结构</h2><h3 id="单分支结构"><a href="#单分支结构" class="headerlink" title="单分支结构"></a>单分支结构</h3><p>if &lt;条件&gt; :<br>    &lt;语句块&gt;<br><strong>实例：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">guess = eval(input())</span><br><span class="line"><span class="keyword">if</span> guess == <span class="number">99</span>:</span><br><span class="line">	print(<span class="string">"猜对了"</span>)</span><br></pre></td></tr></table></figure></p>
 <h3 id="二分支结构"><a href="#二分支结构" class="headerlink" title="二分支结构"></a>二分支结构</h3><p>if &lt;条件&gt; :<br>    &lt;语句块1&gt;<br>else:<br>    &lt;语句块2&gt;<br><strong>实例：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">guess = eval(input())</span><br><span class="line"><span class="keyword">if</span> guess == <span class="number">99</span>:</span><br><span class="line">	print(<span class="string">"猜对了"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">"猜错了"</span>)</span><br></pre></td></tr></table></figure></p>
 <h3 id="多分支结构"><a href="#多分支结构" class="headerlink" title="多分支结构"></a>多分支结构</h3><p>if &lt;条件&gt; :<br>    &lt;语句块1&gt;<br>elif&lt;条件&gt;:<br>    &lt;语句块2&gt;<br>else:<br>    &lt;语句块3&gt;<br><strong>实例：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">score = eval(input())</span><br><span class="line"><span class="keyword">if</span> score &gt;= <span class="number">90</span>:</span><br><span class="line">	grade = <span class="string">"A"</span></span><br><span class="line"><span class="keyword">elif</span> score &gt;=<span class="number">80</span>:</span><br><span class="line">	grade = <span class="string">"B"</span></span><br><span class="line"><span class="keyword">elif</span> score &gt;=<span class="number">60</span>:</span><br><span class="line">	grade = <span class="string">"C"</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	grade = <span class="string">"D"</span></span><br><span class="line">print(<span class="string">"输入成绩属于级别&#123;&#125;"</span>.format(grade))</span><br></pre></td></tr></table></figure></p>
