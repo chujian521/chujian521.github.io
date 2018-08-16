@@ -6,22 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>常见图片格式分析总结 | X&#39;s blog</title>
+  <title>Python组合数据类型 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="总结一下常见的图片格式的十六进制的开头结尾以及含义（可用winhex十六进制编辑器打开图片编辑）">
-<meta name="keywords" content="CTF,MISC">
+  <meta name="description" content="今天学习一下Python组合数据类型。">
+<meta name="keywords" content="python学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见图片格式分析总结">
-<meta property="og:url" content="http://yoursite.com/blog/2018/07/31/常见图片格式分析总结/index.html">
+<meta property="og:title" content="Python组合数据类型">
+<meta property="og:url" content="http://yoursite.com/blog/2018/08/16/Python组合数据类型/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="总结一下常见的图片格式的十六进制的开头结尾以及含义（可用winhex十六进制编辑器打开图片编辑）">
+<meta property="og:description" content="今天学习一下Python组合数据类型。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/4.jpg">
-<meta property="og:updated_time" content="2018-07-31T04:15:02.574Z">
+<meta property="og:image" content="http://yoursite.com/images/fj7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/caozuofu.png">
+<meta property="og:image" content="http://yoursite.com/images/caozuofu1.png">
+<meta property="og:updated_time" content="2018-08-16T11:40:19.631Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常见图片格式分析总结">
-<meta name="twitter:description" content="总结一下常见的图片格式的十六进制的开头结尾以及含义（可用winhex十六进制编辑器打开图片编辑）">
-<meta name="twitter:image" content="http://yoursite.com/images/4.jpg">
+<meta name="twitter:title" content="Python组合数据类型">
+<meta name="twitter:description" content="今天学习一下Python组合数据类型。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj7.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -164,37 +166,88 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-常见图片格式分析总结" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Python组合数据类型" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      常见图片格式分析总结
+      Python组合数据类型
     </h1>
   
 
         
-        <a href="/blog/2018/07/31/常见图片格式分析总结/" class="archive-article-date">
-  	<time datetime="2018-07-31T04:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
+        <a href="/blog/2018/08/16/Python组合数据类型/" class="archive-article-date">
+  	<time datetime="2018-08-16T08:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>总结一下常见的图片格式的十六进制的开头结尾以及含义（可用winhex十六进制编辑器打开图片编辑）</strong><br><img src="/images/4.jpg" alt=""></p>
+        <p><strong>今天学习一下Python组合数据类型。</strong><br><img src="/images/fj7.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="1、JPG文件格式："><a href="#1、JPG文件格式：" class="headerlink" title="1、JPG文件格式："></a>1、JPG文件格式：</h2><p>（1）JPG = “段” + 经过压缩编码的图像数据<br>什么是‘段’？段是一种数据结构，主要是来控制一段数据怎样存储和表示，段的结构如下：<br>段  =  段标识  +  段类型  +  段长度  +段内容          （其中文件头和文件尾属于没有‘段长度’和‘段内容’的特殊的段）<br>（2）‘段标识’是一种固定的符号–“FF”，段的类型有30种，其中有10中是每个JPG图片中必须存在的，其余的都是可选的类型，在此，我们就那10中类型加以说明，如下：</p>
-<p>【1】D8 —- 文件头   【2】D9 — 文件尾  【3】FE— 注释  【4】C0— 帧开始  【5】C1 — 帧开始<br>【6】C4 — 定义Huffman表  【7】DA — 扫描行开始  【8】DB — 定义量化表 【9】DD—定义重新开始间隔<br>【10】E0 — 定义交换格式和图像识别信息</p>
-<p>因此，一般的JPG格式的图片通过十六进制的文件磁盘内容查看器发现：文件头为：FF D8  ，而且通常在此之后都有FF E0（其后一般接JFIF）来表明图像识别信息和交换格式，文件尾为：FF D9。</p>
-<h2 id="2、PNG文件格式："><a href="#2、PNG文件格式：" class="headerlink" title="2、PNG文件格式："></a>2、PNG文件格式：</h2><p>（1）文件结构如下：<br>PNG文件 =  PNG标识  +  数据块   + 数据块  + ……  + 数据块（其中数据块的个数最少是4）<br>（2）PNG标识是固定的，以十六进制表示为：【89  50  4E  47  0D  0A  1A  0A】，对应的符号为：【 ‰  P  N  G  .  .  .  . 】</p>
-<p>数据块分析如下：</p>
-<p>PNG文件 -  PNG标识  =   IHDR  + 可选数据块  +  PLTE  +  可选数据块  +  IDAT  +  可选数据块  +  IEND<br>分别说明如下：</p>
-<p>【1】IHDR数据块，文件头数据块，在一个PNG文件里只能有一个。<br>【2】PLTE数据块，调色板数据块，它仅与索引彩色图像有关，其中，‘索引图像’是指–一种把像素值直接作为RGB调色板下标的图像。<br>【3】IDAT数据块，图像数据块，存储实际的图像数据，在数据流中包含多个连续顺序的图像数据块。<br>【4】IEND数据块，图像结束数据块，表示–数据流已结束，放在文件的末尾。<br>以上的数据块都是以自己的名字作为开头来控制一段数据。其中，结尾数据块IEND的内容固定：<br>【00  00  00  00  49  45  4E  44  AE  42  60  82】，对应的符号如下：<br>【.   .    .    .   I   E   N   D  （后四位为CRC校验码）】</p>
-<h2 id="3、GIF文件格式："><a href="#3、GIF文件格式：" class="headerlink" title="3、GIF文件格式："></a>3、GIF文件格式：</h2><p>（1）文件的单位是数据块，文件的结构如下：<br>GIF文件  =  文件头  +  GIF数据流  +  文件结束块<br>GIF数据流  =  控制块  +   成像块   +  特殊用途块<br>（2）文件头大小为6个字节，而且【文件头  =  标识符（3字节） +  版本（3字节）】，其中，标识符为“GIF”，版本一般是“87a”或者“89a”。<br>文件结束块是一个单字节的数据块，它指示数据流的结束，值为“0x3B”，符号是“；”。<br>注意：GIF文件中的每个数据块都有一个块尾记录，大小为1个字节，同样也是“0x3B”。</p>
-<h2 id="4、BMP文件格式："><a href="#4、BMP文件格式：" class="headerlink" title="4、BMP文件格式："></a>4、BMP文件格式：</h2><p>（1）文件结构如下：<br>BMP文件 =  文件头信息块  +  图像描述信息块  +  颜色表  +  图像数据区<br>（2）关于文件头信息块，0000–000D，其中，【0000–0001】为2个字节的文件标识“BM”，【0002–0005】为4个字节的文件大小的值，【0006–0009】为4个字节的保留值，分别为【00 00 00 00】，【000A – 000D】为图像数据区的起始位置（偏移量），它的值等于前三个内容的大小的和。<br>另外，几个比较重要的位置有：【000A—000D】图像数据的起始位置，【0022–0025】图像数据的大小，【000E–0011】图像描述信息块大小，【0012–0015】图像宽度，【0016–0019】图像高度。</p>
+<h2 id="集合类型及操作"><a href="#集合类型及操作" class="headerlink" title="集合类型及操作"></a>集合类型及操作</h2><h3 id="集合的定义"><a href="#集合的定义" class="headerlink" title="集合的定义"></a>集合的定义</h3><p><strong>集合是多个元素的无序组合</strong></p>
+<ul>
+<li>集合类型与数学中的集合概念一致</li>
+<li>集合元素之间无序，每一个元素唯一，不存在相同元素</li>
+<li>放入集合中的元素为不可变数据类型</li>
+<li>集合用{}表示，元素 间用逗号分隔</li>
+<li>建立集合类型用{}或者set()</li>
+<li>建立空的集合必须用set()</li>
+</ul>
+<h3 id="集合操作符"><a href="#集合操作符" class="headerlink" title="集合操作符"></a>集合操作符</h3><p>6个基本操作符：</p>
+<p><img src="/images/caozuofu.png" alt=""></p>
+<p>关系操作符：判断子集包含关系</p>
+<p>四个增强操作符：</p>
+<p><img src="/images/caozuofu1.png" alt=""></p>
+<h3 id="集合处理方法"><a href="#集合处理方法" class="headerlink" title="集合处理方法"></a>集合处理方法</h3><table>
+<thead>
+<tr>
+<th>操作函数或方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S.add(x)</td>
+<td>如果x不在集合S中，将x增加到S</td>
+</tr>
+<tr>
+<td>S.discard(x)</td>
+<td>移除S中的元素x，如果x不在集合S中，不报错</td>
+</tr>
+<tr>
+<td>S.remove(x)</td>
+<td>移除S中的元素x，如果x不在集合S中，产生KeyError异常</td>
+</tr>
+<tr>
+<td>S.clear()</td>
+<td>移除S中所有元素</td>
+</tr>
+<tr>
+<td>S.pop()</td>
+<td>随机返回一个元素，更新S，若S为空产生KeyError异常</td>
+</tr>
+<tr>
+<td>S.copy()</td>
+<td>返回集合S的一个副本</td>
+</tr>
+<tr>
+<td>len(S)</td>
+<td>返回集合S中的元素个数</td>
+</tr>
+<tr>
+<td>x in S</td>
+<td>判断S中是否含有元素x，若含有返回True，否则返回False</td>
+</tr>
+</tbody>
+</table>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>包含关系比较</li>
+<li>数据去重：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">"p"</span>,<span class="string">"p"</span>,<span class="string">"y"</span>,<span class="string">"y"</span>,<span class="number">123</span>]</span><br><span class="line">s = set(ls)</span><br><span class="line">lt = list(s)</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
 
@@ -234,11 +287,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MISC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
         		</li>
       		
 		</ul>
@@ -294,7 +343,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/07/31/常见图片格式分析总结/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/16/Python组合数据类型/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -308,18 +357,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/08/01/python绘图/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          python绘图
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/07/30/Python-对象以及将对象序列化/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python对象以及将对象序列化</div>
+    <a href="/blog/2018/08/15/Python函数和代码复用-二/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python函数和代码复用(二)</div>
       <i class="icon-circle-right"></i>
     </a>
   

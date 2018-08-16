@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/images/fj6.jpg">
 <meta property="og:image" content="http://yoursite.com/images/hnt.png">
 <meta property="og:image" content="http://yoursite.com/images/pyinstaller.png">
-<meta property="og:updated_time" content="2018-08-15T11:37:04.920Z">
+<meta property="og:updated_time" content="2018-08-16T08:43:45.717Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python函数和代码复用(二)">
 <meta name="twitter:description" content="今天继续学习一下Python函数和代码复用。">
@@ -275,6 +275,7 @@
 </tbody>
 </table>
 <p>实例：pyinstaller -i curve.ico -F 文件名.py #将图标与程序链接</p>
+<h2 id="科赫小雪花绘图："><a href="#科赫小雪花绘图：" class="headerlink" title="科赫小雪花绘图："></a>科赫小雪花绘图：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">koch</span><span class="params">(size, n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n== <span class="number">0</span>:</span><br><span class="line">        turtle.fd(size)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> angle <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">60</span>, <span class="number">-120</span>, <span class="number">60</span>]:</span><br><span class="line">            turtle. left(angle)</span><br><span class="line">            koch(size/<span class="number">3</span>, n<span class="number">-1</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    turtle.setup(<span class="number">600</span>, <span class="number">600</span>)</span><br><span class="line">    turtle.penup()</span><br><span class="line">    turtle.pencolor(<span class="string">"pink"</span>)</span><br><span class="line">    turtle.speed(<span class="number">0</span>)</span><br><span class="line">    turtle.goto( - <span class="number">200</span>, <span class="number">100</span>)</span><br><span class="line">    turtle.pendown()</span><br><span class="line">    turtle.pensize(<span class="number">2</span>)</span><br><span class="line">    level = <span class="number">4</span></span><br><span class="line">    koch(<span class="number">400</span> ,level)</span><br><span class="line">    turtle. right (<span class="number">120</span>)</span><br><span class="line">    koch(<span class="number">400</span>,level)</span><br><span class="line">    turtle. right(<span class="number">120</span>)</span><br><span class="line">    koch(<span class="number">400</span>,level)</span><br><span class="line">    turtle.hideturtle()</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
 
       
 
@@ -383,6 +384,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/blog/2018/08/16/Python组合数据类型/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Python组合数据类型
+        
+      </div>
+    </a>
   
   
     <a href="/blog/2018/08/10/木兰词·拟古决绝词柬友/" id="article-nav-older" class="article-nav-link-wrap">
@@ -525,15 +535,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MISC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
