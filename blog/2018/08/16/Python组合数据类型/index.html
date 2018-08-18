@@ -19,7 +19,10 @@
 <meta property="og:image" content="http://yoursite.com/images/fj7.jpg">
 <meta property="og:image" content="http://yoursite.com/images/caozuofu.png">
 <meta property="og:image" content="http://yoursite.com/images/caozuofu1.png">
-<meta property="og:updated_time" content="2018-08-16T11:40:19.631Z">
+<meta property="og:image" content="http://yoursite.com/images/xlczf.png">
+<meta property="og:image" content="http://yoursite.com/images/lbczf.png">
+<meta property="og:image" content="http://yoursite.com/images/lbczf1.png">
+<meta property="og:updated_time" content="2018-08-18T11:31:34.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python组合数据类型">
 <meta name="twitter:description" content="今天学习一下Python组合数据类型。">
@@ -246,8 +249,58 @@
 </table>
 <h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
 <li>包含关系比较</li>
-<li>数据去重：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">"p"</span>,<span class="string">"p"</span>,<span class="string">"y"</span>,<span class="string">"y"</span>,<span class="number">123</span>]</span><br><span class="line">s = set(ls)</span><br><span class="line">lt = list(s)</span><br></pre></td></tr></table></figure></li>
+<li>数据去重：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">"p"</span>,<span class="string">"p"</span>,<span class="string">"y"</span>,<span class="string">"y"</span>,<span class="number">123</span>]</span><br><span class="line">s = set(ls)</span><br><span class="line">lt = list(s)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<h2 id="序列类型及操作"><a href="#序列类型及操作" class="headerlink" title="序列类型及操作"></a>序列类型及操作</h2><h3 id="序列类型定义"><a href="#序列类型定义" class="headerlink" title="序列类型定义"></a>序列类型定义</h3><p><strong>序列是具有先后关系的一组元素。</strong></p>
+<ul>
+<li>序列是一维元素向量，元素类型可以不同</li>
+<li>类似数学元素序列</li>
+<li>元素间由序号引导，通过下标访问特定元素</li>
+</ul>
+<h3 id="序列处理函数及方法"><a href="#序列处理函数及方法" class="headerlink" title="序列处理函数及方法"></a>序列处理函数及方法</h3><p>6个操作符：</p>
+<p><img src="/images/xlczf.png" alt=""></p>
+<p>5个函数方法：</p>
+<table>
+<thead>
+<tr>
+<th>函数和方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>len(s)</td>
+<td>返回s的长度</td>
+</tr>
+<tr>
+<td>min(s)</td>
+<td>返回序列s的最小元素，s中元素需要可比较</td>
+</tr>
+<tr>
+<td>max(s)</td>
+<td>返回序列s的最大元素，s中元素需要可比较</td>
+</tr>
+<tr>
+<td>s.index(x)或s.index(x,i,j)</td>
+<td>返回序列s从i开始到j位置中第一次出现元素x的位置</td>
+</tr>
+<tr>
+<td>s.count(x)</td>
+<td>返回序列s中出现x的总次数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="元组类型及操作"><a href="#元组类型及操作" class="headerlink" title="元组类型及操作"></a>元组类型及操作</h3><p>定义：<strong>元组是序列类型的一种扩展</strong></p>
+<ul>
+<li>元组是一种序列类型，一旦创建就不能被修改</li>
+<li>使用小括号或tuple()创建，元素间用逗号分隔</li>
+<li>可以使用或不使用小括号</li>
+<li>继承序列类型全部通用操作</li>
+</ul>
+<h3 id="列表类型及操作"><a href="#列表类型及操作" class="headerlink" title="列表类型及操作"></a>列表类型及操作</h3><p><strong>列表是序列类型的一种扩展，很常用</strong></p>
+<p><img src="/images/lbczf.png" alt=""></p>
+<p><img src="/images/lbczf1.png" alt=""></p>
 
       
 
