@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>X&#39;s blog</title>
+  <title>Python组合数据类型（二） | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="今天继续学习一下Python组合数据类型。">
+<meta name="keywords" content="python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python组合数据类型（二）">
+<meta property="og:url" content="http://yoursite.com/blog/2018/08/19/Python组合数据类型（二）/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天继续学习一下Python组合数据类型。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj8.jpg">
+<meta property="og:image" content="http://yoursite.com/images/jieba.png">
+<meta property="og:image" content="http://yoursite.com/images/jieba1.png">
+<meta property="og:updated_time" content="2018-08-19T10:32:11.698Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Python组合数据类型（二）">
+<meta name="twitter:description" content="今天继续学习一下Python组合数据类型。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj8.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -157,114 +166,86 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-常见图片格式分析总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Python组合数据类型（二）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/07/31/常见图片格式分析总结/">常见图片格式分析总结</a>
+    <h1 class="article-title" itemprop="name">
+      Python组合数据类型（二）
     </h1>
   
 
         
-        <a href="/blog/2018/07/31/常见图片格式分析总结/" class="archive-article-date">
-  	<time datetime="2018-07-31T04:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
+        <a href="/blog/2018/08/19/Python组合数据类型（二）/" class="archive-article-date">
+  	<time datetime="2018-08-19T08:31:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>总结一下常见的图片格式的十六进制的开头结尾以及含义（可用winhex十六进制编辑器打开图片编辑）</strong><br><img src="/images/4.jpg" alt=""></p>
-        
-          <a class="article-more-a" href="/blog/2018/07/31/常见图片格式分析总结/#more">more >></a>
-        
+        <p><strong>今天继续学习一下Python组合数据类型。</strong><br><img src="/images/fj8.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="字典类型及操作"><a href="#字典类型及操作" class="headerlink" title="字典类型及操作"></a>字典类型及操作</h2><h2 id="字典类型定义"><a href="#字典类型定义" class="headerlink" title="字典类型定义"></a>字典类型定义</h2><p>映射：<strong>是一种键（索引）和值（数据）的对应</strong></p>
+<h2 id="字典的建立"><a href="#字典的建立" class="headerlink" title="字典的建立"></a>字典的建立</h2><ul>
+<li>赋值创建字典<br>  d={“key1”:”value1”,”key2”:”value2”}</li>
+<li>工厂函数<br>  d=dict(user1=”123”,user2=”234”,user3=”345”)</li>
+<li>内建方法:fromkeys<br>  d={}.fromkeys((‘username’,’password’),())</li>
+<li>字典中的key有相同的value值,默认为None</li>
+</ul>
+<h3 id="基本字典操作方法"><a href="#基本字典操作方法" class="headerlink" title="基本字典操作方法"></a>基本字典操作方法</h3><ul>
+<li>len(d)返回d中的键-值对的数量</li>
+<li>d[k]返回关联到k上的值</li>
+<li>d[k]=v将值v关联到键k上</li>
+<li>del d[k]删除键为k的项</li>
+<li>k in d检查d中是否含有键为k项</li>
+</ul>
+<h3 id="字典方法"><a href="#字典方法" class="headerlink" title="字典方法"></a>字典方法</h3><p><strong>详见python基础教程P59.</strong></p>
+<h2 id="jieba库的使用"><a href="#jieba库的使用" class="headerlink" title="jieba库的使用"></a>jieba库的使用</h2><h3 id="jieba库的基本介绍"><a href="#jieba库的基本介绍" class="headerlink" title="jieba库的基本介绍"></a>jieba库的基本介绍</h3><p>概述：jieba库是优秀的中文分词第三方库</p>
+<ul>
+<li>中文文本需要通过分词获得单个的词语</li>
+<li>jieba是优秀的中文分词第三方库，需要额外安装</li>
+<li>jieba库提供三种分词模式，最简单的只需掌握一个函数</li>
+</ul>
+<h3 id="jieba库的使用-1"><a href="#jieba库的使用-1" class="headerlink" title="jieba库的使用"></a>jieba库的使用</h3><ul>
+<li>精确模式：把文本精确的分开，不存在冗余单词</li>
+<li>全模式：把文本所有可能词语都扫描出来，有冗余</li>
+<li>搜索引擎模式：在精确模式基础上，对长词再次切分</li>
+</ul>
+<p><img src="/images/jieba.png" alt=""></p>
+<p><img src="/images/jieba1.png" alt=""></p>
+<h2 id="实例：文本词频统计"><a href="#实例：文本词频统计" class="headerlink" title="实例：文本词频统计"></a>实例：文本词频统计</h2><h3 id="英文文本词频统计"><a href="#英文文本词频统计" class="headerlink" title="英文文本词频统计"></a>英文文本词频统计</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTxt</span><span class="params">()</span>:</span></span><br><span class="line">	txt = open(<span class="string">"hamlet.txt"</span>,<span class="string">"r"</span>).read()</span><br><span class="line">	txt = txt.lower()</span><br><span class="line">	<span class="keyword">for</span> ch <span class="keyword">in</span> <span class="string">'~!@#$%^&amp;*()_+&#123;&#125;[]|\:;"&lt;&gt;,.?/-=`'</span></span><br><span class="line">		txt = txt.replace(ch,<span class="string">" "</span>)</span><br><span class="line">	<span class="keyword">return</span> txt</span><br><span class="line"></span><br><span class="line">hamletTxt = getTxt()</span><br><span class="line">words = hamletTxt.split()</span><br><span class="line">counts = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">	counts[word] = counts.get(word,<span class="number">0</span>)+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">items = list(counts.items())</span><br><span class="line">items.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)</span><br><span class="line">	word,count = items[i]</span><br><span class="line">	print(<span class="string">"&#123;0:&lt;10&#125;&#123;1:&gt;5&#125;"</span>.format(word,count))</span><br></pre></td></tr></table></figure>
+<h3 id="中文文本词频统计"><a href="#中文文本词频统计" class="headerlink" title="中文文本词频统计"></a>中文文本词频统计</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line">txt = open(<span class="string">"threekingdoms.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf-8"</span>).read()</span><br><span class="line">words = jieba.lcut(txt)</span><br><span class="line">counts = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">	<span class="keyword">if</span> len(word) == <span class="number">1</span>:</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		counts[word] = counts.get(word,<span class="number">0</span>)+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">items = list(counts.items())</span><br><span class="line">items.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)</span><br><span class="line">	word,count = items[i]</span><br><span class="line">	print(<span class="string">"&#123;0:&lt;10&#125;&#123;1:&gt;5&#125;"</span>.format(word,count))</span><br></pre></td></tr></table></figure>
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MISC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/07/31/常见图片格式分析总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python-对象以及将对象序列化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/07/30/Python-对象以及将对象序列化/">Python对象以及将对象序列化</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
-  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天开始继续学习一下python，熟悉一门脚本语言</strong><br><img src="/images/fengjing.jpg" alt=""></p>
-        
-          <a class="article-more-a" href="/blog/2018/07/30/Python-对象以及将对象序列化/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -284,16 +265,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/07/30/Python-对象以及将对象序列化/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/19/Python组合数据类型（二）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/08/16/Python组合数据类型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python组合数据类型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -313,148 +353,14 @@
 
 
 
-
-  
-    <article id="post-My-First-Blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/07/28/My-First-Blog/">My First Blog</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/07/28/My-First-Blog/" class="archive-article-date">
-  	<time datetime="2018-07-28T02:54:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天正式建立了博客，写一下留个纪念</strong><br>  <img src="/images/3.jpg" alt=""><br>
-        
-          <a class="article-more-a" href="/blog/2018/07/28/My-First-Blog/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/07/28/My-First-Blog/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/07/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/07/25/hello-world/" class="archive-article-date">
-  	<time datetime="2018-07-25T11:32:49.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/07/25/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -486,8 +392,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
