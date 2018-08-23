@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj9.jpg">
 <meta property="og:image" content="http://yoursite.com/images/wenjian.png">
-<meta property="og:updated_time" content="2018-08-22T12:32:00.946Z">
+<meta property="og:updated_time" content="2018-08-23T02:38:20.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python文件和数据格式化">
 <meta name="twitter:description" content="今天对Python基础语法进行最后一部分Python文件和数据格式化的学习，到此Python基础语法基本结束。">
@@ -234,7 +234,29 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = input(<span class="string">"请输入要打开的文件名称："</span>)</span><br><span class="line">fo = open(fname,<span class="string">"r"</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">	print(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="数据的文件写入"><a href="#数据的文件写入" class="headerlink" title="数据的文件写入"></a>数据的文件写入</h3>
+<h3 id="数据的文件写入"><a href="#数据的文件写入" class="headerlink" title="数据的文件写入"></a>数据的文件写入</h3><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>f.write(s)</td>
+<td>向文件写入一个字符串或字节流</td>
+</tr>
+<tr>
+<td>f.writelines(lines)</td>
+<td>将一个元素全为字符串的列表写入文件</td>
+</tr>
+<tr>
+<td>f.seek(offset)</td>
+<td>改变当前文件操作指针位置，offset含义如下：0-文件开头；1-当前位置；2-文件结尾；</td>
+</tr>
+</tbody>
+</table>
+
       
 
       
@@ -365,6 +387,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件的使用"><span class="toc-number">1.</span> <span class="toc-text">文件的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件的类型"><span class="toc-number">1.1.</span> <span class="toc-text">文件的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件的打开和关闭"><span class="toc-number">1.2.</span> <span class="toc-text">文件的打开和关闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件内容的读取"><span class="toc-number">1.3.</span> <span class="toc-text">文件内容的读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据的文件写入"><span class="toc-number">1.4.</span> <span class="toc-text">数据的文件写入</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -480,11 +515,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
