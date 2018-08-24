@@ -6,24 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Python组合数据类型（二） | X&#39;s blog</title>
+  <title>使用Aircrack-ng进行WiFi密码破解 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天继续学习一下Python组合数据类型。">
-<meta name="keywords" content="python学习">
+  <meta name="description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
+<meta name="keywords" content="无线渗透">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python组合数据类型（二）">
-<meta property="og:url" content="http://yoursite.com/blog/2018/08/19/Python组合数据类型（二）/index.html">
+<meta property="og:title" content="使用Aircrack-ng进行WiFi密码破解">
+<meta property="og:url" content="http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="今天继续学习一下Python组合数据类型。">
+<meta property="og:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/fj8.jpg">
-<meta property="og:image" content="http://yoursite.com/images/jieba.png">
-<meta property="og:image" content="http://yoursite.com/images/jieba1.png">
-<meta property="og:updated_time" content="2018-08-19T10:32:11.698Z">
+<meta property="og:image" content="http://yoursite.com/images/kali.jpg">
+<meta property="og:image" content="http://yoursite.com/images/aircrack-ng.png">
+<meta property="og:image" content="http://yoursite.com/images/aircrack-ng1.png">
+<meta property="og:image" content="http://yoursite.com/images/aircrack-ng2.png">
+<meta property="og:image" content="http://yoursite.com/images/aircrack-ng3.png">
+<meta property="og:image" content="http://yoursite.com/images/aircrack-ng4.png">
+<meta property="og:updated_time" content="2018-08-24T10:30:24.035Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python组合数据类型（二）">
-<meta name="twitter:description" content="今天继续学习一下Python组合数据类型。">
-<meta name="twitter:image" content="http://yoursite.com/images/fj8.jpg">
+<meta name="twitter:title" content="使用Aircrack-ng进行WiFi密码破解">
+<meta name="twitter:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
+<meta name="twitter:image" content="http://yoursite.com/images/kali.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -166,58 +169,62 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Python组合数据类型（二）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-使用Aircrack-ng进行WiFi密码破解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Python组合数据类型（二）
+      使用Aircrack-ng进行WiFi密码破解
     </h1>
   
 
         
-        <a href="/blog/2018/08/19/Python组合数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-19T08:31:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
+        <a href="/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" class="archive-article-date">
+  	<time datetime="2018-08-23T13:10:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>今天继续学习一下Python组合数据类型。</strong><br><img src="/images/fj8.jpg" alt=""></p>
+        <p><strong>今天来学习一下如何抓包破解WPA加密的WiFi。</strong></p>
+<p><img src="/images/kali.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="字典类型及操作"><a href="#字典类型及操作" class="headerlink" title="字典类型及操作"></a>字典类型及操作</h2><h2 id="字典类型定义"><a href="#字典类型定义" class="headerlink" title="字典类型定义"></a>字典类型定义</h2><p>映射：<strong>是一种键（索引）和值（数据）的对应</strong></p>
-<h2 id="字典的建立"><a href="#字典的建立" class="headerlink" title="字典的建立"></a>字典的建立</h2><ul>
-<li>赋值创建字典<br>  d={“key1”:”value1”,”key2”:”value2”}</li>
-<li>工厂函数<br>  d=dict(user1=”123”,user2=”234”,user3=”345”)</li>
-<li>内建方法:fromkeys<br>  d={}.fromkeys((‘username’,’password’),())</li>
-<li>字典中的key有相同的value值,默认为None</li>
-</ul>
-<h3 id="基本字典操作方法"><a href="#基本字典操作方法" class="headerlink" title="基本字典操作方法"></a>基本字典操作方法</h3><ul>
-<li>len(d)返回d中的键-值对的数量</li>
-<li>d[k]返回关联到k上的值</li>
-<li>d[k]=v将值v关联到键k上</li>
-<li>del d[k]删除键为k的项</li>
-<li>k in d检查d中是否含有键为k项</li>
-</ul>
-<h3 id="字典方法"><a href="#字典方法" class="headerlink" title="字典方法"></a>字典方法</h3><p><strong>详见python基础教程P59.</strong></p>
-<h2 id="jieba库的使用"><a href="#jieba库的使用" class="headerlink" title="jieba库的使用"></a>jieba库的使用</h2><h3 id="jieba库的基本介绍"><a href="#jieba库的基本介绍" class="headerlink" title="jieba库的基本介绍"></a>jieba库的基本介绍</h3><p>概述：jieba库是优秀的中文分词第三方库</p>
+<h2 id="Aircrack-ng"><a href="#Aircrack-ng" class="headerlink" title="Aircrack-ng"></a>Aircrack-ng</h2><p>Aircrack-ng是一个与802.11标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP和WPA/WPA2-PSK破解。Aircrack-ng可以工作在任何支持监听模式的无线网卡上（设备列表请参阅其官方网站）并嗅探802.11a，802.11b，802.11g的数据。</p>
+<p>具体详情见百度<a href="https://baike.baidu.com/item/aircrack-ng/7661805" title="aircrack-ng" target="_blank" rel="noopener">https://baike.baidu.com/item/aircrack-ng/7661805</a></p>
+<h2 id="破解准备"><a href="#破解准备" class="headerlink" title="破解准备"></a>破解准备</h2><p>首先你需要一块无线网卡，kali虚拟机（为了方便直接使用，里面的小工具很多，不用再去自己下载了）</p>
+<h3 id="1-查看你的网卡信息"><a href="#1-查看你的网卡信息" class="headerlink" title="1.查看你的网卡信息"></a>1.查看你的网卡信息</h3><p>在kali Linux下使用命令查看网卡信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
+<p>效果图如下：<br><img src="/images/aircrack-ng.png" alt=""></p>
+<p>可以看到里面有个wlan0，那就是我的网卡，如果没有的话就把无线网卡拔了再插一下，直到找到那个wlan0为止。一定要保证它<strong>现在没有连接到任何wifi</strong>，上面那个wlan0里面<strong>没有ip地址</strong>什么的就说明现在不在连接中。</p>
+<h3 id="2-激活无线网卡至monitor即监听模式"><a href="#2-激活无线网卡至monitor即监听模式" class="headerlink" title="2.激活无线网卡至monitor即监听模式"></a>2.激活无线网卡至monitor即监听模式</h3><p>使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure></p>
+<p>然后会出现以下提示信息：<br><img src="/images/aircrack-ng1.png" alt=""></p>
+<p>如果再次使用ifconfig可以发现，我们的网卡已经被重命名为wlan0mon</p>
+<h3 id="3-探测无线网络，抓取无线数据包"><a href="#3-探测无线网络，抓取无线数据包" class="headerlink" title="3.探测无线网络，抓取无线数据包"></a>3.探测无线网络，抓取无线数据包</h3><p>具体命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng -c 11 longas wlan0mon</span><br></pre></td></tr></table></figure></p>
+<p>参数解释：</p>
 <ul>
-<li>中文文本需要通过分词获得单个的词语</li>
-<li>jieba是优秀的中文分词第三方库，需要额外安装</li>
-<li>jieba库提供三种分词模式，最简单的只需掌握一个函数</li>
+<li>-c设置目标AP的工作频道</li>
+<li>-w后面紧跟要保存的文件的文件名，注意：生成的文件名是longas-01.cap</li>
+<li>wlan0mon：为之前已经开启监听的网卡名</li>
 </ul>
-<h3 id="jieba库的使用-1"><a href="#jieba库的使用-1" class="headerlink" title="jieba库的使用"></a>jieba库的使用</h3><ul>
-<li>精确模式：把文本精确的分开，不存在冗余单词</li>
-<li>全模式：把文本所有可能词语都扫描出来，有冗余</li>
-<li>搜索引擎模式：在精确模式基础上，对长词再次切分</li>
+<p>按Enter开始执行，不要关闭并打开另一个shell进行下一步</p>
+<h3 id="4-进行deauth攻击加速破解过程"><a href="#4-进行deauth攻击加速破解过程" class="headerlink" title="4.进行deauth攻击加速破解过程"></a>4.进行deauth攻击加速破解过程</h3><p>输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -0 9 -a AP的MAC -c 客户端的mac wlan0mon</span><br></pre></td></tr></table></figure></p>
+<p>参数解释：</p>
+<ul>
+<li>-0：采用Deauth攻击模式，后面紧跟攻击次数，这里设置为9，大家可以根据实际情况设置</li>
+<li>-a：后面跟AP的mac地址</li>
+<li>-c：后面跟客户端的mac地址</li>
 </ul>
-<p><img src="/images/jieba.png" alt=""></p>
-<p><img src="/images/jieba1.png" alt=""></p>
-<h2 id="实例：文本词频统计"><a href="#实例：文本词频统计" class="headerlink" title="实例：文本词频统计"></a>实例：文本词频统计</h2><h3 id="英文文本词频统计"><a href="#英文文本词频统计" class="headerlink" title="英文文本词频统计"></a>英文文本词频统计</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTxt</span><span class="params">()</span>:</span></span><br><span class="line">	txt = open(<span class="string">"hamlet.txt"</span>,<span class="string">"r"</span>).read()</span><br><span class="line">	txt = txt.lower()</span><br><span class="line">	<span class="keyword">for</span> ch <span class="keyword">in</span> <span class="string">'~!@#$%^&amp;*()_+&#123;&#125;[]|\:;"&lt;&gt;,.?/-=`'</span></span><br><span class="line">		txt = txt.replace(ch,<span class="string">" "</span>)</span><br><span class="line">	<span class="keyword">return</span> txt</span><br><span class="line"></span><br><span class="line">hamletTxt = getTxt()</span><br><span class="line">words = hamletTxt.split()</span><br><span class="line">counts = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">	counts[word] = counts.get(word,<span class="number">0</span>)+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">items = list(counts.items())</span><br><span class="line">items.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)</span><br><span class="line">	word,count = items[i]</span><br><span class="line">	print(<span class="string">"&#123;0:&lt;10&#125;&#123;1:&gt;5&#125;"</span>.format(word,count))</span><br></pre></td></tr></table></figure>
-<h3 id="中文文本词频统计"><a href="#中文文本词频统计" class="headerlink" title="中文文本词频统计"></a>中文文本词频统计</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line">txt = open(<span class="string">"threekingdoms.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf-8"</span>).read()</span><br><span class="line">words = jieba.lcut(txt)</span><br><span class="line">counts = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">	<span class="keyword">if</span> len(word) == <span class="number">1</span>:</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		counts[word] = counts.get(word,<span class="number">0</span>)+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">items = list(counts.items())</span><br><span class="line">items.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)</span><br><span class="line">	word,count = items[i]</span><br><span class="line">	print(<span class="string">"&#123;0:&lt;10&#125;&#123;1:&gt;5&#125;"</span>.format(word,count))</span><br></pre></td></tr></table></figure>
+<p>按Enter键后会出现以下信息：<br><img src="/images/aircrack-ng2.png" alt=""></p>
+<p>然后回到抓取数据包的界面。在右上角出现handshake的提示证明获得了包含WPA-PSK密码的4次握手数据报文。如未出现，在此执行上述步骤。</p>
+<p><img src="/images/aircrack-ng3.png" alt=""></p>
+<h2 id="开始破解WPA-PSK"><a href="#开始破解WPA-PSK" class="headerlink" title="开始破解WPA-PSK"></a>开始破解WPA-PSK</h2><p>提前用字典生成器生成所需字典。</p>
+<p>输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng -w dict.txt 捕获的.cap文件</span><br></pre></td></tr></table></figure></p>
+<p>按Enter执行后，经过一段时间便可破解，这取决于密码的强度。（为了方便演示，我故意将密码写在字典里）</p>
+<p><img src="/images/aircrack-ng4.png" alt=""></p>
+<p>Key Found！便是破解成功。</p>
+
       
 
       
@@ -256,7 +263,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">无线渗透</a>
         		</li>
       		
 		</ul>
@@ -312,7 +319,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/19/Python组合数据类型（二）/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -326,18 +333,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/08/19/Encounter/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Encounter
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/08/16/Python组合数据类型/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python组合数据类型</div>
+    <a href="/blog/2018/08/22/Python文件和数据格式化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python文件和数据格式化</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -364,7 +362,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#字典类型及操作"><span class="toc-number">1.</span> <span class="toc-text">字典类型及操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典类型定义"><span class="toc-number">2.</span> <span class="toc-text">字典类型定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典的建立"><span class="toc-number">3.</span> <span class="toc-text">字典的建立</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本字典操作方法"><span class="toc-number">3.1.</span> <span class="toc-text">基本字典操作方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字典方法"><span class="toc-number">3.2.</span> <span class="toc-text">字典方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jieba库的使用"><span class="toc-number">4.</span> <span class="toc-text">jieba库的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jieba库的基本介绍"><span class="toc-number">4.1.</span> <span class="toc-text">jieba库的基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jieba库的使用-1"><span class="toc-number">4.2.</span> <span class="toc-text">jieba库的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例：文本词频统计"><span class="toc-number">5.</span> <span class="toc-text">实例：文本词频统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#英文文本词频统计"><span class="toc-number">5.1.</span> <span class="toc-text">英文文本词频统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中文文本词频统计"><span class="toc-number">5.2.</span> <span class="toc-text">中文文本词频统计</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Aircrack-ng"><span class="toc-number">1.</span> <span class="toc-text">Aircrack-ng</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#破解准备"><span class="toc-number">2.</span> <span class="toc-text">破解准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看你的网卡信息"><span class="toc-number">2.1.</span> <span class="toc-text">1.查看你的网卡信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-激活无线网卡至monitor即监听模式"><span class="toc-number">2.2.</span> <span class="toc-text">2.激活无线网卡至monitor即监听模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-探测无线网络，抓取无线数据包"><span class="toc-number">2.3.</span> <span class="toc-text">3.探测无线网络，抓取无线数据包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-进行deauth攻击加速破解过程"><span class="toc-number">2.4.</span> <span class="toc-text">4.进行deauth攻击加速破解过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始破解WPA-PSK"><span class="toc-number">3.</span> <span class="toc-text">开始破解WPA-PSK</span></a></li></ol>
                     </div>
                 </span>
             </div>
