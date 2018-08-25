@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/images/aircrack-ng2.png">
 <meta property="og:image" content="http://yoursite.com/images/aircrack-ng3.png">
 <meta property="og:image" content="http://yoursite.com/images/aircrack-ng4.png">
-<meta property="og:updated_time" content="2018-08-24T10:30:24.035Z">
+<meta property="og:updated_time" content="2018-08-25T06:35:47.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Aircrack-ng进行WiFi密码破解">
 <meta name="twitter:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
@@ -201,6 +201,8 @@
 <h3 id="2-激活无线网卡至monitor即监听模式"><a href="#2-激活无线网卡至monitor即监听模式" class="headerlink" title="2.激活无线网卡至monitor即监听模式"></a>2.激活无线网卡至monitor即监听模式</h3><p>使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure></p>
 <p>然后会出现以下提示信息：<br><img src="/images/aircrack-ng1.png" alt=""></p>
 <p>如果再次使用ifconfig可以发现，我们的网卡已经被重命名为wlan0mon</p>
+<p><strong>获取当前网络概况：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure></p>
+<p>其中wlan0mon是已经激活监听状态的网卡。</p>
 <h3 id="3-探测无线网络，抓取无线数据包"><a href="#3-探测无线网络，抓取无线数据包" class="headerlink" title="3.探测无线网络，抓取无线数据包"></a>3.探测无线网络，抓取无线数据包</h3><p>具体命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng -c 11 longas wlan0mon</span><br></pre></td></tr></table></figure></p>
 <p>参数解释：</p>
 <ul>
