@@ -6,27 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>使用Aircrack-ng进行WiFi密码破解 | X&#39;s blog</title>
+  <title>计算机网络基本知识 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
-<meta name="keywords" content="无线渗透">
+  <meta name="description" content="今天了解一下计算机网络的基础知识，为以后深入学习计算机网络做准备。">
+<meta name="keywords" content="计算机网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Aircrack-ng进行WiFi密码破解">
-<meta property="og:url" content="http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/index.html">
+<meta property="og:title" content="计算机网络基本知识">
+<meta property="og:url" content="http://yoursite.com/blog/2018/09/05/计算机网络基本知识/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
+<meta property="og:description" content="今天了解一下计算机网络的基础知识，为以后深入学习计算机网络做准备。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/kali.jpg">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng1.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng2.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng3.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng4.png">
-<meta property="og:updated_time" content="2018-08-25T12:17:18.189Z">
+<meta property="og:image" content="http://yoursite.com/images/fj10.jpg">
+<meta property="og:image" content="http://yoursite.com/images/tcp首部.png">
+<meta property="og:image" content="http://yoursite.com/images/tcp握手和挥手.jpg">
+<meta property="og:updated_time" content="2018-09-05T15:14:09.436Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Aircrack-ng进行WiFi密码破解">
-<meta name="twitter:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
-<meta name="twitter:image" content="http://yoursite.com/images/kali.jpg">
+<meta name="twitter:title" content="计算机网络基本知识">
+<meta name="twitter:description" content="今天了解一下计算机网络的基础知识，为以后深入学习计算机网络做准备。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj10.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -165,63 +162,148 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-使用Aircrack-ng进行WiFi密码破解" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-计算机网络基本知识" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      使用Aircrack-ng进行WiFi密码破解
+      计算机网络基本知识
     </h1>
   
 
         
-        <a href="/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" class="archive-article-date">
-  	<time datetime="2018-08-23T13:10:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
+        <a href="/blog/2018/09/05/计算机网络基本知识/" class="archive-article-date">
+  	<time datetime="2018-09-05T14:21:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>今天来学习一下如何抓包破解WPA加密的WiFi。</strong></p>
-<p><img src="/images/kali.jpg" alt=""></p>
+        <p><strong>今天了解一下计算机网络的基础知识，为以后深入学习计算机网络做准备。</strong></p>
+<p><img src="/images/fj10.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="Aircrack-ng"><a href="#Aircrack-ng" class="headerlink" title="Aircrack-ng"></a>Aircrack-ng</h2><p>Aircrack-ng是一个与802.11标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP和WPA/WPA2-PSK破解。Aircrack-ng可以工作在任何支持监听模式的无线网卡上（设备列表请参阅其官方网站）并嗅探802.11a，802.11b，802.11g的数据。</p>
-<p>具体详情见百度<a href="https://baike.baidu.com/item/aircrack-ng/7661805" title="aircrack-ng" target="_blank" rel="noopener">https://baike.baidu.com/item/aircrack-ng/7661805</a></p>
-<h2 id="破解准备"><a href="#破解准备" class="headerlink" title="破解准备"></a>破解准备</h2><p>首先你需要一块无线网卡，kali虚拟机（为了方便直接使用，里面的小工具很多，不用再去自己下载了）</p>
-<h3 id="1-查看你的网卡信息"><a href="#1-查看你的网卡信息" class="headerlink" title="1.查看你的网卡信息"></a>1.查看你的网卡信息</h3><p>在kali Linux下使用命令查看网卡信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
-<p>效果图如下：<br><img src="/images/aircrack-ng.png" alt=""></p>
-<p>可以看到里面有个wlan0，那就是我的网卡，如果没有的话就把无线网卡拔了再插一下，直到找到那个wlan0为止。一定要保证它<strong>现在没有连接到任何wifi</strong>，上面那个wlan0里面<strong>没有ip地址</strong>什么的就说明现在不在连接中。</p>
-<h3 id="2-激活无线网卡至monitor即监听模式"><a href="#2-激活无线网卡至monitor即监听模式" class="headerlink" title="2.激活无线网卡至monitor即监听模式"></a>2.激活无线网卡至monitor即监听模式</h3><p>使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure></p>
-<p>然后会出现以下提示信息：<br><img src="/images/aircrack-ng1.png" alt=""></p>
-<p>如果再次使用ifconfig可以发现，我们的网卡已经被重命名为wlan0mon</p>
-<p><strong>获取当前网络概况：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>其中wlan0mon是已经激活监听状态的网卡。</p>
-<h3 id="3-探测无线网络，抓取无线数据包"><a href="#3-探测无线网络，抓取无线数据包" class="headerlink" title="3.探测无线网络，抓取无线数据包"></a>3.探测无线网络，抓取无线数据包</h3><p>具体命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng -c 11 -w longas wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>参数解释：</p>
+<h1 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h1><h2 id="OSI分层（7层）"><a href="#OSI分层（7层）" class="headerlink" title="OSI分层（7层）"></a>OSI分层（7层）</h2><ol>
+<li>物理层</li>
+<li>数据链路层</li>
+<li>网络层</li>
+<li>运输层</li>
+<li>会话层</li>
+<li>表示层</li>
+<li>应用层</li>
+</ol>
+<h2 id="TCP-IP分层（4层）"><a href="#TCP-IP分层（4层）" class="headerlink" title="TCP/IP分层（4层）"></a>TCP/IP分层（4层）</h2><ol>
+<li>网络接口层</li>
+<li>网络层</li>
+<li>运输层</li>
+<li>应用层</li>
+</ol>
+<h2 id="五层协议（5层）"><a href="#五层协议（5层）" class="headerlink" title="五层协议（5层）"></a>五层协议（5层）</h2><ol>
+<li>物理层</li>
+<li>数据链路层</li>
+<li>网络层</li>
+<li>运输层</li>
+<li>应用层</li>
+</ol>
+<h2 id="五层协议概述"><a href="#五层协议概述" class="headerlink" title="五层协议概述"></a>五层协议概述</h2><ol>
+<li><p>应用层：通过应用进程间的交互来完成特定网络应用</p>
 <ul>
-<li>-c设置目标AP的工作频道</li>
-<li>-w后面紧跟要保存的文件的文件名，注意：生成的文件名是longas-01.cap</li>
-<li>wlan0mon：为之前已经开启监听的网卡名</li>
+<li>数据：报文</li>
+<li>协议：HTTP, SMTP(邮件), FTP(文件传送)</li>
 </ul>
-<p>按Enter开始执行，不要关闭并打开另一个shell进行下一步</p>
-<h3 id="4-进行deauth攻击加速破解过程"><a href="#4-进行deauth攻击加速破解过程" class="headerlink" title="4.进行deauth攻击加速破解过程"></a>4.进行deauth攻击加速破解过程</h3><p>输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -0 9 -a AP的MAC -c 客户端的mac wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>参数解释：</p>
+</li>
+<li><p>运输层：向两个主机进程之间的通信提供通用的数据传输服务。</p>
 <ul>
-<li>-0：采用Deauth攻击模式，后面紧跟攻击次数，这里设置为9，大家可以根据实际情况设置</li>
-<li>-a：后面跟AP的mac地址</li>
-<li>-c：后面跟客户端的mac地址</li>
+<li>数据：TCP:报文段，UDP:用户数据报</li>
+<li>协议：TCP, UDP</li>
 </ul>
-<p>按Enter键后会出现以下信息：<br><img src="/images/aircrack-ng2.png" alt=""></p>
-<p>然后回到抓取数据包的界面。在右上角出现handshake的提示证明获得了包含WPA-PSK密码的4次握手数据报文。如未出现，在此执行上述步骤。</p>
-<p><img src="/images/aircrack-ng3.png" alt=""></p>
-<h2 id="开始破解WPA-PSK"><a href="#开始破解WPA-PSK" class="headerlink" title="开始破解WPA-PSK"></a>开始破解WPA-PSK</h2><p>提前用字典生成器生成所需字典。</p>
-<p>输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng -w dict.txt 捕获的.cap文件</span><br></pre></td></tr></table></figure></p>
-<p>按Enter执行后，经过一段时间便可破解，这取决于密码的强度。（为了方便演示，我故意将密码写在字典里）</p>
-<p><img src="/images/aircrack-ng4.png" alt=""></p>
-<p>Key Found！便是破解成功。</p>
+</li>
+<li><p>网络层：为分组交换网上的不同主机提供通信服务 </p>
+<ul>
+<li>数据：包或IP数据报</li>
+<li>协议：IP</li>
+</ul>
+</li>
+<li><p>数据链路层： </p>
+<ul>
+<li>数据：帧</li>
+</ul>
+</li>
+<li><p>物理层： </p>
+<ul>
+<li>数据：比特</li>
+</ul>
+</li>
+</ol>
+<h2 id="ARP-RARP协议"><a href="#ARP-RARP协议" class="headerlink" title="ARP/RARP协议"></a>ARP/RARP协议</h2><p><strong>地址解析协议，即ARP（Address Resolution Protocol），是根据IP地址获取物理地址的一个TCP/IP协议。</strong>主机发送信息时将包含目标IP地址的ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。</p>
+<p>　　ARP工作流程举例：<br>　　主机A的IP地址为192.168.1.1，MAC地址为0A-11-22-33-44-01；<br>　　主机B的IP地址为192.168.1.2，MAC地址为0A-11-22-33-44-02；</p>
+<p>当主机A要与主机B通信时，地址解析协议可以将主机B的IP地址（192.168.1.2）解析成主机B的MAC地址，以下为工作流程：</p>
+<ol>
+<li>根据主机A上的路由表内容，IP确定用于访问主机B的转发IP地址是192.168.1.2。然后A主机在自己的本地ARP缓存中检查主机B的匹配MAC地址。</li>
+<li>如果主机A在ARP缓存中没有找到映射，它将询问192.168.1.2的硬件地址，从而将ARP请求帧广播到本地网络上的所有主机。源主机A的IP地址和MAC地址都包括在ARP请求中。本地网络上的每台主机都接收到ARP请求并且检查是否与自己的IP地址匹配。如果主机发现请求的IP地址与自己的IP地址不匹配，它将丢弃ARP请求。</li>
+<li>主机B确定ARP请求中的IP地址与自己的IP地址匹配，则将主机A的IP地址和MAC地址映射添加到本地ARP缓存中。</li>
+<li>主机B将包含其MAC地址的ARP回复消息直接发送回主机A。</li>
+<li>当主机A收到从主机B发来的ARP回复消息时，会用主机B的IP和MAC地址映射更新ARP缓存。本机缓存是有生存期的，生存期结束后，将再次重复上面的过程。主机B的MAC地址一旦确定，主机A就能向主机B发送IP通信了。</li>
+</ol>
+<p><strong>逆地址解析协议，即RARP，功能和ARP协议相对，其将局域网中某个主机的物理地址转换为IP地址</strong>，比如局域网中有一台主机只知道物理地址而不知道IP地址，那么可以通过RARP协议发出征求自身IP地址的广播请求，然后由RARP服务器负责回答。<br>　　RARP协议工作流程：</p>
+<ol>
+<li>给主机发送一个本地的RARP广播，在此广播包中，声明自己的MAC地址并且请求任何收到此请求的RARP服务器分配一个IP地址；</li>
+<li>本地网段上的RARP服务器收到此请求后，检查其RARP列表，查找该MAC地址对应的IP地址；</li>
+<li>如果存在，RARP服务器就给源主机发送一个响应数据包并将此IP地址提供给对方主机使用；</li>
+<li>如果不存在，RARP服务器对此不做任何的响应；</li>
+<li>源主机收到从RARP服务器的响应信息，就利用得到的IP地址进行通讯；如果一直没有收到RARP服务器的响应信息，表示初始化失败。</li>
+</ol>
+<h2 id="TCP-IP协议"><a href="#TCP-IP协议" class="headerlink" title="TCP/IP协议"></a>TCP/IP协议</h2><p>TCP/IP协议是Internet最基本的协议、Internet国际互联网络的基础，由网络层的IP协议和传输层的TCP协议组成。通俗而言：<strong>TCP负责发现传输的问题，一有问题就发出信号，要求重新传输，直到所有数据安全正确地传输到目的地。而IP是给因特网的每一台联网设备规定一个地址。</strong></p>
+<p>IP层接收由更低层（网络接口层例如以太网设备驱动程序）发来的数据包，并把该数据包发送到更高层—TCP或UDP层；相反，IP层也把从TCP或UDP层接收来的数据包传送到更低层。IP数据包是不可靠的，因为IP并没有做任何事情来确认数据包是否按顺序发送的或者有没有被破坏，IP数据包中含有发送它的主机的地址（源地址）和接收它的主机的地址（目的地址）。</p>
+<p>TCP是面向连接的通信协议，通过三次握手建立连接，通讯完成时要拆除连接，由于TCP是面向连接的所以只能用于端到端的通讯。TCP提供的是一种可靠的数据流服务，采用“带重传的肯定确认”技术来实现传输的可靠性。TCP还采用一种称为“滑动窗口”的方式进行流量控制，所谓窗口实际表示接收能力，用以限制发送方的发送速度。</p>
+<p><strong>TCP报文首部格式：</strong></p>
+<p><img src="/images/tcp首部.png" alt=""></p>
+<p><strong>TCP的三次握手和四次挥手：</strong></p>
+<p><img src="/images/tcp握手和挥手.jpg" alt=""></p>
+<p>注：seq:”sequance”序列号；ack:”acknowledge”确认号；SYN:”synchronize”请求同步标志；；ACK:”acknowledge”确认标志”；FIN：”Finally”结束标志。</p>
+<p><strong>TCP连接建立过程：</strong>首先Client端发送连接请求报文，Server段接受连接后回复ACK报文，并为这次连接分配资源。Client端接收到ACK报文后也向Server段发生ACK报文，并分配资源，这样TCP连接就建立了。<br><strong>TCP连接断开过程：</strong>假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说”我Client端没有数据要发给你了”，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，”告诉Client端，你的请求我收到了，但是我还没准备好，请继续你等我的消息”。这个时候Client端就进入FIN_WAIT状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，”告诉Client端，好了，我这边数据发完了，准备好关闭连接了”。Client端收到FIN报文后，”就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。“，Server端收到ACK后，”就知道可以断开连接了”。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了。Ok，TCP连接就这样关闭了！</p>
+<p><strong>为什么要三次挥手？</strong><br>   在只有两次“握手”的情形下，假设Client想跟Server建立连接，但是却因为中途连接请求的数据报丢失了，故Client端不得不重新发送一遍；这个时候Server端仅收到一个连接请求，因此可以正常的建立连接。但是，有时候Client端重新发送请求不是因为数据报丢失了，而是有可能数据传输过程因为网络并发量很大在某结点被阻塞了，这种情形下Server端将先后收到2次请求，并持续等待两个Client请求向他发送数据…问题就在这里，Cient端实际上只有一次请求，而Server端却有2个响应，极端的情况可能由于Client端多次重新发送请求数据而导致Server端最后建立了N多个响应在等待，因而造成极大的资源浪费！所以，“三次握手”很有必要！<br><strong>为什么要四次挥手？</strong><br>　　试想一下，假如现在你是客户端你想断开跟Server的所有连接该怎么做？第一步，你自己先停止向Server端发送数据，并等待Server的回复。但事情还没有完，虽然你自身不往Server发送数据了，但是因为你们之前已经建立好平等的连接了，所以此时他也有主动权向你发送数据；故Server端还得终止主动向你发送数据，并等待你的确认。其实，说白了就是保证双方的一个合约的完整执行！</p>
+<p>使用TCP的协议：<strong>FTP（文件传输协议）、Telnet（远程登录协议）、SMTP（简单邮件传输协议）、POP3（和SMTP相对，用于接收邮件）、HTTP协议等。</strong></p>
+<h2 id="UDP协议"><a href="#UDP协议" class="headerlink" title="UDP协议"></a>UDP协议</h2><p><strong>UDP用户数据报协议，是面向无连接的通讯协议，UDP数据包括目的端口号和源端口号信息，由于通讯不需要连接，所以可以实现广播发送。UDP通讯时不需要接收方确认，属于不可靠的传输，可能会出现丢包现象，实际应用中要求程序员编程验证。</strong></p>
+<p>UDP与TCP位于同一层，但它不管数据包的顺序、错误或重发。因此，UDP不被应用于那些使用虚电路的面向连接的服务，UDP主要用于那些面向查询—应答的服务，例如NFS。相对于FTP或Telnet，这些服务需要交换的信息量较小。</p>
+<p>每个UDP报文分UDP报头和UDP数据区两部分。报头由四个16位长（2字节）字段组成，分别说明该报文的源端口、目的端口、报文长度以及校验值。UDP报头由4个域组成，其中每个域各占用2个字节，具体如下：<br>　　1. 源端口号；<br>　　2. 目标端口号；<br>　　3. 数据报长度；<br>　　4. 校验值。<br>使用UDP协议包括：<strong>TFTP（简单文件传输协议）、SNMP（简单网络管理协议）、DNS（域名解析协议）、NFS、BOOTP。</strong></p>
+<p>TCP 与 UDP 的区别：TCP是面向连接的，可靠的字节流服务；UDP是面向无连接的，不可靠的数据报服务。</p>
+<h2 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议"></a>DNS协议</h2><p>DNS是域名系统(DomainNameSystem)的缩写，该系统用于命名组织到域层次结构中的计算机和网络服务，可以简单地理解为<strong>将URL转换为IP地址</strong>。域名是由圆点分开一串单词或缩写组成的，每一个域名都对应一个惟一的IP地址，在Internet上域名与IP地址之间是一一对应的，DNS就是进行域名解析的服务器。DNS命名用于Internet等TCP/IP网络中，通过用户友好的名称查找计算机和服务。</p>
+<h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><p>超文本传输协议（HTTP，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。</p>
+<p>下面是一些最常见的请HTTP请求头概述 （HttpServletRequest）：</p>
+<ul>
+<li>Accept：浏览器可接受的MIME类型。</li>
+<li>Accept-Charset：浏览器可接受的字符集。</li>
+<li>Accept-Encoding：浏览器能够进行解码的数据编码方式，比如gzip。Servlet能够向支持gzip的浏览器返回经gzip编码的HTML页面。许多情形下这可以减少5到10倍的下载时间。</li>
+<li>Accept-Language：浏览器所希望的语言种类，当服务器能够提供一种以上的语言版本时要用到。</li>
+<li>Authorization：授权信息，通常出现在对服务器发送的WWW-Authenticate头的应答中。</li>
+<li>Connection：表示是否需要持久连接。如果Servlet看到这里的值为“Keep-Alive”，或者看到请求使用的是HTTP 1.1（HTTP 1.1默认进行持久连接），它就可以利用持久连接的优点，当页面包含多个元素时（例如Applet，图片），显著地减少下载所需要的时间。要实现这一点，Servlet需要在应答中发送一个Content-Length头，最简单的实现方法是：先把内容写入ByteArrayOutputStream，然后在正式写出内容之前计算它的大小。<br>Content-Length：表示请求消息正文的长度。</li>
+<li>Cookie：这是最重要的请求头信息之一</li>
+<li>From：请求发送者的email地址，由一些特殊的Web客户程序使用，浏览器不会用到它。</li>
+<li>Host：初始URL中的主机和端口。</li>
+<li>If-Modified-Since：只有当所请求的内容在指定的日期之后又经过修改才返回它，否则返回304“Not Modified”应答。</li>
+<li>Pragma：指定“no-cache”值表示服务器必须返回一个刷新后的文档，即使它是代理服务器而且已经有了页面的本地拷贝。</li>
+<li>Referer：包含一个URL，用户从该URL代表的页面出发访问当前请求的页面。</li>
+<li>User-Agent：浏览器类型，如果Servlet返回的内容与浏览器类型有关则该值非常有用。<br>UA-Pixels，UA-Color，UA-OS，UA-CPU：由某些版本的IE浏览器所发送的非标准的请求头，表示屏幕大小、颜色深度、操作系统和CPU类型。</li>
+</ul>
+<p>HTTP应答头概述（HttpServletResponse）：</p>
+<p>Web服务器的HTTP应答一般由以下几项构成：一个状态行，一个或多个应答头，一个空行，内容文档。设置HTTP应答头往往和设置状态行中的状态代码结合起来。例如，有好几个表示“文档位置已经改变”的状态代码都伴随着一个Location头，而401（Unauthorized）状态代码则必须伴随一个WWW-Authenticate头。<br>然而，即使在没有设置特殊含义的状态代码时，指定应答头也是很有用的。应答头可以用来完成：设置Cookie，指定修改日期，指示浏览器按照指定的间隔刷新页面，声明文档的长度以便利用持久HTTP连接，……等等许多其他任务。<br>设置应答头最常用的方法是HttpServletResponse的setHeader，该方法有两个参数，分别表示应答头的名字和值。和设置状态代码相似，设置应答头应该在发送任何文档内容之前进行。<br>setDateHeader方法和setIntHeadr方法专门用来设置包含日期和整数值的应答头，前者避免了把Java时间转换为GMT时间字符串的麻烦，后者则避免了把整数转换为字符串的麻烦。<br>HttpServletResponse还提供了许多设置<br>setContentType：设置Content-Type头。大多数Servlet都要用到这个方法。<br>setContentLength：设置Content-Length头。对于支持持久HTTP连接的浏览器来说，这个函数是很有用的。<br>addCookie：设置一个Cookie（Servlet API中没有setCookie方法，因为应答往往包含多个Set-Cookie头）。<br>另外，如上节介绍，sendRedirect方法设置状态代码302时也会设置Location头。</p>
+<p>HTTP应答头说明：</p>
+<ul>
+<li>Allow 服务器支持哪些请求方法（如GET、POST等）。</li>
+<li>Content-Encoding 文档的编码（Encode）方法。只有在解码之后才可以得到Content-Type头指定的内容类型。利用gzip压缩文档能够显著地减少HTML文档的下载时间。Java的GZIPOutputStream可以很方便地进行gzip压缩，但只有Unix上的Netscape和Windows上的IE 4、IE 5才支持它。因此，Servlet应该通过查看Accept-Encoding头（即request.getHeader(“Accept-Encoding”)）检查浏览器是否支持gzip，为支持gzip的浏览器返回经gzip压缩的HTML页面，为其他浏览器返回普通页面。</li>
+<li>Content-Length 表示内容长度。只有当浏览器使用持久HTTP连接时才需要这个数据。如果你想要利用持久连接的优势，可以把输出文档写入ByteArrayOutputStram，完成后查看其大小，然后把该值放入Content-Length头，最后通过byteArrayStream.writeTo(response.getOutputStream()发送内容。</li>
+<li>Content-Type 表示后面的文档属于什么MIME类型。Servlet默认为text/plain，但通常需要显式地指定为text/html。由于经常要设置Content-Type，因此HttpServletResponse提供了一个专用的方法setContentType。<br>Date 当前的GMT时间。你可以用setDateHeader来设置这个头以避免转换时间格式的麻烦。</li>
+<li>Expires 应该在什么时候认为文档已经过期，从而不再缓存它？</li>
+<li>Last-Modified 文档的最后改动时间。客户可以通过If-Modified-Since请求头提供一个日期，该请求将被视为一个条件GET，只有改动时间迟于指定时间的文档才会返回，否则返回一个304（Not Modified）状态。Last-Modified也可用setDateHeader方法来设置。</li>
+<li>Location 表示客户应当到哪里去提取文档。Location通常不是直接设置的，而是通过HttpServletResponse的sendRedirect方法，该方法同时设置状态代码为302。</li>
+<li>Refresh 表示浏览器应该在多少时间之后刷新文档，以秒计。除了刷新当前文档之外，你还可以通过setHeader(“Refresh”, “5; URL=<a href="http://host/path&quot;)让浏览器读取指定的页面。注意这种功能通常是通过设置HTML页面HEAD区的" target="_blank" rel="noopener">http://host/path&quot;)让浏览器读取指定的页面。注意这种功能通常是通过设置HTML页面HEAD区的</a><meta http-equiv="Refresh" content="5;URL=http://host/path">实现，这是因为，自动刷新或重定向对于那些不能使用CGI或Servlet的HTML编写者十分重要。但是，对于Servlet来说，直接设置Refresh头更加方便。注意Refresh的意义是“N秒之后刷新本页面或访问指定页面”，而不是“每隔N秒刷新本页面或访问指定页面”。因此，连续刷新要求每次都发送一个Refresh头，而发送204状态代码则可以阻止浏览器继续刷新，不管是使用Refresh头还是<meta http-equiv="Refresh" ...="">。注意Refresh头不属于HTTP 1.1正式规范的一部分，而是一个扩展，但Netscape和IE都支持它。</li>
+<li>Server 服务器名字。Servlet一般不设置这个值，而是由Web服务器自己设置。</li>
+<li>Set-Cookie 设置和页面关联的Cookie。Servlet不应使用response.setHeader(“Set-Cookie”, …)，而是应使用HttpServletResponse提供的专用方法addCookie。</li>
+</ul>
+<div style="position:absolute; bottom:120px; left:300px; width:76%;"><br>    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=406232&auto=1&height=66"></iframe><br></div>
 
       
 
@@ -261,7 +343,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">无线渗透</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -317,7 +399,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/09/05/计算机网络基本知识/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -331,18 +413,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/09/05/计算机网络基本知识/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          计算机网络基本知识
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/08/22/Python文件和数据格式化/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python文件和数据格式化</div>
+    <a href="/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用Aircrack-ng进行WiFi密码破解</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -369,7 +442,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Aircrack-ng"><span class="toc-number">1.</span> <span class="toc-text">Aircrack-ng</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#破解准备"><span class="toc-number">2.</span> <span class="toc-text">破解准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看你的网卡信息"><span class="toc-number">2.1.</span> <span class="toc-text">1.查看你的网卡信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-激活无线网卡至monitor即监听模式"><span class="toc-number">2.2.</span> <span class="toc-text">2.激活无线网卡至monitor即监听模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-探测无线网络，抓取无线数据包"><span class="toc-number">2.3.</span> <span class="toc-text">3.探测无线网络，抓取无线数据包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-进行deauth攻击加速破解过程"><span class="toc-number">2.4.</span> <span class="toc-text">4.进行deauth攻击加速破解过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始破解WPA-PSK"><span class="toc-number">3.</span> <span class="toc-text">开始破解WPA-PSK</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#综述"><span class="toc-number">1.</span> <span class="toc-text">综述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OSI分层（7层）"><span class="toc-number">1.1.</span> <span class="toc-text">OSI分层（7层）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP分层（4层）"><span class="toc-number">1.2.</span> <span class="toc-text">TCP/IP分层（4层）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五层协议（5层）"><span class="toc-number">1.3.</span> <span class="toc-text">五层协议（5层）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五层协议概述"><span class="toc-number">1.4.</span> <span class="toc-text">五层协议概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP-RARP协议"><span class="toc-number">1.5.</span> <span class="toc-text">ARP/RARP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP协议"><span class="toc-number">1.6.</span> <span class="toc-text">TCP/IP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP协议"><span class="toc-number">1.7.</span> <span class="toc-text">UDP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS协议"><span class="toc-number">1.8.</span> <span class="toc-text">DNS协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP协议"><span class="toc-number">1.9.</span> <span class="toc-text">HTTP协议</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>

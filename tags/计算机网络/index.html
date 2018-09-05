@@ -6,27 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>使用Aircrack-ng进行WiFi密码破解 | X&#39;s blog</title>
+  <title>Tag: 计算机网络 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
-<meta name="keywords" content="无线渗透">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用Aircrack-ng进行WiFi密码破解">
-<meta property="og:url" content="http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="X&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/tags/计算机网络/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/kali.jpg">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng1.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng2.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng3.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng4.png">
-<meta property="og:updated_time" content="2018-08-25T12:17:18.189Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Aircrack-ng进行WiFi密码破解">
-<meta name="twitter:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
-<meta name="twitter:image" content="http://yoursite.com/images/kali.jpg">
+<meta name="twitter:title" content="X&#39;s blog">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -165,230 +153,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-使用Aircrack-ng进行WiFi密码破解" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      使用Aircrack-ng进行WiFi密码破解
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/blog/2018/09/05/计算机网络基本知识/" class="archive-article-date">
+  	<time datetime="2018-09-05T14:21:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/blog/2018/09/05/计算机网络基本知识/">计算机网络基本知识</a>
     </h1>
   
 
-        
-        <a href="/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" class="archive-article-date">
-  	<time datetime="2018-08-23T13:10:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天来学习一下如何抓包破解WPA加密的WiFi。</strong></p>
-<p><img src="/images/kali.jpg" alt=""></p>
-<a id="more"></a>
-<h2 id="Aircrack-ng"><a href="#Aircrack-ng" class="headerlink" title="Aircrack-ng"></a>Aircrack-ng</h2><p>Aircrack-ng是一个与802.11标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP和WPA/WPA2-PSK破解。Aircrack-ng可以工作在任何支持监听模式的无线网卡上（设备列表请参阅其官方网站）并嗅探802.11a，802.11b，802.11g的数据。</p>
-<p>具体详情见百度<a href="https://baike.baidu.com/item/aircrack-ng/7661805" title="aircrack-ng" target="_blank" rel="noopener">https://baike.baidu.com/item/aircrack-ng/7661805</a></p>
-<h2 id="破解准备"><a href="#破解准备" class="headerlink" title="破解准备"></a>破解准备</h2><p>首先你需要一块无线网卡，kali虚拟机（为了方便直接使用，里面的小工具很多，不用再去自己下载了）</p>
-<h3 id="1-查看你的网卡信息"><a href="#1-查看你的网卡信息" class="headerlink" title="1.查看你的网卡信息"></a>1.查看你的网卡信息</h3><p>在kali Linux下使用命令查看网卡信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
-<p>效果图如下：<br><img src="/images/aircrack-ng.png" alt=""></p>
-<p>可以看到里面有个wlan0，那就是我的网卡，如果没有的话就把无线网卡拔了再插一下，直到找到那个wlan0为止。一定要保证它<strong>现在没有连接到任何wifi</strong>，上面那个wlan0里面<strong>没有ip地址</strong>什么的就说明现在不在连接中。</p>
-<h3 id="2-激活无线网卡至monitor即监听模式"><a href="#2-激活无线网卡至monitor即监听模式" class="headerlink" title="2.激活无线网卡至monitor即监听模式"></a>2.激活无线网卡至monitor即监听模式</h3><p>使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure></p>
-<p>然后会出现以下提示信息：<br><img src="/images/aircrack-ng1.png" alt=""></p>
-<p>如果再次使用ifconfig可以发现，我们的网卡已经被重命名为wlan0mon</p>
-<p><strong>获取当前网络概况：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>其中wlan0mon是已经激活监听状态的网卡。</p>
-<h3 id="3-探测无线网络，抓取无线数据包"><a href="#3-探测无线网络，抓取无线数据包" class="headerlink" title="3.探测无线网络，抓取无线数据包"></a>3.探测无线网络，抓取无线数据包</h3><p>具体命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng -c 11 -w longas wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>参数解释：</p>
-<ul>
-<li>-c设置目标AP的工作频道</li>
-<li>-w后面紧跟要保存的文件的文件名，注意：生成的文件名是longas-01.cap</li>
-<li>wlan0mon：为之前已经开启监听的网卡名</li>
-</ul>
-<p>按Enter开始执行，不要关闭并打开另一个shell进行下一步</p>
-<h3 id="4-进行deauth攻击加速破解过程"><a href="#4-进行deauth攻击加速破解过程" class="headerlink" title="4.进行deauth攻击加速破解过程"></a>4.进行deauth攻击加速破解过程</h3><p>输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -0 9 -a AP的MAC -c 客户端的mac wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>参数解释：</p>
-<ul>
-<li>-0：采用Deauth攻击模式，后面紧跟攻击次数，这里设置为9，大家可以根据实际情况设置</li>
-<li>-a：后面跟AP的mac地址</li>
-<li>-c：后面跟客户端的mac地址</li>
-</ul>
-<p>按Enter键后会出现以下信息：<br><img src="/images/aircrack-ng2.png" alt=""></p>
-<p>然后回到抓取数据包的界面。在右上角出现handshake的提示证明获得了包含WPA-PSK密码的4次握手数据报文。如未出现，在此执行上述步骤。</p>
-<p><img src="/images/aircrack-ng3.png" alt=""></p>
-<h2 id="开始破解WPA-PSK"><a href="#开始破解WPA-PSK" class="headerlink" title="开始破解WPA-PSK"></a>开始破解WPA-PSK</h2><p>提前用字典生成器生成所需字典。</p>
-<p>输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng -w dict.txt 捕获的.cap文件</span><br></pre></td></tr></table></figure></p>
-<p>按Enter执行后，经过一段时间便可破解，这取决于密码的强度。（为了方便演示，我故意将密码写在字典里）</p>
-<p><img src="/images/aircrack-ng4.png" alt=""></p>
-<p>Key Found！便是破解成功。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">无线渗透</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/blog/2018/09/05/计算机网络基本知识/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          计算机网络基本知识
-        
-      </div>
-    </a>
   
   
-    <a href="/blog/2018/08/22/Python文件和数据格式化/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python文件和数据格式化</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Aircrack-ng"><span class="toc-number">1.</span> <span class="toc-text">Aircrack-ng</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#破解准备"><span class="toc-number">2.</span> <span class="toc-text">破解准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看你的网卡信息"><span class="toc-number">2.1.</span> <span class="toc-text">1.查看你的网卡信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-激活无线网卡至monitor即监听模式"><span class="toc-number">2.2.</span> <span class="toc-text">2.激活无线网卡至monitor即监听模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-探测无线网络，抓取无线数据包"><span class="toc-number">2.3.</span> <span class="toc-text">3.探测无线网络，抓取无线数据包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-进行deauth攻击加速破解过程"><span class="toc-number">2.4.</span> <span class="toc-text">4.进行deauth攻击加速破解过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始破解WPA-PSK"><span class="toc-number">3.</span> <span class="toc-text">开始破解WPA-PSK</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -420,9 +238,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
