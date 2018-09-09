@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="X&#39;s blog">
 <meta property="og:description" content="今天了解一下ARP欺骗的概念，学习使用ettercap工具进行，学习使用driftnet、sslstrip等工具监听消息。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/blog/2018/09/09/无线监听/images/fj12.jpg">
-<meta property="og:updated_time" content="2018-09-09T12:55:55.518Z">
+<meta property="og:image" content="http://yoursite.com/images/fj12.jpg">
+<meta property="og:updated_time" content="2018-09-09T13:00:53.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无线监听">
 <meta name="twitter:description" content="今天了解一下ARP欺骗的概念，学习使用ettercap工具进行，学习使用driftnet、sslstrip等工具监听消息。">
-<meta name="twitter:image" content="http://yoursite.com/blog/2018/09/09/无线监听/images/fj12.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/fj12.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -179,7 +179,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>今天了解一下ARP欺骗的概念，学习使用ettercap工具进行，学习使用driftnet、sslstrip等工具监听消息。</strong></p>
-<p><img src="images\fj12.jpg" alt=""></p>
+<p><img src="/images/fj12.jpg" alt=""></p>
 <a id="more"></a>
 <h1 id="ARP欺骗与消息监听概述"><a href="#ARP欺骗与消息监听概述" class="headerlink" title="ARP欺骗与消息监听概述"></a>ARP欺骗与消息监听概述</h1><h2 id="什么是ARP（地址解析协议）"><a href="#什么是ARP（地址解析协议）" class="headerlink" title="什么是ARP（地址解析协议）"></a>什么是ARP（地址解析协议）</h2><p>地址解析协议，即ARP（Address Resolution Protocol），是根据IP地址获取物理地址的一个TCP/IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。NDP用于在IPv6中代替地址解析协议。</p>
 <p>在无线网络环境中，ARP欺骗的对象是受攻击的设备以及无线网关。攻击者首先需要接入目标所在的无线网络，随后向受攻击设备冒充自己是无线网关，同时向无线网关冒充自己是发起请求的用户，开启攻击机上的IP转发功能，使自己成为整个通信过程中的中转站，从而能够监听到所有的通信数据，能够进一步篡改数据。</p>
