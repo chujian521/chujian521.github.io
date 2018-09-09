@@ -6,27 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>使用Aircrack-ng进行WiFi密码破解 | X&#39;s blog</title>
+  <title>无线DoS攻击 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
-<meta name="keywords" content="无线渗透">
+  <meta name="description" content="今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。">
+<meta name="keywords" content="无线渗透,kali,工具使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Aircrack-ng进行WiFi密码破解">
-<meta property="og:url" content="http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/index.html">
+<meta property="og:title" content="无线DoS攻击">
+<meta property="og:url" content="http://yoursite.com/blog/2018/09/08/无线DoS攻击/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
+<meta property="og:description" content="今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/kali.jpg">
+<meta property="og:image" content="http://yoursite.com/images/fj11.jpg">
 <meta property="og:image" content="http://yoursite.com/images/aircrack-ng.png">
 <meta property="og:image" content="http://yoursite.com/images/aircrack-ng1.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng2.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng3.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng4.png">
-<meta property="og:updated_time" content="2018-09-09T01:26:57.862Z">
+<meta property="og:image" content="http://yoursite.com/images/ssidtxt.png">
+<meta property="og:image" content="http://yoursite.com/images/mdk3-1-1.png">
+<meta property="og:image" content="http://yoursite.com/images/mdk3-1-2.png">
+<meta property="og:image" content="http://yoursite.com/images/mdk3-2-1.png">
+<meta property="og:image" content="http://yoursite.com/images/mdk3-3-1.png">
+<meta property="og:updated_time" content="2018-09-09T01:25:02.293Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Aircrack-ng进行WiFi密码破解">
-<meta name="twitter:description" content="今天来学习一下如何抓包破解WPA加密的WiFi。">
-<meta name="twitter:image" content="http://yoursite.com/images/kali.jpg">
+<meta name="twitter:title" content="无线DoS攻击">
+<meta name="twitter:description" content="今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj11.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -163,32 +165,40 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-使用Aircrack-ng进行WiFi密码破解" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-无线DoS攻击" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      使用Aircrack-ng进行WiFi密码破解
+      无线DoS攻击
     </h1>
   
 
         
-        <a href="/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" class="archive-article-date">
-  	<time datetime="2018-08-23T13:10:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
+        <a href="/blog/2018/09/08/无线DoS攻击/" class="archive-article-date">
+  	<time datetime="2018-09-08T12:01:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>今天来学习一下如何抓包破解WPA加密的WiFi。</strong></p>
-<p><img src="/images/kali.jpg" alt=""></p>
+        <p><strong>今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。</strong></p>
+<p><img src="/images/fj11.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="Aircrack-ng"><a href="#Aircrack-ng" class="headerlink" title="Aircrack-ng"></a>Aircrack-ng</h2><p>Aircrack-ng是一个与802.11标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP和WPA/WPA2-PSK破解。Aircrack-ng可以工作在任何支持监听模式的无线网卡上（设备列表请参阅其官方网站）并嗅探802.11a，802.11b，802.11g的数据。</p>
-<p>具体详情见百度<a href="https://baike.baidu.com/item/aircrack-ng/7661805" title="aircrack-ng" target="_blank" rel="noopener">https://baike.baidu.com/item/aircrack-ng/7661805</a></p>
-<h2 id="破解准备"><a href="#破解准备" class="headerlink" title="破解准备"></a>破解准备</h2><p>首先你需要一块无线网卡，kali虚拟机（为了方便直接使用，里面的小工具很多，不用再去自己下载了）</p>
+<h1 id="MDK介绍"><a href="#MDK介绍" class="headerlink" title="MDK介绍"></a>MDK介绍</h1><p>MDK 是利用IEEE 802.11 协议中的漏洞开发的攻击工具。本次将主要利用MDK 3 工具进行三种攻击，MDK3详细使用指南可以百度一下。</p>
+<h2 id="MDK3的三种攻击模式"><a href="#MDK3的三种攻击模式" class="headerlink" title="MDK3的三种攻击模式"></a>MDK3的三种攻击模式</h2><h3 id="1-Beacon-Flood模式"><a href="#1-Beacon-Flood模式" class="headerlink" title="1.Beacon Flood模式"></a>1.Beacon Flood模式</h3><p>AP发出每秒钟约10个信标帧使客户端能够探测到这些AP的存在。当客户端扫描无线网络时，实际是在每个信道扫描寻找信标帧。通过使用MDK3工具的Beacon Flood模式，也能够发送这些信标帧，但是这些网络都是假的，没有人能够真正连接到它们。但是当用户打开无线网络进行扫描时，这些无线网络都会出现在设备的列表中。此外，这种模式也可以通过伪造大量具有相同SSID的假冒网络来隐藏目标网络。</p>
+<h3 id="2-Authentication（身份验证）-DOS模式"><a href="#2-Authentication（身份验证）-DOS模式" class="headerlink" title="2.Authentication（身份验证） DOS模式"></a>2.Authentication（身份验证） DOS模式</h3><p>当一个客户端接入一个AP，需要满足几个步骤，其中两个基本步骤就是认证和关联。第一步会询问AP是否能接入一个新的设备，AP收到请求后会决定新的客户端是否被接受。如果一个未知的客户端会尝试连接，mac过滤器可能会拒绝这一请求。第二步是密钥验证阶段，大多数AP采用开放的模式，因此关联步骤总是会通过，真正验证密钥有效性的阶段将在后面进行（例如WPA中的EAP阶段）。这么做的缺点在于攻击者可以发起多个连接请求后放弃这些请求，但是AP会在内存中保留这些请求。此攻击模式会向AP发送尽可能多的连接请求，同时跟踪AP的响应，甚至会发送网络中截获的其他有效数据包，来混淆AP对于真假客户端的判断，可能会造成AP丢弃合法用户的连接请求。</p>
+<h3 id="3-Deauthentication-Disassociation-Amok-模式"><a href="#3-Deauthentication-Disassociation-Amok-模式" class="headerlink" title="3.Deauthentication/Disassociation Amok 模式"></a>3.Deauthentication/Disassociation Amok 模式</h3><p>如果一个客户端需要断开无线网络，他需要向AP发送Deauthentication包注销自己。同时AP也可以主动断开与客户端的连接，例如AP的连接列表已满，新的连接将旧的连接踢出。攻击者可以伪造包使合法用户断开连接。MDK3可以伪造多种包，来应对如下情况：</p>
+<ul>
+<li>AP主动取消客户端认证</li>
+<li>客户端主动取消与AP的认证</li>
+<li>AP主动与客户端取消关联</li>
+<li>客户端主动与AP取消关联</li>
+</ul>
+<h1 id="使用Kali-Linux进行三种攻击实战"><a href="#使用Kali-Linux进行三种攻击实战" class="headerlink" title="使用Kali Linux进行三种攻击实战"></a>使用Kali Linux进行三种攻击实战</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先你需要一块无线网卡，kali虚拟机（为了方便直接使用，里面的小工具很多，不用再去自己下载了）</p>
 <h3 id="1-查看你的网卡信息"><a href="#1-查看你的网卡信息" class="headerlink" title="1.查看你的网卡信息"></a>1.查看你的网卡信息</h3><p>在kali Linux下使用命令查看网卡信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
 <p>效果图如下：<br><img src="/images/aircrack-ng.png" alt=""></p>
 <p>可以看到里面有个wlan0，那就是我的网卡，如果没有的话就把无线网卡拔了再插一下，直到找到那个wlan0为止。一定要保证它<strong>现在没有连接到任何wifi</strong>，上面那个wlan0里面<strong>没有ip地址</strong>什么的就说明现在不在连接中。</p>
@@ -197,30 +207,41 @@
 <p>如果再次使用ifconfig可以发现，我们的网卡已经被重命名为wlan0mon</p>
 <p><strong>获取当前网络概况：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure></p>
 <p>其中wlan0mon是已经激活监听状态的网卡。</p>
-<h3 id="3-探测无线网络，抓取无线数据包"><a href="#3-探测无线网络，抓取无线数据包" class="headerlink" title="3.探测无线网络，抓取无线数据包"></a>3.探测无线网络，抓取无线数据包</h3><p>具体命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng -c 11 -w longas wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>参数解释：</p>
+<h2 id="进行Beacon-Flood攻击"><a href="#进行Beacon-Flood攻击" class="headerlink" title="进行Beacon Flood攻击"></a>进行Beacon Flood攻击</h2><p>这个模式可以产生很多死亡SSID充斥无线客户端的无线列表，从而扰乱无线使用者；我们甚至还可以自定义发送死亡SSID的BSSID和ESSID以及加密方式等。</p>
+<p>参数说明：</p>
 <ul>
-<li>-c设置目标AP的工作频道</li>
-<li>-w后面紧跟要保存的文件的文件名，注意：生成的文件名是longas-01.cap</li>
-<li>wlan0mon：为之前已经开启监听的网卡名</li>
+<li>-f：读取SSID列表文件，默认生成随机SSID；</li>
+<li>-c：信道，默认随机信道；</li>
+<li>-s：发包率，默认50。</li>
 </ul>
-<p>按Enter开始执行，不要关闭并打开另一个shell进行下一步</p>
-<h3 id="4-进行deauth攻击加速破解过程"><a href="#4-进行deauth攻击加速破解过程" class="headerlink" title="4.进行deauth攻击加速破解过程"></a>4.进行deauth攻击加速破解过程</h3><p>输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -0 9 -a AP的MAC -c 客户端的mac wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>参数解释：</p>
+<p>新建字典文件SSID.txt ,字典文件中存的每一个条目为伪造SSID的名称。此步可以忽略，如果忽略，MDK3将生成随机字符串作为SSID。同理，mac地址也可以指定。</p>
+<p>输入命令：<br><code>mdk3 wlan0mon b -f[文件路径] -s[速率]</code></p>
+<p>创建如下文件：<br><img src="/images/ssidtxt.png" alt=""></p>
+<p>结果如下：</p>
+<p><img src="/images/mdk3-1-1.png" alt=""></p>
+<p><img src="/images/mdk3-1-2.png" alt=""></p>
+<h2 id="进行Authentication（身份验证）-DOS攻击"><a href="#进行Authentication（身份验证）-DOS攻击" class="headerlink" title="进行Authentication（身份验证） DOS攻击"></a>进行Authentication（身份验证） DOS攻击</h2><p>这是一种验证请求攻击模式，在这个模式里，MDK3工具自动模拟随机产生的mac向目标AP发起大量验证请求，可以导致AP忙于处理过多的请求而停止对正常连接的客户端的响应。由于目前绝大部分的的路由器都有应对这种DoS的防御措施，攻击效果并不明显。</p>
+<p>参数说明：</p>
 <ul>
-<li>-0：采用Deauth攻击模式，后面紧跟攻击次数，这里设置为9，大家可以根据实际情况设置</li>
-<li>-a：后面跟AP的mac地址</li>
-<li>-c：后面跟客户端的mac地址</li>
+<li>-a：测试指定的BSSID；</li>
+<li>-m：使用有效的mac地址进行攻击；</li>
+<li>-c：不检查是否测试成功；</li>
+<li>-s:速率，默认50.</li>
 </ul>
-<p>按Enter键后会出现以下信息：<br><img src="/images/aircrack-ng2.png" alt=""></p>
-<p>然后回到抓取数据包的界面。在右上角出现handshake的提示证明获得了包含WPA-PSK密码的4次握手数据报文。如未出现，在此执行上述步骤。</p>
-<p><img src="/images/aircrack-ng3.png" alt=""></p>
-<h2 id="开始破解WPA-PSK"><a href="#开始破解WPA-PSK" class="headerlink" title="开始破解WPA-PSK"></a>开始破解WPA-PSK</h2><p>提前用字典生成器生成所需字典。</p>
-<p>输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng -w dict.txt 捕获的.cap文件</span><br></pre></td></tr></table></figure></p>
-<p>按Enter执行后，经过一段时间便可破解，这取决于密码的强度。（为了方便演示，我故意将密码写在字典里）</p>
-<p><img src="/images/aircrack-ng4.png" alt=""></p>
-<p>Key Found！便是破解成功。</p>
-<div style="position:absolute; bottom:0px; left:610px; width:76%;"><br><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=38592976&auto=1&height=66"></iframe><br></div>
+<p>输入命令：<br><code>mdk3 wlan0mon a -a [BSSID] -m</code></p>
+<p><img src="/images/mdk3-2-1.png" alt=""><br>显然攻击是失败的！</p>
+<h2 id="进行Deauthentication-Disassociation-Amok攻击"><a href="#进行Deauthentication-Disassociation-Amok攻击" class="headerlink" title="进行Deauthentication/Disassociation Amok攻击"></a>进行Deauthentication/Disassociation Amok攻击</h2><p>这是强制解除验证、解除连接的攻击。在这个模式下，MDK3工具会向周围所有可见AP发起循环攻击，可能造成一定范围内的无线网络瘫痪，直到手动停止攻击。</p>
+<p>参数说明：</p>
+<ul>
+<li>-w：白名单，白名单中的mac不会被攻击；</li>
+<li>-b：黑名单，工具会对黑名单中的mac进行攻击；</li>
+<li>-s：发包速率；</li>
+<li>-c：攻击信道，可以攻击多个信道，逗号分隔。</li>
+</ul>
+<p>为了避免大范围攻击，建议使用黑名单模式进行攻击。新建mac.txt文件，将目标mac地址写入其中。</p>
+<p>输入命令：<br><code>mdk3 wlan0mon d -b [文件路径]</code></p>
+<p><img src="/images/mdk3-3-1.png" alt=""></p>
+<div style="position:absolute; bottom:0px; left:610px; width:76%;"><br>  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=25706282&auto=1&height=66"></iframe>  <br></div>
       
 
       
@@ -260,6 +281,14 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">无线渗透</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kali</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">工具使用</a>
         		</li>
       		
 		</ul>
@@ -315,7 +344,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/08/23/使用Aircrack-ng进行WiFi密码破解/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/09/08/无线DoS攻击/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -329,18 +358,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/09/05/计算机网络基本知识/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          计算机网络基本知识
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/08/22/Python文件和数据格式化/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python文件和数据格式化</div>
+    <a href="/blog/2018/09/05/计算机网络基本知识/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">计算机网络基本知识</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -367,7 +387,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Aircrack-ng"><span class="toc-number">1.</span> <span class="toc-text">Aircrack-ng</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#破解准备"><span class="toc-number">2.</span> <span class="toc-text">破解准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看你的网卡信息"><span class="toc-number">2.1.</span> <span class="toc-text">1.查看你的网卡信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-激活无线网卡至monitor即监听模式"><span class="toc-number">2.2.</span> <span class="toc-text">2.激活无线网卡至monitor即监听模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-探测无线网络，抓取无线数据包"><span class="toc-number">2.3.</span> <span class="toc-text">3.探测无线网络，抓取无线数据包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-进行deauth攻击加速破解过程"><span class="toc-number">2.4.</span> <span class="toc-text">4.进行deauth攻击加速破解过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始破解WPA-PSK"><span class="toc-number">3.</span> <span class="toc-text">开始破解WPA-PSK</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MDK介绍"><span class="toc-number">1.</span> <span class="toc-text">MDK介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MDK3的三种攻击模式"><span class="toc-number">1.1.</span> <span class="toc-text">MDK3的三种攻击模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Beacon-Flood模式"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.Beacon Flood模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Authentication（身份验证）-DOS模式"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.Authentication（身份验证） DOS模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Deauthentication-Disassociation-Amok-模式"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.Deauthentication/Disassociation Amok 模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Kali-Linux进行三种攻击实战"><span class="toc-number">2.</span> <span class="toc-text">使用Kali Linux进行三种攻击实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看你的网卡信息"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.查看你的网卡信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-激活无线网卡至monitor即监听模式"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.激活无线网卡至monitor即监听模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行Beacon-Flood攻击"><span class="toc-number">2.2.</span> <span class="toc-text">进行Beacon Flood攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行Authentication（身份验证）-DOS攻击"><span class="toc-number">2.3.</span> <span class="toc-text">进行Authentication（身份验证） DOS攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行Deauthentication-Disassociation-Amok攻击"><span class="toc-number">2.4.</span> <span class="toc-text">进行Deauthentication/Disassociation Amok攻击</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
