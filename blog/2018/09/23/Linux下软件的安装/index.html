@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: python学习 | X&#39;s blog</title>
+  <title>Linux下软件的安装 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/python学习/index.html">
+  <meta name="description" content="今天突然想给自己的虚拟机装点软件，可是发现自己以前只会装tar.gz的安装包，今天记一下其他的安装方法。">
+<meta name="keywords" content="Linux基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下软件的安装">
+<meta property="og:url" content="http://yoursite.com/blog/2018/09/23/Linux下软件的安装/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天突然想给自己的虚拟机装点软件，可是发现自己以前只会装tar.gz的安装包，今天记一下其他的安装方法。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj13.jpg">
+<meta property="og:updated_time" content="2018-09-23T12:13:56.412Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Linux下软件的安装">
+<meta name="twitter:description" content="今天突然想给自己的虚拟机装点软件，可是发现自己以前只会装tar.gz的安装包，今天记一下其他的安装方法。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj13.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,405 +158,213 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux下软件的安装" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux下软件的安装
+    </h1>
+  
+
+        
+        <a href="/blog/2018/09/23/Linux下软件的安装/" class="archive-article-date">
+  	<time datetime="2018-09-23T11:49:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-23</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>今天突然想给自己的虚拟机装点软件，可是发现自己以前只会装tar.gz的安装包，今天记一下其他的安装方法。</strong></p>
+<p><img src="/images/fj13.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="一、-解析Linux应用软件安装包："><a href="#一、-解析Linux应用软件安装包：" class="headerlink" title="一、 解析Linux应用软件安装包："></a>一、 解析Linux应用软件安装包：</h1><p>通常Linux应用软件的安装包有三种：<br>　　1. tar包，如software-1.2.3-1.tar.gz。它是使用UNIX系统的打包工具tar打包的。<br>　　2. rpm包，如software-1.2.3-1.i386.rpm。它是Redhat Linux提供的一种包封装格式。<br>　　3. dpkg包，如software-1.2.3-1.deb。它是Debain Linux提供的一种包封装格式。</p>
+<p>而且，大多数Linux应用软件包的命名也有一定的规律，它遵循：<br>名称-版本-修正版-类型<br>例如：
+　　</p>
+<ol>
+<li>software-1.2.3-1.tar.gz 意味着：<br>　　　软件名称：software<br>　　　版本号：1.2.3<br>　　　修正版本：1<br>　　　类型：tar.gz，说明是一个tar包。</li>
+<li>sfotware-1.2.3-1.i386.rpm<br>　　　软件名称：software<br>　　　版本号：1.2.3<br>　　　修正版本：1<br>　　　可用平台：i386，适用于Intel 80x86平台。<br>　　　类型：rpm，说明是一个rpm包。<br>　　　注：由于rpm格式的通常是已编译的程序，所以需指明平台。在后面会详细说明。<h1 id="二、-了解包里的内容："><a href="#二、-了解包里的内容：" class="headerlink" title="二、 了解包里的内容："></a>二、 了解包里的内容：</h1>一个Linux应用程序的软件包中可以包含两种不同的内容：</li>
+</ol>
+<p>　1. 一种就是可执行文件，也就是解开包后就可以直接运行的。在Windows中所 有的软件包都是这种类型。安装完这个程序后，你就可以使用，但你看不到源程序。而且下载时要注意这个软件是否是你所使用的平台，否则将无法正常安装。</p>
+<p>　2. 另一种则是源程序，也就解开包后，你还需要使用编译器将其编译成为可执行文件。这在Windows系统中是几乎没有的，因为Windows的思想是不开放源程序的。<br>　通常，用tar打包的，都是源程序；而用rpm、dpkg打包的则常是可执行程序。一般来说，自己动手编译源程序能够更具灵活性，但也容易遇到各 种问题和困难。而相对来说，下载那些可执行程序包，反而是更容易完成软件的安装，当然那样灵活性就差多了。所以一般一个软件总会提供多种打包格式的安装程 序的。你可以根据自己的情况来选择。</p>
+<h1 id="三、-搞定使用tar打包的应用软件"><a href="#三、-搞定使用tar打包的应用软件" class="headerlink" title="三、 搞定使用tar打包的应用软件"></a>三、 搞定使用tar打包的应用软件</h1><ol>
+<li>安装：<br>整个安装过程可以分为以下几步：</li>
+</ol>
+<p>　- 取得应用软件：通过下载、购买光盘的方法获得；<br>　- 解压缩文件：一般tar包，都会再做一次压缩，如gzip、bz2等，所以你需要先解压。如果是最常见的gz格式，则可以执行：“tar –xvzf 软件包名”，就可以一步完成解压与解包工作。如果不是，则先用解压软件，再执行“tar –xvf 解压后的tar包”进行解包；<br>　- 阅读附带的INSTALL文件、README文件；<br>　- 执行“./configure”命令为编译做好准备；<br>　- 执行“make”命令进行软件编译；<br>　- 执行“make install”完成安装；<br>　- 执行“make clean”删除安装时产生的临时文件。<br>好了，到此大功告成。我们就可以运行应用程序了。但这时，有的读者就会问，我怎么执行呢？这也是一个Linux特色的问题。其实，一般来说， Linux的应用软件的可执行文件会存放在/usr/local/bin目录下！不过这并不是“放四海皆准”的真理，最可靠的还是看这个软件的 INSTALL和README文件，一般都会有说明。</p>
+<ol start="2">
+<li>卸载：<br>　通常软件的开发者很少考虑到如何卸载自己的软件，而tar又仅是完成打包的工作，所以并没有提供良好的卸载方法。<br>那么是不是说就不能够卸载呢！其实也不是，有两个软件能够解决这个问题，那就是Kinstall和Kife，它们是tar包安装、卸载的黄金搭档。</li>
+</ol>
+<h1 id="四、-搞定使用rpm打包的应用软件"><a href="#四、-搞定使用rpm打包的应用软件" class="headerlink" title="四、 搞定使用rpm打包的应用软件"></a>四、 搞定使用rpm打包的应用软件</h1><p>rpm可谓是Redhat公司的一大贡献，它使Linux的软件安装工作变得更加简单容易。</p>
+<ol>
+<li>安装：<br>我只需简单的一句话，就可以说完。执行：<br> <code>rpm –ivh rpm软件包名</code><br>更高级的，请见下表：<br>　　  rpm参数 参数说明<br>　　   -i    安装软件<br>　　   -t     测试安装，不是真的安装<br>　　   -p   显示安装进度<br>　　   -f     忽略任何错误<br>　　   -U   升级安装<br>　　   -v    检测套件是否正确安装<br>这些参数可以同时采用。更多的内容可以参考RPM的命令帮助。</li>
+<li>卸载：<br>我同样只需简单的一句话，就可以说完。执行：<br>　<code>rpm –e 软件名</code><br>不过要注意的是，后面使用的是软件名，而不是软件包名。例如，要安装software-1.2.3-1.i386.rpm这个包时，应执行：<br><code>rpm –ivh software-1.2.3-1.i386.rpm</code><br>而当卸载时，则应执行： rpm –e software。<br>　　<br>另外，在Linux中还提供了象GnoRPM、kpackage等图形化的RPM工具，使得整个过程会更加简单。这些软件的具体应用，笔者会另行文介绍。<h1 id="五、-搞定使用deb打包的应用程序"><a href="#五、-搞定使用deb打包的应用程序" class="headerlink" title="五、 搞定使用deb打包的应用程序"></a>五、 搞定使用deb打包的应用程序</h1></li>
+</ol>
+<p>这是Debian Linux提供的一个包管理器，它与RPM十分类似。但由于RPM出现得更早，所以在各种版本的Linux都常见到。而debian的包管理器dpkg则 只出现在Debina Linux中，其它Linux版本一般都没有。我们在此就简单地说明一下：</p>
+<ol>
+<li>安装<br>　   <code>dpkg –i deb软件包名</code><br>　　如：<code>dpkg –i software-1.2.3-1.deb</code></li>
+<li>卸载<br>　　 <code>dpkg –e 软件名</code><br>　　如：<code>dpkg –e software</code></li>
+</ol>
+<h1 id="六、软件的安装"><a href="#六、软件的安装" class="headerlink" title="六、软件的安装"></a>六、软件的安装</h1><p>　　—- Linux下软件的安装主要有两种不同的形式。第一种安装文件名为filename.tar.gz。另一种安装文件名为 filename.i386.rpm。以第一种方式发行的软件多为以源码形式发送的。第二种方式则是直接以二进制形式发行的。i386即表示该软件是按 Inter 386指令集编译生成的。<br>　　—- 对于第一种，安装方法如下：<br>　　—- 首先，将安装文件拷贝至你的目录中。例如，如果你是以root身份登录上的，就将软件拷贝至/root中。<br>　　—- #cp filename.tar.gz /root<br>　　—- 由于该文件是被压缩并打包的，所以，应对其解压缩。命令为：<br>　　—- #tar xvzf filename.tar.gz<br>　　—- 执行该命令后，安装文件按路径，解压缩在当前目录下。用ls命令可以看到解压缩后的文件。通常在解压缩后产生的文件中，有名为”INSTALL”的文件。该文件为纯文本文件，详细讲述了该软件包的安装方法。<br>　　—- 对于多数需要编译的软件，其安装的方法大体相同。执行解压缩后产生的一个名为configure的可执行脚本程序。它是用于检查系统是否有编译时所需的库，以及库的版本是否满足编译的需要等安装所需要的系统信息。为随后的编译工作做准备。命令为：<br>　　—- #./configure<br>　　—- 如果检查过程中，发现有错误，configure将给予提示，并停止检查。你可以跟据提示对系统进行配置。再重新执行该程序。检查通过后，将生成用于编译 的MakeFile文件。此时，可以开始进行编译了。编译的过程视软件的规模和计算机的性能的不同，所耗费的时间也不同。命令为：<br>　　—- #make<br>　　—- 成功编译后，键入如下的命令开始安装：<br>　　—- #make install<br>　　—- 安装完毕，应清除编译过程中产生的临时文件和配置过程中产生的文件。键入如下命令：<br>　　<code>#make clean</code><br>　　<code>#make distclean</code><br>　　至此，软件的安装结束。<br>　　—- 对于第二种，其安装方法要简单的多。<br>　　—- 同第一种方式一样，将安装文件拷贝至你的目录中。然后使用rpm来安装该文件。命令如下：<br>　　—- #rpm -i filename.i386.rpm<br>　　—- rpm将自动将安装文件解包，并将软件安装到缺省的目录下。并将软件的安装信息注册到rpm的数据库中。参数i的作用是使rpm进入安装模式。<br>　　—- 另外，还有一些Linux平台下的商业软件。在其安装文件中，有Setup安装程序，其安装方法同Windows平台下的一样。如:Corel WordPerfect。<br>　　软件的卸载<br>　　—- 软件的卸载主要是使用rpm来进行的。卸载软件首先要知道软件包在系统中注册的名称。键入命令：<br>　　—- #rpm -q -a<br>　　—- 即可查询到当前系统中安装的所有的软件包。参数q的作用是使rpm进入查询命令模式。参数a是查询模式的子参数，意为全部（ALL）。查询到的信息较多，可使用less人屏显示。<br>　　—- 确定了要卸载的软件的名称，就可以开始实际卸载该软件了。键入命令：<br>　　—- #rpm -e [package name]<br>　　—- 即可卸载软件。参数e的作用是使rpm进入卸载模式。对名为[package name]的软件包进行卸载。由于系统中各个软件包之间相互有依赖关系。如果因存在依赖关系而不能卸载，rpm将给予提示并停止卸载。你可以使用如下的命 令来忽略依赖关系，直接开始卸载：<br>　　—- #rpm -e [package name] -nodeps<br>　　—- 忽略依赖关系的卸载可能会导致系统中其它的一此软件无法使用。你可以使用<br>　　—- #rpm -e [package name] -test<br>　　—- 使rpm进行一次卸载预演，而不是真正卸载。这样可以使你检查一下软件是否存在有依赖关系。卸载过程中是否有错误。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/22/Python文件和数据格式化/" class="archive-article-date">
-  	<time datetime="2018-08-22T09:53:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/22/Python文件和数据格式化/">Python文件和数据格式化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Linux基础知识</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/09/23/Linux下软件的安装/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/19/Python组合数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-19T08:31:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/09/09/无线监听/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无线监听</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/19/Python组合数据类型（二）/">Python组合数据类型（二）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、-解析Linux应用软件安装包："><span class="toc-number">1.</span> <span class="toc-text">一、 解析Linux应用软件安装包：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、-了解包里的内容："><span class="toc-number">2.</span> <span class="toc-text">二、 了解包里的内容：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、-搞定使用tar打包的应用软件"><span class="toc-number">3.</span> <span class="toc-text">三、 搞定使用tar打包的应用软件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、-搞定使用rpm打包的应用软件"><span class="toc-number">4.</span> <span class="toc-text">四、 搞定使用rpm打包的应用软件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、-搞定使用deb打包的应用程序"><span class="toc-number">5.</span> <span class="toc-text">五、 搞定使用deb打包的应用程序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、软件的安装"><span class="toc-number">6.</span> <span class="toc-text">六、软件的安装</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/16/Python组合数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-16T08:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/16/Python组合数据类型/">Python组合数据类型</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/15/Python函数和代码复用-二/" class="archive-article-date">
-  	<time datetime="2018-08-15T08:25:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/15/Python函数和代码复用-二/">Python函数和代码复用(二)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/09/Python函数和代码复用(一)/" class="archive-article-date">
-  	<time datetime="2018-08-09T02:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/09/Python函数和代码复用(一)/">Python函数和代码复用(一)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/06/Python程序的控制结构/" class="archive-article-date">
-  	<time datetime="2018-08-06T07:00:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/06/Python程序的控制结构/">Python程序的控制结构</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-04T08:26:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/">Python基础学习 基本数据类型（二）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python中Requests库的基本使用/" class="archive-article-date">
-  	<time datetime="2018-08-03T12:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python中Requests库的基本使用/">Python中Requests库的基本使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python基础学习-基本数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-03T05:41:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python基础学习-基本数据类型/">Python基础学习 基本数据类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/01/python绘图/" class="archive-article-date">
-  	<time datetime="2018-08-01T13:11:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/01/python绘图/">python绘图</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/python学习/page/2/">2</a><a class="extend next" rel="next" href="/tags/python学习/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -582,9 +397,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
