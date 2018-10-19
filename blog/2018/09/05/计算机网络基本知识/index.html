@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/images/fj10.jpg">
 <meta property="og:image" content="http://yoursite.com/images/tcp首部.png">
 <meta property="og:image" content="http://yoursite.com/images/tcp握手和挥手.jpg">
-<meta property="og:updated_time" content="2018-09-07T12:40:01.483Z">
+<meta property="og:updated_time" content="2018-10-19T08:22:19.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络基本知识">
 <meta name="twitter:description" content="今天了解一下计算机网络的基础知识，为以后深入学习计算机网络做准备。">
@@ -235,7 +235,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="ARP-RARP协议"><a href="#ARP-RARP协议" class="headerlink" title="ARP/RARP协议"></a>ARP/RARP协议</h2><p><strong>地址解析协议，即ARP（Address Resolution Protocol），是根据IP地址获取物理地址的一个TCP/IP协议。</strong>主机发送信息时将包含目标IP地址的ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。</p>
+<h2 id="ARP-RARP协议"><a href="#ARP-RARP协议" class="headerlink" title="ARP/RARP协议"></a>ARP/RARP协议</h2><p><strong>地址解析协议，即ARP（Address Resolution Protocol），是根据IP地址获取物理地址的一个协议。</strong>主机发送信息时将包含目标IP地址的ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。</p>
 <p>　　ARP工作流程举例：<br>　　主机A的IP地址为192.168.1.1，MAC地址为0A-11-22-33-44-01；<br>　　主机B的IP地址为192.168.1.2，MAC地址为0A-11-22-33-44-02；</p>
 <p>当主机A要与主机B通信时，地址解析协议可以将主机B的IP地址（192.168.1.2）解析成主机B的MAC地址，以下为工作流程：</p>
 <ol>
@@ -588,6 +588,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -601,10 +605,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>
