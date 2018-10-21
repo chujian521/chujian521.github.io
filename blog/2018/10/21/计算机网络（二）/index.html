@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>X&#39;s blog</title>
+  <title>计算机网络（二） | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="现在开始了人生中第一个项目，开始为这个项目做出准备了，根据学长的指示，深入了解一下计算机网络工作的原理。">
+<meta name="keywords" content="-计算机网络 -协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络（二）">
+<meta property="og:url" content="http://yoursite.com/blog/2018/10/21/计算机网络（二）/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="现在开始了人生中第一个项目，开始为这个项目做出准备了，根据学长的指示，深入了解一下计算机网络工作的原理。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/hxb.png">
+<meta property="og:image" content="http://yoursite.com/images/ipshujubao.png">
+<meta property="og:image" content="http://yoursite.com/images/tcpipfenjie.jpg">
+<meta property="og:image" content="http://yoursite.com/images/fengbao.png">
+<meta property="og:updated_time" content="2018-10-21T12:33:49.176Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="计算机网络（二）">
+<meta name="twitter:description" content="现在开始了人生中第一个项目，开始为这个项目做出准备了，根据学长的指示，深入了解一下计算机网络工作的原理。">
+<meta name="twitter:image" content="http://yoursite.com/images/hxb.png">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,32 +161,85 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Python函数和代码复用-二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-计算机网络（二）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/15/Python函数和代码复用-二/">Python函数和代码复用(二)</a>
+    <h1 class="article-title" itemprop="name">
+      计算机网络（二）
     </h1>
   
 
         
-        <a href="/blog/2018/08/15/Python函数和代码复用-二/" class="archive-article-date">
-  	<time datetime="2018-08-15T08:25:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-15</time>
+        <a href="/blog/2018/10/21/计算机网络（二）/" class="archive-article-date">
+  	<time datetime="2018-10-21T07:55:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>今天继续学习一下Python函数和代码复用。</strong><br><img src="/images/fj6.jpg" alt=""></p>
-        
+        <p><strong>现在开始了人生中第一个项目，开始为这个项目做出准备了，根据学长的指示，深入了解一下计算机网络工作的原理。</strong></p>
+<p><img src="/images/hxb.png" alt=""></p>
+<a id="more"></a>
+<h2 id="计算机网络协议为什么要分层"><a href="#计算机网络协议为什么要分层" class="headerlink" title="计算机网络协议为什么要分层?"></a>计算机网络协议为什么要分层?</h2><ol>
+<li>各层之间相互独立：高层是不需要知道底层的功能是采取硬件技术来实现的，它只需要知道通过与底层的接口就可以获得所需要的服务；</li>
+<li>灵活性好：各层都可以采用最适当的技术来实现，例如某一层的实现技术发生了变化，用硬件代替了软件，只要这一层的功能与接口保持不变，实现技术的变化都并不会对其他各层以及整个系统的工作产生影响； </li>
+<li>易于实现和标准化：由于采取了规范的层次结构去组织网络功能与协议，因此可以将计算机网络复杂的通信过程，划分为有序的连续动作与有序的交互过程，有利于将网络复杂的通信工作过程化解为一系列可以控制和实现的功能模块，使得复杂的计算机网络系统变得易于设计，实现和标准化。</li>
+</ol>
+<h2 id="IP数据报文"><a href="#IP数据报文" class="headerlink" title="IP数据报文"></a>IP数据报文</h2><p>IP协议提供不可靠无连接的数据报传输服务，IP层提供的服务是通过IP层对数据报的封装与拆封来实现的。IP数据报的格式分为报头区和数据区两大部分，其中报头区是为了正确传输高层数据而加的各种控制信息，数据区包括高层协议需要传输的数据。</p>
+<p>IPv4数据报如下图所示：</p>
+<p><img src="/images/ipshujubao.png" alt=""></p>
+<h3 id="IP头部字段"><a href="#IP头部字段" class="headerlink" title="IP头部字段"></a>IP头部字段</h3><p>第一个字段（只有四位）是<em>版本字段</em>。它包含IP数据报的版本号：IPv4为4，IPv6为6。IPv4和IPv6头部版本除版本字段位置相同外再无其它是一样的。因此，这两个协议不能直接相互操作，主机或者路由器必须分别处理IPv4和IPv6。</p>
+<p><em>Internet头部长度（IHL）字段</em>保存IPv4头部中32位字的数量，包括任何选项。由于它是一个4位的字段，所以IPv4的头部被限制为最多15个32位字，即60字节。IPv6中不存在这个字段，其头部的长度固定为40字节。</p>
+<p><em>总长度字段</em>是IPV4数据报的总长度，以字节为单位。通过这个字段长度和IHL我们就可以知道数据报的数据部分从哪里开始，以及它的长度。由于它是一个16位的字段，所以IPv4的数据报最大长度（包括头部）为65535字节。</p>
+<p><em>标识字段</em>帮助标识由IPv4主机发送的数据报。为了避免将一个数据报分片和其他数据报分片混淆，发送主机通常在每次发送数据报时都将一个内部计数器加一，并将该计数器值复制到IPv4标识字段。</p>
+<p><em>生存期（TTL）字段</em>用于设置一个数据报可经过的路由器数量上限。发送方将它初始化为某个值（[RFC1122]建议为64，但128或255也不少见），每台路由器在转发该数据报时将该值减1。当这个字段值达到0时，该数据报被丢弃，并使用一个ICMP消息通知发送方。这可以防止由于出现不希望的路由环路而导致数据报在网络中永远循环。</p>
+<p>IPv4头部中的<em>协议字段</em>包含一个数字，表示数据报有效载荷部分的数据类型。最常用的值为17(UDP)和6(TCP)。这提供了多路分解的功能，以便IP协议可用于携带多种协议类型的有效载荷。</p>
+<p><em>头部校验和字段</em>仅计算IPv4头部。理解这一点很重要，因为这意味着IP协议不会检查IPv4数据报有效载荷（例如TCP和UDP数据）的正确性。为了确保IP数据报的有效载荷部分已经正确传输，其它协议必须通过自己的数据完整性检验机制来检查重要数据。IPv6头部没有任何校验字段。</p>
+<h2 id="TCP-IP中的分解"><a href="#TCP-IP中的分解" class="headerlink" title="TCP/IP中的分解"></a>TCP/IP中的分解</h2><p><img src="/images/tcpipfenjie.jpg" alt=""></p>
+<h2 id="访问一个网址的过程背后发生的那些事"><a href="#访问一个网址的过程背后发生的那些事" class="headerlink" title="访问一个网址的过程背后发生的那些事"></a>访问一个网址的过程背后发生的那些事</h2><p>1)<strong>回车键按下后，浏览器首先会对输入的地址数据进行解析</strong></p>
+<p>1.1、检查输入的URL是http协议，请求资源是对应主机名网站主页。<br>1.2、然后检查浏览器的严格安全传输列表（ HSTS列表 ），如果网站在列表中，则浏览器直接使用https协议进行传输，否则直接使用http协议传输，或者先使用http协议向网站服务器发送一个请求，服务器返回浏览器只能以https协议进行，则接下来仍然只以https协议来进行传输。<br>1.3、然后检查输入地址中是否有非ASCII码的unicode字符，如果有的话进行字符转换。<br>1.4、当协议或主机名不合法时，浏览器会将地址栏中输入的内容传递给默认的搜索引擎。</p>
+<p>2)<strong>然后进行DNS递归查询</strong></p>
+<p>2.1、DNS查询过程中，首先在缓存中进行查询，找到直接返回结果否则<br>2.2、再使用gethostbynme库函数进行查询，库函数查询过程中，首先到hosts中进行检查，查看域名是否在本地hosts文件中，找到直接返回结果，如果没有记录且库函数查询也没有记录则<br>2.3、以上查询均未果，则会向DNS服务器发送一条DNS查询请求。查询DNS服务器通常是在本地路由器或者ISP的缓存DNS服务器上进行，如果对应记录存在，则返回该映射地址，并且该地址会被标记为非权威服务器应答标签，如果对应记录不存在，则会递归向高层 DNS 服务器做查询，直到返回最终结果。<br>2.4、如果DNS查询失败，则返回无法解析DNS地址，停止，否则浏览器根据查询到的对应ip地址进行下一步操作，即使用套接字进行数据访问。</p>
+<p>3)<strong>使用套接字进行数据访问</strong></p>
+<p>3.1、浏览器获得目标IP地址，以及URL中给出的端口号（http 协议默认端口号是 80， https 默认端口号是 443），调用系统库函数socket，请求一个TCP流套接字。<br>3.2、该请求首先被交给传输层，封装成TCP segment，然后被送往网络层，添加目标服务器IP地址以及本机的IP地址，封装成TCP packet，再接下来会进入链路层，在封包中加入frame头部，包含本机网卡的MAC地址和网关MAC地址等，形成最终的TCP封包。<br>3.3、TCP封包完成之后，会通过以太网等网络进行传输到目标地址。</p>
+<p><img src="/images/fengbao.png" alt=""></p>
+<p>4)<strong>建立TCP连接</strong></p>
+<p>建立TCP连接会进行三次握手的过程，然后进行发送HTTP请求过程和接收过程。<br>4.1、进行三次握手，首先向服务器发送一个syn报文，其中syn=1，seq number=1022(随机)；<br>4.2、服务器接收到syn报文，根据syn=1判断客户端请求建立连接，并返回一个syn报文，为第一次握手，其中ack number=1023(客户端seq number+1)，seq number=2032(随机)，syn=1，ack=1；<br>4.3、客户端根据服务器的syn报文，确认其ack number是否与上一次发送的seq number+1相等，且ack=1，确认正确，则回应一个ack报文，为第二次握手，即ack number=2033(服务器seq number+1)，ack=1，<br>4.4、服务器根据接收到的ack报文，确认ack number是否与上一次发送的seq number+1相等，并且ack=1，确认正确，则建立连接，进入Established状态，为第三次握手。<br>4.5、建立TCP连接后，会使用HTTP协议发送HTTP的GET请求，服务器处理请求返回资源数据。</p>
+<p>5)<strong>浏览器处理数据</strong></p>
+<p>5.1、再接收到所请求的资源之后，浏览器会对接收到的html、css、js等数据根据标准格式进行解析。<br>5.2、然后会通过构建和遍历DOM节点树，进行各个节点的渲染计算，最后进行GPU的渲染布局和绘制步骤等。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -187,7 +250,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">-计算机网络 -协议</a>
         		</li>
       		
 		</ul>
@@ -196,16 +259,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/15/Python函数和代码复用-二/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/10/21/计算机网络（二）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/09/23/Linux下软件的安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux下软件的安装</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -220,687 +342,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-木兰词·拟古决绝词柬友" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/10/木兰词·拟古决绝词柬友/">木兰词·拟古决绝词柬友</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/10/木兰词·拟古决绝词柬友/" class="archive-article-date">
-  	<time datetime="2018-08-10T12:38:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>人生若只如初见，何事秋风悲画扇。<br>等闲变却故人心，却道故人心易变。<br>骊山语罢清宵半，泪雨零铃终不怨。<br>何如薄幸锦衣郎，比翼连枝当日愿。</strong><br><img src="/images/suibi1.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/10/木兰词·拟古决绝词柬友/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#计算机网络协议为什么要分层"><span class="toc-number">1.</span> <span class="toc-text">计算机网络协议为什么要分层?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP数据报文"><span class="toc-number">2.</span> <span class="toc-text">IP数据报文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP头部字段"><span class="toc-number">2.1.</span> <span class="toc-text">IP头部字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP中的分解"><span class="toc-number">3.</span> <span class="toc-text">TCP/IP中的分解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问一个网址的过程背后发生的那些事"><span class="toc-number">4.</span> <span class="toc-text">访问一个网址的过程背后发生的那些事</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-Python函数和代码复用(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/09/Python函数和代码复用(一)/">Python函数和代码复用(一)</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/09/Python函数和代码复用(一)/" class="archive-article-date">
-  	<time datetime="2018-08-09T02:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天学习一下Python函数和代码复用，进一步学习python。</strong><br><img src="/images/fj5.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/09/Python函数和代码复用(一)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python程序的控制结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/06/Python程序的控制结构/">Python程序的控制结构</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/06/Python程序的控制结构/" class="archive-article-date">
-  	<time datetime="2018-08-06T07:00:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天学习一下python程序的分支和循环结构以及random库的使用。</strong><br><img src="/images/fj4.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/06/Python程序的控制结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python基础学习-基本数据类型（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/">Python基础学习 基本数据类型（二）</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-04T08:26:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天继续学习一下python的基本数据类型。</strong><br><img src="/images/fj3.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python中Requests库的基本使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/03/Python中Requests库的基本使用/">Python中Requests库的基本使用</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/03/Python中Requests库的基本使用/" class="archive-article-date">
-  	<time datetime="2018-08-03T12:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>python爬虫从入门到放弃</strong><br><img src="/images/fj2.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/03/Python中Requests库的基本使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python基础学习-基本数据类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/03/Python基础学习-基本数据类型/">Python基础学习 基本数据类型</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/03/Python基础学习-基本数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-03T05:41:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天继续学习一下python，了解一下python的基本数据类型。</strong><br><img src="/images/fengjing1.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/03/Python基础学习-基本数据类型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python绘图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/08/01/python绘图/">python绘图</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/08/01/python绘图/" class="archive-article-date">
-  	<time datetime="2018-08-01T13:11:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天看mooc上面的python教程，老师讲了一个有趣的实例，记录一下，挺好玩</strong><br><img src="/images/py.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/08/01/python绘图/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-常见图片格式分析总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/07/31/常见图片格式分析总结/">常见图片格式分析总结</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/07/31/常见图片格式分析总结/" class="archive-article-date">
-  	<time datetime="2018-07-31T04:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>总结一下常见的图片格式的十六进制的开头结尾以及含义（可用winhex十六进制编辑器打开图片编辑）</strong><br><img src="/images/4.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MISC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/07/31/常见图片格式分析总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python-对象以及将对象序列化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/07/30/Python-对象以及将对象序列化/">Python对象以及将对象序列化</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
-  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天开始继续学习一下python，熟悉一门脚本语言</strong><br><img src="/images/fengjing.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2018/07/30/Python-对象以及将对象序列化/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -932,8 +399,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
