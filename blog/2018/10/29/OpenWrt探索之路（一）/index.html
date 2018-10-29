@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | X&#39;s blog</title>
+  <title>OpenWrt探索之路（一） | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="漫长的国创项目之路开始了第一步，在学长的指导下，我开始学习OpenWrt这个开源的路由器系统，来设计我们新的路由器协议，简单总结一下这周学的东西，方便以后自己查阅。">
+<meta name="keywords" content="路由器系统,无线安全,OpenWrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenWrt探索之路（一）">
+<meta property="og:url" content="http://yoursite.com/blog/2018/10/29/OpenWrt探索之路（一）/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="漫长的国创项目之路开始了第一步，在学长的指导下，我开始学习OpenWrt这个开源的路由器系统，来设计我们新的路由器协议，简单总结一下这周学的东西，方便以后自己查阅。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/bxb.png">
+<meta property="og:image" content="http://yoursite.com/images/openwrt1.png">
+<meta property="og:image" content="http://yoursite.com/images/openwrt2.png">
+<meta property="og:updated_time" content="2018-10-29T12:16:03.747Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="OpenWrt探索之路（一）">
+<meta name="twitter:description" content="漫长的国创项目之路开始了第一步，在学长的指导下，我开始学习OpenWrt这个开源的路由器系统，来设计我们新的路由器协议，简单总结一下这周学的东西，方便以后自己查阅。">
+<meta name="twitter:image" content="http://yoursite.com/images/bxb.png">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,409 +160,252 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-OpenWrt探索之路（一）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenWrt探索之路（一）
+    </h1>
+  
+
+        
+        <a href="/blog/2018/10/29/OpenWrt探索之路（一）/" class="archive-article-date">
+  	<time datetime="2018-10-29T10:43:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-29</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>漫长的国创项目之路开始了第一步，在学长的指导下，我开始学习OpenWrt这个开源的路由器系统，来设计我们新的路由器协议，简单总结一下这周学的东西，方便以后自己查阅。</strong></p>
+<p><img src="/images/bxb.png" alt=""></p>
+<a id="more"></a>
+<h2 id="OpenWrt系统的安装"><a href="#OpenWrt系统的安装" class="headerlink" title="OpenWrt系统的安装"></a>OpenWrt系统的安装</h2><ul>
+<li><p>首先，我们需要确认所有的依赖软件已安装。下面以Debian/Ubuntu为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install subversion g++ zlib1g-dev build-essential git python rsync man-db</span><br><span class="line">sudo apt-get install libncurses5-dev gawk gettext unzip file libssl-dev wget zip time</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来，使用以下命名获取OpenWrt的源代码： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openwrt/openwrt.git</span><br><span class="line">cd openwrt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里找了好多源，官网上给的源无法git，会出现错误，只好使用Github上面的源。</p>
+<ul>
+<li>下载完OpenWrt的源码后，为了使OpenWrt支持更多的软件，需要更新和安装其它源上面的软件。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里还是会出现无法更新的问题，还是源的问题，这里还是把目录下的feeds.conf.default文件打开，修改其中的源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">src-git packages https://github.com/openwrt/packages.git</span><br><span class="line">src-git luci https://github.com/openwrt/luci.git</span><br><span class="line">src-git routing https://github.com/openwrt-routing/packages.git</span><br><span class="line">src-git telephony https://github.com/openwrt/telephony.git</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>最后一个命令就是打开菜单配置你想编译出来的功能和路由器型号等等：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>就拿我手上现有的NETGEAR WNDR4300来说：</p>
+<p> Target System —&gt; Atheros AR7xxx/AR9xxx<br> Subtarget —&gt; Generic devices with NAND flash<br> Target Profile —&gt; NETGEAR WNDR4300v1  </p>
+<p>然后退出并选择保存。<br>由于具体的config中的配置我还没去了解，所以具体的config的配置将会在下一篇博客写出。</p>
+<ul>
+<li>编译：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make FORCE\_UNSAFE\_CONFIGURE=1 -j N V=s</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明一下，make的时候记得加系统变量FORCE_UNSAFE_CONFIGURE=1 这样就不会报错了（错误信息里面给的，至于为什么我也不是很清楚）。-j N中N为CPU内核数+1，这种方法可以加快编译速度，但是容易出错。如果遇到编译错误，在没有-j N的情况下再次编译。建议在并行编译之前使用make download命令以防止出现这些错误（对于那些拥有更快Internet连接的用户来说，使用-jN命令在下载环节通常可以更安全）。V=s是显示详细信息。</p>
+<p><strong>到此，Openwrt的大致安装和编译过程介绍完毕。</strong></p>
+<h2 id="路由器救砖之路"><a href="#路由器救砖之路" class="headerlink" title="路由器救砖之路"></a>路由器救砖之路</h2><p>咳咳咳，原本以为自己直接make编译出了相应的刷机文件，刷进路由器就可以使用最简单的功能了呢，结果很不幸，路由器变成了一块板砖（具体原因推测是config文件配置问题，少选了很多东西）。于是就出现了下面的救砖之路……<br>此次使用的是TFTP刷机：</p>
+<ol>
+<li>首先，下载需要的固件以及Tftp软件<br>下载固件（需解压）： <a href="http://www.downloads.netgear.com/files/GDC/WNDR4300/WNDR4300_V1.0.1.60.zip" target="_blank" rel="noopener">http://www.downloads.netgear.com/files/GDC/WNDR4300/WNDR4300_V1.0.1.60.zip</a><br>TFTP软件这里我使用的是Tftpd，读者可自行网上下载。</li>
+<li>拔掉路由器连接外网的网线，仅保留与电脑的lan口连接，电脑改为固定IP：192.168.1.171（这个随意，固定的就好），子网掩码：255.255.255.0，DNS：192.168.1.1</li>
+<li>按复位键（位于机器底部，用卡针按）不放，此时路由器应处于断电状态</li>
+<li>通电，直到电源指示灯变为绿色并开始闪烁，使用TFTP软件上传固件，服务器IP填写192.168.1.1，稍等5分钟，然后关闭路由器电源，再打开。电脑改为DHCP自动获取IP地址，稍等几分钟路由器便会正常启动，然后浏览器键入192.168.1.1进入路由器后台管理界面即可。</li>
+</ol>
+<h2 id="OpenWrt系统源码目录概述"><a href="#OpenWrt系统源码目录概述" class="headerlink" title="OpenWrt系统源码目录概述"></a>OpenWrt系统源码目录概述</h2><h3 id="原始目录"><a href="#原始目录" class="headerlink" title="原始目录"></a>原始目录</h3><p>下载源码后,源文件如下图所示,下面我们来一一解释：</p>
+<p><img src="/images/openwrt1.png" alt=""></p>
+<ol>
+<li>scripts<br>存放了一些脚本,使用了bash,python,perl等多种脚本语言.编译过程中,用于第三方软件包管理的feeds文件也是在这个目录当中.在编译过程中,使用到的脚本也统一放在这个目录中。</li>
+<li>tools<br>编译时,主机需要使用一些工具软件,tools 里包含了获取和编译这些工具的命令.软件包里面有Makefile文件,有的还包含了patch.每个Makefile当中都有一句$(eval $(call HostBuild)),这表明编译这个工具是为了在主机上使用的。</li>
+<li>config<br>存放着整个系统的配置文件</li>
+<li>toolchain<br>嵌入式的童鞋应该都知道交叉编译链,这个文件中存放的就是编译交叉编译链的软件包.包括:binutils,gcc,libc等等。</li>
+<li>target<br>openwrt的源码可以编译出各个平台适用的二进制文件,各平台在这个目录里定义了firmware和kernel的编译过程。</li>
+<li>package<br>存放了openwrt系统中适用的软件包,包含针对各个软件包的Makefile。openwrt定义了一套Makefile模板.各软件参照这个模板定义了自己的信息，如软件包的版本、下载地址、编译方式、安装地址等。在二次开发过程中,这个文件夹我们会经常打交道。<br>事实上,通过./scripts/feed update -a和./scripts/feed install -a的软件包也会存放在这个目录之中。</li>
+<li>include<br>openwrt的Makefile都存放在这里。文件名为 *.mk 。这里的文件上是在Makefile里被include的,类似于库文件.这些文件定义了编译过程。</li>
+<li>其他单个文件：<br>8.1 Makefile:<br>在顶层目录执行make命令的入口文件。<br>8.2 rules.mk<br>定义了Makefile中使用的一些通用变量和函数。<br>8.3 Config.in<br>在include/toplevel.mk中我们可以看到,这是和make menuconfig相关联的文件。<br>8.4 feeds.conf.default<br>是下载第三方一些软件包时所使用的地址。<br>8.5 LICENSE &amp; README<br>即软件许可证和软件基本说明.其中README描述了编译软件的基本过程和依赖文件。</li>
+</ol>
+<h3 id="生成目录"><a href="#生成目录" class="headerlink" title="生成目录"></a>生成目录</h3><p>在我们编译完成后除了下载的源码文件,多出来的部分很明显就是编译过程中新生成的.如下图: </p>
+<p><img src="/images/openwrt2.png" alt=""></p>
+<ol>
+<li>feeds<br>openwrt的附加软件包管理器的扩展包索引目录.有点绕,简单来说就是下载管理软件包的。默认的feeds下载有packages、management、luci、routing、telephony。如要下载其他的软件包，需打开源码根目录下面的feeds.conf.default文件，去掉相应软件包前面的#号，然后更新源:<br>./scripts/feeds update -a<br>安装下载好的包:<br>./scripts/feeds install -a</li>
+<li>build_dir<br>在前面的原始目录中,我们提到了host工具,toolchain工具还有目标文件.openwrt将在这个目录中展开各个软件包,进行编译.所以这个文件夹中包含3个子文件夹:<br>2.1 host<br>在该文件夹中编译主机使用的工具软件<br>2.2 toolchain-XXX<br>在该文件夹中编译交叉工具链<br>2.3 target-XXX<br>在此编译目标平台的目标文件,包括各个软件包和内核文件。</li>
+<li>bin<br>保存编译完成后的二进制文件,包括:完整的bin文件,所有的ipk文件。</li>
+<li>dl<br>在编译过程中使用的很多软件,刚开始下载源码并没有包含,而是在编译过程中从其他服务器下载的,这里是统一的保存目录。</li>
+<li>staging_dir<br>用于保存在build_dir目录中编译完成的软件。所以这里也和build_dir有同样的子目录结构。<br>比如,在target-XXX文件夹中保存了目标平台编译好的头文件,库文件.在我们开发自己的ipk文件时,编译过程中,预处理头文件,链接动态库,静态库都是到这个子文件夹中。</li>
+<li>tmp<br>从名字来看,是临时文件夹.在编译过程中,有大量中间临时文件需要保存,都是在这里。</li>
+<li>logs<br>这个文件夹,有时可以看到,有时没有.这是因为这个文件夹保存的是,编译过程中出错的信息,只有当编译出错了才会出现.我们可以从这里获取信息,从而分析我们的软件编译为什么没有完成。</li>
+</ol>
+<p>这些只是最最基础的对基本目录的了解，以后会更深入地去了解。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/16/Python组合数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-16T08:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/16/Python组合数据类型/">Python组合数据类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/15/Python函数和代码复用-二/" class="archive-article-date">
-  	<time datetime="2018-08-15T08:25:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/15/Python函数和代码复用-二/">Python函数和代码复用(二)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/10/木兰词·拟古决绝词柬友/" class="archive-article-date">
-  	<time datetime="2018-08-10T12:38:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/10/木兰词·拟古决绝词柬友/">木兰词·拟古决绝词柬友</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/09/Python函数和代码复用(一)/" class="archive-article-date">
-  	<time datetime="2018-08-09T02:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/09/Python函数和代码复用(一)/">Python函数和代码复用(一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/06/Python程序的控制结构/" class="archive-article-date">
-  	<time datetime="2018-08-06T07:00:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/06/Python程序的控制结构/">Python程序的控制结构</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-04T08:26:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/">Python基础学习 基本数据类型（二）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python中Requests库的基本使用/" class="archive-article-date">
-  	<time datetime="2018-08-03T12:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python中Requests库的基本使用/">Python中Requests库的基本使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python基础学习-基本数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-03T05:41:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python基础学习-基本数据类型/">Python基础学习 基本数据类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/01/python绘图/" class="archive-article-date">
-  	<time datetime="2018-08-01T13:11:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/01/python绘图/">python绘图</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/31/常见图片格式分析总结/" class="archive-article-date">
-  	<time datetime="2018-07-31T04:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/31/常见图片格式分析总结/">常见图片格式分析总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">路由器系统</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MISC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">无线安全</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OpenWrt</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/10/29/OpenWrt探索之路（一）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/blog/2018/10/21/计算机网络（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">计算机网络（二）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenWrt系统的安装"><span class="toc-number">1.</span> <span class="toc-text">OpenWrt系统的安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由器救砖之路"><span class="toc-number">2.</span> <span class="toc-text">路由器救砖之路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenWrt系统源码目录概述"><span class="toc-number">3.</span> <span class="toc-text">OpenWrt系统源码目录概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原始目录"><span class="toc-number">3.1.</span> <span class="toc-text">原始目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成目录"><span class="toc-number">3.2.</span> <span class="toc-text">生成目录</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -586,8 +438,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
