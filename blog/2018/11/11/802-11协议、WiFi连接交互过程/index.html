@@ -33,7 +33,8 @@
 <meta property="og:image" content="http://yoursite.com/images/zhuabao3.png">
 <meta property="og:image" content="http://yoursite.com/images/zhuabao4.png">
 <meta property="og:image" content="http://yoursite.com/images/zhuabao5.png">
-<meta property="og:updated_time" content="2018-11-13T11:07:50.802Z">
+<meta property="og:image" content="http://yoursite.com/images/woshou.png">
+<meta property="og:updated_time" content="2018-11-13T11:27:33.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="802.11协议、WiFi连接交互过程">
 <meta name="twitter:description" content="本周主要任务是更深入的了解WiFi连接过程中AP与STA之间的交互过程，深入理解802.11标准，为以后协议的修改做准备。">
@@ -306,7 +307,9 @@
 <h2 id="客户端向AP发送连接-Association-请求"><a href="#客户端向AP发送连接-Association-请求" class="headerlink" title="客户端向AP发送连接(Association)请求"></a>客户端向AP发送连接(Association)请求</h2><p><img src="/images/zhuabao5.png" alt=""></p>
 <h2 id="AP对连接-Association-请求进行回应"><a href="#AP对连接-Association-请求进行回应" class="headerlink" title="AP对连接(Association)请求进行回应"></a>AP对连接(Association)请求进行回应</h2><p>这个包也没有抓到……</p>
 <p>AP对客户端的连接请求(Association)予以了回应(包括SSID、性能、加密设置等)。至此，Wi-Fi的连接身份认证交互就全部结束了，之后就可以正常进行数据发送了</p>
-<h2 id="客户端向AP请求断开连接-Disassociation"><a href="#客户端向AP请求断开连接-Disassociation" class="headerlink" title="客户端向AP请求断开连接(Disassociation)"></a>客户端向AP请求断开连接(Disassociation)</h2><p><strong>由此，我们可以发现，基于对数据帧格式的了解，黑客可以发起一些针对协议的攻击 </strong>前面几篇文章介绍过几种无线DoS的攻击，其中Deanthentication攻击，Disassociation攻击基于协议的攻击。</p>
+<h2 id="客户端向AP请求断开连接-Disassociation"><a href="#客户端向AP请求断开连接-Disassociation" class="headerlink" title="客户端向AP请求断开连接(Disassociation)"></a>客户端向AP请求断开连接(Disassociation)</h2><p>这个也没抓到对应数据报。</p>
+<p><img src="/images/woshou.png" alt=""></p>
+<p><strong>由此，我们可以发现，基于对数据帧格式的了解，黑客可以发起一些针对协议的攻击 </strong>前面几篇文章介绍过几种无线DoS的攻击，其中Deanthentication攻击，Disassociation攻击基于协议的攻击。</p>
 
       
 
@@ -578,14 +581,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -599,6 +594,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">无线网络安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,6 +621,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
@@ -627,14 +638,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
               </li>
             
             <div class="clearfix"></div>
