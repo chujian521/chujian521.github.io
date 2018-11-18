@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018 | X&#39;s blog</title>
+  <title>WPA/WPA2 4-way handshake | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/page/3/index.html">
+  <meta name="description" content="今天了解一下WPA/WPA2四部握手的过程，了解其中的信息交互过程，为项目代码修改做准备。">
+<meta name="keywords" content="计算机网络,协议,802.11,WPA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WPA&#x2F;WPA2 4-way handshake">
+<meta property="og:url" content="http://yoursite.com/blog/2018/11/18/WPA-WPA2-4-way-handshake/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天了解一下WPA/WPA2四部握手的过程，了解其中的信息交互过程，为项目代码修改做准备。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj15.jpg">
+<meta property="og:image" content="http://yoursite.com/images/4-way-handshake.svg.png">
+<meta property="og:image" content="http://yoursite.com/images/4-way-handshake.png">
+<meta property="og:updated_time" content="2018-11-18T14:06:33.745Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="WPA&#x2F;WPA2 4-way handshake">
+<meta name="twitter:description" content="今天了解一下WPA/WPA2四部握手的过程，了解其中的信息交互过程，为项目代码修改做准备。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj15.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,197 +160,249 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-WPA-WPA2-4-way-handshake" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/01/python绘图/" class="archive-article-date">
-  	<time datetime="2018-08-01T13:11:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/01/python绘图/">python绘图</a>
+    <h1 class="article-title" itemprop="name">
+      WPA/WPA2 4-way handshake
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/blog/2018/11/18/WPA-WPA2-4-way-handshake/" class="archive-article-date">
+  	<time datetime="2018-11-18T13:16:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>今天了解一下WPA/WPA2四部握手的过程，了解其中的信息交互过程，为项目代码修改做准备。</strong></p>
+<p><img src="/images/fj15.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>IEEE 802.11i通过提供具有两种新协议的强健安全网络（RSN）来增强IEEE 802.11-1999：四次握手和组密钥握手。它们利用IEEE 802.1X中描述的认证服务和端口访问控制来建立和更改适当的加密密钥。RSN是一种安全网络，只允许创建健壮的安全网络关联（RSNA），这是一对站点（STA）使用的关联类型，如果建立身份验证或关联的过程它们包括4-Way Handshake。</p>
+<p>该标准还提供了两种RSNA数据机密性和完整性协议，TKIP和CCMP，因为TKIP的机密性和完整性机制不像CCMP那样强大，因此CCMP的实施是强制性的。实施TKIP的主要目的是该算法应该在大多数仅支持WEP的旧设备的能力范围内实现。</p>
+<p>初始认证过程使用预共享密钥（PSK）或通过802.1X 进行EAP交换（称为EAPOL，需要存在认证服务器）来执行。此过程确保客户端站（STA）通过接入点（AP）进行身份验证。在PSK或802.1X认证之后，生成共享密钥，称为成对主密钥（PMK）。PMK源自通过PBKDF2 -SHA1作为加密散列函数的密码。在预共享密钥网络中，PMK实际上是PSK。如果执行了802.1X EAP交换，则PMK从认证服务器提供的EAP参数派生。</p>
+<h2 id="四次握手"><a href="#四次握手" class="headerlink" title="四次握手"></a>四次握手</h2><p><img src="/images/4-way-handshake.svg.png" alt=""></p>
+<p>四次握手的设计使得接入点（或认证者）和无线客户端（或请求者）可以彼此独立地证明他们知道PSK / PMK，而不会泄露密钥。接入点（AP）和客户端不会泄露密钥，而是相互加密消息 - 只能通过使用已经共享的PMK进行解密 - 如果消息的解密成功，则证明了PMK的知识。四次握手对于保护PMK免受恶意接入点的影响至关重要 - 例如，攻击者的SSID冒充真实接入点 - 这样客户端就不必告知接入点其PMK。</p>
+<p>PMK旨在持续整个会话，应尽可能少地暴露; 因此，需要导出加密流量的密钥。四次握手用于建立另一个称为成对瞬态密钥（PTK）的密钥。通过连接以下属性生成PTK ：PMK，AP nonce（ANonce），STA nonce（SNonce），AP MAC地址和STA MAC地址。然后将产品通过伪随机函数。握手还产生GTK（组临时密钥），用于解密多播和广播流量。</p>
+<p>在握手期间交换的实际消息在图中描述并在下面解释（所有消息都作为EAPOL -Key帧发送）：</p>
+<ol>
+<li>所述AP用钥匙重放计数器，其是用于匹配每对发送的消息，并丢弃重播消息的号码一起发送一个随机数-值（的ANonce）到STA。STA现在具有构建PTK的所有属性。</li>
+<li>STA将其自己的随机值（SNonce）与消息完整性代码（MIC）一起发送到AP ，包括认证，其实际上是消息认证和完整性代码（MAIC），以及密钥重放计数器将是相同的作为消息1，允许AP匹配正确的消息1。</li>
+<li>AP通过检查MIC，RSN，ANonce和密钥重放计数器字段来验证消息2，如果有效，则构建并用另一个MIC发送GTK。</li>
+<li>STA通过检查MIC和密钥重放计数器字段来验证消息3，并且如果有效则向AP发送确认。</li>
+</ol>
+<p>详见：<a href="https://mrncciew.com/2014/08/19/cwsp-4-way-handshake/" title="WPA四步握手过程" target="_blank" rel="noopener">https://mrncciew.com/2014/08/19/cwsp-4-way-handshake/</a><br><strong>4次握手完成以后，之后的帧传播就都会以加密的方式进行。</strong></p>
+<p>成对瞬态密钥（64字节）分为五个单独的密钥：</p>
+<ol>
+<li>16字节的EAPOL-Key确认密钥（KCK） - 用于计算WPA EAPOL密钥消息的MIC</li>
+<li>16字节的EAPOL密钥加密密钥（KEK） - AP使用此密钥加密发送到客户端的附加数据（在“密钥数据”字段中）（例如，RSN IE或GTK）</li>
+<li>16字节的临时密钥（TK） - 用于加密/解密单播数据包</li>
+<li>8个字节的Michael MIC Authenticator Tx Key - 用于计算AP发送的单播数据包的MIC</li>
+<li>8个字节的Michael MIC Authenticator Rx Key - 用于计算由站发送的单播数据包的MIC</li>
+</ol>
+<p>Group Temporal Key（32字节）分为三个独立的键：</p>
+<ol>
+<li>16字节的组时间加密密钥 - 用于加密/解密多播和广播数据包</li>
+<li>8个字节的Michael MIC Authenticator Tx Key - 用于计算AP发送的组播和广播数据包的MIC</li>
+<li>8个字节的Michael MIC Authenticator Rx Key - 当前未使用的站点不发送多播流量</li>
+</ol>
+<p>仅当网络使用TKIP加密数据时，才使用PTK和GTK中的Michael MIC Authenticator Tx / Rx密钥。</p>
+<p>已证明四步握手易受<strong>KRACK（密钥重装攻击）</strong>攻击。</p>
+<p><img src="/images/4-way-handshake.png" alt=""></p>
+<p>如图所示，KRACK攻击主要发生在认证和密钥建立阶段的四步握手过程中，通过简单的报文模拟诱使安全协议交互的一方重发密钥交互协议中的一条消息，另一方收到重发的这条消息后再次安装已安装过的密钥，安装时将IV等相关的信息重置后使用，从而导致了同一个密钥使用了相同的IV再次加密数据，最终造成数据被重放、解密甚至伪造等安全危害。该攻击不仅针对WPA2，对于WPA也同样适用，不论是采用预共享密钥机制还是采用IEEE 802.1x机制的Wi-Fi网络都受到该漏洞的影响。<br>详见：<a href="https://blog.csdn.net/yuaninbj/article/details/78794159" title="KRACK深度剖析" target="_blank" rel="noopener">https://blog.csdn.net/yuaninbj/article/details/78794159</a></p>
+<h2 id="组密钥握手"><a href="#组密钥握手" class="headerlink" title="组密钥握手"></a>组密钥握手</h2><p>由于预设定时器到期，可能需要更新网络中使用的组临时密钥（GTK）。当设备离开网络时，GTK也需要更新。这是为了防止设备从AP接收更多的多播或广播消息。</p>
+<p>为了处理更新，802.11i定义了一个由双向握手组成的组密钥握手：</p>
+<ol>
+<li>AP将新GTK发送给网络中的每个STA。GTK使用分配给该STA的KEK加密，并通过使用MIC保护数据不被篡改。</li>
+<li>STA确认新的GTK并回复AP。</li>
+</ol>
+<h2 id="CCMP概述"><a href="#CCMP概述" class="headerlink" title="CCMP概述"></a>CCMP概述</h2><p>CCMP基于AES加密算法的CCM。CCM结合了CTR的机密性和CBC-MAC的身份验证和完整性。CCM保护MPDU数据字段和IEEE 802.11 MPDU报头的选定部分的完整性。</p>
+<h2 id="密钥层次结构"><a href="#密钥层次结构" class="headerlink" title="密钥层次结构"></a>密钥层次结构</h2><p>RSNA定义了两个关键层次结构：</p>
+<ol>
+<li>成对密钥层次结构，用于保护单播流量</li>
+<li>GTK，一种由单个密钥组成的层次结构，用于保护多播和广播流量</li>
+</ol>
+<p>密钥层次结构的描述使用以下两个函数：</p>
+<ul>
+<li>L（Str，F，L） - 从左边开始，从提取位F到F + L-1。</li>
+<li>RF-n - 产生n位输出的伪随机函数，有128,192,256,384和512版本，每个都输出这些位数。</li>
+</ul>
+<p>成对密钥层次结构利用PRF-384或PRF-512从PMK导出会话特定密钥，生成PTK，该PTK被分区为KCK和KEK以及MAC使用的所有临时密钥以保护单播通信。</p>
+<p>GTK应该是一个随机数，它也是通过使用PRF-n生成的，通常是PRF-128或PRF-256，在这个模型中，组密钥层次结构采用GMK（组主密钥）并生成GTK。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/31/常见图片格式分析总结/" class="archive-article-date">
-  	<time datetime="2018-07-31T04:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/31/常见图片格式分析总结/">常见图片格式分析总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">MISC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">协议</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/30/Python-对象以及将对象序列化/" class="archive-article-date">
-  	<time datetime="2018-07-30T08:51:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/30/Python-对象以及将对象序列化/">Python对象以及将对象序列化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">802.11</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">WPA</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/11/18/WPA-WPA2-4-way-handshake/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/28/My-First-Blog/" class="archive-article-date">
-  	<time datetime="2018-07-28T02:54:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-28</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/11/11/802-11协议、WiFi连接交互过程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">802.11协议、WiFi连接交互过程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/28/My-First-Blog/">My First Blog</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四次握手"><span class="toc-number">2.</span> <span class="toc-text">四次握手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组密钥握手"><span class="toc-number">3.</span> <span class="toc-text">组密钥握手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CCMP概述"><span class="toc-number">4.</span> <span class="toc-text">CCMP概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密钥层次结构"><span class="toc-number">5.</span> <span class="toc-text">密钥层次结构</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/07/25/hello-world/" class="archive-article-date">
-  	<time datetime="2018-07-25T11:32:49.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-25</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/07/25/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
+  
+
   
 
 
@@ -374,8 +435,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
