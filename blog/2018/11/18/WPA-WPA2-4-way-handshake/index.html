@@ -18,8 +18,9 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj15.jpg">
 <meta property="og:image" content="http://yoursite.com/images/4-way-handshake.svg.png">
+<meta property="og:image" content="http://yoursite.com/images/wpa.png">
 <meta property="og:image" content="http://yoursite.com/images/4-way-handshake.png">
-<meta property="og:updated_time" content="2018-11-18T14:06:33.745Z">
+<meta property="og:updated_time" content="2018-11-20T11:28:50.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WPA&#x2F;WPA2 4-way handshake">
 <meta name="twitter:description" content="今天了解一下WPA/WPA2四部握手的过程，了解其中的信息交互过程，为项目代码修改做准备。">
@@ -196,6 +197,7 @@
 <li>AP通过检查MIC，RSN，ANonce和密钥重放计数器字段来验证消息2，如果有效，则构建并用另一个MIC发送GTK。</li>
 <li>STA通过检查MIC和密钥重放计数器字段来验证消息3，并且如果有效则向AP发送确认。</li>
 </ol>
+<p><img src="/images/wpa.png" alt=""></p>
 <p>详见：<a href="https://mrncciew.com/2014/08/19/cwsp-4-way-handshake/" title="WPA四步握手过程" target="_blank" rel="noopener">https://mrncciew.com/2014/08/19/cwsp-4-way-handshake/</a><br><strong>4次握手完成以后，之后的帧传播就都会以加密的方式进行。</strong></p>
 <p>成对瞬态密钥（64字节）分为五个单独的密钥：</p>
 <ol>
@@ -525,10 +527,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">路由器系统</a>
               </li>
              
@@ -545,6 +543,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">WPA</a>
               </li>
              
@@ -553,19 +555,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kali</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
               </li>
             
             <div class="clearfix"></div>
