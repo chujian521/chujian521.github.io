@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | X&#39;s blog</title>
+  <title>Linux下shell脚本的编写 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间">
+<meta name="keywords" content="Linux,Shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下shell脚本的编写">
+<meta property="og:url" content="http://yoursite.com/blog/2018/12/10/Linux下shell脚本的编写/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj16.jpg">
+<meta property="og:updated_time" content="2018-12-10T14:30:54.663Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Linux下shell脚本的编写">
+<meta name="twitter:description" content="由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间">
+<meta name="twitter:image" content="http://yoursite.com/images/fj16.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,405 +158,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux下shell脚本的编写" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux下shell脚本的编写
+    </h1>
+  
+
+        
+        <a href="/blog/2018/12/10/Linux下shell脚本的编写/" class="archive-article-date">
+  	<time datetime="2018-12-10T11:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-10</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间</strong></p>
+<p><img src="/images/fj16.jpg" alt=""><br><a id="more"></a></p>
+<h2 id="规范格式"><a href="#规范格式" class="headerlink" title="规范格式"></a>规范格式</h2><p>我们关注的重点是Bash，也就是Bourne Again Shell，由于易用和免费，Bash在日常工作中被广泛使用；同时，Bash也是大多数Linux系统默认的Shell。在一般情况下，人们并不区分 Bourne Shell和Bourne Again Shell，所以，在下面的文字中，我们可以看到#!/bin/sh，它同样也可以改为#!/bin/bash。<br>利用vi等文本编辑器编写Shell脚本的格式是固定的，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#comments</span><br><span class="line">Your commands go here</span><br></pre></td></tr></table></figure></p>
+<p>首行中的符号#!告诉系统其后路径所指定的程序即是解释此脚本文件的Shell程 序。如果首行没有这句话，在执行脚本文件的时候，将会出现错误。后续的部分就是主程序，Shell脚本像高级语言一样，也有变量赋值，也有控制语句。除第 一行外，以#开头的行就是注释行，直到此行的结束。如果一行未完成，可以在行尾加上”，这个符号表明下一行与此行会合并为同一行。<br>编辑完毕，将脚本存盘为filename.sh，文件名后缀sh表明这是一个Bash脚本文件。执行脚本的时候，要先将脚本文件的属性改为可执行的：<br>chmod +x filename.sh<br>执行脚本的方法是：<br>./filename.sh</p>
+<h2 id="Shell的基本知识"><a href="#Shell的基本知识" class="headerlink" title="Shell的基本知识"></a>Shell的基本知识</h2><p>与其他语言不同，Shell Script中if语句的条件部分要以分号来分隔。第三行中的[]表示条件测试，常用的条件测试有下面几种：<br>[ -f “$file” ] 判断$file是否是一个文件<br>[ $a -lt 3 ] 判断$a的值是否小于3，同样-gt和-le分别表示大于或小于等于<br>[ -x “$file” ] 判断$file是否存在且有可执行权限，同样-r测试文件可读性<br>[ -n “$a” ] 判断变量$a是否有值，测试空串用-z<br>[ “$a” = “$b” ] 判断$a和$b的取值是否相等<br>[ cond1 -a cond2 ] 判断cond1和cond2是否同时成立，-o表示cond1和cond2有一成立<br>要注意条件测试部分中的空格。在方括号的两侧都有空格，在-f、-lt、=等符号两侧同样也有空格。如果没有这些空格，Shell解释脚本的时候就会出错。</p>
+<p>Linux中bash shell语音保留的关键字：<br>case、elif、let、clear、else、read、continue、if、then、echo、for in、while</p>
+<p>2.1. shell提示符及其环境<br>提示符：$<br>环境：Linux，Unix，Dos等等<br>Shell其实就是一个解释执行命令的程序，所谓shell编程其实就是用一定的语法将各种基本的命令组合起来，让shell程序去解释执行。<br>同传统的编程语言一样，shell提供了很多特性，这些特性可以使你的shell script编程更为有用，如：数据变量、参数传递、判断、流程控制、数据输入和输出，子程序及以中断处理等。<br>2.2 如何执行shell程序<br>Shell程序（<strong><em>.sh）<br>? 执行这个命令时<br>(1) #./</em></strong>.sh<br>(2) #chmod u+x ***.sh</p>
+<p>#<strong><em>.sh<br>(3) #sh </em></strong>.sh<br>2.3 常量<br>? 字符串，例如“Hello World！”。<br>? 数字，例如705，23。</p>
+<p>2.4 变量<br>shell编程中它们是没有类型的，简称弱类型编程语言，在这个变量中可以保含一个数字，一个字符串，一个单词等。你并不需要声明这个变量，它会在引用这个变量时创建它。<br>STR=”Hello World!”<br>echo $STR<br>　　HOME=”/home”                //注意赋值不要有空格<br>　　a=123<br>　　HOME_LIST=$(ls /home) //把命令的执行结果赋值给变量<br>　　ehco $HOME                   //$ 符号是获得变量HOME的值<br>　　a=a+1<br>系统变量：<br>　　$0 这个程序的执行名字<br>　　$n 　这个程序的第n个参数值，n=1…9<br>　　$<em>　 这个程序的所有参数<br>　　$# 这个程序的参数个数<br>　　$$ 这个程序的PID<br>　　$! 执行上一个背景指令的PID<br>   $? 上一个指令的返回值<br>2.5 局部变量<br> 局部变量一般是指写在函数中的变量，他的生命力是有限的。局部变量比较好理解，这里就不再多介绍了。<br>2.6 从键盘输入变量值<br>使用read命令<br>read var1 var2 … varn<br>2.7 注释<br>?Shell编程中的注释以#开头<br>2.8 数字运算<br>主要是指整数运算。expr命令可以将字符型变量转换为整数进行操作<br>语法：expr integer operator integer<br>其中operator为+ - </em> / %, 但对*的使用要用转义符/,如：<br>[oracle@localhost ~]$ more dvd.sh</p>
+<p>#!/bin/bash<br>expr 5 /* 5<br>[oracle@localhost ~]$ sh dvd.sh<br>25<br>2.9 逻辑运算<br>test进行逻辑运算，用[ ]括起来就是test运算<br>int1 -eq int2 相等?<br>int1 -ne int2 不等?<br>int1 -gt int2 int1 &gt; int2 ?<br>int1 -ge int2 int1 &gt;= int2 ?<br>int1 -lt int2 int1 &lt; int2 ?<br>int1 -le int2 int1 &lt;= int2<br>2.10 双引号及单引号<br>?$echo “$HOME $PATH”  – 显示变量值<br>/home/hbwork opt/kde/bin:/usr/local/bin:<br> $echo ‘$HOME $PATH’  – 显示单引号里的内容<br>$HOME $PATH<br>2.11 空格<br>由于shell对命令中的多余的空格不作任何处理 ，而用引号括起来则可以防止shell去掉这些空格。<br>$ str1=abcd<br>$ str2=”abcd “<br>2.12 分支结构<br>if [ variable = value ]<br>then<br>command<br>else<br>if [ variable = value ]<br>then<br>command<br>else<br>command<br>fi<br>2.13 Case语句<br>case value in<br>pattern1)<br>command;;<br>pattern2)<br>command;;<br>…<br>patternn)<br>command;<br>esac<br>2.15 循环语句<br>For循环：<br>for var in arg1 arg2 … argn<br>do<br>command<br>….<br>command<br>done</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$(id -u)</span>"</span> != <span class="string">"0"</span> ]; <span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"This script must be run as root"</span> 1&gt;&amp;2</span><br><span class="line">   <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">tar -Jcvf /home/xin/Desktop/hostapd-2018-05-21-62566bc2.tar.xz /home/xin/Desktop/hostapd-2018-05-21-62566bc2</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"compile Success!"</span></span><br><span class="line"></span><br><span class="line">mv -i /home/xin/Desktop/hostapd-2018-05-21-62566bc2.tar.xz /home/xin/openwrt/dl</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"move Success!"</span></span><br><span class="line"></span><br><span class="line">make FORCE\_UNSAFE\_CONFIGURE=1 V=s</span><br></pre></td></tr></table></figure>
+<p>自己写的一个很简单的shell脚本。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/22/Python文件和数据格式化/" class="archive-article-date">
-  	<time datetime="2018-08-22T09:53:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/22/Python文件和数据格式化/">Python文件和数据格式化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/19/Encounter/" class="archive-article-date">
-  	<time datetime="2018-08-19T10:42:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/19/Encounter/">Encounter</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Shell</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/12/10/Linux下shell脚本的编写/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/19/Python组合数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-19T08:31:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2018/11/18/WPA-WPA2-4-way-handshake/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">WPA/WPA2 4-way handshake</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/19/Python组合数据类型（二）/">Python组合数据类型（二）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#规范格式"><span class="toc-number">1.</span> <span class="toc-text">规范格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell的基本知识"><span class="toc-number">2.</span> <span class="toc-text">Shell的基本知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">3.</span> <span class="toc-text">实例</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/16/Python组合数据类型/" class="archive-article-date">
-  	<time datetime="2018-08-16T08:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/16/Python组合数据类型/">Python组合数据类型</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/15/Python函数和代码复用-二/" class="archive-article-date">
-  	<time datetime="2018-08-15T08:25:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/15/Python函数和代码复用-二/">Python函数和代码复用(二)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/10/木兰词·拟古决绝词柬友/" class="archive-article-date">
-  	<time datetime="2018-08-10T12:38:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/10/木兰词·拟古决绝词柬友/">木兰词·拟古决绝词柬友</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/09/Python函数和代码复用(一)/" class="archive-article-date">
-  	<time datetime="2018-08-09T02:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/09/Python函数和代码复用(一)/">Python函数和代码复用(一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/06/Python程序的控制结构/" class="archive-article-date">
-  	<time datetime="2018-08-06T07:00:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/06/Python程序的控制结构/">Python程序的控制结构</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/" class="archive-article-date">
-  	<time datetime="2018-08-04T08:26:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/04/Python基础学习-基本数据类型（二）/">Python基础学习 基本数据类型（二）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/08/03/Python中Requests库的基本使用/" class="archive-article-date">
-  	<time datetime="2018-08-03T12:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/08/03/Python中Requests库的基本使用/">Python中Requests库的基本使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -582,8 +383,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
