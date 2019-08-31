@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/images/gdb5.png">
 <meta property="og:image" content="http://yoursite.com/images/gdb6.png">
 <meta property="og:image" content="http://yoursite.com/images/gdb7.png">
-<meta property="og:updated_time" content="2019-08-31T08:59:40.475Z">
+<meta property="og:updated_time" content="2019-08-31T11:26:29.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="调试工具GDB的使用">
 <meta name="twitter:description" content="大三了，是时候定一下自己的方向了，还剩一年就要开始秋招了。准备向Linux内核和Linux嵌入式方向走，感觉未来物联网设备会走进千家万户，Linux嵌入式系统用途将会增加很多。既然选择了某个方向，有了目标之后就义无反顾的走下去吧！">
@@ -258,6 +258,44 @@
 </tr>
 </tbody>
 </table>
+<h3 id="数据相关命令"><a href="#数据相关命令" class="headerlink" title="数据相关命令"></a>数据相关命令</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">命令格式</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">display+表达式</td>
+<td style="text-align:center">该命令用于显示表达式的值，使用了该命令之后，每当程序运行到断点后都会显示表达式值</td>
+</tr>
+<tr>
+<td style="text-align:center">info display</td>
+<td style="text-align:center">用于显示当前所有要显示值的表达式的有关情况</td>
+</tr>
+<tr>
+<td style="text-align:center">delete +display编号</td>
+<td style="text-align:center">删除一个要显示值的表达式</td>
+</tr>
+<tr>
+<td style="text-align:center">disable/enable + display编号</td>
+<td style="text-align:center">使一个要显示的表达式暂时无效/有效</td>
+</tr>
+<tr>
+<td style="text-align:center">whatis+变量</td>
+<td style="text-align:center">显示某个表达式数据类型</td>
+</tr>
+<tr>
+<td style="text-align:center">print(p)+变量或表达式</td>
+<td style="text-align:center">打印某个变量或者表达式的值</td>
+</tr>
+<tr>
+<td style="text-align:center">set+变量=变量值</td>
+<td style="text-align:center">改变程序中一个变量的值</td>
+</tr>
+</tbody>
+</table>
 
       
 
@@ -400,7 +438,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB使用实例"><span class="toc-number">1.</span> <span class="toc-text">GDB使用实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-进入gdb"><span class="toc-number">1.1.</span> <span class="toc-text">1.进入gdb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-查看文件"><span class="toc-number">1.2.</span> <span class="toc-text">2.查看文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-设置断点"><span class="toc-number">1.3.</span> <span class="toc-text">3.设置断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-查看断点处的情况"><span class="toc-number">1.4.</span> <span class="toc-text">4.查看断点处的情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-运行代码"><span class="toc-number">1.5.</span> <span class="toc-text">5.运行代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-查看变量值"><span class="toc-number">1.6.</span> <span class="toc-text">6.查看变量值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-观察变量"><span class="toc-number">1.7.</span> <span class="toc-text">7.观察变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-单步运行"><span class="toc-number">1.8.</span> <span class="toc-text">8.单步运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-程序的继续运行"><span class="toc-number">1.9.</span> <span class="toc-text">9.程序的继续运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-退出gdb"><span class="toc-number">1.10.</span> <span class="toc-text">10.退出gdb</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置-删除断点"><span class="toc-number">2.</span> <span class="toc-text">设置/删除断点</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDB使用实例"><span class="toc-number">1.</span> <span class="toc-text">GDB使用实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-进入gdb"><span class="toc-number">1.1.</span> <span class="toc-text">1.进入gdb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-查看文件"><span class="toc-number">1.2.</span> <span class="toc-text">2.查看文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-设置断点"><span class="toc-number">1.3.</span> <span class="toc-text">3.设置断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-查看断点处的情况"><span class="toc-number">1.4.</span> <span class="toc-text">4.查看断点处的情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-运行代码"><span class="toc-number">1.5.</span> <span class="toc-text">5.运行代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-查看变量值"><span class="toc-number">1.6.</span> <span class="toc-text">6.查看变量值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-观察变量"><span class="toc-number">1.7.</span> <span class="toc-text">7.观察变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-单步运行"><span class="toc-number">1.8.</span> <span class="toc-text">8.单步运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-程序的继续运行"><span class="toc-number">1.9.</span> <span class="toc-text">9.程序的继续运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-退出gdb"><span class="toc-number">1.10.</span> <span class="toc-text">10.退出gdb</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置-删除断点"><span class="toc-number">2.</span> <span class="toc-text">设置/删除断点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据相关命令"><span class="toc-number">3.</span> <span class="toc-text">数据相关命令</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -521,6 +559,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">802.11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">无线网络安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -553,23 +607,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">协议</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">802.11</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">无线网络安全</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
+                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -577,11 +615,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
+                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GDB</a>
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -601,11 +643,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+                <a href="javascript:void(0)" class="js-tag color4">GDB</a>
               </li>
             
             <div class="clearfix"></div>
