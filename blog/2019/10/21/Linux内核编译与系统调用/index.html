@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="X&#39;s blog">
 <meta property="og:description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/fj23.jpg">
-<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k1.png">
-<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k2.png">
-<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k3.png">
-<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k4.png">
-<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k5.png">
-<meta property="og:updated_time" content="2019-10-22T14:37:28.577Z">
+<meta property="og:image" content="http://yoursite.com/images/fj23.jpg">
+<meta property="og:image" content="http://yoursite.com/images/linux-k1.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k2.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k3.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k4.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k5.png">
+<meta property="og:updated_time" content="2019-10-22T14:56:41.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux内核编译与系统调用">
 <meta name="twitter:description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
-<meta name="twitter:image" content="http://yoursite.com/blog/2019/10/21/images/fj23.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/fj23.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -184,14 +184,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。</strong></p>
-<p><img src="../images/fj23.jpg" alt=""></p>
+<p><img src="/images/fj23.jpg" alt=""></p>
 <a id="more"></a>
 <h2 id="Linux体系结构简介"><a href="#Linux体系结构简介" class="headerlink" title="Linux体系结构简介"></a>Linux体系结构简介</h2><h3 id="Linux体系结构"><a href="#Linux体系结构" class="headerlink" title="Linux体系结构"></a>Linux体系结构</h3><p>Linux可以分为两部分，分别为用户空间和内核空间具体如下图：</p>
-<p><img src="../images/linux-k1.png" alt=""></p>
+<p><img src="/images/linux-k1.png" alt=""></p>
 <p>1)<strong>用户空间包括</strong>：用户的应用程序、C库</p>
 <p>2)<strong>内核空间包括</strong>：系统调用接口、内核（狭义的）、平台架构相关的代码</p>
 <h3 id="Linux内核结构（广义内核）"><a href="#Linux内核结构（广义内核）" class="headerlink" title="Linux内核结构（广义内核）"></a>Linux内核结构（广义内核）</h3><p>Linux内核由七个部分构成，具体如下图所示：</p>
-<p><img src="../images/linux-k2.png" alt=""></p>
+<p><img src="/images/linux-k2.png" alt=""></p>
 <p>a)        <strong>系统调用接口（SCI）</strong>：open、read、write等系统调用<br>b)        <strong>进程管理（PM）</strong>：创建进程、删除进程、调度进程等<br>c)        <strong>内存管理（MM）</strong>：内存分配、管理等<br>d)        <strong>虚拟文件系统（VFS）</strong>：为多种文件系统提供统一的操作接口<br>e)        <strong>网络协议栈</strong>：提供各种网络协议<br>f)         <strong>CPU架构相关代码（Arch）</strong>：为的是提高至移植性<br>g)        <strong>设备驱动程序（DD）</strong>：各种设备驱动，占到内核的70%左右代码</p>
 <h2 id="Linux内核源码简介"><a href="#Linux内核源码简介" class="headerlink" title="Linux内核源码简介"></a>Linux内核源码简介</h2><h3 id="源码获取"><a href="#源码获取" class="headerlink" title="源码获取"></a>源码获取</h3><p>可以从官网直接下载：<a href="https://www.kernel.org/" target="_blank" rel="noopener">https://www.kernel.org/</a></p>
 <h3 id="源码目录简介"><a href="#源码目录简介" class="headerlink" title="源码目录简介"></a>源码目录简介</h3><p>其源码主要有以下目录（介绍重要目录）：<br>a)        <strong>Arch目录：</strong>存放处理器相关的代码。下设子目录，分别对应具体的CPU，每个子目录有boot，mm，以及kernel三个子目录，分别对应系统引导以及存储管理，和系统调用<br>b)        <strong>Include目录</strong>：内核所需要的大部分头文件目录。与平台无关的在include/linux子目录下，与平台相关的则放在include相应的子目录中。<br>c)        <strong>fs目录：</strong>存放各种文件系统的实现代码。<br>d)        <strong>init目录：</strong>init子目录包含核心的初始化代码（不是系统的引导代码）。其包含两个文件main.c和version.c，可以用来研究核心如何工作。<br>e)        <strong>ipc目录：</strong>包含核心进程间的通信代码。<br>f)         <strong>kernel目录：</strong>包含内核管理的核心代码。与硬件相关代码放在arch/<em>/kernel目录下。<br>g)        <strong>mm目录：</strong>包含了所有的内存管理代码。与硬件相关的内存管理代码位于arch/</em>/mm目录下。<br>h)        <strong>scripts目录：</strong>包含用于配置核心的脚本文件。<br>i)          <strong>lib目录：</strong>包含了核心的库代码，与硬件相关的库代码被放在arch/*/lib/目录下</p>
@@ -205,12 +205,12 @@
 <p><strong>重用当前系统内核的配置：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -v /boot/config-3.10.0-693.el7.x86_64 .config</span><br></pre></td></tr></table></figure>
 <p>然后我们就可以使用make menuconfig开启菜单了，随后即可自由配置所需的内核模块：</p>
-<p><img src="../images/linux-k3.png" alt=""></p>
+<p><img src="/images/linux-k3.png" alt=""></p>
 <p>配置完config之后，保存并退出。</p>
 <h3 id="虚拟机增加磁盘容量"><a href="#虚拟机增加磁盘容量" class="headerlink" title="虚拟机增加磁盘容量"></a>虚拟机增加磁盘容量</h3><p><strong>如果你的虚拟机磁盘容量大于30GB请直接跳过这部分！</strong></p>
 <p>由于当时安装虚拟机时没考虑去用它编译内核，因此虚拟机磁盘容量只有20GB，然后内核编译过程中就会出错，因为磁盘容量不足，因此这里说一下如何给CentOS 7虚拟机磁盘扩容。</p>
 <h4 id="1-VMware扩展磁盘"><a href="#1-VMware扩展磁盘" class="headerlink" title="1. VMware扩展磁盘"></a>1. VMware扩展磁盘</h4><p>首先将虚拟机关机，在虚拟机上点击右键，设置，点硬盘，扩展，我这里设置的是40G，如果主机硬盘够大可以多设置一些，然后点击扩展，随后启动虚拟机。</p>
-<p><img src="../images/linux-k4.png" alt=""></p>
+<p><img src="/images/linux-k4.png" alt=""></p>
 <h4 id="2-CentOS中扩展"><a href="#2-CentOS中扩展" class="headerlink" title="2. CentOS中扩展"></a>2. CentOS中扩展</h4><p><strong>首先查看系统的磁盘情况：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[admin@localhost ~]$ sudo fdisk -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> admin: </span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 42.9 GB, 42949672960 bytes, 83886080 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label <span class="built_in">type</span>: dos</span><br><span class="line">Disk identifier: 0x0009003d</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line">/dev/sda3        41943040    83886079    20971520   83  Linux</span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 39.6 GB, 39619395584 bytes, 77381632 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
@@ -250,7 +250,7 @@
 <p>这里最后一步make install之后我这里报了一个错误：</p>
 <p>dracut[38489]: Failed to install module libnvdimmvmxnet3</p>
 <p>目测是一个模块安装错误，但是重启后发现内核已经编译安装成功了，可以正常使用：</p>
-<p><img src="../images/linux-k5.png" alt=""></p>
+<p><img src="/images/linux-k5.png" alt=""></p>
 <p>图中4.17.11内核就是我们新编译安装的。</p>
 <p>但是，刚才为什么会报错呢？百度毫无疑问无解，我们直接谷歌，发现谷歌上有很多提问，相关内容也不多，于是改变思路，直接搜索未安装成功的libnvdimmvmxnet3模块，然后找到了答案。原来这是vm虚拟机的一个模块，emmmmm突然发现好像自己并没有解决这个问题。。。等我找出来原因在写</p>
 
@@ -512,10 +512,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -532,7 +528,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,6 +537,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Shell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -572,11 +572,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
               <li class="article-tag-list-item">
