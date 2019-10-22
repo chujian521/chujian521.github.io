@@ -6,15 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 无线网络安全 | X&#39;s blog</title>
+  <title>Linux内核编译与系统调用 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/无线网络安全/index.html">
+  <meta name="description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux内核编译与系统调用">
+<meta property="og:url" content="http://yoursite.com/blog/2019/10/21/Linux内核编译与系统调用/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/fj23.jpg">
+<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k1.png">
+<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k2.png">
+<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k3.png">
+<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k4.png">
+<meta property="og:image" content="http://yoursite.com/blog/2019/10/21/images/linux-k5.png">
+<meta property="og:updated_time" content="2019-10-22T14:37:28.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="Linux内核编译与系统调用">
+<meta name="twitter:description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
+<meta name="twitter:image" content="http://yoursite.com/blog/2019/10/21/images/fj23.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,72 +163,254 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux内核编译与系统调用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/11/802-11协议、WiFi连接交互过程/" class="archive-article-date">
-  	<time datetime="2018-11-11T03:11:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-11</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/11/802-11协议、WiFi连接交互过程/">802.11协议、WiFi连接交互过程</a>
+    <h1 class="article-title" itemprop="name">
+      Linux内核编译与系统调用
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/blog/2019/10/21/Linux内核编译与系统调用/" class="archive-article-date">
+  	<time datetime="2019-10-21T06:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。</strong></p>
+<p><img src="../images/fj23.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="Linux体系结构简介"><a href="#Linux体系结构简介" class="headerlink" title="Linux体系结构简介"></a>Linux体系结构简介</h2><h3 id="Linux体系结构"><a href="#Linux体系结构" class="headerlink" title="Linux体系结构"></a>Linux体系结构</h3><p>Linux可以分为两部分，分别为用户空间和内核空间具体如下图：</p>
+<p><img src="../images/linux-k1.png" alt=""></p>
+<p>1)<strong>用户空间包括</strong>：用户的应用程序、C库</p>
+<p>2)<strong>内核空间包括</strong>：系统调用接口、内核（狭义的）、平台架构相关的代码</p>
+<h3 id="Linux内核结构（广义内核）"><a href="#Linux内核结构（广义内核）" class="headerlink" title="Linux内核结构（广义内核）"></a>Linux内核结构（广义内核）</h3><p>Linux内核由七个部分构成，具体如下图所示：</p>
+<p><img src="../images/linux-k2.png" alt=""></p>
+<p>a)        <strong>系统调用接口（SCI）</strong>：open、read、write等系统调用<br>b)        <strong>进程管理（PM）</strong>：创建进程、删除进程、调度进程等<br>c)        <strong>内存管理（MM）</strong>：内存分配、管理等<br>d)        <strong>虚拟文件系统（VFS）</strong>：为多种文件系统提供统一的操作接口<br>e)        <strong>网络协议栈</strong>：提供各种网络协议<br>f)         <strong>CPU架构相关代码（Arch）</strong>：为的是提高至移植性<br>g)        <strong>设备驱动程序（DD）</strong>：各种设备驱动，占到内核的70%左右代码</p>
+<h2 id="Linux内核源码简介"><a href="#Linux内核源码简介" class="headerlink" title="Linux内核源码简介"></a>Linux内核源码简介</h2><h3 id="源码获取"><a href="#源码获取" class="headerlink" title="源码获取"></a>源码获取</h3><p>可以从官网直接下载：<a href="https://www.kernel.org/" target="_blank" rel="noopener">https://www.kernel.org/</a></p>
+<h3 id="源码目录简介"><a href="#源码目录简介" class="headerlink" title="源码目录简介"></a>源码目录简介</h3><p>其源码主要有以下目录（介绍重要目录）：<br>a)        <strong>Arch目录：</strong>存放处理器相关的代码。下设子目录，分别对应具体的CPU，每个子目录有boot，mm，以及kernel三个子目录，分别对应系统引导以及存储管理，和系统调用<br>b)        <strong>Include目录</strong>：内核所需要的大部分头文件目录。与平台无关的在include/linux子目录下，与平台相关的则放在include相应的子目录中。<br>c)        <strong>fs目录：</strong>存放各种文件系统的实现代码。<br>d)        <strong>init目录：</strong>init子目录包含核心的初始化代码（不是系统的引导代码）。其包含两个文件main.c和version.c，可以用来研究核心如何工作。<br>e)        <strong>ipc目录：</strong>包含核心进程间的通信代码。<br>f)         <strong>kernel目录：</strong>包含内核管理的核心代码。与硬件相关代码放在arch/<em>/kernel目录下。<br>g)        <strong>mm目录：</strong>包含了所有的内存管理代码。与硬件相关的内存管理代码位于arch/</em>/mm目录下。<br>h)        <strong>scripts目录：</strong>包含用于配置核心的脚本文件。<br>i)          <strong>lib目录：</strong>包含了核心的库代码，与硬件相关的库代码被放在arch/*/lib/目录下</p>
+<h2 id="Linux内核编译（CentOS-7）"><a href="#Linux内核编译（CentOS-7）" class="headerlink" title="Linux内核编译（CentOS 7）"></a>Linux内核编译（CentOS 7）</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p><strong>安装所需的软件包：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br><span class="line">sudo yum install -y ncurses-devel make gcc bc bison flex elfutils-libelf-devel openssl-devel grub2</span><br></pre></td></tr></table></figure>
+<p><strong>下载内核源码：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.17.11.tar.xz</span><br></pre></td></tr></table></figure>
+<p>这里我用的是内核的4.17.11版本。</p>
+<p><strong>解压缩到当前目录：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xf linux-4.17.11.tar.xz</span><br></pre></td></tr></table></figure>
+<p><strong>重用当前系统内核的配置：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -v /boot/config-3.10.0-693.el7.x86_64 .config</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以使用make menuconfig开启菜单了，随后即可自由配置所需的内核模块：</p>
+<p><img src="../images/linux-k3.png" alt=""></p>
+<p>配置完config之后，保存并退出。</p>
+<h3 id="虚拟机增加磁盘容量"><a href="#虚拟机增加磁盘容量" class="headerlink" title="虚拟机增加磁盘容量"></a>虚拟机增加磁盘容量</h3><p><strong>如果你的虚拟机磁盘容量大于30GB请直接跳过这部分！</strong></p>
+<p>由于当时安装虚拟机时没考虑去用它编译内核，因此虚拟机磁盘容量只有20GB，然后内核编译过程中就会出错，因为磁盘容量不足，因此这里说一下如何给CentOS 7虚拟机磁盘扩容。</p>
+<h4 id="1-VMware扩展磁盘"><a href="#1-VMware扩展磁盘" class="headerlink" title="1. VMware扩展磁盘"></a>1. VMware扩展磁盘</h4><p>首先将虚拟机关机，在虚拟机上点击右键，设置，点硬盘，扩展，我这里设置的是40G，如果主机硬盘够大可以多设置一些，然后点击扩展，随后启动虚拟机。</p>
+<p><img src="../images/linux-k4.png" alt=""></p>
+<h4 id="2-CentOS中扩展"><a href="#2-CentOS中扩展" class="headerlink" title="2. CentOS中扩展"></a>2. CentOS中扩展</h4><p><strong>首先查看系统的磁盘情况：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[admin@localhost ~]$ sudo fdisk -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> admin: </span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 42.9 GB, 42949672960 bytes, 83886080 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label <span class="built_in">type</span>: dos</span><br><span class="line">Disk identifier: 0x0009003d</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line">/dev/sda3        41943040    83886079    20971520   83  Linux</span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 39.6 GB, 39619395584 bytes, 77381632 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+<p>分区情况如上所示。</p>
+<p><strong>然后创建新的分区sda3：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk /dev/sda</span><br></pre></td></tr></table></figure>
+<p>然后根据提示创建分区：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n   <span class="comment"># 输入 n 表示创建新分区</span></span><br><span class="line">Command action</span><br><span class="line">   e   extended</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">p</span><br><span class="line">Partition number (1-4): 3   <span class="comment"># 输入 3 表示sda3，因为前面已经有两个了</span></span><br><span class="line">First cylinder (1306-4568, default 1306):     <span class="comment"># 回车，按默认值</span></span><br><span class="line">Using default value 1306</span><br><span class="line">Last cylinder, +cylinders or +size&#123;K,M,G&#125; (1306-4568, default 4568):   <span class="comment"># 回车，按默认值</span></span><br><span class="line">Using default value 4568</span><br><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): w     <span class="comment"># 输入 w 保存退出 </span></span><br><span class="line">The partition table has been altered!</span><br></pre></td></tr></table></figure>
+<p><strong>再次查看分区情况：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Disk /dev/sda: 42.9 GB, 42949672960 bytes, 83886080 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk label <span class="built_in">type</span>: dos</span><br><span class="line">Disk identifier: 0x0009003d</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line">/dev/sda3        41943040    83886079    20971520   83  Linux</span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-root: 39.6 GB, 39619395584 bytes, 77381632 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors</span><br><span class="line">Units = sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br></pre></td></tr></table></figure>
+<p>分区已经变成3个了，但是还没有挂载，还不能使用。</p>
+<p><strong>重启操作系统：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>格式化新的分区为ext3文件系统：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkfs -t ext3 /dev/sda3</span><br></pre></td></tr></table></figure>
+<p><strong>将物理硬盘分区初始化为物理卷：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>向卷组中添加物理卷来增加卷组的容量：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[admin@localhost ~]$ sudo df -h</span><br><span class="line">Filesystem               Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                 894M     0  894M   0% /dev</span><br><span class="line">tmpfs                    910M     0  910M   0% /dev/shm</span><br><span class="line">tmpfs                    910M   11M  900M   2% /run</span><br><span class="line">tmpfs                    910M     0  910M   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root   37G   21G   17G  55% /</span><br><span class="line">/dev/sda1               1014M  313M  702M  31% /boot</span><br><span class="line">tmpfs                    182M  4.0K  182M   1% /run/user/42</span><br><span class="line">tmpfs                    182M   24K  182M   1% /run/user/1000</span><br><span class="line">/dev/sr0                 8.1G  8.1G     0 100% /run/media/admin/CentOS 7 x86_64</span><br><span class="line">tmpfs                    182M     0  182M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+<p>从以上信息我们可以看出，centos就是root所在的组名，输入指令增加卷组容量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>查看可扩展空间大小并扩充磁盘空间：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[admin@localhost ~]$ sudo vgdisplay </span><br><span class="line">[sudo] password <span class="keyword">for</span> admin: </span><br><span class="line">  --- Volume group ---</span><br><span class="line">  VG Name               centos</span><br><span class="line">  System ID             </span><br><span class="line">  Format                lvm2</span><br><span class="line">  Metadata Areas        2</span><br><span class="line">  Metadata Sequence No  5</span><br><span class="line">  VG Access             <span class="built_in">read</span>/write</span><br><span class="line">  VG Status             resizable</span><br><span class="line">  MAX LV                0</span><br><span class="line">  Cur LV                2</span><br><span class="line">  Open LV               2</span><br><span class="line">  Max PV                0</span><br><span class="line">  Cur PV                2</span><br><span class="line">  Act PV                2</span><br><span class="line">  VG Size               38.99 GiB</span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              9982</span><br><span class="line">  Alloc PE / Size       9958 / &lt;38.90 GiB</span><br><span class="line">  Free  PE / Size       24 / 96.00 MiB</span><br><span class="line">  VG UUID               IW5x2l-MRIe-AbnO-u110-wmFr-QCJj-DwN41a</span><br></pre></td></tr></table></figure>
+<p>正常未扩容之前Free  PE / Size应该很大，由于我是先进行了扩容后写的博客，这里没法展示之前原本的数据。</p>
+<p><strong>扩充磁盘空间：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lvextend -L+20G /dev/mapper/vg_test001-lv_root /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>上面的20G就是我们扩容的容量，最大不应当超过Free  PE / Size的值。</p>
+<p><strong>增大或者收缩未加载的文件系统的大小：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[admin@localhost ~]$ sudo df -hT</span><br><span class="line">[sudo] password <span class="keyword">for</span> admin: </span><br><span class="line">Filesystem              Type      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs                devtmpfs  894M     0  894M   0% /dev</span><br><span class="line">tmpfs                   tmpfs     910M     0  910M   0% /dev/shm</span><br><span class="line">tmpfs                   tmpfs     910M   11M  900M   2% /run</span><br><span class="line">tmpfs                   tmpfs     910M     0  910M   0% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/centos-root xfs        37G   21G   17G  55% /</span><br><span class="line">/dev/sda1               xfs      1014M  313M  702M  31% /boot</span><br><span class="line">tmpfs                   tmpfs     182M  4.0K  182M   1% /run/user/42</span><br><span class="line">tmpfs                   tmpfs     182M   24K  182M   1% /run/user/1000</span><br><span class="line">/dev/sr0                iso9660   8.1G  8.1G     0 100% /run/media/admin/CentOS 7 x86_64</span><br><span class="line">tmpfs                   tmpfs     182M     0  182M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+<p>可以看出/dev/mapper/centos-root是xfs类型的</p>
+<p>文件扩充：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>至此所有的步骤完成，扩容成功，如果中间出了什么错误，自行百度谷歌即可。</p>
+<h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><p>进入到源码解压的目录下，依次执行如下命令开始内核编译，这可能需要几个小时的时间，可以写一个简单的shell脚本自动执行这些编译指令即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make bzImage</span><br><span class="line">make modules</span><br><span class="line">make</span><br><span class="line">make modules_install</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>这里最后一步make install之后我这里报了一个错误：</p>
+<p>dracut[38489]: Failed to install module libnvdimmvmxnet3</p>
+<p>目测是一个模块安装错误，但是重启后发现内核已经编译安装成功了，可以正常使用：</p>
+<p><img src="../images/linux-k5.png" alt=""></p>
+<p>图中4.17.11内核就是我们新编译安装的。</p>
+<p>但是，刚才为什么会报错呢？百度毫无疑问无解，我们直接谷歌，发现谷歌上有很多提问，相关内容也不多，于是改变思路，直接搜索未安装成功的libnvdimmvmxnet3模块，然后找到了答案。原来这是vm虚拟机的一个模块，emmmmm突然发现好像自己并没有解决这个问题。。。等我找出来原因在写</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">协议</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">802.11</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">无线网络安全</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2019/10/21/Linux内核编译与系统调用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/blog/2019/10/20/密码学实验一/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">密码学实验一</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux体系结构简介"><span class="toc-number">1.</span> <span class="toc-text">Linux体系结构简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux体系结构"><span class="toc-number">1.1.</span> <span class="toc-text">Linux体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux内核结构（广义内核）"><span class="toc-number">1.2.</span> <span class="toc-text">Linux内核结构（广义内核）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux内核源码简介"><span class="toc-number">2.</span> <span class="toc-text">Linux内核源码简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码获取"><span class="toc-number">2.1.</span> <span class="toc-text">源码获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码目录简介"><span class="toc-number">2.2.</span> <span class="toc-text">源码目录简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux内核编译（CentOS-7）"><span class="toc-number">3.</span> <span class="toc-text">Linux内核编译（CentOS 7）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">3.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机增加磁盘容量"><span class="toc-number">3.2.</span> <span class="toc-text">虚拟机增加磁盘容量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-VMware扩展磁盘"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. VMware扩展磁盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-CentOS中扩展"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. CentOS中扩展</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始编译"><span class="toc-number">3.3.</span> <span class="toc-text">开始编译</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -248,9 +442,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
