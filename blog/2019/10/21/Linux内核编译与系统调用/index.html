@@ -22,7 +22,17 @@
 <meta property="og:image" content="http://yoursite.com/images/linux-k3.png">
 <meta property="og:image" content="http://yoursite.com/images/linux-k4.png">
 <meta property="og:image" content="http://yoursite.com/images/linux-k5.png">
-<meta property="og:updated_time" content="2019-10-22T15:03:58.162Z">
+<meta property="og:image" content="http://yoursite.com/images/linux-k6.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k7.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k8.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k9.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k10.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k11.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k7.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k12.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k9.png">
+<meta property="og:image" content="http://yoursite.com/images/linux-k13.png">
+<meta property="og:updated_time" content="2019-10-25T11:16:13.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux内核编译与系统调用">
 <meta name="twitter:description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
@@ -253,6 +263,49 @@
 <p><img src="/images/linux-k5.png" alt=""></p>
 <p>图中4.17.11内核就是我们新编译安装的。</p>
 <p>但是，刚才为什么会报错呢？百度毫无疑问无解，我们直接谷歌，发现谷歌上有很多提问，相关内容也不多，于是改变思路，直接搜索未安装成功的libnvdimmvmxnet3模块，然后找到了答案。原来这是vm虚拟机的一个模块，emmmmm突然发现好像自己并没有解决这个问题。。。等我找出来原因在写</p>
+<h2 id="增加一个自定义的系统调用"><a href="#增加一个自定义的系统调用" class="headerlink" title="增加一个自定义的系统调用"></a>增加一个自定义的系统调用</h2><h3 id="1-踩坑合集-4-17-11版本内核勿看"><a href="#1-踩坑合集-4-17-11版本内核勿看" class="headerlink" title="1.踩坑合集(4.17.11版本内核勿看)"></a>1.踩坑合集(4.17.11版本内核勿看)</h3><p><strong>俗话说尽信书则不如无书，照着实验手册来做，忽然发现做出来的有问题，先记录一下这些有问题的</strong></p>
+<h4 id="1-1加系统调用号："><a href="#1-1加系统调用号：" class="headerlink" title="1.1加系统调用号："></a>1.1加系统调用号：</h4><p>先进入源代码根目录，也就是你安装的的内核的目录。在系统调用入口表中增加一项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> arch/x86/entry/syscalls/</span><br><span class="line">vi syscall_64.tbl</span><br></pre></td></tr></table></figure>
+<p>在文件末端增加自己的系统调用函数以及对应的系统调用编号，注意不要覆盖原有的系统调用（333号为本文增加的）</p>
+<p><img src="/images/linux-k6.png" alt=""></p>
+<p>这个时候其实已经感觉有点不对了，看看前面的系统调用号，明显和自己加的不一样。</p>
+<h4 id="1-2-声明系统调用函数"><a href="#1-2-声明系统调用函数" class="headerlink" title="1.2 声明系统调用函数"></a>1.2 声明系统调用函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> include/linux/</span><br><span class="line"></span><br><span class="line">vi syscalls.h</span><br></pre></td></tr></table></figure>
+<p>在末端加入系统调用函数的声明：</p>
+<p><img src="/images/linux-k7.png" alt=""></p>
+<h4 id="1-3实现系统调用函数"><a href="#1-3实现系统调用函数" class="headerlink" title="1.3实现系统调用函数"></a>1.3实现系统调用函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi kernel/sys.c</span><br></pre></td></tr></table></figure>
+<p>在文件末端加入对应的实现函数：</p>
+<p><img src="/images/linux-k8.png" alt=""></p>
+<h4 id="1-4编译安装内核同上，然后重启系统选择编译好的内核。"><a href="#1-4编译安装内核同上，然后重启系统选择编译好的内核。" class="headerlink" title="1.4编译安装内核同上，然后重启系统选择编译好的内核。"></a>1.4编译安装内核同上，然后重启系统选择编译好的内核。</h4><p>首先编写相应代码测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi mysys.c</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; <span class="number">5</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"ret = %d\n"</span>,syscall(<span class="number">333</span>,i));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行后，查看函数是否加入我们的内核：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/kallsyms | grep mysyscall</span><br></pre></td></tr></table></figure>
+<p>结果是：000000000000000     T       sys_mysyscall</p>
+<p>我们可以看到，自己编译的函数成功加入到内核，然后我们执行测试代码，然后用dmesg查看内核输出信息：</p>
+<p><img src="/images/linux-k9.png" alt=""></p>
+<p><img src="/images/linux-k10.png" alt=""></p>
+<p>可以看出可以调用也正常加入了内核，但是参数明显不对，传参出现了错误！</p>
+<h3 id="2-正确做法（4-17-11版本及以上内核）"><a href="#2-正确做法（4-17-11版本及以上内核）" class="headerlink" title="2.正确做法（4.17.11版本及以上内核）"></a>2.正确做法（4.17.11版本及以上内核）</h3><h4 id="2-1加系统调用号："><a href="#2-1加系统调用号：" class="headerlink" title="2.1加系统调用号："></a>2.1加系统调用号：</h4><p>先进入源代码根目录，也就是你安装的的内核的目录。在系统调用入口表中增加一项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> arch/x86/entry/syscalls/</span><br><span class="line">vi syscall_64.tbl</span><br></pre></td></tr></table></figure>
+<p>在文件末端增加自己的系统调用函数以及对应的系统调用编号，注意不要覆盖原有的系统调用（333号为本文增加的）</p>
+<p><img src="/images/linux-k11.png" alt=""></p>
+<h4 id="2-2-声明系统调用函数"><a href="#2-2-声明系统调用函数" class="headerlink" title="2.2 声明系统调用函数"></a>2.2 声明系统调用函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> include/linux/</span><br><span class="line"></span><br><span class="line">vi syscalls.h</span><br></pre></td></tr></table></figure>
+<p>在末端加入系统调用函数的声明：</p>
+<p><img src="/images/linux-k7.png" alt=""></p>
+<h4 id="2-3实现系统调用函数"><a href="#2-3实现系统调用函数" class="headerlink" title="2.3实现系统调用函数"></a>2.3实现系统调用函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi kernel/sys.c</span><br></pre></td></tr></table></figure>
+<p>在文件末端加入对应的实现函数：</p>
+<p><img src="/images/linux-k12.png" alt=""></p>
+<h4 id="2-4编译安装内核同上，然后重启系统选择编译好的内核。"><a href="#2-4编译安装内核同上，然后重启系统选择编译好的内核。" class="headerlink" title="2.4编译安装内核同上，然后重启系统选择编译好的内核。"></a>2.4编译安装内核同上，然后重启系统选择编译好的内核。</h4><p>首先编写相应代码测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi mysys.c</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; <span class="number">5</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"ret = %d\n"</span>,syscall(<span class="number">333</span>,i));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行后，查看函数是否加入我们的内核：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/kallsyms | grep mysyscall</span><br></pre></td></tr></table></figure>
+<p>结果是：000000000000000     T       sys_mysyscall</p>
+<p>我们可以看到，自己编译的函数成功加入到内核，然后我们执行测试代码，然后用dmesg查看内核输出信息：</p>
+<p><img src="/images/linux-k9.png" alt=""></p>
+<p><img src="/images/linux-k13.png" alt=""></p>
+<p>至此问题解决，成功增加了一个自己的系统调用!</p>
+<p>欢迎大家批评指正！</p>
 
       
 
@@ -391,7 +444,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux体系结构简介"><span class="toc-number">1.</span> <span class="toc-text">Linux体系结构简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux体系结构"><span class="toc-number">1.1.</span> <span class="toc-text">Linux体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux内核结构（广义内核）"><span class="toc-number">1.2.</span> <span class="toc-text">Linux内核结构（广义内核）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux内核源码简介"><span class="toc-number">2.</span> <span class="toc-text">Linux内核源码简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码获取"><span class="toc-number">2.1.</span> <span class="toc-text">源码获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码目录简介"><span class="toc-number">2.2.</span> <span class="toc-text">源码目录简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux内核编译（CentOS-7）"><span class="toc-number">3.</span> <span class="toc-text">Linux内核编译（CentOS 7）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">3.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机增加磁盘容量"><span class="toc-number">3.2.</span> <span class="toc-text">虚拟机增加磁盘容量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-VMware扩展磁盘"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. VMware扩展磁盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-CentOS中扩展"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. CentOS中扩展</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始编译"><span class="toc-number">3.3.</span> <span class="toc-text">开始编译</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux体系结构简介"><span class="toc-number">1.</span> <span class="toc-text">Linux体系结构简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux体系结构"><span class="toc-number">1.1.</span> <span class="toc-text">Linux体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux内核结构（广义内核）"><span class="toc-number">1.2.</span> <span class="toc-text">Linux内核结构（广义内核）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux内核源码简介"><span class="toc-number">2.</span> <span class="toc-text">Linux内核源码简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码获取"><span class="toc-number">2.1.</span> <span class="toc-text">源码获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码目录简介"><span class="toc-number">2.2.</span> <span class="toc-text">源码目录简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux内核编译（CentOS-7）"><span class="toc-number">3.</span> <span class="toc-text">Linux内核编译（CentOS 7）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">3.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机增加磁盘容量"><span class="toc-number">3.2.</span> <span class="toc-text">虚拟机增加磁盘容量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-VMware扩展磁盘"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. VMware扩展磁盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-CentOS中扩展"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. CentOS中扩展</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始编译"><span class="toc-number">3.3.</span> <span class="toc-text">开始编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#增加一个自定义的系统调用"><span class="toc-number">4.</span> <span class="toc-text">增加一个自定义的系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-踩坑合集-4-17-11版本内核勿看"><span class="toc-number">4.1.</span> <span class="toc-text">1.踩坑合集(4.17.11版本内核勿看)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1加系统调用号："><span class="toc-number">4.1.1.</span> <span class="toc-text">1.1加系统调用号：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-声明系统调用函数"><span class="toc-number">4.1.2.</span> <span class="toc-text">1.2 声明系统调用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3实现系统调用函数"><span class="toc-number">4.1.3.</span> <span class="toc-text">1.3实现系统调用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4编译安装内核同上，然后重启系统选择编译好的内核。"><span class="toc-number">4.1.4.</span> <span class="toc-text">1.4编译安装内核同上，然后重启系统选择编译好的内核。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-正确做法（4-17-11版本及以上内核）"><span class="toc-number">4.2.</span> <span class="toc-text">2.正确做法（4.17.11版本及以上内核）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1加系统调用号："><span class="toc-number">4.2.1.</span> <span class="toc-text">2.1加系统调用号：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-声明系统调用函数"><span class="toc-number">4.2.2.</span> <span class="toc-text">2.2 声明系统调用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3实现系统调用函数"><span class="toc-number">4.2.3.</span> <span class="toc-text">2.3实现系统调用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4编译安装内核同上，然后重启系统选择编译好的内核。"><span class="toc-number">4.2.4.</span> <span class="toc-text">2.4编译安装内核同上，然后重启系统选择编译好的内核。</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -572,11 +625,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
               <li class="article-tag-list-item">
