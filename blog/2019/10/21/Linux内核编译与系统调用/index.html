@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://yoursite.com/images/linux-k12.png">
 <meta property="og:image" content="http://yoursite.com/images/linux-k9.png">
 <meta property="og:image" content="http://yoursite.com/images/linux-k13.png">
-<meta property="og:updated_time" content="2019-10-25T11:16:13.885Z">
+<meta property="og:updated_time" content="2019-10-30T02:42:37.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux内核编译与系统调用">
 <meta name="twitter:description" content="今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。">
@@ -285,7 +285,7 @@
 <p><img src="/images/linux-k9.png" alt=""></p>
 <p><img src="/images/linux-k10.png" alt=""></p>
 <p>可以看出可以调用也正常加入了内核，但是参数明显不对，传参出现了错误！</p>
-<h3 id="2-正确做法（4-17-11版本及以上内核）"><a href="#2-正确做法（4-17-11版本及以上内核）" class="headerlink" title="2.正确做法（4.17.11版本及以上内核）"></a>2.正确做法（4.17.11版本及以上内核）</h3><h4 id="2-1加系统调用号："><a href="#2-1加系统调用号：" class="headerlink" title="2.1加系统调用号："></a>2.1加系统调用号：</h4><p>先进入源代码根目录，也就是你安装的的内核的目录。在系统调用入口表中增加一项：</p>
+<h3 id="2-正确做法（4-17-11版本及以上内核）"><a href="#2-正确做法（4-17-11版本及以上内核）" class="headerlink" title="2.正确做法（4.17.11版本及以上内核）"></a>2.正确做法（4.17.11版本及以上内核）</h3><h4 id="2-1加系统调用号："><a href="#2-1加系统调用号：" class="headerlink" title="2.1加系统调用号："></a>2.1加系统调用号：</h4><p>先进入源代码根目录，在系统调用入口表中增加一项：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> arch/x86/entry/syscalls/</span><br><span class="line">vi syscall_64.tbl</span><br></pre></td></tr></table></figure>
 <p>在文件末端增加自己的系统调用函数以及对应的系统调用编号，注意不要覆盖原有的系统调用（333号为本文增加的）</p>
 <p><img src="/images/linux-k11.png" alt=""></p>
@@ -574,6 +574,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -590,10 +594,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -606,6 +606,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">路由器系统</a>
               </li>
              
@@ -615,10 +619,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OpenWrt</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -642,7 +642,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">网络编程 Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
               </li>
              
               <li class="article-tag-list-item">
