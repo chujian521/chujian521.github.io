@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Linux下shell脚本的编写 | X&#39;s blog</title>
+  <title>电子数据取证参赛经验总结 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间">
-<meta name="keywords" content="Linux,Shell">
+  <meta name="description" content="参加了三次取证比赛了，也谈不上有什么经验吧，就简单写一下一些注意事项以及可能会踩坑的地方和一些技巧吧。">
+<meta name="keywords" content="电子数据取证">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下shell脚本的编写">
-<meta property="og:url" content="http://yoursite.com/blog/2018/12/10/Linux下shell脚本的编写/index.html">
+<meta property="og:title" content="电子数据取证参赛经验总结">
+<meta property="og:url" content="http://yoursite.com/blog/2019/12/01/电子数据取证参赛经验总结/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间">
+<meta property="og:description" content="参加了三次取证比赛了，也谈不上有什么经验吧，就简单写一下一些注意事项以及可能会踩坑的地方和一些技巧吧。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/fj16.jpg">
-<meta property="og:updated_time" content="2018-12-10T14:30:54.663Z">
+<meta property="og:image" content="http://yoursite.com/images/fj25.jpg">
+<meta property="og:updated_time" content="2019-12-01T05:49:59.252Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下shell脚本的编写">
-<meta name="twitter:description" content="由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间">
-<meta name="twitter:image" content="http://yoursite.com/images/fj16.jpg">
+<meta name="twitter:title" content="电子数据取证参赛经验总结">
+<meta name="twitter:description" content="参加了三次取证比赛了，也谈不上有什么经验吧，就简单写一下一些注意事项以及可能会踩坑的地方和一些技巧吧。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj25.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -158,38 +158,55 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Linux下shell脚本的编写" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-电子数据取证参赛经验总结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Linux下shell脚本的编写
+      电子数据取证参赛经验总结
     </h1>
   
 
         
-        <a href="/blog/2018/12/10/Linux下shell脚本的编写/" class="archive-article-date">
-  	<time datetime="2018-12-10T11:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-10</time>
+        <a href="/blog/2019/12/01/电子数据取证参赛经验总结/" class="archive-article-date">
+  	<time datetime="2019-12-01T05:39:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>由于需要频繁使用相同的命令，今天学习一下如何再Linux下编写简单的shell脚本，简化操作，节省时间</strong></p>
-<p><img src="/images/fj16.jpg" alt=""><br><a id="more"></a></p>
-<h2 id="规范格式"><a href="#规范格式" class="headerlink" title="规范格式"></a>规范格式</h2><p>我们关注的重点是Bash，也就是Bourne Again Shell，由于易用和免费，Bash在日常工作中被广泛使用；同时，Bash也是大多数Linux系统默认的Shell。在一般情况下，人们并不区分 Bourne Shell和Bourne Again Shell，所以，在下面的文字中，我们可以看到#!/bin/sh，它同样也可以改为#!/bin/bash。<br>利用vi等文本编辑器编写Shell脚本的格式是固定的，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#comments</span><br><span class="line">Your commands go here</span><br></pre></td></tr></table></figure></p>
-<p>首行中的符号#!告诉系统其后路径所指定的程序即是解释此脚本文件的Shell程 序。如果首行没有这句话，在执行脚本文件的时候，将会出现错误。后续的部分就是主程序，Shell脚本像高级语言一样，也有变量赋值，也有控制语句。除第 一行外，以#开头的行就是注释行，直到此行的结束。如果一行未完成，可以在行尾加上”，这个符号表明下一行与此行会合并为同一行。<br>编辑完毕，将脚本存盘为filename.sh，文件名后缀sh表明这是一个Bash脚本文件。执行脚本的时候，要先将脚本文件的属性改为可执行的：<br>chmod +x filename.sh<br>执行脚本的方法是：<br>./filename.sh</p>
-<h2 id="Shell的基本知识"><a href="#Shell的基本知识" class="headerlink" title="Shell的基本知识"></a>Shell的基本知识</h2><p>与其他语言不同，Shell Script中if语句的条件部分要以分号来分隔。第三行中的[]表示条件测试，常用的条件测试有下面几种：<br>[ -f “$file” ] 判断$file是否是一个文件<br>[ $a -lt 3 ] 判断$a的值是否小于3，同样-gt和-le分别表示大于或小于等于<br>[ -x “$file” ] 判断$file是否存在且有可执行权限，同样-r测试文件可读性<br>[ -n “$a” ] 判断变量$a是否有值，测试空串用-z<br>[ “$a” = “$b” ] 判断$a和$b的取值是否相等<br>[ cond1 -a cond2 ] 判断cond1和cond2是否同时成立，-o表示cond1和cond2有一成立<br>要注意条件测试部分中的空格。在方括号的两侧都有空格，在-f、-lt、=等符号两侧同样也有空格。如果没有这些空格，Shell解释脚本的时候就会出错。</p>
-<p>Linux中bash shell语音保留的关键字：<br>case、elif、let、clear、else、read、continue、if、then、echo、for in、while</p>
-<p>2.1. shell提示符及其环境<br>提示符：$<br>环境：Linux，Unix，Dos等等<br>Shell其实就是一个解释执行命令的程序，所谓shell编程其实就是用一定的语法将各种基本的命令组合起来，让shell程序去解释执行。<br>同传统的编程语言一样，shell提供了很多特性，这些特性可以使你的shell script编程更为有用，如：数据变量、参数传递、判断、流程控制、数据输入和输出，子程序及以中断处理等。<br>2.2 如何执行shell程序<br>Shell程序（<strong><em>.sh）<br>? 执行这个命令时<br>(1) #./</em></strong>.sh<br>(2) #chmod u+x ***.sh</p>
-<p>#<strong><em>.sh<br>(3) #sh </em></strong>.sh<br>2.3 常量<br>? 字符串，例如“Hello World！”。<br>? 数字，例如705，23。</p>
-<p>2.4 变量<br>shell编程中它们是没有类型的，简称弱类型编程语言，在这个变量中可以保含一个数字，一个字符串，一个单词等。你并不需要声明这个变量，它会在引用这个变量时创建它。<br>STR=”Hello World!”<br>echo $STR<br>　　HOME=”/home”                //注意赋值不要有空格<br>　　a=123<br>　　HOME_LIST=$(ls /home) //把命令的执行结果赋值给变量<br>　　ehco $HOME                   //$ 符号是获得变量HOME的值<br>　　a=a+1<br>系统变量：<br>　　$0 这个程序的执行名字<br>　　$n 　这个程序的第n个参数值，n=1…9<br>　　$<em>　 这个程序的所有参数<br>　　$# 这个程序的参数个数<br>　　$$ 这个程序的PID<br>　　$! 执行上一个背景指令的PID<br>   $? 上一个指令的返回值<br>2.5 局部变量<br> 局部变量一般是指写在函数中的变量，他的生命力是有限的。局部变量比较好理解，这里就不再多介绍了。<br>2.6 从键盘输入变量值<br>使用read命令<br>read var1 var2 … varn<br>2.7 注释<br>?Shell编程中的注释以#开头<br>2.8 数字运算<br>主要是指整数运算。expr命令可以将字符型变量转换为整数进行操作<br>语法：expr integer operator integer<br>其中operator为+ - </em> / %, 但对*的使用要用转义符/,如：<br>[oracle@localhost ~]$ more dvd.sh</p>
-<p>#!/bin/bash<br>expr 5 /* 5<br>[oracle@localhost ~]$ sh dvd.sh<br>25<br>2.9 逻辑运算<br>test进行逻辑运算，用[ ]括起来就是test运算<br>int1 -eq int2 相等?<br>int1 -ne int2 不等?<br>int1 -gt int2 int1 &gt; int2 ?<br>int1 -ge int2 int1 &gt;= int2 ?<br>int1 -lt int2 int1 &lt; int2 ?<br>int1 -le int2 int1 &lt;= int2<br>2.10 双引号及单引号<br>?$echo “$HOME $PATH”  – 显示变量值<br>/home/hbwork opt/kde/bin:/usr/local/bin:<br> $echo ‘$HOME $PATH’  – 显示单引号里的内容<br>$HOME $PATH<br>2.11 空格<br>由于shell对命令中的多余的空格不作任何处理 ，而用引号括起来则可以防止shell去掉这些空格。<br>$ str1=abcd<br>$ str2=”abcd “<br>2.12 分支结构<br>if [ variable = value ]<br>then<br>command<br>else<br>if [ variable = value ]<br>then<br>command<br>else<br>command<br>fi<br>2.13 Case语句<br>case value in<br>pattern1)<br>command;;<br>pattern2)<br>command;;<br>…<br>patternn)<br>command;<br>esac<br>2.15 循环语句<br>For循环：<br>for var in arg1 arg2 … argn<br>do<br>command<br>….<br>command<br>done</p>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$(id -u)</span>"</span> != <span class="string">"0"</span> ]; <span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"This script must be run as root"</span> 1&gt;&amp;2</span><br><span class="line">   <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">tar -Jcvf /home/xin/Desktop/hostapd-2018-05-21-62566bc2.tar.xz /home/xin/Desktop/hostapd-2018-05-21-62566bc2</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"compile Success!"</span></span><br><span class="line"></span><br><span class="line">mv -i /home/xin/Desktop/hostapd-2018-05-21-62566bc2.tar.xz /home/xin/openwrt/dl</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"move Success!"</span></span><br><span class="line"></span><br><span class="line">make FORCE\_UNSAFE\_CONFIGURE=1 V=s</span><br></pre></td></tr></table></figure>
-<p>自己写的一个很简单的shell脚本。</p>
+        <p><strong>参加了三次取证比赛了，也谈不上有什么经验吧，就简单写一下一些注意事项以及可能会踩坑的地方和一些技巧吧。</strong></p>
+<p><img src="/images/fj25.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="Windows："><a href="#Windows：" class="headerlink" title="Windows："></a>Windows：</h2><p>1.刚开始的第一个问题一般情况下都是问你镜像的哈希或者磁盘的哈希值，这在实际中应该是为了保证镜像数据的完整性，一定要注意题目问的是什么的哈希值，磁盘的哈希值要放到取证软件中之后再看，镜像文件的哈希就是.dd文件的哈希，可以直接计算。</p>
+<p>2.接下来可能会有一些基础的问题，比如系统最后一次关机时间，系统安装时间，系统用户信息等等，都可以在取证大师中的取证结果中查看。</p>
+<p>3.当题目中问到某某文件有关的信息的时候，如果你比较了解这个文件具体作用、具体路径，就可以根据经验找这个文件，如果不了解就可以采取暴力检索的方式直接搜索想要的结果，然后点击跳转到源文件即可找到想要的文件。</p>
+<p>4.Windows注册表中有很多有用的东西，可以了解一下一些重要的注册表项的含义。</p>
+<p>5.使用火眼仿真软件来做可能会有意想不到的收获，比如桌面有个txt文件，里面有账号密码哈哈哈哈。</p>
+<p>6.和时间相关的题目务必注意选项里面的时间是不是UTC +8，世界标准时间是UTC时间也就是0时区的时间，对标格林威治时间，中国是使用东八区时间也就是UTC +8 ，选择的时候一定要注意选项问的到底是哪个时间。</p>
+<p>7.关于内存取证方面，VolatilityWorkbench是个不错的选择，不用启动kali虚拟机，也不用记住命令，但是组件不能自由添加，不过整体还挺好用。</p>
+<p>8.你需要有一定的软件逆向能力，比如使用IDA，也要会一些DLL函数作用。还有apk的逆向分析等等。</p>
+<p>9.浏览器的访问记录有很多有用的东西，比如我们攻击某个网站，可能会需要搜索资料，历史纪录里面就可能有想要的东西。</p>
+<p>10.邮件里面可能会有太多太多的有用信息，附件很可能就是病毒，不要在本地电脑运行！</p>
+<p>11.洋葱网络可以了解一下，一般搞事情的都会在背地里搞，所以很可能涉及洋葱网络。</p>
+<p>12.学会计算扇区、簇、以及一系列的硬件存储相关的东西，查看簇的大小可以用chkdsk命令，具体怎么用网上有。</p>
+<h2 id="Linux："><a href="#Linux：" class="headerlink" title="Linux："></a>Linux：</h2><p>1.Linux很有可能涉及RAID重组，这里也是一个难点，如果组不出来后面的题基本上是没法做的，上次美亚杯就是吃了这个亏，如果组出来一等奖稳稳的。RAID重组最简单也是最有效的办法就是使用取证大师自动重组，但是很重要的一点也是我们刚知道的一点就是先用FTK把镜像文件挂载到本地之后再用取证大师自动重组，这样会大大提高效率！如果取证大师组不出来，那就可以试试用RAID Reconstructor试试，有的大佬还能直接用Winhex看磁盘看出来，，，我也不是很懂这是什么操作。如果都组不出来，那就可以尝试把镜像放进火眼仿真软件里面了，尝试一下是不是软RAID，mdadm -D 查看软件raid信息。如果实在组不出来，然后还有很多时间的话那就慢慢试试，运气好几百种可能你一下子就试出来了也不好说。</p>
+<p>2.Linux一般是服务器，或者是攻击者的kali机。服务器上很多配置信息都可以在取证大师取证结果中看到，需要了解Linux媒体文件的挂载方式，理解LVM等一系列存储相关的东西怎么看，命令是啥。</p>
+<p>3.服务器上也可能是一个网站的服务器，这就要求你的队伍里面还需要一个懂web的，了解docker容器使用。</p>
+<p>4.Linux的几个常见目录是干什么的要有所了解，比如DDos攻击上传的文件一般在/var目录下</p>
+<p>5.bash的history是一个好东西</p>
+<p>6.Linux的用户登录信息，权限信息，怎么提权，最好也要了解一下</p>
+<h2 id="手机取证："><a href="#手机取证：" class="headerlink" title="手机取证："></a>手机取证：</h2><p>1.iPhone很有可能就在嫌疑人笔记本电脑上有备份，所以准备一个iPhone备份恢复工具非常有必要。安卓手机也有可能在电脑有备份。</p>
+<p>2.安卓的目录信息稍微了解一下</p>
+<p>3.短信息里面有惊喜</p>
+<p>4.微信聊天数据db文件是加密的，有加密方法，具体好像是用IMEI+啥东西我忘记了，可以查一下，很重要</p>
+<p>5.手机取证可以用手机大师或者是用火眼取证做。</p>
+<h2 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h2><p>流量分析用wireshark做，筛选方法自己去学习一下，流量包可以看出DDos攻击或者是其他DNS等有用的数据。其他日志分析就自己看着来吧。</p>
+<p>总结：取证比赛呢，可能上手比较简单，刚开始你可能会觉得不就是操作软件找东西嘛，点点点就行了。但是越往后你越会发现其实没那么简单，你需要深刻理解操作系统，知识点要覆盖很全面，还要了解黑客的攻击手段，想做到做的每个题都对确实挺难的，看选项一定看清楚再选，问哈希值的时候看后几位别看前几位。欢迎大家参加取证比赛，还是挺有意思的，也会对大家日常学习有所帮助。</p>
+<p>以上内容如有不对的地方欢迎批评指正！</p>
 
       
 
@@ -229,11 +246,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Shell</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">电子数据取证</a>
         		</li>
       		
 		</ul>
@@ -289,7 +302,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/12/10/Linux下shell脚本的编写/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2019/12/01/电子数据取证参赛经验总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -303,18 +316,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2019/03/19/zsh的配置与使用以及grep的使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          zsh的配置与使用以及grep的使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/11/18/WPA-WPA2-4-way-handshake/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">WPA/WPA2 4-way handshake</div>
+    <a href="/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用多进程、多线程、多路复用实现Web服务器</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -341,7 +345,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#规范格式"><span class="toc-number">1.</span> <span class="toc-text">规范格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell的基本知识"><span class="toc-number">2.</span> <span class="toc-text">Shell的基本知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">3.</span> <span class="toc-text">实例</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows："><span class="toc-number">1.</span> <span class="toc-text">Windows：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux："><span class="toc-number">2.</span> <span class="toc-text">Linux：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机取证："><span class="toc-number">3.</span> <span class="toc-text">手机取证：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他："><span class="toc-number">4.</span> <span class="toc-text">其他：</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -366,7 +370,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/blog/2018/12/10/Linux下shell脚本的编写/",
+  id: "http://yoursite.com/blog/2019/12/01/电子数据取证参赛经验总结/",
   owner: 'chujian521',
   repo: 'chujian521',
   oauth: {
