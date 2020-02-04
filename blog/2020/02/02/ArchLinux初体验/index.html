@@ -8,19 +8,21 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>ArchLinux初体验 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="忙碌的竞赛月过去了，终于有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。">
+  <meta name="description" content="有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ArchLinux初体验">
-<meta property="og:url" content="http://yoursite.com/blog/2019/12/02/ArchLinux初体验/index.html">
+<meta property="og:url" content="http://yoursite.com/blog/2020/02/02/ArchLinux初体验/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="忙碌的竞赛月过去了，终于有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。">
+<meta property="og:description" content="有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj26.jpg">
-<meta property="og:updated_time" content="2019-12-03T09:12:52.222Z">
+<meta property="og:image" content="http://yoursite.com/images/archlinux1.png">
+<meta property="og:image" content="http://yoursite.com/images/archlinux2.png">
+<meta property="og:updated_time" content="2020-02-04T07:01:21.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArchLinux初体验">
-<meta name="twitter:description" content="忙碌的竞赛月过去了，终于有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。">
+<meta name="twitter:description" content="有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。">
 <meta name="twitter:image" content="http://yoursite.com/images/fj26.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
@@ -170,22 +172,104 @@
   
 
         
-        <a href="/blog/2019/12/02/ArchLinux初体验/" class="archive-article-date">
-  	<time datetime="2019-12-02T13:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
+        <a href="/blog/2020/02/02/ArchLinux初体验/" class="archive-article-date">
+  	<time datetime="2020-02-02T13:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>忙碌的竞赛月过去了，终于有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。</strong></p>
+        <p><strong>有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。</strong></p>
 <p><img src="/images/fj26.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="ArchLinux安装"><a href="#ArchLinux安装" class="headerlink" title="ArchLinux安装"></a>ArchLinux安装</h2><h3 id="开始分区"><a href="#开始分区" class="headerlink" title="开始分区"></a>开始分区</h3><h2 id="ArchLinux安装后一些必要的配置"><a href="#ArchLinux安装后一些必要的配置" class="headerlink" title="ArchLinux安装后一些必要的配置"></a>ArchLinux安装后一些必要的配置</h2><h3 id="连接网络"><a href="#连接网络" class="headerlink" title="连接网络"></a>连接网络</h3><p>现在我们是在新安装的系统上进行操作，所以我们要重新联网，我们在安装系统时已经提前装好了相关的包，所以我们需要测试一下是否正常连接网络：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="ArchLinux安装"><a href="#ArchLinux安装" class="headerlink" title="ArchLinux安装"></a>ArchLinux安装</h2><h3 id="开始分区"><a href="#开始分区" class="headerlink" title="开始分区"></a>开始分区</h3><p><strong>查看目前的分区情况：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+<p><img src="/images/archlinux1.png" alt=""></p>
+<p>可以看到我的一块20GB的磁盘空间，并且没有进行任何分区（虚拟机分配的）</p>
+<p><strong>创建一个根分区：</strong></p>
+<p>输入命令：<strong>fdisk /dev/sda</strong></p>
+<ol>
+<li>如果是一块全新硬盘，而且是BIOS/MBR引导方式，输入o来创建一个新的MBR分区表</li>
+<li>输入n创建一个新的分区，适当选择相应的分区选项</li>
+<li>输入p查看新建的分区</li>
+<li>输入w来讲之前所有的操作写入磁盘生效</li>
+<li>输入以下命令格式化更创建的根分区：mkfs.ext4 /dev/sda1</li>
+</ol>
+<p><strong>挂载分区：</strong> mount  /dev/sda1 /mnt</p>
+<h3 id="连接网络"><a href="#连接网络" class="headerlink" title="连接网络"></a>连接网络</h3><p>现在我们是在新安装的系统上进行操作，所以我们要重新联网，我们在安装系统时已经提前装好了相关的包，所以我们需要测试一下是否正常连接网络：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
 <p>如果你使用的有线网络并且路由器支持DHCP，那么插上网线就可正常使用网络。</p>
-<h3 id="创建交换文件"><a href="#创建交换文件" class="headerlink" title="创建交换文件"></a>创建交换文件</h3><p>交换文件可以在物理内存不足的时候将部分内存暂存到交换文件中，避免系统由于内存不足而完全停止工作。<br>之前我们通常采用单独一个分区的方式作为交换分区，现在更推荐采用交换文件的方式，更便于我们的管理。<br>分配一块空间用于交换文件，执行：</p>
+<h3 id="安装基本包"><a href="#安装基本包" class="headerlink" title="安装基本包"></a>安装基本包</h3><p><strong>选择镜像源</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+<p>将清华和浙大的源放进最开始的地方（优先级高）</p>
+<p>Server = <a href="http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</a><br>Server = <a href="http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch" target="_blank" rel="noopener">http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch</a></p>
+<p><strong>安装基本包</strong></p>
+<p>pacstrap /mnt base base-devel linux linux-firmware dhcpcd</p>
+<p><strong>配置Fstab</strong></p>
+<p>生成自动挂载分区的fstab文件，执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+<p>由于这步比较重要，所以我们需要输出生成的文件来检查是否正确，执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+<p><strong>Chroot</strong></p>
+<p>Chroot意为Change root，相当于把操纵权交给我们新安装（或已经存在）的Linux系统，执行了这步以后，我们的操作都相当于在磁盘上新装的系统中进行。</p>
+<p>执行如下命令：</p>
+<p><strong>arch-chroot /mnt</strong></p>
+<h2 id="ArchLinux安装后一些必要的配置"><a href="#ArchLinux安装后一些必要的配置" class="headerlink" title="ArchLinux安装后一些必要的配置"></a>ArchLinux安装后一些必要的配置</h2><h3 id="创建交换文件"><a href="#创建交换文件" class="headerlink" title="创建交换文件"></a>创建交换文件</h3><p>交换文件可以在物理内存不足的时候将部分内存暂存到交换文件中，避免系统由于内存不足而完全停止工作。<br>之前我们通常采用单独一个分区的方式作为交换分区，现在更推荐采用交换文件的方式，更便于我们的管理。<br>分配一块空间用于交换文件，执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fallocate -l 768M /swapfile</span><br></pre></td></tr></table></figure>
+<p>更改权限，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 /swapfile</span><br></pre></td></tr></table></figure>
+<p>设置交换文件，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkswap /swapfile</span><br></pre></td></tr></table></figure>
+<p>启用交换文件，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapon /swapfile</span><br></pre></td></tr></table></figure>
+<p>最后我们需要编辑/etc/fstab为交换文件设置一个入口，使用vim打开文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/fstab</span><br></pre></td></tr></table></figure>
+<p>在最后一行添加以下内容：</p>
+<p><strong>/swapfile none swap defaults 0 0</strong></p>
+<h3 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h3><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
+<h3 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h3><p>设置我们使用的语言选项，执行如下命令来编辑/etc/locale.gen文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
+<p>在文件中找到zh_CN.UTF-8 UTF-8 zh_HK.UTF-8 UTF-8 zh_TW.UTF-8 UTF-8 en_US.UTF-8 UTF-8这四行，去掉行首的#号，保存并退出。</p>
+<p>然后执行： locale-gen</p>
+<p>打开（不存在时会创建）/etc/locale.conf文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
+<p>在文件的第一行加入以下内容：</p>
+<p>LANG=en_US.UTF-8</p>
+<p>保存并退出。</p>
+<h3 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h3><p>打开（不存在时会创建）/etc/hostname文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hostname</span><br></pre></td></tr></table></figure>
+<p>在文件的第一行输入你自己设定的一个myhostname，我设置的时xin，保存并退出。</p>
+<p>编辑/etc/hosts文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<p>在文件末添加如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		    localhost</span><br><span class="line">127.0.1.1	xin.localdomain	xin</span><br></pre></td></tr></table></figure>
+<h3 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h3><p>Root是Linux中具有最高权限帐户，有些敏感的操作必须通过Root用户进行，比如使用pacman，我们之前进行所有的操作也都是以Root用户进行的，也正是因为Root的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为Root帐户设置一个密码：</p>
+<p>执行以下命令：</p>
+<p><strong>passwd</strong></p>
+<p>按照提示操作。</p>
+<h3 id="安装Intel-ucode（非IntelCPU可以跳过此步骤）"><a href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）" class="headerlink" title="安装Intel-ucode（非IntelCPU可以跳过此步骤）"></a>安装Intel-ucode（非IntelCPU可以跳过此步骤）</h3><p>执行命令：<strong>pacman -S intel-ucode</strong></p>
+<h3 id="安装Bootloader"><a href="#安装Bootloader" class="headerlink" title="安装Bootloader"></a>安装Bootloader</h3><ul>
+<li><p>首先安装os-prober和ntfs-3g这两个包，它可以配合Grub检测已经存在的系统，自动设置启动选项。命令如下：pacman -S os-prober ntfs-3g</p>
+</li>
+<li><ul>
+<li>安装grub包：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br></pre></td></tr></table></figure>
+<ul>
+<li>部署grub：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-install --target=i386-pc /dev/sda （将sdx换成你安装的硬盘）</span><br></pre></td></tr></table></figure>
+<p>注意这里的sdx应该为硬盘（例如<code>/dev/sda</code>），<strong>而不是</strong>形如<code>/dev/sda1</code>这样的分区。</p>
+<ul>
+<li>生成配置文件：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p>exit退出后，umount /mnt 后reboot即可进入新的操作系统。</p>
+<p><img src="/images/archlinux2.png" alt=""></p>
 
       
 
@@ -281,7 +365,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2019/12/02/ArchLinux初体验/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/02/02/ArchLinux初体验/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -295,18 +379,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2020/01/13/算法练习/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          算法练习
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2019/12/01/电子数据取证参赛经验总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">电子数据取证参赛经验总结</div>
+    <a href="/blog/2020/01/19/Linux开发与应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux开发与应用</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -333,7 +408,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ArchLinux安装"><span class="toc-number">1.</span> <span class="toc-text">ArchLinux安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始分区"><span class="toc-number">1.1.</span> <span class="toc-text">开始分区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArchLinux安装后一些必要的配置"><span class="toc-number">2.</span> <span class="toc-text">ArchLinux安装后一些必要的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接网络"><span class="toc-number">2.1.</span> <span class="toc-text">连接网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建交换文件"><span class="toc-number">2.2.</span> <span class="toc-text">创建交换文件</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ArchLinux安装"><span class="toc-number">1.</span> <span class="toc-text">ArchLinux安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始分区"><span class="toc-number">1.1.</span> <span class="toc-text">开始分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接网络"><span class="toc-number">1.2.</span> <span class="toc-text">连接网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装基本包"><span class="toc-number">1.3.</span> <span class="toc-text">安装基本包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArchLinux安装后一些必要的配置"><span class="toc-number">2.</span> <span class="toc-text">ArchLinux安装后一些必要的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建交换文件"><span class="toc-number">2.1.</span> <span class="toc-text">创建交换文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置时区"><span class="toc-number">2.2.</span> <span class="toc-text">设置时区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置Locale"><span class="toc-number">2.3.</span> <span class="toc-text">设置Locale</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置主机名"><span class="toc-number">2.4.</span> <span class="toc-text">设置主机名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置root密码"><span class="toc-number">2.5.</span> <span class="toc-text">设置root密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）"><span class="toc-number">2.6.</span> <span class="toc-text">安装Intel-ucode（非IntelCPU可以跳过此步骤）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Bootloader"><span class="toc-number">2.7.</span> <span class="toc-text">安装Bootloader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启"><span class="toc-number">2.8.</span> <span class="toc-text">重启</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -358,7 +433,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/blog/2019/12/02/ArchLinux初体验/",
+  id: "http://yoursite.com/blog/2020/02/02/ArchLinux初体验/",
   owner: 'chujian521',
   repo: 'chujian521',
   oauth: {
@@ -486,6 +561,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -494,15 +573,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,15 +593,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">hostapd</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -542,7 +613,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,11 +621,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kali</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,6 +630,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">MISC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kali</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
               </li>
              
               <li class="article-tag-list-item">
