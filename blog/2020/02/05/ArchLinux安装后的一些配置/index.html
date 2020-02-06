@@ -6,29 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>无线DoS攻击 | X&#39;s blog</title>
+  <title>ArchLinux安装后的一些配置 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。">
-<meta name="keywords" content="无线渗透,kali,工具使用">
+  <meta name="description" content="前几天安装好了Arch Linux的基础包部分，现在试着配置一下我们安装好的系统">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无线DoS攻击">
-<meta property="og:url" content="http://yoursite.com/blog/2018/09/08/无线DoS攻击/index.html">
+<meta property="og:title" content="ArchLinux安装后的一些配置">
+<meta property="og:url" content="http://yoursite.com/blog/2020/02/05/ArchLinux安装后的一些配置/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。">
+<meta property="og:description" content="前几天安装好了Arch Linux的基础包部分，现在试着配置一下我们安装好的系统">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/fj11.jpg">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng.png">
-<meta property="og:image" content="http://yoursite.com/images/aircrack-ng1.png">
-<meta property="og:image" content="http://yoursite.com/images/ssidtxt.png">
-<meta property="og:image" content="http://yoursite.com/images/mdk3-1-1.png">
-<meta property="og:image" content="http://yoursite.com/images/mdk3-1-2.png">
-<meta property="og:image" content="http://yoursite.com/images/mdk3-2-1.png">
-<meta property="og:image" content="http://yoursite.com/images/mdk3-3-1.png">
-<meta property="og:updated_time" content="2018-09-09T01:25:02.293Z">
+<meta property="og:image" content="http://yoursite.com/images/fj29.jpg">
+<meta property="og:image" content="http://yoursite.com/images/archlinux3.png">
+<meta property="og:image" content="http://yoursite.com/images/archlinux4.png">
+<meta property="og:updated_time" content="2020-02-06T09:45:32.116Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无线DoS攻击">
-<meta name="twitter:description" content="今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。">
-<meta name="twitter:image" content="http://yoursite.com/images/fj11.jpg">
+<meta name="twitter:title" content="ArchLinux安装后的一些配置">
+<meta name="twitter:description" content="前几天安装好了Arch Linux的基础包部分，现在试着配置一下我们安装好的系统">
+<meta name="twitter:image" content="http://yoursite.com/images/fj29.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -165,83 +160,70 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-无线DoS攻击" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-ArchLinux安装后的一些配置" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      无线DoS攻击
+      ArchLinux安装后的一些配置
     </h1>
   
 
         
-        <a href="/blog/2018/09/08/无线DoS攻击/" class="archive-article-date">
-  	<time datetime="2018-09-08T12:01:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-08</time>
+        <a href="/blog/2020/02/05/ArchLinux安装后的一些配置/" class="archive-article-date">
+  	<time datetime="2020-02-05T08:35:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>今天了解一下一种常见的无线攻击方式——无线DoS攻击。使用的工具是mdk3。</strong></p>
-<p><img src="/images/fj11.jpg" alt=""></p>
+        <p><strong>前几天安装好了Arch Linux的基础包部分，现在试着配置一下我们安装好的系统</strong></p>
+<p><img src="/images/fj29.jpg" alt=""></p>
 <a id="more"></a>
-<h1 id="MDK介绍"><a href="#MDK介绍" class="headerlink" title="MDK介绍"></a>MDK介绍</h1><p>MDK 是利用IEEE 802.11 协议中的漏洞开发的攻击工具。本次将主要利用MDK 3 工具进行三种攻击，MDK3详细使用指南可以百度一下。</p>
-<h2 id="MDK3的三种攻击模式"><a href="#MDK3的三种攻击模式" class="headerlink" title="MDK3的三种攻击模式"></a>MDK3的三种攻击模式</h2><h3 id="1-Beacon-Flood模式"><a href="#1-Beacon-Flood模式" class="headerlink" title="1.Beacon Flood模式"></a>1.Beacon Flood模式</h3><p>AP发出每秒钟约10个信标帧使客户端能够探测到这些AP的存在。当客户端扫描无线网络时，实际是在每个信道扫描寻找信标帧。通过使用MDK3工具的Beacon Flood模式，也能够发送这些信标帧，但是这些网络都是假的，没有人能够真正连接到它们。但是当用户打开无线网络进行扫描时，这些无线网络都会出现在设备的列表中。此外，这种模式也可以通过伪造大量具有相同SSID的假冒网络来隐藏目标网络。</p>
-<h3 id="2-Authentication（身份验证）-DOS模式"><a href="#2-Authentication（身份验证）-DOS模式" class="headerlink" title="2.Authentication（身份验证） DOS模式"></a>2.Authentication（身份验证） DOS模式</h3><p>当一个客户端接入一个AP，需要满足几个步骤，其中两个基本步骤就是认证和关联。第一步会询问AP是否能接入一个新的设备，AP收到请求后会决定新的客户端是否被接受。如果一个未知的客户端会尝试连接，mac过滤器可能会拒绝这一请求。第二步是密钥验证阶段，大多数AP采用开放的模式，因此关联步骤总是会通过，真正验证密钥有效性的阶段将在后面进行（例如WPA中的EAP阶段）。这么做的缺点在于攻击者可以发起多个连接请求后放弃这些请求，但是AP会在内存中保留这些请求。此攻击模式会向AP发送尽可能多的连接请求，同时跟踪AP的响应，甚至会发送网络中截获的其他有效数据包，来混淆AP对于真假客户端的判断，可能会造成AP丢弃合法用户的连接请求。</p>
-<h3 id="3-Deauthentication-Disassociation-Amok-模式"><a href="#3-Deauthentication-Disassociation-Amok-模式" class="headerlink" title="3.Deauthentication/Disassociation Amok 模式"></a>3.Deauthentication/Disassociation Amok 模式</h3><p>如果一个客户端需要断开无线网络，他需要向AP发送Deauthentication包注销自己。同时AP也可以主动断开与客户端的连接，例如AP的连接列表已满，新的连接将旧的连接踢出。攻击者可以伪造包使合法用户断开连接。MDK3可以伪造多种包，来应对如下情况：</p>
-<ul>
-<li>AP主动取消客户端认证</li>
-<li>客户端主动取消与AP的认证</li>
-<li>AP主动与客户端取消关联</li>
-<li>客户端主动与AP取消关联</li>
-</ul>
-<h1 id="使用Kali-Linux进行三种攻击实战"><a href="#使用Kali-Linux进行三种攻击实战" class="headerlink" title="使用Kali Linux进行三种攻击实战"></a>使用Kali Linux进行三种攻击实战</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先你需要一块无线网卡，kali虚拟机（为了方便直接使用，里面的小工具很多，不用再去自己下载了）</p>
-<h3 id="1-查看你的网卡信息"><a href="#1-查看你的网卡信息" class="headerlink" title="1.查看你的网卡信息"></a>1.查看你的网卡信息</h3><p>在kali Linux下使用命令查看网卡信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure></p>
-<p>效果图如下：<br><img src="/images/aircrack-ng.png" alt=""></p>
-<p>可以看到里面有个wlan0，那就是我的网卡，如果没有的话就把无线网卡拔了再插一下，直到找到那个wlan0为止。一定要保证它<strong>现在没有连接到任何wifi</strong>，上面那个wlan0里面<strong>没有ip地址</strong>什么的就说明现在不在连接中。</p>
-<h3 id="2-激活无线网卡至monitor即监听模式"><a href="#2-激活无线网卡至monitor即监听模式" class="headerlink" title="2.激活无线网卡至monitor即监听模式"></a>2.激活无线网卡至monitor即监听模式</h3><p>使用命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure></p>
-<p>然后会出现以下提示信息：<br><img src="/images/aircrack-ng1.png" alt=""></p>
-<p>如果再次使用ifconfig可以发现，我们的网卡已经被重命名为wlan0mon</p>
-<p><strong>获取当前网络概况：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure></p>
-<p>其中wlan0mon是已经激活监听状态的网卡。</p>
-<h2 id="进行Beacon-Flood攻击"><a href="#进行Beacon-Flood攻击" class="headerlink" title="进行Beacon Flood攻击"></a>进行Beacon Flood攻击</h2><p>这个模式可以产生很多死亡SSID充斥无线客户端的无线列表，从而扰乱无线使用者；我们甚至还可以自定义发送死亡SSID的BSSID和ESSID以及加密方式等。</p>
-<p>参数说明：</p>
-<ul>
-<li>-f：读取SSID列表文件，默认生成随机SSID；</li>
-<li>-c：信道，默认随机信道；</li>
-<li>-s：发包率，默认50。</li>
-</ul>
-<p>新建字典文件SSID.txt ,字典文件中存的每一个条目为伪造SSID的名称。此步可以忽略，如果忽略，MDK3将生成随机字符串作为SSID。同理，mac地址也可以指定。</p>
-<p>输入命令：<br><code>mdk3 wlan0mon b -f[文件路径] -s[速率]</code></p>
-<p>创建如下文件：<br><img src="/images/ssidtxt.png" alt=""></p>
-<p>结果如下：</p>
-<p><img src="/images/mdk3-1-1.png" alt=""></p>
-<p><img src="/images/mdk3-1-2.png" alt=""></p>
-<h2 id="进行Authentication（身份验证）-DOS攻击"><a href="#进行Authentication（身份验证）-DOS攻击" class="headerlink" title="进行Authentication（身份验证） DOS攻击"></a>进行Authentication（身份验证） DOS攻击</h2><p>这是一种验证请求攻击模式，在这个模式里，MDK3工具自动模拟随机产生的mac向目标AP发起大量验证请求，可以导致AP忙于处理过多的请求而停止对正常连接的客户端的响应。由于目前绝大部分的的路由器都有应对这种DoS的防御措施，攻击效果并不明显。</p>
-<p>参数说明：</p>
-<ul>
-<li>-a：测试指定的BSSID；</li>
-<li>-m：使用有效的mac地址进行攻击；</li>
-<li>-c：不检查是否测试成功；</li>
-<li>-s:速率，默认50.</li>
-</ul>
-<p>输入命令：<br><code>mdk3 wlan0mon a -a [BSSID] -m</code></p>
-<p><img src="/images/mdk3-2-1.png" alt=""><br>显然攻击是失败的！</p>
-<h2 id="进行Deauthentication-Disassociation-Amok攻击"><a href="#进行Deauthentication-Disassociation-Amok攻击" class="headerlink" title="进行Deauthentication/Disassociation Amok攻击"></a>进行Deauthentication/Disassociation Amok攻击</h2><p>这是强制解除验证、解除连接的攻击。在这个模式下，MDK3工具会向周围所有可见AP发起循环攻击，可能造成一定范围内的无线网络瘫痪，直到手动停止攻击。</p>
-<p>参数说明：</p>
-<ul>
-<li>-w：白名单，白名单中的mac不会被攻击；</li>
-<li>-b：黑名单，工具会对黑名单中的mac进行攻击；</li>
-<li>-s：发包速率；</li>
-<li>-c：攻击信道，可以攻击多个信道，逗号分隔。</li>
-</ul>
-<p>为了避免大范围攻击，建议使用黑名单模式进行攻击。新建mac.txt文件，将目标mac地址写入其中。</p>
-<p>输入命令：<br><code>mdk3 wlan0mon d -b [文件路径]</code></p>
-<p><img src="/images/mdk3-3-1.png" alt=""></p>
-<div style="position:absolute; bottom:0px; left:610px; width:76%;"><br>  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=25706282&auto=1&height=66"></iframe>  <br></div>
+<h2 id="新建用户"><a href="#新建用户" class="headerlink" title="新建用户"></a>新建用户</h2><p>在这之前所有操作都是以root用户的身份进行的，由于root的权限过高，日常使用root用户是不安全的。Linux为我们提供了强大的用户与组的权限管理，提高了整个系统的安全性。这里我们就来新建一个用户。<br>执行以下命令来创建一个名为xin的用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -G wheel xin</span><br></pre></td></tr></table></figure>
+<p>在这里稍微解释一下各参数的含义：<br>-m：在创建时同时在/home目录下创建一个与用户名同名的文件夹，这个目录就是你的家目录啦！家目录有一个别名是~，你可以在任何地方使用~来代替家目录路径。这个神奇的目录将会用于存放你所有的个人资料、配置文件等所有跟系统本身无关的资料。这种设定带来了诸多优点：<br>只要家目录不变，你重装系统后只需要重新安装一下软件包（它们一般不存放在家目录），然后所有的配置都会从家目录中读取，完全不用重新设置软件着。<br>你可以在家目录不变的情况下更换你的发行版而不用重新配置你的环境。<br>切换用户后所有的设置会从新的用户的家目录中读取，将不同用户的资料与软件设置等完全隔离。<br>有些著名的配置文件比如vim的配置文件~/.vimrc，只要根据自己的使用习惯配置一次， 在另一个Linux系统下（例如你的服务器）把这个文件复制到家目录下，就可以完全恢复你的配置。<br>-G wheel：-G代表把用户加入一个组，对用户与组的概念感兴趣的同学可以自行查找有关资料学习。<br>当然记得为新用户设置一个密码，执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd xin</span><br></pre></td></tr></table></figure>
+<p>根据提示输入两次密码就可以了，这是用户的密码。</p>
+<h2 id="配置sudo"><a href="#配置sudo" class="headerlink" title="配置sudo"></a>配置sudo</h2><p>我们已经创建好了一个新的用户，以后我们将会使用这个用户来登录，那么我们如果需要执行一些只有root用户才能执行的命令，有一个简单的办法就是使用<strong>sudo</strong>。</p>
+<p>sudo本身也是一个软件包，我们可以通过pacman来安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S sudo</span><br></pre></td></tr></table></figure>
+<p>接下来我们需要修改sudo的配置文件，教程上面说的是使用visudo，可是我不能用，于是我手动找到了sudo的配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sudoers</span><br></pre></td></tr></table></figure>
+<p>编辑之后发现这是一个只读文件，于是退出重来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">chmod -w /etc/sudoers</span><br></pre></td></tr></table></figure>
+<p>编辑时找到# %wheel ALL=(ALL)ALL这一行，将前面的#去掉即可</p>
+<p>最后记得将配置文件恢复成只读，为了安全考虑。图如下：</p>
+<p><img src="/images/archlinux3.png" alt=""></p>
+<p>配置好sudo后，输入reboot命令重启，输入刚创建的用户名密码即可登录。</p>
+<h2 id="图形界面的安装"><a href="#图形界面的安装" class="headerlink" title="图形界面的安装"></a>图形界面的安装</h2><h3 id="安装显卡驱动"><a href="#安装显卡驱动" class="headerlink" title="安装显卡驱动"></a>安装显卡驱动</h3><p>如果是因特尔的集成显卡就可执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S xf86-video-intel</span><br></pre></td></tr></table></figure>
+<h3 id="安装Xorg"><a href="#安装Xorg" class="headerlink" title="安装Xorg"></a>安装Xorg</h3><p>Xorg是Linux下的一个著名的开源图形服务，我们的桌面环境需要Xorg的支持。<br>执行如下命令安装Xorg及相关组件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S xorg</span><br></pre></td></tr></table></figure>
+<h3 id="安装桌面环境"><a href="#安装桌面环境" class="headerlink" title="安装桌面环境"></a>安装桌面环境</h3><p>Linux下有很多著名的桌面环境如Xfce、KDE(Plasma)、Gnome、Unity、Deepin等等，它们的外观、操作、设计理念等各方面都有所不同， 在它们之间的比较与选择网上有很多的资料可以去查。</p>
+<h4 id="安装Xfce"><a href="#安装Xfce" class="headerlink" title="安装Xfce"></a>安装Xfce</h4><p>直接安装软件包组即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S xfce4 xfce4-goodies</span><br></pre></td></tr></table></figure>
+<h4 id="安装KDE（Plasma）"><a href="#安装KDE（Plasma）" class="headerlink" title="安装KDE（Plasma）"></a>安装KDE（Plasma）</h4><p>直接安装软件包组合：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S plasma kde-applications</span><br></pre></td></tr></table></figure>
+<h3 id="安装桌面管理器"><a href="#安装桌面管理器" class="headerlink" title="安装桌面管理器"></a>安装桌面管理器</h3><p>安装好了桌面环境包以后，我们需要安装一个图形化的桌面管理器来帮助我们登录并且选择我们使用的桌面环境，这里我推荐使用sddm。</p>
+<h4 id="安装sddm"><a href="#安装sddm" class="headerlink" title="安装sddm"></a>安装sddm</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S sddm</span><br></pre></td></tr></table></figure>
+<h4 id="设置开机启动sddm服务"><a href="#设置开机启动sddm服务" class="headerlink" title="设置开机启动sddm服务"></a>设置开机启动sddm服务</h4><p>这里就要介绍一下Arch下用于管理系统服务的命令systemctl了，服务的作用就是字面意思，为我们提供特定的服务，比如sddm就为我们提供了启动xorg与管理桌面环境的服务。<br>命令的使用并不复杂：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start   服务名 （启动一项服务）</span><br><span class="line">sudo systemctl stop    服务名 （停止一项服务）</span><br><span class="line">sudo systemctl <span class="built_in">enable</span>  服务名 （开机启动一项服务）</span><br><span class="line">sudo systemctl <span class="built_in">disable</span> 服务名 （取消开机启动一项服务）</span><br></pre></td></tr></table></figure>
+<p>执行以下命令设置开机启动sddm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> sddm</span><br></pre></td></tr></table></figure>
+<h3 id="提前配置网络"><a href="#提前配置网络" class="headerlink" title="提前配置网络"></a>提前配置网络</h3><p>到现在我们已经安装好了桌面环境，但是还有一件事情需要我们提前设置一下。由于我们之前使用的一直都是netctl这个自带的网络服务，而桌面环境使用的是NetworkManager这个网络服务，所以我们需要禁用netctl并启用NetworkManager：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">disable</span> netctl</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> NetworkManager （注意大小写）</span><br></pre></td></tr></table></figure>
+<p>同时我们可以安装一个工具栏网络显示图标：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S network-manager-applet</span><br></pre></td></tr></table></figure>
+<p>重新启动之后就看到我们安装的桌面啦：</p>
+<p><img src="/images/archlinux4.png" alt=""></p>
+<h2 id="安装vmtools（虚拟机工具）"><a href="#安装vmtools（虚拟机工具）" class="headerlink" title="安装vmtools（虚拟机工具）"></a>安装vmtools（虚拟机工具）</h2><p>安装vmtools的时候发现按照以往的安装方法并不适用，一直提示找不到rc0.d到rc6.d，查阅资料后发现这些文件为各启动级别的启动脚本，ArchLinux并不是以此方式启动的，因此不能使用vmware自带的安装包安装，经过查阅资料我们可以安装一个开源的工具包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S open-vm-tools</span><br></pre></td></tr></table></figure>
+<p>后面出了点问题，找不到vmtoolsd这个服务，还没解决。解决以后再写，</p>
+
       
 
       
@@ -280,15 +262,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">无线渗透</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">kali</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">工具使用</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -344,7 +318,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2018/09/08/无线DoS攻击/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/02/05/ArchLinux安装后的一些配置/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -358,18 +332,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2018/09/09/无线监听/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          无线监听
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2018/09/05/计算机网络基本知识/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机网络基本知识</div>
+    <a href="/blog/2020/02/02/ArchLinux初体验/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ArchLinux初体验</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -396,7 +361,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MDK介绍"><span class="toc-number">1.</span> <span class="toc-text">MDK介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MDK3的三种攻击模式"><span class="toc-number">1.1.</span> <span class="toc-text">MDK3的三种攻击模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Beacon-Flood模式"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.Beacon Flood模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Authentication（身份验证）-DOS模式"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.Authentication（身份验证） DOS模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Deauthentication-Disassociation-Amok-模式"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.Deauthentication/Disassociation Amok 模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Kali-Linux进行三种攻击实战"><span class="toc-number">2.</span> <span class="toc-text">使用Kali Linux进行三种攻击实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看你的网卡信息"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.查看你的网卡信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-激活无线网卡至monitor即监听模式"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.激活无线网卡至monitor即监听模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行Beacon-Flood攻击"><span class="toc-number">2.2.</span> <span class="toc-text">进行Beacon Flood攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行Authentication（身份验证）-DOS攻击"><span class="toc-number">2.3.</span> <span class="toc-text">进行Authentication（身份验证） DOS攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行Deauthentication-Disassociation-Amok攻击"><span class="toc-number">2.4.</span> <span class="toc-text">进行Deauthentication/Disassociation Amok攻击</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#新建用户"><span class="toc-number">1.</span> <span class="toc-text">新建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置sudo"><span class="toc-number">2.</span> <span class="toc-text">配置sudo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图形界面的安装"><span class="toc-number">3.</span> <span class="toc-text">图形界面的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装显卡驱动"><span class="toc-number">3.1.</span> <span class="toc-text">安装显卡驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Xorg"><span class="toc-number">3.2.</span> <span class="toc-text">安装Xorg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装桌面环境"><span class="toc-number">3.3.</span> <span class="toc-text">安装桌面环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装Xfce"><span class="toc-number">3.3.1.</span> <span class="toc-text">安装Xfce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装KDE（Plasma）"><span class="toc-number">3.3.2.</span> <span class="toc-text">安装KDE（Plasma）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装桌面管理器"><span class="toc-number">3.4.</span> <span class="toc-text">安装桌面管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装sddm"><span class="toc-number">3.4.1.</span> <span class="toc-text">安装sddm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置开机启动sddm服务"><span class="toc-number">3.4.2.</span> <span class="toc-text">设置开机启动sddm服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提前配置网络"><span class="toc-number">3.5.</span> <span class="toc-text">提前配置网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装vmtools（虚拟机工具）"><span class="toc-number">4.</span> <span class="toc-text">安装vmtools（虚拟机工具）</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -421,7 +386,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/blog/2018/09/08/无线DoS攻击/",
+  id: "http://yoursite.com/blog/2020/02/05/ArchLinux安装后的一些配置/",
   owner: 'chujian521',
   repo: 'chujian521',
   oauth: {
