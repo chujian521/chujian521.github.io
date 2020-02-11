@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>X&#39;s blog</title>
+  <title>C++学习笔记0 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一直想学C++，一直没空，现在闲下来了学习下。">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记0">
+<meta property="og:url" content="http://yoursite.com/blog/2020/02/10/C-学习笔记0/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="一直想学C++，一直没空，现在闲下来了学习下。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj30.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Cplus0-0.png">
+<meta property="og:image" content="http://yoursite.com/images/Cplus0-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Cplus0-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Cplus0-3.png">
+<meta property="og:updated_time" content="2020-02-11T09:26:44.360Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="C++学习笔记0">
+<meta name="twitter:description" content="一直想学C++，一直没空，现在闲下来了学习下。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj30.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -151,16 +162,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-C-学习笔记0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-C-学习笔记0" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/02/10/C-学习笔记0/">C++学习笔记0</a>
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记0
     </h1>
   
 
@@ -175,9 +184,76 @@
       
         <p><strong>一直想学C++，一直没空，现在闲下来了学习下。</strong></p>
 <p><img src="/images/fj30.jpg" alt=""></p>
-        
+<a id="more"></a>
+<h2 id="0-0-C-源文件和编码规范"><a href="#0-0-C-源文件和编码规范" class="headerlink" title="0-0  C++源文件和编码规范"></a>0-0  C++源文件和编码规范</h2><h3 id="1-代码文件"><a href="#1-代码文件" class="headerlink" title="1. 代码文件"></a>1. 代码文件</h3><ul>
+<li>world.h 是头文件</li>
+<li>world.hpp 是头文件</li>
+<li>world.cpp 是源文件</li>
+<li>world.cxx 是源文件</li>
+</ul>
+<h3 id="2-编码规范"><a href="#2-编码规范" class="headerlink" title="2. 编码规范"></a>2. 编码规范</h3><p>为什么要使用编码规范？显然是为了让程序具有更好的可读性</p>
+<p>谷歌开源项目风格指南：<a href="https://github.com/zh-google-styleguide/zh-google-styleguide" target="_blank" rel="noopener">https://github.com/zh-google-styleguide/zh-google-styleguide</a></p>
+<h2 id="0-1-Hello-World"><a href="#0-1-Hello-World" class="headerlink" title="0-1 Hello World"></a>0-1 Hello World</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;//头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Hello World"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;<span class="comment">//流插入操作符</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//返回值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>不准使用制表符和分页符等特殊字符，IDE中会将制表符设置并替换为四个空格</li>
+<li>函数的返回值必须明确列出，如果不写返回值编译器会默认为int</li>
+</ul>
+<h2 id="0-2-命名空间-namespace"><a href="#0-2-命名空间-namespace" class="headerlink" title="0-2 命名空间(namespace)"></a>0-2 命名空间(namespace)</h2><p>所谓namespace，是指标识符的各种可见范围。C++标准程序库中的所有标识符都被定义于一个名为std的namespace中。<br>一 ：<iostream>和&lt;iostream.h&gt;格式不一样，前者没有后缀，实际上，在你的编译器include文件夹里面可以看到，二者是两个文件，打开文件就会发现，里面的代码是不一样的。后缀为.h的头文件c++标准已经明确提出不支持了，早些的实现将标准库功能定义在全局空间里，声明在带.h后缀的头文件里，c++标准为了和C区别开，也为了正确使用命名空间，规定头文件不使用后缀.h。 因此，当使用&lt;iostream.h&gt;时，相当于在c中调用库函数，使用的是全局命名空间，也就是早期的c++实现；当使用<iostream>的时候，该头文件没有定义全局命名空间，必须使用namespace std；这样才能正确使用cout。<br>二： 由于namespace的概念，使用C++标准程序库的任何标识符时，可以有三种选择：<br>1、直接指定标识符。例如std::iostream而不是iostream。完整语句如下： std::cout &lt;&lt; std::hex &lt;&lt; 3.4 &lt;&lt; std::endl;<br>2、使用using关键字。 using std::cout; using std::endl; using std::cin; 以上程序可以写成 cout &lt;&lt; std::hex &lt;&lt; 3.4 &lt;&lt; endl;<br>3、最方便的就是使用using namespace std <strong>（一般不用）</strong>; 例如： using namespace std;这样命名空间std内定义的所有标识符都有效（曝光）。就好像它们被声明为全局变量一样。那么以上语句可以如下写: cout &lt;&lt;hex &lt;&lt; 3.4 &lt;&lt; endl;<strong>因为标准库非常的庞大，所以程序员在选择的类的名称或函数名时就很有可能和标准库中的某个名字相同。</strong>所以为了避免这种情况所造成的名字冲突，就把标准库中的一切都被放在名字空间std中。但这又会带来了一个新问题。无数原有的C++代码都依赖于使用了多年的伪标准库中的功能，他们都是在全局空间下的。所以就有了&lt;iostream.h&gt;和<iostream>等等这样的头文件，一个是为了兼容以前的C++代码，一个是为了支持新的标准。命名空间std封装的是标准程序库的名称，标准程序库为了和以前的头文件区别，一般不加”.h”。</iostream></iostream></iostream></p>
+<h4 id="有无命名空间的区别："><a href="#有无命名空间的区别：" class="headerlink" title="有无命名空间的区别："></a>有无命名空间的区别：</h4><p><img src="/images/Cplus0-0.png" alt=""></p>
+<h2 id="0-3-编译C-程序"><a href="#0-3-编译C-程序" class="headerlink" title="0-3 编译C++程序"></a>0-3 编译C++程序</h2><h3 id="步骤如下："><a href="#步骤如下：" class="headerlink" title="步骤如下："></a>步骤如下：</h3><p><img src="/images/Cplus0-1.png" alt=""></p>
+<h2 id="0-4-处理错误"><a href="#0-4-处理错误" class="headerlink" title="0-4 处理错误"></a>0-4 处理错误</h2><h3 id="4-1-错误分类"><a href="#4-1-错误分类" class="headerlink" title="4.1 错误分类"></a>4.1 错误分类</h3><ul>
+<li>Syntax Error（语法错误）</li>
+<li>Runtime Error（运行时错误）</li>
+<li>Logic Error （逻辑错误）</li>
+</ul>
+<p>语法错误就是违反了编程语言的语句形式或者使用规则，一般由编译器检查指出；运行时错误是指程序运行时，遇到一个无法执行的操作，一般编译器无法检查指出；逻辑错误是指程序运行结果与预期的正确结果不一致，编译器无法检查指出。</p>
+<h3 id="4-2-常见语法错误"><a href="#4-2-常见语法错误" class="headerlink" title="4.2 常见语法错误"></a>4.2 常见语法错误</h3><ul>
+<li>写错关键字</li>
+<li>遗漏分号</li>
+<li>遗漏括号</li>
+<li>遗漏引号</li>
+<li>全半角中英文混写</li>
+<li>命名空间引发的错误</li>
+</ul>
+<h2 id="0-5-输入和输出"><a href="#0-5-输入和输出" class="headerlink" title="0-5 输入和输出"></a>0-5 输入和输出</h2><h3 id="5-1-输入输出分类"><a href="#5-1-输入输出分类" class="headerlink" title="5.1 输入输出分类"></a>5.1 输入输出分类</h3><ul>
+<li>标准IO</li>
+<li>文件IO</li>
+<li>字符串IO</li>
+<li>网络IO</li>
+</ul>
+<h3 id="5-2-C-的输入和输出"><a href="#5-2-C-的输入和输出" class="headerlink" title="5.2 C++的输入和输出"></a>5.2 C++的输入和输出</h3><p>C++使用一种叫做“流”的概念对屏幕、键盘或者文件进行输入输出操作</p>
+<p><img src="/images/Cplus0-2.png" alt=""></p>
+<p><img src="/images/Cplus0-3.png" alt=""></p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -197,16 +273,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2020/02/10/C-学习笔记0/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/02/10/C-学习笔记0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/02/05/ArchLinux安装后的一些配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ArchLinux安装后的一些配置</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -221,704 +356,48 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ArchLinux安装后的一些配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/02/05/ArchLinux安装后的一些配置/">ArchLinux安装后的一些配置</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2020/02/05/ArchLinux安装后的一些配置/" class="archive-article-date">
-  	<time datetime="2020-02-05T08:35:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>前几天安装好了Arch Linux的基础包部分，现在试着配置一下我们安装好的系统</strong></p>
-<p><img src="/images/fj29.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2020/02/05/ArchLinux安装后的一些配置/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-0-C-源文件和编码规范"><span class="toc-number">1.</span> <span class="toc-text">0-0  C++源文件和编码规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-代码文件"><span class="toc-number">1.1.</span> <span class="toc-text">1. 代码文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-编码规范"><span class="toc-number">1.2.</span> <span class="toc-text">2. 编码规范</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-1-Hello-World"><span class="toc-number">2.</span> <span class="toc-text">0-1 Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-2-命名空间-namespace"><span class="toc-number">3.</span> <span class="toc-text">0-2 命名空间(namespace)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#有无命名空间的区别："><span class="toc-number">3.0.1.</span> <span class="toc-text">有无命名空间的区别：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-3-编译C-程序"><span class="toc-number">4.</span> <span class="toc-text">0-3 编译C++程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤如下："><span class="toc-number">4.1.</span> <span class="toc-text">步骤如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-4-处理错误"><span class="toc-number">5.</span> <span class="toc-text">0-4 处理错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-错误分类"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 错误分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-常见语法错误"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 常见语法错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-5-输入和输出"><span class="toc-number">6.</span> <span class="toc-text">0-5 输入和输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-输入输出分类"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 输入输出分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-C-的输入和输出"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 C++的输入和输出</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-ArchLinux初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/02/02/ArchLinux初体验/">ArchLinux初体验</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2020/02/02/ArchLinux初体验/" class="archive-article-date">
-  	<time datetime="2020-02-02T13:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>有时间玩一些好玩的了，听说亲手弄一个Arch Linux是一个很有成就感的事情，说干就干，记录一下配置的过程吧。</strong></p>
-<p><img src="/images/fj26.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2020/02/02/ArchLinux初体验/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux开发与应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/01/19/Linux开发与应用/">Linux开发与应用</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2020/01/19/Linux开发与应用/" class="archive-article-date">
-  	<time datetime="2020-01-19T04:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>趁着假期没有事情做，具体的学习一下Linux在实际使用时的常用技巧。</strong></p>
-<p><img src="/images/fj28.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2020/01/19/Linux开发与应用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法练习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/01/13/算法练习/">算法练习</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2020/01/13/算法练习/" class="archive-article-date">
-  	<time datetime="2020-01-13T06:07:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>假期闲着没事干刷刷算法题，为以后找工作面试做一下准备工作</strong></p>
-<p><img src="/images/fj27.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2020/01/13/算法练习/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-电子数据取证参赛经验总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/12/01/电子数据取证参赛经验总结/">电子数据取证参赛经验总结</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/12/01/电子数据取证参赛经验总结/" class="archive-article-date">
-  	<time datetime="2019-12-01T05:39:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>参加了三次取证比赛了，也谈不上有什么经验吧，就简单写一下一些注意事项以及可能会踩坑的地方和一些技巧吧。</strong></p>
-<p><img src="/images/fj25.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">电子数据取证</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/12/01/电子数据取证参赛经验总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-使用多进程、多线程、多路复用实现Web服务器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/">使用多进程、多线程、多路复用实现Web服务器</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/" class="archive-article-date">
-  	<time datetime="2019-10-30T01:27:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>操作系统课程的实验，要求使用多进程、多线程、多路复用实现Web服务器并发，使用的是tiny的一个简单的WEB服务器源码进行修改，使其支持多进程、多线程、多路复用。</strong></p>
-<p><img src="/images/fj24.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux内核编译与系统调用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/10/21/Linux内核编译与系统调用/">Linux内核编译与系统调用</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/10/21/Linux内核编译与系统调用/" class="archive-article-date">
-  	<time datetime="2019-10-21T06:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>今天尝试一下人生中第一次编译Linux内核，遇到了几个问题，也收获了很多技能，总的来说还是很有意义的。</strong></p>
-<p><img src="/images/fj23.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/10/21/Linux内核编译与系统调用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-密码学实验一" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/10/20/密码学实验一/">密码学实验一</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/10/20/密码学实验一/" class="archive-article-date">
-  	<time datetime="2019-10-20T08:04:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>密码学实验一做完了，写篇博客总结一下。</p>
-<p><img src="/images/fj22.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">密码学</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/10/20/密码学实验一/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-调试工具GDB的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/08/31/调试工具GDB的使用/">调试工具GDB的使用</a>
-    </h1>
-  
-
-        
-        <a href="/blog/2019/08/31/调试工具GDB的使用/" class="archive-article-date">
-  	<time datetime="2019-08-31T07:50:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>大三了，是时候定一下自己的方向了，还剩一年就要开始秋招了。准备向Linux内核和Linux嵌入式方向走，感觉未来物联网设备会走进千家万户，Linux嵌入式系统用途将会增加很多。既然选择了某个方向，有了目标之后就义无反顾的走下去吧！</strong></p>
-<p><img src="/images/fj21.jpg" alt=""></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">GDB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog/2019/08/31/调试工具GDB的使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/blog/2020/02/10/C-学习笔记0/",
+  owner: 'chujian521',
+  repo: 'chujian521',
+  oauth: {
+    client_id: '92cb754049b5b07da081',
+    client_secret: '0c2a286ab9760e5057d75df14d7ce140cc5fbbec',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -950,8 +429,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
