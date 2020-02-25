@@ -6,33 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>使用多进程、多线程、多路复用实现Web服务器 | X&#39;s blog</title>
+  <title>Archives | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="操作系统课程的实验，要求使用多进程、多线程、多路复用实现Web服务器并发，使用的是tiny的一个简单的WEB服务器源码进行修改，使其支持多进程、多线程、多路复用。">
-<meta name="keywords" content="Linux,网络编程">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用多进程、多线程、多路复用实现Web服务器">
-<meta property="og:url" content="http://yoursite.com/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="X&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/archives/page/5/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="操作系统课程的实验，要求使用多进程、多线程、多路复用实现Web服务器并发，使用的是tiny的一个简单的WEB服务器源码进行修改，使其支持多进程、多线程、多路复用。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/fj24.jpg">
-<meta property="og:image" content="http://yoursite.com/images/os4-1.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-2.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-3.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-4.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-5.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-6.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-7.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-6.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-7.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-6.png">
-<meta property="og:image" content="http://yoursite.com/images/os4-7.png">
-<meta property="og:updated_time" content="2019-10-30T02:45:24.894Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用多进程、多线程、多路复用实现Web服务器">
-<meta name="twitter:description" content="操作系统课程的实验，要求使用多进程、多线程、多路复用实现Web服务器并发，使用的是tiny的一个简单的WEB服务器源码进行修改，使其支持多进程、多线程、多路复用。">
-<meta name="twitter:image" content="http://yoursite.com/images/fj24.jpg">
+<meta name="twitter:title" content="X&#39;s blog">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -173,251 +155,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-使用多进程、多线程、多路复用实现Web服务器" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      使用多进程、多线程、多路复用实现Web服务器
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/blog/2018/07/25/hello-world/" class="archive-article-date">
+  	<time datetime="2018-07-25T11:32:49.544Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-25</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/blog/2018/07/25/hello-world/">Hello World</a>
     </h1>
   
 
-        
-        <a href="/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/" class="archive-article-date">
-  	<time datetime="2019-10-30T01:27:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
-</a>
-        
-      </header>
-	  
-	  <div align="center" class="post-count">
-      字数：1.9k字 | 预计阅读时长：8分钟</div>
-	  
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>操作系统课程的实验，要求使用多进程、多线程、多路复用实现Web服务器并发，使用的是tiny的一个简单的WEB服务器源码进行修改，使其支持多进程、多线程、多路复用。</strong></p>
-<p><img src="/images/fj24.jpg" alt=""></p>
-<a id="more"></a>
-<h2 id="相关原理"><a href="#相关原理" class="headerlink" title="相关原理"></a>相关原理</h2><h3 id="TCP套接字通信"><a href="#TCP套接字通信" class="headerlink" title="TCP套接字通信"></a>TCP套接字通信</h3><p>Echo通信例子：</p>
-<p><img src="/images/os4-1.png" alt=""></p>
-<p>select：</p>
-<p><img src="/images/os4-2.png" alt=""></p>
-<p>文件描述符集合操作：</p>
-<p><img src="/images/os4-3.png" alt=""></p>
-<p>一般来说，在每次使用select()函数之前，首先使用FD_ZERO()和FD_SET()来初始化文件描述符集（在需要重复调用select()函数的时候，先把一次初始化好的文件描述符集备份下来，每次读取它即可）。在select()函数返回之后，可循环使用FD_ISSET()来测试描述符集，在执行完对相关文件描述符的操作之后，使用FD_CLR()来清除描述符集。<br>另外，select()函数中的timeout是一个struct timeval类型的指针，该结构体如下所示：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  	   <span class="keyword">long</span> tv_sec; <span class="comment">/* 秒 */</span></span><br><span class="line">  	   <span class="keyword">long</span> tv_unsec; <span class="comment">/* 微秒 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="WEB-server"><a href="#WEB-server" class="headerlink" title="WEB server"></a>WEB server</h3><p>模型：</p>
-<p><img src="/images/os4-4.png" alt=""></p>
-<p><img src="/images/os4-5.png" alt=""></p>
-<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><h3 id="多进程实现服务器并发"><a href="#多进程实现服务器并发" class="headerlink" title="多进程实现服务器并发"></a>多进程实现服务器并发</h3><p>调用Fork创建子进程，父进程继续监听。在子进程中对客户端进行处理，因为fork完全复制父进程，所以要在子进程中关掉监听套接字listenfd。子进程处理完之后，父子进程都要关掉连接套接字connfd。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> listenfd, connfd;</span><br><span class="line">    <span class="keyword">char</span> hostname[MAXLINE], port[MAXLINE];</span><br><span class="line">    <span class="keyword">socklen_t</span> clientlen;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_storage</span> <span class="title">clientaddr</span>;</span></span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Check command line args */</span></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"usage: %s &lt;port&gt;\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    listenfd = Open_listenfd(argv[<span class="number">1</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//原始模式 </span></span><br><span class="line">    <span class="comment">/*while (1) &#123;</span></span><br><span class="line"><span class="comment">	clientlen = sizeof(clientaddr);</span></span><br><span class="line"><span class="comment">	connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen); //line:netp:tiny:accept</span></span><br><span class="line"><span class="comment">        Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span></span><br><span class="line"><span class="comment">                    port, MAXLINE, 0);</span></span><br><span class="line"><span class="comment">        printf("Accepted connection from (%s, %s)\n", hostname, port);</span></span><br><span class="line"><span class="comment">	doit(connfd);                                             //line:netp:tiny:doit</span></span><br><span class="line"><span class="comment">	Close(connfd);                                            //line:netp:tiny:close</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line">    <span class="comment">// 多进程 </span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        clientlen = <span class="keyword">sizeof</span>(clientaddr);</span><br><span class="line">        connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen); </span><br><span class="line">        <span class="keyword">if</span> (Fork() == <span class="number">0</span>) &#123;</span><br><span class="line">            Close(listenfd);</span><br><span class="line">            Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span><br><span class="line">                        port, MAXLINE, <span class="number">0</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"Accepted connection from (%s, %s)\n"</span>, hostname, port);</span><br><span class="line">            doit(connfd);</span><br><span class="line">            Close(connfd);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Close(connfd);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">sudo ./tiny 6666</span><br></pre></td></tr></table></figure>
-<p><img src="/images/os4-6.png" alt=""></p>
-<p><img src="/images/os4-7.png" alt=""></p>
-<h3 id="多线程实现服务器并发"><a href="#多线程实现服务器并发" class="headerlink" title="多线程实现服务器并发"></a>多线程实现服务器并发</h3><p>定义一个tid用于记录创建线程的id，主线程用于监听套接字，有新的连接建立之后创建一个副线程，主线程继续监听。副线程调用执行线程函数，在该函数中完成对新建立连接的处理，处理完之后关闭套接字，副线程结束。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">thread</span><span class="params">(<span class="keyword">void</span> *argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> connfd = *((<span class="keyword">int</span> *)argv);</span><br><span class="line">    Pthread_detach(pthread_self());</span><br><span class="line">    doit(connfd);  </span><br><span class="line">    Close(connfd);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> listenfd, connfd;</span><br><span class="line">    <span class="keyword">char</span> hostname[MAXLINE], port[MAXLINE];</span><br><span class="line">    <span class="keyword">socklen_t</span> clientlen;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_storage</span> <span class="title">clientaddr</span>;</span></span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Check command line args */</span></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"usage: %s &lt;port&gt;\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    listenfd = Open_listenfd(argv[<span class="number">1</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//原始模式 </span></span><br><span class="line">    <span class="comment">/*while (1) &#123;</span></span><br><span class="line"><span class="comment">	clientlen = sizeof(clientaddr);</span></span><br><span class="line"><span class="comment">	connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen); //line:netp:tiny:accept</span></span><br><span class="line"><span class="comment">        Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span></span><br><span class="line"><span class="comment">                    port, MAXLINE, 0);</span></span><br><span class="line"><span class="comment">        printf("Accepted connection from (%s, %s)\n", hostname, port);</span></span><br><span class="line"><span class="comment">	doit(connfd);                                             //line:netp:tiny:doit</span></span><br><span class="line"><span class="comment">	Close(connfd);                                            //line:netp:tiny:close</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">//多线程 </span></span><br><span class="line">    <span class="keyword">pthread_t</span> tid;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        clientlen = <span class="keyword">sizeof</span>(clientaddr);</span><br><span class="line">        connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen);</span><br><span class="line">            Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span><br><span class="line">                        port, MAXLINE, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Accepted connection from (%s, %s)\n"</span>, hostname, port);</span><br><span class="line">        Pthread_create(&amp;tid, <span class="literal">NULL</span>, thread, &amp;connfd);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">sudo ./tiny 6666</span><br></pre></td></tr></table></figure>
-<p><img src="/images/os4-6.png" alt=""></p>
-<p><img src="/images/os4-7.png" alt=""></p>
-<h3 id="多路复用实现并发"><a href="#多路复用实现并发" class="headerlink" title="多路复用实现并发"></a>多路复用实现并发</h3><p>Fd_set rds,tmp定义两个文件描述符集，rds为用于监控的集合，tmp用于临时复制rds。FD_ZERO将rds清零，RD_SET将选定的位置1，fd_max是监听的套接字中最大的套接字描述符加一。<br>因为每次执行完select之后，未发生状态变化的套接字位会被置0，所以在循环开始时要对rds进行复制，对副本tmp进行select操作。select会把未就绪的描述符位置0，遍历文件描述符至fd_max，对每个文件描述符进行判断是否在文件描述符集tmp中，若在则进行处理。因为处理的都是就绪的套接字，所以不会发生阻塞。<br>如果为监听套接字就绪，新建立连接的描述符要加入rds中，如果为连接套接字，处理完之后要将其从文件描述符集rds中清除。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> listenfd, connfd;</span><br><span class="line">    <span class="keyword">char</span> hostname[MAXLINE], port[MAXLINE];</span><br><span class="line">    <span class="keyword">socklen_t</span> clientlen;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_storage</span> <span class="title">clientaddr</span>;</span></span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Check command line args */</span></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"usage: %s &lt;port&gt;\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    listenfd = Open_listenfd(argv[<span class="number">1</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//原始模式 </span></span><br><span class="line">    <span class="comment">/*while (1) &#123;</span></span><br><span class="line"><span class="comment">	clientlen = sizeof(clientaddr);</span></span><br><span class="line"><span class="comment">	connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen); //line:netp:tiny:accept</span></span><br><span class="line"><span class="comment">        Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span></span><br><span class="line"><span class="comment">                    port, MAXLINE, 0);</span></span><br><span class="line"><span class="comment">        printf("Accepted connection from (%s, %s)\n", hostname, port);</span></span><br><span class="line"><span class="comment">	doit(connfd);                                             //line:netp:tiny:doit</span></span><br><span class="line"><span class="comment">	Close(connfd);                                            //line:netp:tiny:close</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line">    <span class="comment">//多路复用 </span></span><br><span class="line">    fd_set rds, tmp;</span><br><span class="line">    <span class="keyword">int</span> fd_max,i;</span><br><span class="line">    FD_ZERO(&amp;rds);</span><br><span class="line">    FD_SET(listenfd, &amp;rds);</span><br><span class="line">    fd_max = listenfd + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        tmp = rds;</span><br><span class="line">        select(fd_max, &amp;tmp, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;fd_max; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (FD_ISSET(i, &amp;tmp)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (listenfd == i) &#123;</span><br><span class="line">                    clientlen = <span class="keyword">sizeof</span>(clientaddr);</span><br><span class="line">                    connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen);</span><br><span class="line">                    FD_SET(connfd, &amp;rds);</span><br><span class="line">                    <span class="keyword">if</span> (fd_max &lt;= connfd) fd_max = connfd+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">                    Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span><br><span class="line">                        port, MAXLINE, <span class="number">0</span>);</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">"Accepted connection from (%s, %s)\n"</span>, hostname, port);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    doit(i);</span><br><span class="line">                    FD_CLR(i, &amp;rds);</span><br><span class="line">                    Close(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">sudo ./tiny 6666</span><br></pre></td></tr></table></figure>
-<p><img src="/images/os4-6.png" alt=""></p>
-<p><img src="/images/os4-7.png" alt=""></p>
-<h2 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h2><p>使用进程最简单，因为每个进程互相独立，不影响主程序的稳定性，子进程崩溃没关系，每个子进程都有自己的地址空间和相关资源，总体能够达到的性能上限非常大，但是调度开销比较大。<br>多路复用编程复杂度高，但是由于多路复用是在单一进程的上下文中的，因此每个逻辑流程都能访问该进程的全部地址空间，所以开销比多进程低得多。<br>多线程每个线程都有自己的线程上下文，所有的运行在一个进程里的线程共享该进程的整个虚拟地址空间。由于线程运行在单一进程中，因此共享这个进程虚拟地址空间的整个内容，包括它的代码、数据、堆、共享库和打开的文件。优点是程序逻辑和控制方式简单，所有线程可以直接共享内存和变量等，耗的总资源比进程方式好。但是由于每个线程与主程序共用地址空间，地址空间受限，一个线程的崩溃也可能影响到整个程序的稳定性，性能提高也有限制。</p>
-<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><p>tiny.c修改的main函数部分代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">thread</span><span class="params">(<span class="keyword">void</span> *argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> connfd = *((<span class="keyword">int</span> *)argv);</span><br><span class="line">    Pthread_detach(pthread_self());</span><br><span class="line">    doit(connfd);  </span><br><span class="line">    Close(connfd);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> listenfd, connfd;</span><br><span class="line">    <span class="keyword">char</span> hostname[MAXLINE], port[MAXLINE];</span><br><span class="line">    <span class="keyword">socklen_t</span> clientlen;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_storage</span> <span class="title">clientaddr</span>;</span></span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Check command line args */</span></span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"usage: %s &lt;port&gt;\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    listenfd = Open_listenfd(argv[<span class="number">1</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//原始模式 </span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">	clientlen = <span class="keyword">sizeof</span>(clientaddr);</span><br><span class="line">	connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen); <span class="comment">//line:netp:tiny:accept</span></span><br><span class="line">        Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span><br><span class="line">                    port, MAXLINE, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Accepted connection from (%s, %s)\n"</span>, hostname, port);</span><br><span class="line">	doit(connfd);                                             <span class="comment">//line:netp:tiny:doit</span></span><br><span class="line">	Close(connfd);                                            <span class="comment">//line:netp:tiny:close</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 多进程 </span></span><br><span class="line">    <span class="comment">/*while (1) &#123;</span></span><br><span class="line"><span class="comment">        clientlen = sizeof(clientaddr);</span></span><br><span class="line"><span class="comment">        connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen); </span></span><br><span class="line"><span class="comment">        if (Fork() == 0) &#123;</span></span><br><span class="line"><span class="comment">            Close(listenfd);</span></span><br><span class="line"><span class="comment">            Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span></span><br><span class="line"><span class="comment">                        port, MAXLINE, 0);</span></span><br><span class="line"><span class="comment">            printf("Accepted connection from (%s, %s)\n", hostname, port);</span></span><br><span class="line"><span class="comment">            doit(connfd);</span></span><br><span class="line"><span class="comment">            Close(connfd);</span></span><br><span class="line"><span class="comment">            exit(0);</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        Close(connfd);</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line">    <span class="comment">//多路复用 </span></span><br><span class="line">    <span class="comment">/* </span></span><br><span class="line"><span class="comment">    fd_set rds, tmp;</span></span><br><span class="line"><span class="comment">    int fd_max,i;</span></span><br><span class="line"><span class="comment">    FD_ZERO(&amp;rds);</span></span><br><span class="line"><span class="comment">    FD_SET(listenfd, &amp;rds);</span></span><br><span class="line"><span class="comment">    fd_max = listenfd + 1;</span></span><br><span class="line"><span class="comment">	while (1) &#123;</span></span><br><span class="line"><span class="comment">        tmp = rds;</span></span><br><span class="line"><span class="comment">        select(fd_max, &amp;tmp, NULL, NULL, NULL);</span></span><br><span class="line"><span class="comment">        for (i=0; i&lt;fd_max; i++) &#123;</span></span><br><span class="line"><span class="comment">            if (FD_ISSET(i, &amp;tmp)) &#123;</span></span><br><span class="line"><span class="comment">                if (listenfd == i) &#123;</span></span><br><span class="line"><span class="comment">                    clientlen = sizeof(clientaddr);</span></span><br><span class="line"><span class="comment">                    connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen);</span></span><br><span class="line"><span class="comment">                    FD_SET(connfd, &amp;rds);</span></span><br><span class="line"><span class="comment">                    if (fd_max &lt;= connfd) fd_max = connfd+1;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">                    Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span></span><br><span class="line"><span class="comment">                        port, MAXLINE, 0);</span></span><br><span class="line"><span class="comment">                    printf("Accepted connection from (%s, %s)\n", hostname, port);</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">                else &#123;</span></span><br><span class="line"><span class="comment">                    doit(i);</span></span><br><span class="line"><span class="comment">                    FD_CLR(i, &amp;rds);</span></span><br><span class="line"><span class="comment">                    Close(i);</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">            &#125;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;*/</span> </span><br><span class="line">    <span class="comment">//多线程 </span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*pthread_t tid;</span></span><br><span class="line"><span class="comment">	while (1) &#123;</span></span><br><span class="line"><span class="comment">        clientlen = sizeof(clientaddr);</span></span><br><span class="line"><span class="comment">        connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen);</span></span><br><span class="line"><span class="comment">            Getnameinfo((SA *) &amp;clientaddr, clientlen, hostname, MAXLINE, </span></span><br><span class="line"><span class="comment">                        port, MAXLINE, 0);</span></span><br><span class="line"><span class="comment">        printf("Accepted connection from (%s, %s)\n", hostname, port);</span></span><br><span class="line"><span class="comment">        Pthread_create(&amp;tid, NULL, thread, &amp;connfd);</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <div class="article-info info-on-right">
+          
+          
 
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/blog/2019/12/01/电子数据取证参赛经验总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          电子数据取证参赛经验总结
-        
-      </div>
-    </a>
   
   
-    <a href="/blog/2019/10/21/Linux内核编译与系统调用/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Linux内核编译与系统调用</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#相关原理"><span class="toc-number">1.</span> <span class="toc-text">相关原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP套接字通信"><span class="toc-number">1.1.</span> <span class="toc-text">TCP套接字通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WEB-server"><span class="toc-number">1.2.</span> <span class="toc-text">WEB server</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现过程"><span class="toc-number">2.</span> <span class="toc-text">实现过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多进程实现服务器并发"><span class="toc-number">2.1.</span> <span class="toc-text">多进程实现服务器并发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多线程实现服务器并发"><span class="toc-number">2.2.</span> <span class="toc-text">多线程实现服务器并发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多路复用实现并发"><span class="toc-number">2.3.</span> <span class="toc-text">多路复用实现并发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验结果分析"><span class="toc-number">3.</span> <span class="toc-text">实验结果分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源代码"><span class="toc-number">4.</span> <span class="toc-text">源代码</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/blog/2019/10/30/使用多进程、多线程、多路复用实现Web服务器/",
-  owner: 'chujian521',
-  repo: 'chujian521',
-  oauth: {
-    client_id: '92cb754049b5b07da081',
-    client_secret: '0c2a286ab9760e5057d75df14d7ce140cc5fbbec',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/page/4/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span>
+    </nav>
   
 
 
@@ -450,8 +233,8 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
