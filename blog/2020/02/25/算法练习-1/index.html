@@ -17,7 +17,7 @@
 <meta property="og:description" content="最近几天写算法写的挺开心的，为了以后保研面试啥的，继续准备算法学习工作，在家闲着也是闲着。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj32.jpg">
-<meta property="og:updated_time" content="2020-03-02T09:30:31.990Z">
+<meta property="og:updated_time" content="2020-03-03T04:58:49.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法练习-1">
 <meta name="twitter:description" content="最近几天写算法写的挺开心的，为了以后保研面试啥的，继续准备算法学习工作，在家闲着也是闲着。">
@@ -84,7 +84,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">61.7k</span>
+			总字数 <span class="post-count">64.6k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -181,7 +181,7 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：2.2k字 | 预计阅读时长：9分钟</div>
+      字数：2.6k字 | 预计阅读时长：11分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
@@ -263,6 +263,18 @@
 <p>来源：<a href="https://leetcode-cn.com/problems/utf-8-validation" target="_blank" rel="noopener">https://leetcode-cn.com/problems/utf-8-validation</a></p>
 <h3 id="5-2思路分析"><a href="#5-2思路分析" class="headerlink" title="5.2思路分析"></a>5.2思路分析</h3><p>最简单的思路就是不做什么进制转换，直接按照不同条件分支判断即可，然后判断后面的字符是否符合标准，如果有一个不符合就直接返回false。中间踩了一个坑，就是忘记了数字位数不够的问题，导致数组访问溢出的情况。</p>
 <h3 id="5-3代码"><a href="#5-3代码" class="headerlink" title="5.3代码"></a>5.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">validUtf8</span><span class="params">(<span class="keyword">int</span>* data, <span class="keyword">int</span> dataSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>,j;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;dataSize)&#123;</span><br><span class="line">        <span class="keyword">if</span>(data[i]&gt;=<span class="number">240</span>&amp;&amp;data[i]&lt;=<span class="number">247</span>)&#123;<span class="comment">//情形4</span></span><br><span class="line">            <span class="keyword">if</span>(dataSize&lt;<span class="number">4</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">1</span>;j &lt; <span class="number">4</span>;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(data[i+j]&lt;<span class="number">128</span>||data[i+j]&gt;<span class="number">191</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            i = i+<span class="number">4</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(data[i]&gt;=<span class="number">224</span>&amp;&amp;data[i]&lt;=<span class="number">239</span>)&#123;<span class="comment">//情形3</span></span><br><span class="line">            <span class="keyword">for</span>(j = <span class="number">1</span>;j &lt; <span class="number">3</span>;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(dataSize&lt;<span class="number">3</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(data[i+j]&lt;<span class="number">128</span>||data[i+j]&gt;<span class="number">191</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            i = i+<span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(data[i]&gt;=<span class="number">192</span>&amp;&amp;data[i]&lt;=<span class="number">223</span>)&#123;<span class="comment">//情形2</span></span><br><span class="line">            <span class="keyword">if</span>(dataSize&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(data[i+<span class="number">1</span>]&lt;<span class="number">128</span>||data[i+<span class="number">1</span>]&gt;<span class="number">191</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;  </span><br><span class="line">            i = i+<span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(data[i]&lt;=<span class="number">127</span>)&#123;<span class="comment">//情形1</span></span><br><span class="line">            i = i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;<span class="comment">//不符合要求</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-二叉树的最小深度"><a href="#6-二叉树的最小深度" class="headerlink" title="6.二叉树的最小深度"></a>6.二叉树的最小深度</h2><h3 id="6-1题目描述"><a href="#6-1题目描述" class="headerlink" title="6.1题目描述"></a>6.1题目描述</h3><p>给定一个二叉树，找出其最小深度。</p>
+<p>最小深度是从根节点到最近叶子节点的最短路径上的节点数量。</p>
+<p>说明: 叶子节点是指没有子节点的节点。</p>
+<p>示例:</p>
+<p>给定二叉树 [3,9,20,null,null,15,7],</p>
+<pre><code>3
+</code></pre><p>   / \<br>  9  20<br>    /  \<br>   15   7</p>
+<p>返回它的最小深度  2.</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/minimum-depth-of-binary-tree</a></p>
+<h3 id="6-2思路分析"><a href="#6-2思路分析" class="headerlink" title="6.2思路分析"></a>6.2思路分析</h3><p>第一思路就是使用递归遍历，遍历整棵树后即可获得树的最小深度。</p>
+<p>递归算法一定要注意，当时我将depth初始化为0的时候会出错，因为后面有个取最小值的步骤，如果深度初始化为0，每次取最小值都取0，最后结果肯定是错误的。因此我们需要取一个最大的值，保证不会出问题。</p>
+<h3 id="6-3代码"><a href="#6-3代码" class="headerlink" title="6.3代码"></a>6.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a&lt;=b)&#123;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(struct TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> depth = <span class="number">65535</span>;<span class="comment">//不应该初始化为0，应该初始化为一个大的值</span></span><br><span class="line">    <span class="keyword">if</span>(root-&gt;left == <span class="literal">NULL</span> &amp;&amp; root-&gt;right == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;left != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        depth = min(minDepth(root-&gt;left),depth);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;right != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        depth = min(minDepth(root-&gt;right),depth);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> depth+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -410,7 +422,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-复杂链表的复制"><span class="toc-number">1.</span> <span class="toc-text">1.复杂链表的复制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-对称二叉树"><span class="toc-number">2.</span> <span class="toc-text">2.对称二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-寻找旋转排序数组中的最小值"><span class="toc-number">3.</span> <span class="toc-text">3.寻找旋转排序数组中的最小值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路分析"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-二叉搜索树中第K小的元素"><span class="toc-number">4.</span> <span class="toc-text">4.二叉搜索树中第K小的元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路分析"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4复习遍历算法"><span class="toc-number">4.4.</span> <span class="toc-text">4.4复习遍历算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#先序遍历"><span class="toc-number">4.4.1.</span> <span class="toc-text">先序遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中序遍历"><span class="toc-number">4.4.2.</span> <span class="toc-text">中序遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后序遍历"><span class="toc-number">4.4.3.</span> <span class="toc-text">后序遍历</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-UTF8编码验证"><span class="toc-number">5.</span> <span class="toc-text">5.UTF8编码验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1题目描述"><span class="toc-number">5.1.</span> <span class="toc-text">5.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2思路分析"><span class="toc-number">5.2.</span> <span class="toc-text">5.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3代码"><span class="toc-number">5.3.</span> <span class="toc-text">5.3代码</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-复杂链表的复制"><span class="toc-number">1.</span> <span class="toc-text">1.复杂链表的复制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-对称二叉树"><span class="toc-number">2.</span> <span class="toc-text">2.对称二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-寻找旋转排序数组中的最小值"><span class="toc-number">3.</span> <span class="toc-text">3.寻找旋转排序数组中的最小值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路分析"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-二叉搜索树中第K小的元素"><span class="toc-number">4.</span> <span class="toc-text">4.二叉搜索树中第K小的元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路分析"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4复习遍历算法"><span class="toc-number">4.4.</span> <span class="toc-text">4.4复习遍历算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#先序遍历"><span class="toc-number">4.4.1.</span> <span class="toc-text">先序遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中序遍历"><span class="toc-number">4.4.2.</span> <span class="toc-text">中序遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后序遍历"><span class="toc-number">4.4.3.</span> <span class="toc-text">后序遍历</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-UTF8编码验证"><span class="toc-number">5.</span> <span class="toc-text">5.UTF8编码验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1题目描述"><span class="toc-number">5.1.</span> <span class="toc-text">5.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2思路分析"><span class="toc-number">5.2.</span> <span class="toc-text">5.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3代码"><span class="toc-number">5.3.</span> <span class="toc-text">5.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-二叉树的最小深度"><span class="toc-number">6.</span> <span class="toc-text">6.二叉树的最小深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1题目描述"><span class="toc-number">6.1.</span> <span class="toc-text">6.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2思路分析"><span class="toc-number">6.2.</span> <span class="toc-text">6.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3代码"><span class="toc-number">6.3.</span> <span class="toc-text">6.3代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -550,10 +562,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -570,19 +578,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -590,11 +586,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Shell</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,11 +618,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
+                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
+                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,7 +630,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">密码学</a>
+                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,7 +642,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+                <a href="javascript:void(0)" class="js-tag color4">密码学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -650,15 +666,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
