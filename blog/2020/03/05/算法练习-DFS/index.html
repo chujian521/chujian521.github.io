@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 协议 | X&#39;s blog</title>
+  <title>算法练习-DFS | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="X&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/协议/index.html">
+  <meta name="description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法练习-DFS">
+<meta property="og:url" content="http://yoursite.com/blog/2020/03/05/算法练习-DFS/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/fj37.jpg">
+<meta property="og:updated_time" content="2020-03-09T12:06:44.354Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="X&#39;s blog">
+<meta name="twitter:title" content="算法练习-DFS">
+<meta name="twitter:description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj37.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -155,164 +162,234 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-算法练习-DFS" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      算法练习-DFS
+    </h1>
+  
+
+        
+        <a href="/blog/2020/03/05/算法练习-DFS/" class="archive-article-date">
+  	<time datetime="2020-03-05T06:36:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-05</time>
+</a>
+        
+      </header>
+	  
+	  <div align="center" class="post-count">
+      字数：1k字 | 预计阅读时长：4分钟</div>
+	  
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。</strong></p>
+<p><img src="/images/fj37.jpg" alt=""></p>
+<a id="more"></a>
+<p><strong>深度优先搜索算法</strong>（英语：Depth-First-Search，DFS）是一种用于遍历或搜索树或图的算法。沿着树的深度遍历树的节点，尽可能深的搜索树的分支。当节点v的所在边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。如果还存在未被发现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。属于盲目搜索。<br>深度优先搜索是图论中的经典算法，利用深度优先搜索算法可以产生目标图的相应拓扑排序表，利用拓扑排序表可以方便的解决很多相关的图论问题，如最大路径问题等等。</p>
+<h2 id="1-验证二叉搜索树"><a href="#1-验证二叉搜索树" class="headerlink" title="1.验证二叉搜索树"></a>1.验证二叉搜索树</h2><h3 id="1-1题目描述"><a href="#1-1题目描述" class="headerlink" title="1.1题目描述"></a>1.1题目描述</h3><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<p>节点的左子树只包含小于当前节点的数。<br>节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。</p>
+<p>示例 1:</p>
+<p>输入:<br>    2<br>   / \<br>  1   3<br>输出: true</p>
+<p>示例 2:</p>
+<p>输入:<br>    5<br>   / \<br>  1   4<br>     / \<br>    3   6<br>输出: false<br>解释: 输入为: [5,1,4,null,null,3,6]。<br>根节点的值为 5 ，但是其右子节点值为 4 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/validate-binary-search-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/validate-binary-search-tree</a></p>
+<h3 id="1-2思路分析"><a href="#1-2思路分析" class="headerlink" title="1.2思路分析"></a>1.2思路分析</h3><p>该题最显然的思路就是采用中序遍历递归调用算法，最开始是用的把所有节点值放进数组中，然后再检查数组是否有序，后来发现太占用内存和花费时间了，就改了一下，记录一次上次节点的值last，然后用last和当前遍历的节点比较即可，节约内存和缩小运行时间。</p>
+<h3 id="1-3代码"><a href="#1-3代码" class="headerlink" title="1.3代码"></a>1.3代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     struct TreeNode *left;</span><br><span class="line"> *     struct TreeNode *right;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">int flag;</span><br><span class="line">long int last ;</span><br><span class="line">void findArray(struct TreeNode* root)&#123;</span><br><span class="line">    if(root == NULL)&#123;</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    findArray(root-&gt;left);</span><br><span class="line">    if(last &gt;= root-&gt;val)</span><br><span class="line">        flag = 1;</span><br><span class="line">    last = root-&gt;val;</span><br><span class="line">    findArray(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line">bool isValidBST(struct TreeNode* root)&#123;</span><br><span class="line">    last = -2147483649;</span><br><span class="line">    flag = 0;</span><br><span class="line">    findArray(root);</span><br><span class="line">    if(flag == 0)</span><br><span class="line">        return true;</span><br><span class="line">    else return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//再次优化版本</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">int</span> last = <span class="number">-2147483649</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(struct TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!isValidBST1(root-&gt;left))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(last &gt;= root-&gt;val)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        last=root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span>(!isValidBST1(root-&gt;right))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-恢复二叉搜索树"><a href="#2-恢复二叉搜索树" class="headerlink" title="2.恢复二叉搜索树"></a>2.恢复二叉搜索树</h2><h3 id="2-1题目描述"><a href="#2-1题目描述" class="headerlink" title="2.1题目描述"></a>2.1题目描述</h3><p>二叉搜索树中的两个节点被错误地交换。</p>
+<p>请在不改变其结构的情况下，恢复这棵树。</p>
+<p>示例 1:</p>
+<p>输入: [1,3,null,null,2]</p>
+<p>   1<br>  /<br> 3<br>  \<br>   2</p>
+<p>输出: [3,1,null,null,2]</p>
+<p>   3<br>  /<br> 1<br>  \<br>   2</p>
+<p>示例 2:</p>
+<p>输入: [3,1,4,null,null,2]</p>
+<p>  3<br> / \<br>1   4<br>   /<br>  2</p>
+<p>输出: [2,1,4,null,null,3]</p>
+<p>  2<br> / \<br>1   4<br>   /<br>  3</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/recover-binary-search-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/recover-binary-search-tree</a></p>
+<h3 id="2-2思路分析"><a href="#2-2思路分析" class="headerlink" title="2.2思路分析"></a>2.2思路分析</h3><p>看到该题也是想到应该中序遍历，二叉排序树中序遍历结果应该是一个递增的数列，我们只需要记住两个错误的节点的指针就好啦，然后将这两个指针中的内容交换，即可恢复出正确的序列值。</p>
+<h3 id="2-3代码"><a href="#2-3代码" class="headerlink" title="2.3代码"></a>2.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">int</span> flag;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">myfirst</span> = <span class="title">NULL</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">mysecond</span> = <span class="title">NULL</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">last</span> = <span class="title">NULL</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recoverTree</span><span class="params">(struct TreeNode* root)</span> </span>&#123;</span><br><span class="line">    myfirst = <span class="literal">NULL</span>;</span><br><span class="line">    mysecond = <span class="literal">NULL</span>;</span><br><span class="line">    last = <span class="literal">NULL</span>;</span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    midOrder(root);</span><br><span class="line">    <span class="keyword">int</span> first;</span><br><span class="line">    first = myfirst-&gt;val;</span><br><span class="line">    myfirst-&gt;val = mysecond-&gt;val;</span><br><span class="line">    mysecond-&gt;val = first;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">midOrder</span><span class="params">(struct TreeNode* root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">    midOrder(root-&gt;left);</span><br><span class="line">    <span class="keyword">if</span> (last!=<span class="literal">NULL</span>&amp;&amp;root-&gt;val &lt; last-&gt;val&amp;&amp;flag == <span class="number">0</span>)&#123;</span><br><span class="line">        flag = <span class="number">1</span>;</span><br><span class="line">        myfirst = last;</span><br><span class="line">        mysecond = root;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (last!=<span class="literal">NULL</span>&amp;&amp;root-&gt;val &lt; last-&gt;val&amp;&amp;flag == <span class="number">1</span>)&#123;</span><br><span class="line">        flag = <span class="number">2</span>;</span><br><span class="line">        mysecond = root;</span><br><span class="line">    &#125;</span><br><span class="line">    last = root;</span><br><span class="line">    midOrder(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/18/WPA-WPA2-4-way-handshake/" class="archive-article-date">
-  	<time datetime="2018-11-18T13:16:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/18/WPA-WPA2-4-way-handshake/">WPA/WPA2 4-way handshake</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">协议</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">802.11</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">WPA</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/03/05/算法练习-DFS/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/11/11/802-11协议、WiFi连接交互过程/" class="archive-article-date">
-  	<time datetime="2018-11-11T03:11:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-11</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/03/算法练习-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法练习-2</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/11/11/802-11协议、WiFi连接交互过程/">802.11协议、WiFi连接交互过程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">协议</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">802.11</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">无线网络安全</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-验证二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text">1.验证二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-恢复二叉搜索树"><span class="toc-number">2.</span> <span class="toc-text">2.恢复二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/blog/2018/10/21/计算机网络（二）/" class="archive-article-date">
-  	<time datetime="2018-10-21T07:55:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-21</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2018/10/21/计算机网络（二）/">计算机网络（二）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">协议</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/blog/2020/03/05/算法练习-DFS/",
+  owner: 'chujian521',
+  repo: 'chujian521',
+  oauth: {
+    client_id: '92cb754049b5b07da081',
+    client_secret: '0c2a286ab9760e5057d75df14d7ce140cc5fbbec',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -344,9 +421,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
