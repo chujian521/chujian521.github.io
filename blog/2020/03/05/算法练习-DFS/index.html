@@ -17,7 +17,7 @@
 <meta property="og:description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj37.jpg">
-<meta property="og:updated_time" content="2020-03-12T12:58:25.808Z">
+<meta property="og:updated_time" content="2020-03-13T13:04:02.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法练习-DFS">
 <meta name="twitter:description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
@@ -84,7 +84,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">66.4k</span>
+			总字数 <span class="post-count">66.7k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -181,7 +181,7 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：1.3k字 | 预计阅读时长：6分钟</div>
+      字数：1.6k字 | 预计阅读时长：7分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
@@ -233,6 +233,17 @@
 <p>来源：<a href="https://leetcode-cn.com/problems/same-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/same-tree</a></p>
 <h3 id="3-2思路分析"><a href="#3-2思路分析" class="headerlink" title="3.2思路分析"></a>3.2思路分析</h3><p>使用递归算法遍历即可，比较相应的访问到的节点值是否相等，边界问题有点恶心，一定要注意到判断语句的边界问题，本身很简单，但是稍微不注意就错了。</p>
 <h3 id="3-3代码"><a href="#3-3代码" class="headerlink" title="3.3代码"></a>3.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isSameTree</span><span class="params">(struct TreeNode* p, struct TreeNode* q)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p == <span class="literal">NULL</span> &amp;&amp; q == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p == <span class="literal">NULL</span> || q==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;left == <span class="literal">NULL</span> &amp;&amp; q-&gt;left == <span class="literal">NULL</span>&amp;&amp;p-&gt;val == q-&gt;val &amp;&amp; p-&gt;right == <span class="literal">NULL</span> &amp;&amp; q-&gt;right == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;val == q-&gt;val )&#123;</span><br><span class="line">        <span class="keyword">return</span> isSameTree(p-&gt;left,q-&gt;left)&amp;&amp;isSameTree(p-&gt;right,q-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-二叉树最大深度"><a href="#4-二叉树最大深度" class="headerlink" title="4.二叉树最大深度"></a>4.二叉树最大深度</h2><h3 id="4-1题目描述"><a href="#4-1题目描述" class="headerlink" title="4.1题目描述"></a>4.1题目描述</h3><p>给定一个二叉树，找出其最大深度。</p>
+<p>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。</p>
+<p>说明: 叶子节点是指没有子节点的节点。</p>
+<p>示例：<br>给定二叉树 [3,9,20,null,null,15,7]，</p>
+<p>  3</p>
+<p> / \</p>
+<p>9  20<br>    /  \<br>  15   7</p>
+<p>返回它的最大深度 3 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/maximum-depth-of-binary-tree</a></p>
+<h3 id="4-2思路分析"><a href="#4-2思路分析" class="headerlink" title="4.2思路分析"></a>4.2思路分析</h3><p>很简单，递归遍历即可，设置左右两个值，取最大的返回并加一。</p>
+<h3 id="4-3代码"><a href="#4-3代码" class="headerlink" title="4.3代码"></a>4.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a&gt;b)&#123;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(struct TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> left_height = maxDepth(root-&gt;left);</span><br><span class="line">        <span class="keyword">int</span> right_height = maxDepth(root-&gt;right);</span><br><span class="line">        <span class="keyword">return</span> max(left_height, right_height) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -380,7 +391,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-验证二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text">1.验证二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-恢复二叉搜索树"><span class="toc-number">2.</span> <span class="toc-text">2.恢复二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-相同的树"><span class="toc-number">3.</span> <span class="toc-text">3.相同的树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路分析"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-验证二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text">1.验证二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-恢复二叉搜索树"><span class="toc-number">2.</span> <span class="toc-text">2.恢复二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-相同的树"><span class="toc-number">3.</span> <span class="toc-text">3.相同的树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路分析"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-二叉树最大深度"><span class="toc-number">4.</span> <span class="toc-text">4.二叉树最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路分析"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -520,7 +531,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,19 +555,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
+                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,7 +575,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
+                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">hostapd</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,15 +595,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">hostapd</a>
+                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -592,27 +603,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">密码学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,7 +619,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -632,11 +639,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>
