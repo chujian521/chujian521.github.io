@@ -17,7 +17,7 @@
 <meta property="og:description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj37.jpg">
-<meta property="og:updated_time" content="2020-03-13T13:04:02.784Z">
+<meta property="og:updated_time" content="2020-03-18T11:06:18.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法练习-DFS">
 <meta name="twitter:description" content="今天专门来复习+学习一下深度优先遍历算法，做一下oj题目。">
@@ -84,7 +84,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">68k</span>
+			总字数 <span class="post-count">69.4k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -181,7 +181,7 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：1.6k字 | 预计阅读时长：7分钟</div>
+      字数：3k字 | 预计阅读时长：13分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
@@ -219,11 +219,14 @@
 <h2 id="3-相同的树"><a href="#3-相同的树" class="headerlink" title="3.相同的树"></a>3.相同的树</h2><h3 id="3-1题目描述"><a href="#3-1题目描述" class="headerlink" title="3.1题目描述"></a>3.1题目描述</h3><p>给定两个二叉树，编写一个函数来检验它们是否相同。</p>
 <p>如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。</p>
 <p>示例 1:</p>
-<p>输入:  1         1<br>          / \       / \<br>         2   3     2   3</p>
+<p>输入:       </p>
+<p> 1         1<br> / \       / \<br>2   3     2   3</p>
 <p>[1,2,3],   [1,2,3]</p>
 <p>输出: true</p>
 <p>示例 2:</p>
-<p>输入: 1          1<br>          /           \<br>         2             2</p>
+<p>输入:    </p>
+<p> 1          1<br> /           \</p>
+<p>2             2</p>
 <p>[1,2],     [1,null,2]</p>
 <p>输出: false</p>
 <p>示例 3:</p>
@@ -244,7 +247,47 @@
 <p>来源：<a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/maximum-depth-of-binary-tree</a></p>
 <h3 id="4-2思路分析"><a href="#4-2思路分析" class="headerlink" title="4.2思路分析"></a>4.2思路分析</h3><p>很简单，递归遍历即可，设置左右两个值，取最大的返回并加一。</p>
 <h3 id="4-3代码"><a href="#4-3代码" class="headerlink" title="4.3代码"></a>4.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a&gt;b)&#123;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(struct TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> left_height = maxDepth(root-&gt;left);</span><br><span class="line">        <span class="keyword">int</span> right_height = maxDepth(root-&gt;right);</span><br><span class="line">        <span class="keyword">return</span> max(left_height, right_height) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="5-从前序与中序遍历序列构造二叉树"><a href="#5-从前序与中序遍历序列构造二叉树" class="headerlink" title="5.从前序与中序遍历序列构造二叉树"></a>5.从前序与中序遍历序列构造二叉树</h2><h3 id="5-1题目描述"><a href="#5-1题目描述" class="headerlink" title="5.1题目描述"></a>5.1题目描述</h3><p>根据一棵树的前序遍历与中序遍历构造二叉树。</p>
+<p>注意:<br>你可以假设树中没有重复的元素。</p>
+<p>例如，给出</p>
+<p>前序遍历 preorder = [3,9,20,15,7]<br>中序遍历 inorder = [9,3,15,20,7]</p>
+<p>返回如下的二叉树：</p>
+<p>​    3</p>
+<p>   / \<br>  9  20<br>    /  \<br>   15   7</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal" target="_blank" rel="noopener">https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal</a></p>
+<h3 id="5-2思路分析"><a href="#5-2思路分析" class="headerlink" title="5.2思路分析"></a>5.2思路分析</h3><p>先序遍历的顺序是 Root -&gt; Left -&gt; Right，这就能方便的从根开始构造一棵树。<br>首先，preorder 中的第一个元素一定是树的根，这个根又将 inorder 序列分成了左右两棵子树。现在我们只需要将先序遍历的数组中删除根元素，然后重复上面的过程处理左右两棵子树。</p>
+<h3 id="5-3代码"><a href="#5-3代码" class="headerlink" title="5.3代码"></a>5.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">struct TreeNode* <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>* preorder, <span class="keyword">int</span> preorderSize, <span class="keyword">int</span>* inorder, <span class="keyword">int</span> inorderSize)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">newNode</span>;</span></span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (preorder == <span class="literal">NULL</span> || inorder == <span class="literal">NULL</span> || preorderSize &lt;= <span class="number">0</span> || inorderSize &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    newNode = (struct TreeNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct TreeNode));</span><br><span class="line">    newNode-&gt;val = preorder[p];</span><br><span class="line">    newNode-&gt;left = <span class="literal">NULL</span>;</span><br><span class="line">    newNode-&gt;right = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; inorderSize; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (inorder[i] == newNode-&gt;val) &#123;</span><br><span class="line">            newNode-&gt;left = buildTree(&amp;preorder[p + <span class="number">1</span>], i, inorder, i);</span><br><span class="line">            newNode-&gt;right = buildTree(&amp;preorder[p + i + <span class="number">1</span>], preorderSize - i - <span class="number">1</span>, &amp;inorder[i + <span class="number">1</span>], inorderSize - i - <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-从中序与后序遍历序列构造二叉树"><a href="#6-从中序与后序遍历序列构造二叉树" class="headerlink" title="6.从中序与后序遍历序列构造二叉树"></a>6.从中序与后序遍历序列构造二叉树</h2><h3 id="6-1题目描述"><a href="#6-1题目描述" class="headerlink" title="6.1题目描述"></a>6.1题目描述</h3><p>根据一棵树的中序遍历与后序遍历构造二叉树。</p>
+<p>注意:<br>你可以假设树中没有重复的元素。</p>
+<p>例如，给出</p>
+<p>中序遍历 inorder = [9,3,15,20,7]<br>后序遍历 postorder = [9,15,7,20,3]</p>
+<p>返回如下的二叉树：</p>
+<p>​     3</p>
+<p>​    / \<br>  9  20<br>​       /  \<br>​     15   7</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal" target="_blank" rel="noopener">https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal</a></p>
+<h3 id="6-2思路"><a href="#6-2思路" class="headerlink" title="6.2思路"></a>6.2思路</h3><p>和上面的基本差不多，后序遍历的顺序是  Left -&gt; Right -&gt;Root，这就能方便的从根开始构造一棵树。<br>首先，postorder中的最后一个元素一定是树的根，这个根又将 inorder 序列分成了左右两棵子树。现在我们只需要将后序遍历的数组中删除根元素，然后重复上面的过程处理左右两棵子树。</p>
+<h3 id="6-3代码"><a href="#6-3代码" class="headerlink" title="6.3代码"></a>6.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">struct TreeNode* <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>* inorder, <span class="keyword">int</span> inorderSize, <span class="keyword">int</span>* postorder, <span class="keyword">int</span> postorderSize)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">newNode</span>;</span></span><br><span class="line">    <span class="keyword">int</span> p = postorderSize - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (postorder == <span class="literal">NULL</span> || inorder == <span class="literal">NULL</span> || postorderSize &lt;= <span class="number">0</span> || inorderSize &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    newNode = (struct TreeNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct TreeNode));</span><br><span class="line">    newNode-&gt;val = postorder[p];</span><br><span class="line">    newNode-&gt;left = <span class="literal">NULL</span>;</span><br><span class="line">    newNode-&gt;right = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; inorderSize ; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (inorder[i] == newNode-&gt;val) &#123;</span><br><span class="line">            newNode-&gt;right = buildTree(&amp;inorder[i + <span class="number">1</span>], inorderSize - i - <span class="number">1</span>,&amp;postorder[i], postorderSize - i - <span class="number">1</span>);</span><br><span class="line">            newNode-&gt;left = buildTree(inorder, i,postorder, i);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="7-将有序数组转换为二叉搜索树"><a href="#7-将有序数组转换为二叉搜索树" class="headerlink" title="7.将有序数组转换为二叉搜索树"></a>7.将有序数组转换为二叉搜索树</h2><h3 id="7-1题目描述"><a href="#7-1题目描述" class="headerlink" title="7.1题目描述"></a>7.1题目描述</h3><p>将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。</p>
+<p>本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。</p>
+<p>示例:</p>
+<p>给定有序数组: [-10,-3,0,5,9],</p>
+<p>一个可能的答案是：[0,-3,9,-10,null,5]，它可以表示下面这个高度平衡二叉搜索树：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     0</span><br><span class="line">    / \</span><br><span class="line">  -3   9</span><br><span class="line">  /   /</span><br><span class="line">-10  5</span><br></pre></td></tr></table></figure>
+<p>来源：<a href="https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree" target="_blank" rel="noopener">https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree</a></p>
+<h3 id="7-2思路分析"><a href="#7-2思路分析" class="headerlink" title="7.2思路分析"></a>7.2思路分析</h3><p>二叉搜索树就是节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。所有左子树和右子树自身必须也是二叉搜索树。</p>
+<p>我们首先要找到根节点，根节点就是数组最中间的值，如果是奇数就取最中间，偶数我们这里选择取中间靠左的位置，直接（left+right）/2即可，然后左边调用left~mid，右边mid+1~right，递归调用即可。</p>
+<h3 id="7-3代码"><a href="#7-3代码" class="headerlink" title="7.3代码"></a>7.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function">struct TreeNode* <span class="title">helper</span><span class="params">(<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="keyword">int</span> *nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= right)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> midpos = <span class="number">0</span>;</span><br><span class="line">    midpos = (left+right)/<span class="number">2</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> *<span class="title">node</span> = <span class="title">malloc</span>(<span class="title">sizeof</span>(<span class="title">struct</span> <span class="title">TreeNode</span>));</span></span><br><span class="line">    node-&gt;val = nums[midpos];</span><br><span class="line">    node-&gt;left = helper(left,midpos,nums);</span><br><span class="line">    node-&gt;right = helper(midpos+<span class="number">1</span>,right,nums);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">struct TreeNode* <span class="title">sortedArrayToBST</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> helper(<span class="number">0</span>,numsSize,nums);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="8-平衡二叉树"><a href="#8-平衡二叉树" class="headerlink" title="8.平衡二叉树"></a>8.平衡二叉树</h2><h3 id="8-1题目描述"><a href="#8-1题目描述" class="headerlink" title="8.1题目描述"></a>8.1题目描述</h3><p>给定一个二叉树，判断它是否是高度平衡的二叉树。<br>本题中，一棵高度平衡二叉树定义为：<br>一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。<br>示例 1:<br>给定二叉树 [3,9,20,null,null,15,7]</p>
+<p>返回 true 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  3</span><br><span class="line"> / \</span><br><span class="line">9  20</span><br><span class="line">  /  \</span><br><span class="line"> 15   7</span><br></pre></td></tr></table></figure>
+<p>返回 true 。</p>
+<p>示例 2:<br>给定二叉树 [1,2,2,3,3,null,null,4,4]</p>
+<p>返回 false 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      1</span><br><span class="line">     / \</span><br><span class="line">    2   2</span><br><span class="line">   / \</span><br><span class="line">  3   3</span><br><span class="line"> / \</span><br><span class="line">4   4</span><br></pre></td></tr></table></figure>
+<p>返回 false 。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/balanced-binary-tree/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/balanced-binary-tree/</a></p>
+<h3 id="8-2思路"><a href="#8-2思路" class="headerlink" title="8.2思路"></a>8.2思路</h3><p>这个最简单的方法就是不停计算子树的最大深度，如果相差大于1，就不是平衡二叉树。结合前面的查找二叉树的最大深度来写这个代码。</p>
+<h3 id="8-3代码"><a href="#8-3代码" class="headerlink" title="8.3代码"></a>8.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     struct TreeNode *right;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a&gt;b)&#123;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(struct TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> left_height = maxDepth(root-&gt;left);</span><br><span class="line">        <span class="keyword">int</span> right_height = maxDepth(root-&gt;right);</span><br><span class="line">        <span class="keyword">return</span> max(left_height, right_height) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isBalanced</span><span class="params">(struct TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(maxDepth(root-&gt;right)-maxDepth(root-&gt;left)) &gt; <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> isBalanced(root-&gt;left)&amp;&amp;isBalanced(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -391,7 +434,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-验证二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text">1.验证二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-恢复二叉搜索树"><span class="toc-number">2.</span> <span class="toc-text">2.恢复二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-相同的树"><span class="toc-number">3.</span> <span class="toc-text">3.相同的树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路分析"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-二叉树最大深度"><span class="toc-number">4.</span> <span class="toc-text">4.二叉树最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路分析"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-验证二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text">1.验证二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路分析"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-恢复二叉搜索树"><span class="toc-number">2.</span> <span class="toc-text">2.恢复二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路分析"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-相同的树"><span class="toc-number">3.</span> <span class="toc-text">3.相同的树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路分析"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-二叉树最大深度"><span class="toc-number">4.</span> <span class="toc-text">4.二叉树最大深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路分析"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-从前序与中序遍历序列构造二叉树"><span class="toc-number">5.</span> <span class="toc-text">5.从前序与中序遍历序列构造二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1题目描述"><span class="toc-number">5.1.</span> <span class="toc-text">5.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2思路分析"><span class="toc-number">5.2.</span> <span class="toc-text">5.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3代码"><span class="toc-number">5.3.</span> <span class="toc-text">5.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-从中序与后序遍历序列构造二叉树"><span class="toc-number">6.</span> <span class="toc-text">6.从中序与后序遍历序列构造二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1题目描述"><span class="toc-number">6.1.</span> <span class="toc-text">6.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2思路"><span class="toc-number">6.2.</span> <span class="toc-text">6.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3代码"><span class="toc-number">6.3.</span> <span class="toc-text">6.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-将有序数组转换为二叉搜索树"><span class="toc-number">7.</span> <span class="toc-text">7.将有序数组转换为二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1题目描述"><span class="toc-number">7.1.</span> <span class="toc-text">7.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2思路分析"><span class="toc-number">7.2.</span> <span class="toc-text">7.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3代码"><span class="toc-number">7.3.</span> <span class="toc-text">7.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-平衡二叉树"><span class="toc-number">8.</span> <span class="toc-text">8.平衡二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1题目描述"><span class="toc-number">8.1.</span> <span class="toc-text">8.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2思路"><span class="toc-number">8.2.</span> <span class="toc-text">8.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3代码"><span class="toc-number">8.3.</span> <span class="toc-text">8.3代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -531,10 +574,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -567,15 +606,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Shell</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,11 +626,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
+                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
+                <a href="javascript:void(0)" class="js-tag color1">Shell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -607,11 +646,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">密码学</a>
+                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">密码学</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,7 +666,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">堆栈溢出</a>
+                <a href="javascript:void(0)" class="js-tag color5">kali</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,15 +674,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kali</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -648,6 +687,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">堆栈溢出</a>
               </li>
             
             <div class="clearfix"></div>
