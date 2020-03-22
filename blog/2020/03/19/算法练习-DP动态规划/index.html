@@ -8,19 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>算法练习-DP动态规划 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="动态规划（英语：Dynamic programming，简称 DP）是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得">
+  <meta name="description" content="今天学习一下动态规划算法的应用与写法，准备机试进行时。">
 <meta name="keywords" content="算法,DP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法练习-DP动态规划">
 <meta property="og:url" content="http://yoursite.com/blog/2020/03/19/算法练习-DP动态规划/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="动态规划（英语：Dynamic programming，简称 DP）是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得">
+<meta property="og:description" content="今天学习一下动态规划算法的应用与写法，准备机试进行时。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj38.jpg">
-<meta property="og:updated_time" content="2020-03-20T15:42:53.220Z">
+<meta property="og:image" content="http://yoursite.com/images/dp7.png">
+<meta property="og:updated_time" content="2020-03-22T12:47:55.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法练习-DP动态规划">
-<meta name="twitter:description" content="动态规划（英语：Dynamic programming，简称 DP）是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得">
+<meta name="twitter:description" content="今天学习一下动态规划算法的应用与写法，准备机试进行时。">
 <meta name="twitter:image" content="http://yoursite.com/images/fj38.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
@@ -84,7 +85,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">71.1k</span>
+			总字数 <span class="post-count">72.4k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -181,14 +182,15 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：1.7k字 | 预计阅读时长：7分钟</div>
+      字数：3k字 | 预计阅读时长：13分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>动态规划</strong>（英语：Dynamic programming，简称 DP）是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。<br>动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。<br>动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得出原问题的解。动态规划往往用于优化递归问题，例如斐波那契数列，如果运用递归的方式来求解会重复计算很多相同的子问题，利用动态规划的思想可以减少计算量。<br>通常许多子问题非常相似，为此动态规划法试图仅仅解决每个子问题一次，具有天然剪枝的功能，从而减少计算量：一旦某个给定子问题的解已经算出，则将其记忆化存储，以便下次需要同一个子问题解之时直接查表。这种做法在重复子问题的数目关于输入的规模呈指数增长时特别有用</p>
+        <p><strong>今天学习一下动态规划算法的应用与写法，准备机试进行时。</strong></p>
 <p><img src="/images/fj38.jpg" alt=""></p>
 <a id="more"></a>
+<p><strong>动态规划</strong>（英语：Dynamic programming，简称 DP）是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。<br>动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。<br>动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得出原问题的解。动态规划往往用于优化递归问题，例如斐波那契数列，如果运用递归的方式来求解会重复计算很多相同的子问题，利用动态规划的思想可以减少计算量。<br>通常许多子问题非常相似，为此动态规划法试图仅仅解决每个子问题一次，具有天然剪枝的功能，从而减少计算量：一旦某个给定子问题的解已经算出，则将其记忆化存储，以便下次需要同一个子问题解之时直接查表。这种做法在重复子问题的数目关于输入的规模呈指数增长时特别有用</p>
 <h2 id="1-解码方法"><a href="#1-解码方法" class="headerlink" title="1.解码方法"></a>1.解码方法</h2><h3 id="1-1题目描述"><a href="#1-1题目描述" class="headerlink" title="1.1题目描述"></a>1.1题目描述</h3><p>一条包含字母 A-Z 的消息通过以下方式进行了编码：<br>‘A’ -&gt; 1<br>‘B’ -&gt; 2<br>…<br>‘Z’ -&gt; 26<br>给定一个只包含数字的非空字符串，请计算解码方法的总数。<br>示例 1:<br>输入: “12”<br>输出: 2<br>解释: 它可以解码为 “AB”（1 2）或者 “L”（12）。<br>示例 2:<br>输入: “226”<br>输出: 3<br>解释: 它可以解码为 “BZ” (2 26), “VF” (22 6), 或者 “BBF” (2 2 6) 。</p>
 <p>来源：<a href="https://leetcode-cn.com/problems/decode-ways/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/decode-ways/</a></p>
 <h3 id="1-2思路"><a href="#1-2思路" class="headerlink" title="1.2思路"></a>1.2思路</h3><p>这个和青蛙跳台阶差不多思路，都是动态规划问题。如果字符串第一位就是0，出错，那么返回0即可。如果当前位置是0，向前查找上一个位置是不是1或者2，如果不是，编码出错，返回0，如果是，当前的结果数量就是上一次的数量。如果当前位置是1-6之间的数字，我们可以去判断上一个位置是不是1或2，如果是，当前结果数量，就是上一次的加上上次的，因为本次可以有跳一个和跳两个两种。然后更新pre的值。</p>
@@ -211,6 +213,25 @@
 <p>首先找到递推式，就是dp[i][j] = dp[i-1][j] + dp[i][j-1];</p>
 <p>然后如果在最上面一行或者最左面，那么结果就是1。</p>
 <h3 id="4-3代码"><a href="#4-3代码" class="headerlink" title="4.3代码"></a>4.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">//动态创建一个二维路径答案表</span></span><br><span class="line">    <span class="comment">/*int **dp = (int **)malloc(sizeof(int *) * n);</span></span><br><span class="line"><span class="comment">    for (int i = 0; i &lt; n; i++) &#123;</span></span><br><span class="line"><span class="comment">        dp[i] = (int *)malloc(sizeof(int) * m);</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line">    <span class="keyword">int</span> dp[<span class="number">100</span>][<span class="number">100</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>) &#123;     <span class="comment">//最上一行或者最左一列</span></span><br><span class="line">                dp[i][j] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n<span class="number">-1</span>][m<span class="number">-1</span>];<span class="comment">//返回最后一个结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-不同路径升级版"><a href="#5-不同路径升级版" class="headerlink" title="5.不同路径升级版"></a>5.不同路径升级版</h2><h3 id="5-1题目描述"><a href="#5-1题目描述" class="headerlink" title="5.1题目描述"></a>5.1题目描述</h3><p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。<br>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。<br>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
+<p>网格中的障碍物和空位置分别用 1 和 0 来表示。</p>
+<p>输入:<br>[<br>  [0,0,0],<br>  [0,1,0],<br>  [0,0,0]<br>]<br>输出: 2<br>解释:<br>3x3 网格的正中间有一个障碍物。<br>从左上角到右下角一共有 2 条不同的路径：</p>
+<ol>
+<li>向右 -&gt; 向右 -&gt; 向下 -&gt; 向下</li>
+<li>向下 -&gt; 向下 -&gt; 向右 -&gt; 向右</li>
+</ol>
+<h3 id="5-2思路"><a href="#5-2思路" class="headerlink" title="5.2思路"></a>5.2思路</h3><p>和前面的差不多，只不过加了障碍，把有障碍的地方去掉，dp[i][j]=0，然后先把第一行和第一列初始化完毕，不能和上面的一样一起初始化了。</p>
+<h3 id="5-3代码"><a href="#5-3代码" class="headerlink" title="5.3代码"></a>5.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="keyword">int</span>** obstacleGrid, <span class="keyword">int</span> obstacleGridSize, <span class="keyword">int</span>* obstacleGridColSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = obstacleGridSize,m = *obstacleGridColSize;<span class="comment">//n行，m列</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">int</span> dp[<span class="number">100</span>][<span class="number">100</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][<span class="number">0</span>] == <span class="number">1</span> || obstacleGrid[n<span class="number">-1</span>][m<span class="number">-1</span>] == <span class="number">1</span> )&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;     <span class="comment">//设置第一行的边界</span></span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[i][<span class="number">0</span>] == <span class="number">0</span>)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;     <span class="comment">//设置第一列的边界</span></span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][i] == <span class="number">0</span>)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][i] = <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>);   <span class="comment">//最上一行或者最左一列</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(obstacleGrid[i][j] == <span class="number">1</span>)&#123;</span><br><span class="line">                dp[i][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n<span class="number">-1</span>][m<span class="number">-1</span>];<span class="comment">//返回最后一个结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-最小路径和"><a href="#6-最小路径和" class="headerlink" title="6.最小路径和"></a>6.最小路径和</h2><h3 id="6-1题目描述"><a href="#6-1题目描述" class="headerlink" title="6.1题目描述"></a>6.1题目描述</h3><p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。<br>说明：每次只能向下或者向右移动一步。<br>示例:<br>输入:<br>[<br>  [1,3,1],<br>  [1,5,1],<br>  [4,2,1]<br>]<br>输出: 7<br>解释: 因为路径 1→3→1→1→1 的总和最小。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/minimum-path-sum/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/minimum-path-sum/</a></p>
+<h3 id="6-2思路"><a href="#6-2思路" class="headerlink" title="6.2思路"></a>6.2思路</h3><p>使用动态规划算法，dp数组记录该点到起始点的最短距离，边界时候单独处理，非边界取上一次计算的最小值加上本点的值即可。思路清晰代码也很简单。dp数组可以使用malloc动态分配即可，偷懒直接申请了一个挺大的空间。时间复杂度为遍历二维数组花费时间。</p>
+<h3 id="6-3代码"><a href="#6-3代码" class="headerlink" title="6.3代码"></a>6.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min(a,b)(a&lt;b?a:b)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="keyword">int</span>** grid, <span class="keyword">int</span> gridSize, <span class="keyword">int</span>* gridColSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m = gridSize,n = *gridColSize;</span><br><span class="line">    <span class="keyword">int</span> dp[<span class="number">1000</span>][<span class="number">1000</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; n;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span> &amp;&amp; j==<span class="number">0</span> )&#123;</span><br><span class="line">                dp[i][j] = grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][j] = grid[i][j] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][j] = grid[i][j] + dp[i<span class="number">-1</span>][j];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                dp[i][j] = min(dp[i<span class="number">-1</span>][j],dp[i][j<span class="number">-1</span>]) + grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="7-编辑距离"><a href="#7-编辑距离" class="headerlink" title="7.编辑距离"></a>7.编辑距离</h2><h3 id="7-1题目描述"><a href="#7-1题目描述" class="headerlink" title="7.1题目描述"></a>7.1题目描述</h3><p>给定两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数 。<br>你可以对一个单词进行如下三种操作：<br>插入一个字符<br>删除一个字符<br>替换一个字符<br>示例 1:<br>输入: word1 = “horse”, word2 = “ros”<br>输出: 3<br>解释:<br>horse -&gt; rorse (将 ‘h’ 替换为 ‘r’)<br>rorse -&gt; rose (删除 ‘r’)<br>rose -&gt; ros (删除 ‘e’)<br>示例 2:<br>输入: word1 = “intention”, word2 = “execution”<br>输出: 5<br>解释:<br>intention -&gt; inention (删除 ‘t’)<br>inention -&gt; enention (将 ‘i’ 替换为 ‘e’)<br>enention -&gt; exention (将 ‘n’ 替换为 ‘x’)<br>exention -&gt; exection (将 ‘n’ 替换为 ‘c’)<br>exection -&gt; execution (插入 ‘u’)</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/edit-distance/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/edit-distance/</a></p>
+<h3 id="7-2思路"><a href="#7-2思路" class="headerlink" title="7.2思路"></a>7.2思路</h3><p><strong>动态规划：</strong></p>
+<p>dp[i][j] 代表 word1 到 i 位置转换成 word2 到 j 位置需要最少步数<br>所以，<br>当 word1[i] == word2[j]，dp[i][j] = dp[i-1][j-1]；<br>当 word1[i] != word2[j]，dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1<br>其中，dp[i-1][j-1]到dp[i][j]需要进行替换操作，dp[i-1][j]到d[i][j]需要进行删除操作，dp[i][j-1] 到d[i][j]需要进行添加操作。</p>
+<p><img src="\images\dp7.png" alt=""></p>
+<h3 id="7-3代码"><a href="#7-3代码" class="headerlink" title="7.3代码"></a>7.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min(a,b) (a&lt;b?a:b)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="keyword">char</span> * word1, <span class="keyword">char</span> * word2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n1 = <span class="built_in">strlen</span>(word1);</span><br><span class="line">    <span class="keyword">int</span> n2 = <span class="built_in">strlen</span>(word2);</span><br><span class="line">    <span class="keyword">int</span> dp[<span class="number">600</span>][<span class="number">600</span>];</span><br><span class="line">    <span class="comment">// 第一行初始化</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n2; j++) dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 第一列初始化</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n1; i++) dp[i][<span class="number">0</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n1; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n2; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word1[i <span class="number">-1</span>] == word2[j - <span class="number">1</span>]) </span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                dp[i][j] = min(min(dp[i - <span class="number">1</span>][j - <span class="number">1</span>], dp[i][j - <span class="number">1</span>]), dp[i - <span class="number">1</span>][j]) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n1][n2];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -353,7 +374,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-解码方法"><span class="toc-number">1.</span> <span class="toc-text">1.解码方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-最长回文子串"><span class="toc-number">2.</span> <span class="toc-text">2.最长回文子串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-最大子序和"><span class="toc-number">3.</span> <span class="toc-text">3.最大子序和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-不同路径"><span class="toc-number">4.</span> <span class="toc-text">4.不同路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-解码方法"><span class="toc-number">1.</span> <span class="toc-text">1.解码方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-最长回文子串"><span class="toc-number">2.</span> <span class="toc-text">2.最长回文子串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-最大子序和"><span class="toc-number">3.</span> <span class="toc-text">3.最大子序和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-不同路径"><span class="toc-number">4.</span> <span class="toc-text">4.不同路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-不同路径升级版"><span class="toc-number">5.</span> <span class="toc-text">5.不同路径升级版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1题目描述"><span class="toc-number">5.1.</span> <span class="toc-text">5.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2思路"><span class="toc-number">5.2.</span> <span class="toc-text">5.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3代码"><span class="toc-number">5.3.</span> <span class="toc-text">5.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-最小路径和"><span class="toc-number">6.</span> <span class="toc-text">6.最小路径和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1题目描述"><span class="toc-number">6.1.</span> <span class="toc-text">6.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2思路"><span class="toc-number">6.2.</span> <span class="toc-text">6.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3代码"><span class="toc-number">6.3.</span> <span class="toc-text">6.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-编辑距离"><span class="toc-number">7.</span> <span class="toc-text">7.编辑距离</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1题目描述"><span class="toc-number">7.1.</span> <span class="toc-text">7.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2思路"><span class="toc-number">7.2.</span> <span class="toc-text">7.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3代码"><span class="toc-number">7.3.</span> <span class="toc-text">7.3代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -493,6 +514,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -509,6 +534,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
@@ -521,19 +550,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Shell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -549,6 +570,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">python学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
               </li>
              
@@ -561,7 +586,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">密码学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kali</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -573,23 +614,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kali</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈溢出</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,11 +622,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,15 +630,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">密码学</a>
+                <a href="javascript:void(0)" class="js-tag color3">DP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">GDB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>
