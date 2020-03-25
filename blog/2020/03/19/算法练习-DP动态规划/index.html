@@ -18,7 +18,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj38.jpg">
 <meta property="og:image" content="http://yoursite.com/images/dp7.png">
-<meta property="og:updated_time" content="2020-03-22T12:47:55.638Z">
+<meta property="og:image" content="http://yoursite.com/images/dp8.jpg">
+<meta property="og:updated_time" content="2020-03-25T10:51:46.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法练习-DP动态规划">
 <meta name="twitter:description" content="今天学习一下动态规划算法的应用与写法，准备机试进行时。">
@@ -85,7 +86,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">72.4k</span>
+			总字数 <span class="post-count">73.3k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -182,7 +183,7 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：3k字 | 预计阅读时长：13分钟</div>
+      字数：3.8k字 | 预计阅读时长：16分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
@@ -232,6 +233,28 @@
 <p>dp[i][j] 代表 word1 到 i 位置转换成 word2 到 j 位置需要最少步数<br>所以，<br>当 word1[i] == word2[j]，dp[i][j] = dp[i-1][j-1]；<br>当 word1[i] != word2[j]，dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1<br>其中，dp[i-1][j-1]到dp[i][j]需要进行替换操作，dp[i-1][j]到d[i][j]需要进行删除操作，dp[i][j-1] 到d[i][j]需要进行添加操作。</p>
 <p><img src="\images\dp7.png" alt=""></p>
 <h3 id="7-3代码"><a href="#7-3代码" class="headerlink" title="7.3代码"></a>7.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min(a,b) (a&lt;b?a:b)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="keyword">char</span> * word1, <span class="keyword">char</span> * word2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n1 = <span class="built_in">strlen</span>(word1);</span><br><span class="line">    <span class="keyword">int</span> n2 = <span class="built_in">strlen</span>(word2);</span><br><span class="line">    <span class="keyword">int</span> dp[<span class="number">600</span>][<span class="number">600</span>];</span><br><span class="line">    <span class="comment">// 第一行初始化</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n2; j++) dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 第一列初始化</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n1; i++) dp[i][<span class="number">0</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n1; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n2; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word1[i <span class="number">-1</span>] == word2[j - <span class="number">1</span>]) </span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                dp[i][j] = min(min(dp[i - <span class="number">1</span>][j - <span class="number">1</span>], dp[i][j - <span class="number">1</span>]), dp[i - <span class="number">1</span>][j]) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n1][n2];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="8-买卖股票的最佳时机"><a href="#8-买卖股票的最佳时机" class="headerlink" title="8.买卖股票的最佳时机"></a>8.买卖股票的最佳时机</h2><h3 id="8-1题目描述"><a href="#8-1题目描述" class="headerlink" title="8.1题目描述"></a>8.1题目描述</h3><p>给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。</p>
+<p>设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。</p>
+<p>注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</p>
+<p><strong>示例 1:</strong></p>
+<p>输入: [3,3,5,0,0,3,1,4]<br>输出: 6<br>解释: 在第 4 天（股票价格 = 0）的时候买入，在第 6 天（股票价格 = 3）的时候卖出，这笔交易所能获得利润 = 3-0 = 3 。</p>
+<p>随后，在第 7 天（股票价格 = 1）的时候买入，在第 8 天 （股票价格 = 4）的时候卖出，这笔交易所能获得利润 = 4-1 = 3 。</p>
+<p><strong>示例 2:</strong></p>
+<p>输入: [1,2,3,4,5]<br>输出: 4<br>解释: 在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。<br>     注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。<br>     因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。</p>
+<p><strong>示例 3:</strong></p>
+<p>输入: [7,6,4,3,1]<br>输出: 0<br>解释: 在这个情况下, 没有交易完成, 所以最大利润为 0。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii" target="_blank" rel="noopener">https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii</a></p>
+<h3 id="8-2思路分析"><a href="#8-2思路分析" class="headerlink" title="8.2思路分析"></a>8.2思路分析</h3><p>每天我们其实是有四个状态，买入当前价格的股票，以当前价格的股票卖出。第二次买入股票，第二次卖出股票。</p>
+<p><img src="\images\dp8.jpg" alt=""></p>
+<p>s0代表初始状态，初始时钱是 0。s1代表第一次买入后当前的钱，s2代表第一次卖出后当前的前，s3代表第二次买入后当前的钱，s4代表第二次卖出后当前的钱。然后我们只需要更新每天的这四个状态即可。</p>
+<h3 id="8-3代码"><a href="#8-3代码" class="headerlink" title="8.3代码"></a>8.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max(a,b) (a&gt;b?a:b)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>* prices, <span class="keyword">int</span> pricesSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(pricesSize == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//进行初始化，第一天 s1 将股票买入，其他状态全部初始化为最小值</span></span><br><span class="line">    <span class="keyword">int</span> s1=-prices[<span class="number">0</span>],s2=<span class="number">-2147483648</span>,s3=<span class="number">-2147483648</span>,s4=<span class="number">-2147483648</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;pricesSize;++i) &#123;            </span><br><span class="line">        s1 = max(s1, -prices[i]); <span class="comment">//买入价格更低的股</span></span><br><span class="line">        s2 = max(s2, s1+prices[i]); <span class="comment">//卖出当前股，或者不操作</span></span><br><span class="line">        s3 = max(s3, s2-prices[i]); <span class="comment">//第二次买入，或者不操作</span></span><br><span class="line">        s4 = max(s4, s3+prices[i]); <span class="comment">//第二次卖出，或者不操作</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max(<span class="number">0</span>,s4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="9-三角形最小路径和"><a href="#9-三角形最小路径和" class="headerlink" title="9.三角形最小路径和"></a>9.三角形最小路径和</h2><h3 id="9-1题目描述"><a href="#9-1题目描述" class="headerlink" title="9.1题目描述"></a>9.1题目描述</h3><p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<p>例如，给定三角形：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">     [2],</span><br><span class="line">    [3,4],</span><br><span class="line">   [6,5,7],</span><br><span class="line">  [4,1,8,3]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。</p>
+<p>来源：<a href="https://leetcode-cn.com/problems/triangle" target="_blank" rel="noopener">https://leetcode-cn.com/problems/triangle</a></p>
+<h3 id="9-2思路"><a href="#9-2思路" class="headerlink" title="9.2思路"></a>9.2思路</h3><p>从倒数第二行开始计算每个数字到下一个节点的最小值，并加上当前节点值存入当前节点，最后triangle[0][0]中存储的就是最终的最短路径结果。</p>
+<h3 id="9-3代码"><a href="#9-3代码" class="headerlink" title="9.3代码"></a>9.3代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min(a,b) (a&lt;b?a:b)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="keyword">int</span>** triangle, <span class="keyword">int</span> triangleSize, <span class="keyword">int</span>* triangleColSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line"><span class="comment">//自底向上</span></span><br><span class="line">    <span class="keyword">for</span>(i = triangleSize<span class="number">-2</span>;i &gt;= <span class="number">0</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>;j &lt; triangleColSize[i];j++ )&#123;</span><br><span class="line">            triangle[i][j] = min(triangle[i+<span class="number">1</span>][j],triangle[i+<span class="number">1</span>][j+<span class="number">1</span>])+triangle[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> triangle[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -374,7 +397,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-解码方法"><span class="toc-number">1.</span> <span class="toc-text">1.解码方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-最长回文子串"><span class="toc-number">2.</span> <span class="toc-text">2.最长回文子串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-最大子序和"><span class="toc-number">3.</span> <span class="toc-text">3.最大子序和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-不同路径"><span class="toc-number">4.</span> <span class="toc-text">4.不同路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-不同路径升级版"><span class="toc-number">5.</span> <span class="toc-text">5.不同路径升级版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1题目描述"><span class="toc-number">5.1.</span> <span class="toc-text">5.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2思路"><span class="toc-number">5.2.</span> <span class="toc-text">5.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3代码"><span class="toc-number">5.3.</span> <span class="toc-text">5.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-最小路径和"><span class="toc-number">6.</span> <span class="toc-text">6.最小路径和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1题目描述"><span class="toc-number">6.1.</span> <span class="toc-text">6.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2思路"><span class="toc-number">6.2.</span> <span class="toc-text">6.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3代码"><span class="toc-number">6.3.</span> <span class="toc-text">6.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-编辑距离"><span class="toc-number">7.</span> <span class="toc-text">7.编辑距离</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1题目描述"><span class="toc-number">7.1.</span> <span class="toc-text">7.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2思路"><span class="toc-number">7.2.</span> <span class="toc-text">7.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3代码"><span class="toc-number">7.3.</span> <span class="toc-text">7.3代码</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-解码方法"><span class="toc-number">1.</span> <span class="toc-text">1.解码方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">1.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2思路"><span class="toc-number">1.2.</span> <span class="toc-text">1.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3代码"><span class="toc-number">1.3.</span> <span class="toc-text">1.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-最长回文子串"><span class="toc-number">2.</span> <span class="toc-text">2.最长回文子串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1题目描述"><span class="toc-number">2.1.</span> <span class="toc-text">2.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2思路"><span class="toc-number">2.2.</span> <span class="toc-text">2.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-最大子序和"><span class="toc-number">3.</span> <span class="toc-text">3.最大子序和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1题目描述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2思路"><span class="toc-number">3.2.</span> <span class="toc-text">3.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3代码"><span class="toc-number">3.3.</span> <span class="toc-text">3.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-不同路径"><span class="toc-number">4.</span> <span class="toc-text">4.不同路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1题目描述"><span class="toc-number">4.1.</span> <span class="toc-text">4.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2思路"><span class="toc-number">4.2.</span> <span class="toc-text">4.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-不同路径升级版"><span class="toc-number">5.</span> <span class="toc-text">5.不同路径升级版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1题目描述"><span class="toc-number">5.1.</span> <span class="toc-text">5.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2思路"><span class="toc-number">5.2.</span> <span class="toc-text">5.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3代码"><span class="toc-number">5.3.</span> <span class="toc-text">5.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-最小路径和"><span class="toc-number">6.</span> <span class="toc-text">6.最小路径和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1题目描述"><span class="toc-number">6.1.</span> <span class="toc-text">6.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2思路"><span class="toc-number">6.2.</span> <span class="toc-text">6.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3代码"><span class="toc-number">6.3.</span> <span class="toc-text">6.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-编辑距离"><span class="toc-number">7.</span> <span class="toc-text">7.编辑距离</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1题目描述"><span class="toc-number">7.1.</span> <span class="toc-text">7.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2思路"><span class="toc-number">7.2.</span> <span class="toc-text">7.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3代码"><span class="toc-number">7.3.</span> <span class="toc-text">7.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-买卖股票的最佳时机"><span class="toc-number">8.</span> <span class="toc-text">8.买卖股票的最佳时机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1题目描述"><span class="toc-number">8.1.</span> <span class="toc-text">8.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2思路分析"><span class="toc-number">8.2.</span> <span class="toc-text">8.2思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3代码"><span class="toc-number">8.3.</span> <span class="toc-text">8.3代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-三角形最小路径和"><span class="toc-number">9.</span> <span class="toc-text">9.三角形最小路径和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1题目描述"><span class="toc-number">9.1.</span> <span class="toc-text">9.1题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2思路"><span class="toc-number">9.2.</span> <span class="toc-text">9.2思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3代码"><span class="toc-number">9.3.</span> <span class="toc-text">9.3代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -514,7 +537,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -534,14 +557,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -550,11 +565,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Shell</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Shell</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -574,6 +597,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DHCP</a>
               </li>
              
@@ -582,19 +609,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WPA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,7 +617,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kali</a>
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,6 +629,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kali</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">堆栈溢出</a>
               </li>
              
@@ -622,7 +645,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
+                <a href="javascript:void(0)" class="js-tag color3">DP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,7 +653,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DP</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -638,7 +661,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
               </li>
             
             <div class="clearfix"></div>
