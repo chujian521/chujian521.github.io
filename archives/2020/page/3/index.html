@@ -6,22 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>C++学习笔记1 | X&#39;s blog</title>
+  <title>Archives: 2020 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="继续本周的C++学习任务。">
-<meta name="keywords" content="C++">
-<meta property="og:type" content="article">
-<meta property="og:title" content="C++学习笔记1">
-<meta property="og:url" content="http://yoursite.com/blog/2020/02/20/C-学习笔迹1/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="X&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/archives/2020/page/3/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="继续本周的C++学习任务。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/fj31.jpg">
-<meta property="og:updated_time" content="2020-02-23T04:30:30.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++学习笔记1">
-<meta name="twitter:description" content="继续本周的C++学习任务。">
-<meta name="twitter:image" content="http://yoursite.com/images/fj31.jpg">
+<meta name="twitter:title" content="X&#39;s blog">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -162,276 +155,63 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-C-学习笔迹1" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      C++学习笔记1
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/blog/2020/01/19/Linux开发与应用/" class="archive-article-date">
+  	<time datetime="2020-01-19T04:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/blog/2020/01/19/Linux开发与应用/">Linux开发与应用</a>
     </h1>
   
 
-        
-        <a href="/blog/2020/02/20/C-学习笔迹1/" class="archive-article-date">
-  	<time datetime="2020-02-20T00:20:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-20</time>
-</a>
-        
-      </header>
-	  
-	  <div align="center" class="post-count">
-      字数：1.4k字 | 预计阅读时长：5分钟</div>
-	  
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>继续本周的C++学习任务。</strong></p>
-<p><img src="/images/fj31.jpg" alt=""></p>
-<a id="more"></a>
-<h1 id="C语法的增强及对应的C-特性"><a href="#C语法的增强及对应的C-特性" class="headerlink" title="C语法的增强及对应的C++特性"></a>C语法的增强及对应的C++特性</h1><h2 id="引用、-C-11-空指针与动态内存分配"><a href="#引用、-C-11-空指针与动态内存分配" class="headerlink" title="引用、[C++11]空指针与动态内存分配"></a>引用、[C++11]空指针与动态内存分配</h2><h3 id="引用Reference"><a href="#引用Reference" class="headerlink" title="引用Reference"></a>引用Reference</h3><p>引用就是另一个变量的别名，通过引用所做的读写操作实际上是作用于原变量上。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span>&amp; rx=x;</span><br></pre></td></tr></table></figure>
-<p>C++指针与引用符号应靠近其类型名而非名字。</p>
-<p>引用可以作为函数参数，但调用时只需要传递普通变量即可。在被调用函数中改变引用变量的值，则改变的是实际参数的值。</p>
-<h3 id="空指针和动态内存分配"><a href="#空指针和动态内存分配" class="headerlink" title="空指针和动态内存分配"></a>空指针和动态内存分配</h3><p>1.空指针</p>
-<p>1.1 0带来的二义性问题</p>
-<ol>
-<li>C++03中，空指针使用“0”来表示。0既是一个常量整数，也是一个常量空指针。</li>
-<li>C语言中，空指针使用(void *)0来表示</li>
-<li>有时候，用“NULL”来表示空指针(一种可能的实现方式是#define NULL  0)</li>
-</ol>
-<p>1.2 C++标准化委员会希望“空指针”是一个确定的东西。<br>C++11中引入保留字“nullptr”作为空指针</p>
-<p>2.动态内存管理：分配/释放</p>
-<p>2.1     C++中通过运算符new申请动态内存</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span>  &lt;类型名&gt; (初值) ;     <span class="comment">//申请一个变量的空间</span></span><br><span class="line"><span class="keyword">new</span>  &lt;类型名&gt;[常量表达式] ;   <span class="comment">//申请数组</span></span><br></pre></td></tr></table></figure>
-<p>如果申请成功，返回指定类型内存的地址；<br>如果申请失败，抛出异常，或者返回空指针(nullptr)。(C++11)</p>
-<p>2.2.       动态内存使用完毕后，要用delete运算符来释放。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span>   &lt;指针名&gt;;    <span class="comment">//删除一个变量/对象</span></span><br><span class="line"><span class="keyword">delete</span> []  &lt;指针名&gt;;     <span class="comment">//删除数组空间</span></span><br></pre></td></tr></table></figure>
-<h2 id="数据类型与转换、列表初始化"><a href="#数据类型与转换、列表初始化" class="headerlink" title="数据类型与转换、列表初始化"></a>数据类型与转换、列表初始化</h2><h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3><p>逻辑运算符和C语言基本一致</p>
-<p>注：编码规范：布尔变量/函数的命名应使用前缀“is”，断行必须很明显，在逗号或运算符后换行，新行要对齐</p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3><p>列表初始化是C++11的一个新特性，“列表”是用花括号括起来的一(些)值。</p>
-<p>列表初始化分为两类：</p>
-<ul>
-<li>直接列表初始化</li>
-<li>拷贝列表初始化</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接列表初始化)</span></span><br><span class="line"><span class="comment">/* Variable initialization */</span> </span><br><span class="line"><span class="keyword">int</span> x&#123;&#125;; <span class="comment">// x is 0; </span></span><br><span class="line"><span class="keyword">int</span> y&#123; <span class="number">1</span> &#125;; <span class="comment">// y is 1; </span></span><br><span class="line"><span class="comment">/* Array initialization */</span> </span><br><span class="line"><span class="keyword">int</span> array1[]&#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s1[ <span class="number">3</span> ] &#123; <span class="string">'o'</span>, <span class="string">'k'</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s3[]&#123; <span class="string">"Hello"</span> &#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拷贝列表初始化</span></span><br><span class="line"><span class="comment">/* Variable initialization */</span> </span><br><span class="line"><span class="keyword">int</span> z = &#123; <span class="number">2</span> &#125;; </span><br><span class="line"><span class="comment">/* Array initialization */</span> </span><br><span class="line"><span class="keyword">int</span> array2[] = &#123; <span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s2[] = &#123; <span class="string">'y'</span>,<span class="string">'e'</span>,<span class="string">'s'</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s4[] = &#123; <span class="string">"World"</span> &#125;;</span><br><span class="line"><span class="keyword">char</span> s5[] = <span class="string">"Aloha"</span>; <span class="comment">// Omit curly braces (省略花括号)</span></span><br></pre></td></tr></table></figure>
-<p>尽量使用列表初始化，列表初始化不允许丢失数据精度的隐式类型转换。</p>
-<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>类型转换有两种：</p>
-<p><strong>1.隐式类型转换</strong></p>
-<ul>
-<li>由编译器按照数据类型的转换规则自动转换，无需程序员干预。</li>
-<li>可能导致数据精度损失，或者转换失败。</li>
-<li>应尽量避免使用隐式类型转换</li>
-</ul>
-<p><strong>2 显式类型转换（即：强制类型转换）</strong></p>
-<ul>
-<li>由程序员用明确的类型转换语法写出类型转换代码。</li>
-<li>好处是，程序员知道自己要做什么并且把这个想法明确表达出来。</li>
-</ul>
-<p>C++风格强制类型转换：<strong>语法：static_cast<type> value</type></strong></p>
-<p>编码规范：类型转换必须显式声明，永远不要依赖隐式类型转换。</p>
-<h2 id="自动类型推导：类型系统、auto与decltype"><a href="#自动类型推导：类型系统、auto与decltype" class="headerlink" title="自动类型推导：类型系统、auto与decltype"></a>自动类型推导：类型系统、auto与decltype</h2><p><strong>静态类型 v.s. 动态类型：</strong></p>
-<p>程序设计语言的类型系统机制会检查连接在一起的多个块的一致性</p>
-<p>上述检查若发生在编译期，称为静态类型<br>上述检查若发生在运行时，称为动态类型<br>上述检查若同时存在于编译期和运行时，称为混合类型</p>
-<h3 id="自动类型推导：auto关键字"><a href="#自动类型推导：auto关键字" class="headerlink" title="自动类型推导：auto关键字"></a>自动类型推导：auto关键字</h3><h4 id="1-关键字auto"><a href="#1-关键字auto" class="headerlink" title="1.关键字auto"></a>1.关键字auto</h4><p>C++11中，auto关键字放在变量之前，作用是在声明变量的时候根据变量初始值的类型自动为此变量选择匹配的类型。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span> au_a = a;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(au_a).name()<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="2-auto的使用限制"><a href="#2-auto的使用限制" class="headerlink" title="2.auto的使用限制"></a>2.auto的使用限制</h4><p>1.auto 变量必须在定义时初始化，这类似于const关键字</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a1 = <span class="number">10</span>;  <span class="comment">//正确</span></span><br><span class="line"><span class="keyword">auto</span> b1;   <span class="comment">//错误,编译器无法推导b1的类型</span></span><br><span class="line">b1 = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-<p>2.定义在一个auto序列的变量必须始终推导成同一类型</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a4 = <span class="number">10</span>, a5&#123;<span class="number">20</span>&#125;;   <span class="comment">//正确 </span></span><br><span class="line"><span class="keyword">auto</span> b4&#123;<span class="number">10</span>&#125;, b5 = <span class="number">20.0</span>; <span class="comment">//错误,没有推导为同一类型</span></span><br></pre></td></tr></table></figure>
-<p>3.如果初始化表达式是引用或const，则去除引用或const语义</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a&#123;<span class="number">10</span>&#125;; <span class="keyword">int</span> &amp;b = a;</span><br><span class="line"><span class="keyword">auto</span> c = b;   <span class="comment">//c的类型为int而非int&amp;（去除引用）</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a1&#123;<span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> b1 = a1; <span class="comment">//b1的类型为int而非const int（去除const）</span></span><br></pre></td></tr></table></figure>
-<p>4.如果auto关键字带上&amp;号，则不去除引用或const语意</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>; <span class="keyword">int</span>&amp; b = a;</span><br><span class="line"><span class="keyword">auto</span>&amp; d = b;<span class="comment">//此时d的类型才为int&amp;</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a2 = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span>&amp; b2 = a2;<span class="comment">//因为auto带上&amp;，故不去除const，b2类型为const in</span></span><br></pre></td></tr></table></figure>
-<p>5.初始化表达式为数组时，auto关键字推导类型为指针</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a3[<span class="number">3</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span> b3 = a3;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(b3).name() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//输出int * （输出与编译器有关）</span></span><br></pre></td></tr></table></figure>
-<p>6.若表达式为数组且auto带上&amp;，则推导类型为数组类型</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a7[<span class="number">3</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span>&amp; b7 = a7;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(b7).name() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//输出int [3] （输出与编译器有关）</span></span><br></pre></td></tr></table></figure>
-<p>7.C++14中，auto可以作为函数的返回值类型和参数类型</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="https://s26.postimg.cc/lyb95vm61/S80804-00230798.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/02/20/C-学习笔迹1/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/blog/2020/02/22/算法练习/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          算法练习
-        
-      </div>
-    </a>
   
   
-    <a href="/blog/2020/02/10/C-学习笔记0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">C++学习笔记0</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C语法的增强及对应的C-特性"><span class="toc-number">1.</span> <span class="toc-text">C语法的增强及对应的C++特性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用、-C-11-空指针与动态内存分配"><span class="toc-number">1.1.</span> <span class="toc-text">引用、[C++11]空指针与动态内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引用Reference"><span class="toc-number">1.1.1.</span> <span class="toc-text">引用Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空指针和动态内存分配"><span class="toc-number">1.1.2.</span> <span class="toc-text">空指针和动态内存分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型与转换、列表初始化"><span class="toc-number">1.2.</span> <span class="toc-text">数据类型与转换、列表初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔类型"><span class="toc-number">1.2.1.</span> <span class="toc-text">布尔类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表初始化"><span class="toc-number">1.2.2.</span> <span class="toc-text">列表初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型转换"><span class="toc-number">1.2.3.</span> <span class="toc-text">类型转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动类型推导：类型系统、auto与decltype"><span class="toc-number">1.3.</span> <span class="toc-text">自动类型推导：类型系统、auto与decltype</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自动类型推导：auto关键字"><span class="toc-number">1.3.1.</span> <span class="toc-text">自动类型推导：auto关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-关键字auto"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">1.关键字auto</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-auto的使用限制"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">2.auto的使用限制</span></a></li></ol></li></ol></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/blog/2020/02/20/C-学习笔迹1/",
-  owner: 'chujian521',
-  repo: 'chujian521',
-  oauth: {
-    client_id: '92cb754049b5b07da081',
-    client_secret: '0c2a286ab9760e5057d75df14d7ce140cc5fbbec',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/2020/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><a class="page-number" href="/archives/2020/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
   
 
 
@@ -464,8 +244,8 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
