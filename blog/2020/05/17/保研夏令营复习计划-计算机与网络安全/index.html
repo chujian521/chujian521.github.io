@@ -50,7 +50,16 @@
 <meta property="og:image" content="http://yoursite.com/images/espchuanshu.png">
 <meta property="og:image" content="http://yoursite.com/images/espsuidao.png">
 <meta property="og:image" content="http://yoursite.com/images/sazuhe.png">
-<meta property="og:updated_time" content="2020-07-03T08:57:23.996Z">
+<meta property="og:image" content="http://yoursite.com/images/eyiruanjian.png">
+<meta property="og:image" content="http://yoursite.com/images/ddossyn.png">
+<meta property="og:image" content="http://yoursite.com/images/ddosicmp.png">
+<meta property="og:image" content="http://yoursite.com/images/directddos.png">
+<meta property="og:image" content="http://yoursite.com/images/reflectorddos.png">
+<meta property="og:image" content="http://yoursite.com/images/attacker.png">
+<meta property="og:image" content="http://yoursite.com/images/ruqinjiance.png">
+<meta property="og:image" content="http://yoursite.com/images/unixpassword.png">
+<meta property="og:image" content="http://yoursite.com/images/firewall.png">
+<meta property="og:updated_time" content="2020-07-07T03:18:39.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="保研夏令营复习计划-计算机与网络安全">
 <meta name="twitter:description" content="计算机与网络安全是我们网络空间安全专业最重要的一门专业课之一主要包括网络安全应用、系统安全。">
@@ -117,7 +126,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">115.8k</span>
+			总字数 <span class="post-count">119.2k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -214,7 +223,7 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：10.7k字 | 预计阅读时长：37分钟</div>
+      字数：14.2k字 | 预计阅读时长：48分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
@@ -623,6 +632,188 @@
 <p>传输相邻和迭代隧道（多个隧道组合）</p>
 <p>7.Oakley密钥确定协议和ISAKMP在IPSec中起到什么作用？</p>
 <p>密钥交换等安全属性的协商</p>
+<h1 id="系统安全"><a href="#系统安全" class="headerlink" title="系统安全"></a>系统安全</h1><ul>
+<li>恶意软件是指为了恶意的目的而蓄意植入系统的软件</li>
+<li>病毒是指通过修改其他程序而达到“感染”目的的软件，这种更改包括复制一个能够继续感染其他程序的病毒程序。</li>
+<li>蠕虫是指通过复制自身，并将副本通过网络传到其他计算机上的程序。当传到其他计算机上，它又开始重复做同样的事情，除了不断繁殖传播之外，蠕虫还经常含有其他有害的功能。</li>
+<li>拒绝服务攻击是指阻止合法用户正常地使用服务。</li>
+<li>分布式拒绝服务攻击是指从多个源端发起的拒绝服务攻击。</li>
+</ul>
+<h2 id="恶意软件"><a href="#恶意软件" class="headerlink" title="恶意软件"></a>恶意软件</h2><h3 id="恶意软件类型"><a href="#恶意软件类型" class="headerlink" title="恶意软件类型"></a>恶意软件类型</h3><h4 id="恶意软件分类"><a href="#恶意软件分类" class="headerlink" title="恶意软件分类"></a>恶意软件分类</h4><p><img src="\images\eyiruanjian.png" alt=""></p>
+<h3 id="传播-感染内容-病毒"><a href="#传播-感染内容-病毒" class="headerlink" title="传播-感染内容-病毒"></a>传播-感染内容-病毒</h3><h4 id="病毒的本质"><a href="#病毒的本质" class="headerlink" title="病毒的本质"></a>病毒的本质</h4><p>计算机病毒是能够通过修改而达到感染其他程序的一段软件，或者说实际上任何形式的可执行内容都可被感染。这种修改操作包括在原始代码中注入能够复制病毒代码的例程，而这些例程又能够继续感染其他内容。</p>
+<h4 id="病毒的四个阶段"><a href="#病毒的四个阶段" class="headerlink" title="病毒的四个阶段"></a>病毒的四个阶段</h4><ul>
+<li>潜伏阶段，处于休眠，直至被触发</li>
+<li>传染阶段，复制自身，传染其他</li>
+<li>触发阶段，被特定事件所激活</li>
+<li>发作阶段，条件成熟，发作破坏</li>
+</ul>
+<h4 id="病毒的结构"><a href="#病毒的结构" class="headerlink" title="病毒的结构"></a>病毒的结构</h4><ul>
+<li>病毒可以被放在可执行文件首部、尾部或以其他方式嵌入宿主程序，首先被执行的应当是病毒</li>
+<li>简单的病毒</li>
+<li>压缩的病毒</li>
+</ul>
+<h4 id="病毒的压缩过程"><a href="#病毒的压缩过程" class="headerlink" title="病毒的压缩过程"></a>病毒的压缩过程</h4><p>感染后的程序比感染之前的程序长，为防止被检测到，对可执行文件进行压缩，使得无论该程序是否被感染，它的长度都是相同的。</p>
+<h4 id="病毒分类"><a href="#病毒分类" class="headerlink" title="病毒分类"></a>病毒分类</h4><p>按照<strong>感染目标</strong>分类，包括以下类型：</p>
+<ul>
+<li>引导扇区感染病毒：感染主引导记录或者其他引导记录，当系统从包含这种病毒的磁盘启动时，病毒将传播开来。</li>
+<li>文件感染病毒：感染被操作系统或Shell认为是可执行的文件</li>
+<li>宏病毒：在一个应用程序解释宏代码或脚本代码时感染文件</li>
+<li>混合体病毒：用多种方式感染文件。能够感染多种类型的文件，清除该病毒要处理所有可能感染的地方</li>
+</ul>
+<p>按<strong>隐藏策略</strong>进行分类的病毒包括以下几种：</p>
+<ul>
+<li>加密病毒：生成密钥加密病毒。当一个受感染的程序调用时，解密该病毒。当病毒被复制时，另选一个不同的随机密钥加密病毒。</li>
+<li>隐蔽性病毒：具有较好的隐蔽性，逃避反病毒软件的检测</li>
+<li>多态病毒：每次感染表现为不同的形态，使通过病毒特征的检测方法无效。</li>
+<li>变形病毒：每次感染过程中也会表现为不同形态。但变形病毒会改写自身的代码，从而增加检测的难度，既可以改变它们的行为，也可以改变其外观。</li>
+</ul>
+<h3 id="分布式拒绝服务攻击DDos"><a href="#分布式拒绝服务攻击DDos" class="headerlink" title="分布式拒绝服务攻击DDos"></a>分布式拒绝服务攻击DDos</h3><p>分布式SYN突发流量攻击：</p>
+<p><img src="\images\ddossyn.png" alt=""></p>
+<p>分布式ICMP攻击：</p>
+<p><img src="\images\ddosicmp.png" alt=""></p>
+<h4 id="基于DDoS攻击的洪泛攻击分类"><a href="#基于DDoS攻击的洪泛攻击分类" class="headerlink" title="基于DDoS攻击的洪泛攻击分类"></a>基于DDoS攻击的洪泛攻击分类</h4><p><img src="\images\directddos.png" alt=""></p>
+<p><img src="\images\reflectorddos.png" alt=""></p>
+<h4 id="DDos防护"><a href="#DDos防护" class="headerlink" title="DDos防护"></a>DDos防护</h4><p>攻击前：攻击预防</p>
+<p>攻击中：攻击检测和过滤</p>
+<p>攻击后：攻击源追踪</p>
+<h3 id="思考题-2"><a href="#思考题-2" class="headerlink" title="思考题"></a>思考题</h3><p>1.恶意软件用于传播的三种主要机制是什么？</p>
+<p>恶意软件可用于传播的三种广泛机制是:病毒感染现有可执行文件或解释内容，随后病毒传播到其他系统。利用软件漏洞，通过蠕虫或驱动下载在本地或网络上进行攻击，以允许恶意软件复制。以及社会工程攻击，即说服用户绕过安全机制安装特洛伊木马，或响应网络钓鱼攻击。</p>
+<p>2.恶意软件携带的四种主要类型的载荷是什么？</p>
+<p>恶意软件可能携带的四大类有效负载是:系统或数据文件的损坏;为了使系统成为僵尸代理而窃取服务作为僵尸网的一部分；窃取系统中的信息，尤其是通过键盘记录或问谍软件程序窃取登录、密码或其他个人详细信息；以及恶意软件隐藏了它在系统上的存在，以防止系统试图检测和阻止它。</p>
+<h2 id="入侵者"><a href="#入侵者" class="headerlink" title="入侵者"></a>入侵者</h2><ul>
+<li>对计算机系统或网络的入侵已成为计算机安全最严重的威胁之一。</li>
+<li>入侵检测系统可以提供早期的预警，从而避免或减轻入侵所造成的损失。</li>
+<li>入侵检测涉及对正常行为的模式检测和对与入侵相关的异常行为的模式检测。</li>
+<li>防备入侵一个重要的组成部分就是口令管理，其目标是阻止非授权用户获得其他用户的口令。</li>
+</ul>
+<h3 id="入侵者-1"><a href="#入侵者-1" class="headerlink" title="入侵者"></a>入侵者</h3><h4 id="入侵者行为模式"><a href="#入侵者行为模式" class="headerlink" title="入侵者行为模式"></a>入侵者行为模式</h4><ul>
+<li>用户非法入侵(黑客)与软件非法入侵(病毒)</li>
+<li>三类入侵者 (hackers or crackers):<ul>
+<li>伪装者Masquerader</li>
+<li>违法行为者Misfeasor</li>
+<li>秘密用户Clandestine user</li>
+</ul>
+</li>
+<li>系统入侵已经明显地发展成为一个社会问题</li>
+<li>许多入侵看起来是无害的，但仍消耗大量资源</li>
+<li>可以通过被控制的系统向其他机器发起攻击</li>
+</ul>
+<h4 id="入侵技术"><a href="#入侵技术" class="headerlink" title="入侵技术"></a>入侵技术</h4><p>系统通常维护一个与每个授权用户相关的口令文件。如果系统对该口令文件没有保护，敌手很容易获得口令。<br><strong>口令文件及其保护</strong></p>
+<ul>
+<li>One-way encryption(单向加密), 用口令产生一个密钥用于加密</li>
+<li>Access Control(访问控制)，限制对口令文件的访问</li>
+</ul>
+<p><strong>猜测口令的技术</strong></p>
+<ul>
+<li>尝试默认口令</li>
+<li>穷尽所有短口令(1到3个字符)</li>
+<li>尝试在线词典中的单词或看似口令的单词表(60,000)</li>
+<li>收集用户信息，如爱好、生日、配偶或孩子名</li>
+<li>尝试用户电话、社会安全号，住址</li>
+<li>使用特洛伊木马</li>
+<li>窃听远程用户和主机之间的线路</li>
+</ul>
+<h3 id="入侵检测"><a href="#入侵检测" class="headerlink" title="入侵检测"></a>入侵检测</h3><ul>
+<li>有效的入侵检测系统可以看成阻止入侵的屏障</li>
+<li>入侵检测可以收集入侵技术的信息，用以增强入侵阻止工具</li>
+<li>入侵检测建立的前提是假设入侵者的行为在某些情况下不同于合法用户的行为，然而两者仍有重叠部分。放宽定义入侵者行为，会发现更多的入侵者，也会产生大量的“错误肯定”</li>
+<li>为减少错误肯定，严格定义入侵者的行为，将导致错误否定的增加，即无法判断出入侵者。因此在入侵的实践中存在巧妙的折衷</li>
+</ul>
+<p><img src="\images\attacker.png" alt=""></p>
+<h4 id="入侵检测方法"><a href="#入侵检测方法" class="headerlink" title="入侵检测方法"></a>入侵检测方法</h4><p>统计异常检测Statistical anomaly detection，定义通常的或期望的行为</p>
+<ul>
+<li>阈值检测Treshold detection</li>
+<li>基于形态的检测Profile based</li>
+</ul>
+<p>基于规则的检测Rule based detection，定义合适的行为</p>
+<ul>
+<li>异常检测Anomaly detection</li>
+<li>渗透识别Penetration identidication</li>
+</ul>
+<p>审计记录，入侵检测的基本工具</p>
+<ul>
+<li>原有审计记录</li>
+<li>专门用于检测的审计记录</li>
+</ul>
+<h4 id="基于规则的入侵检测"><a href="#基于规则的入侵检测" class="headerlink" title="基于规则的入侵检测"></a>基于规则的入侵检测</h4><p>通过观察系统中的事件，应用决定给定活动模式是否可疑的规则集来检测入侵行为</p>
+<ul>
+<li>异常检测，类似于统计的异常检测</li>
+<li>基于规则的渗透标识：采用基于专家系统技术的方法, 使用规则来识别已知的渗透, 或那些利用已知弱点的渗透行为。</li>
+</ul>
+<p>NDIX采用启发式规则对行为分配可疑程度</p>
+<p>IDES使用渗透标识模式，当生成审计记录时进行检查，并与规则库相匹配；如果找到匹配，用户的可疑等级会提高；匹配了足够多的规则，等级超过阈值，导致异常报告</p>
+<h4 id="分布式入侵检测"><a href="#分布式入侵检测" class="headerlink" title="分布式入侵检测"></a>分布式入侵检测</h4><p>分布式入侵检测系统要考虑的几个问题</p>
+<ul>
+<li>分布式入侵检测系统可能需要处理不同的审计记录格式</li>
+<li>网络上一个或多个结点将作为数据收集和分析点，需要保证数据完整性和机密性</li>
+<li>集中的或分散的体系结构都可以使用</li>
+</ul>
+<p>分布式入侵检测系统的组成</p>
+<ul>
+<li>主机代理模块：收集主机上有关事件数据，送给中央管理者</li>
+<li>局域网监视代理模块：与主机代理模块类似</li>
+<li>中央管理者模块：接收事件报告，关联事件，检测入侵</li>
+</ul>
+<p><img src="\images\ruqinjiance.png" alt=""></p>
+<h4 id="蜜罐技术"><a href="#蜜罐技术" class="headerlink" title="蜜罐技术"></a>蜜罐技术</h4><p>蜜罐是诱导潜在的攻击者远离重要系统的圈套</p>
+<ul>
+<li>转移攻击重要系统的攻击者</li>
+<li>收集攻击者活动的信息</li>
+<li>希望攻击者在系统中逗留足够的时间，使管理员能对此攻击做出响应</li>
+</ul>
+<p>蜜罐充满合法用户不会访问、但表面看起来有价值的虚假信息，任何对蜜罐的访问都是可疑的<br>蜜罐系统使用的工具包括灵敏的监视器和事件日志<br>初始使用一台有IP地址的机器吸引黑客，现在是建立蜜罐网络，用来模拟一个企业网络。使用实际的或模拟的通信量和数据，一旦黑客进入，管理员可以详细观察到他们的行为，提出防范措施。</p>
+<h3 id="口令管理"><a href="#口令管理" class="headerlink" title="口令管理"></a>口令管理</h3><p><strong>用户ID的作用</strong></p>
+<ul>
+<li>确定用户是否获得访问系统的授权</li>
+<li>确定分配给用户的相应权利</li>
+<li>用于自主的访问控制</li>
+</ul>
+<p><strong>UNIX口令模式</strong><br>用户选择长度大于8个可打印字符的口令, 转换成56位的值, 作为加密例程的密钥输入。加密例程cryp(3)是基于DES的，使用12位的盐值salt修改DES算法。使用由0组成的64位数据输入执行DES算法，输出作为二次加密的输入，加密过程重复25次。<br>产生的64位输出被转换成11个字符序列，密文口令和明文盐值副本一起存放在口令文件相应用户ID项中。</p>
+<p><img src="\images\unixpassword.png" alt=""></p>
+<h4 id="口令选择策略"><a href="#口令选择策略" class="headerlink" title="口令选择策略"></a>口令选择策略</h4><p><strong>用户教育</strong><br><strong>计算机生成的口令</strong><br>如果口令本质上完全随机，难以被用户接受<br><strong>后验的口令检查</strong><br>系统定期运行口令破解程序来找到可猜测的口令并通知用户修正<br><strong>预先的口令检查</strong></p>
+<ul>
+<li>允许用户选择口令，系统检查口令是否是允许的，使用户在相当大的空间中选择可记忆的且在词典攻击中不太可能猜出的口令。</li>
+<li>简单的规则约束系统，如口令至少8个字符，且应混用</li>
+<li>编译一个可能的口令大词典，不允许用户选择</li>
+<li>基于Bloom过滤器的口令检查技术：一种高效的先验口令检查技术，基于拒绝列表上的单词，已经在许多系统上使用了，包括Linux系统。</li>
+</ul>
+<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>信息系统不断发展完善，每个人都希望与互联网相连或连接到网上，存在安全忧虑，不能很容易地使组织中的各系统得到安全保护，典型地使用防火墙，用以提供边界防御，作为复杂的安全策略的一部分</p>
+<h4 id="什么是防火墙？"><a href="#什么是防火墙？" class="headerlink" title="什么是防火墙？"></a>什么是防火墙？</h4><ul>
+<li>是网络控制和监视的关键点</li>
+<li>用不同的信任与网络相连接</li>
+<li>对网络服务进行强制性限制</li>
+<li>对访问进行审查和控制</li>
+<li>提供NAT和使用监视</li>
+<li>用 IPSec 实现VPN </li>
+<li>对于渗透是免疫的</li>
+</ul>
+<h4 id="防火墙设计目标"><a href="#防火墙设计目标" class="headerlink" title="防火墙设计目标"></a>防火墙设计目标</h4><ul>
+<li><p>所有通信都必须经过防火墙</p>
+</li>
+<li><p>只有被授权的通信才能通过防火墙</p>
+</li>
+<li><p>防火墙本身不能被攻破</p>
+</li>
+</ul>
+<h3 id="防火墙的四种机制"><a href="#防火墙的四种机制" class="headerlink" title="防火墙的四种机制"></a>防火墙的四种机制</h3><h4 id="服务控制"><a href="#服务控制" class="headerlink" title="服务控制"></a>服务控制</h4><p>确定可以访问的互联网服务类型，在IP地址、协议，或端口号的基础上对数据流进行过滤，或提供委托代理，自身作为服务器。</p>
+<h4 id="方向控制"><a href="#方向控制" class="headerlink" title="方向控制"></a>方向控制</h4><p>确定特定服务请求发起和通过的方向，即允许通过防火墙的进入或者离开。</p>
+<h4 id="用户控制"><a href="#用户控制" class="headerlink" title="用户控制"></a>用户控制</h4><p>根据试图访问服务器的用户来控制服务器的访问权限。</p>
+<h4 id="行为控制"><a href="#行为控制" class="headerlink" title="行为控制"></a>行为控制</h4><p>控制特定服务的使用方法。如防火墙可以过滤电子邮件来清除垃圾邮件，或者控制外部用户只能对本地Web服务器上的部分信息访问。</p>
+<h3 id="防火墙的局限性"><a href="#防火墙的局限性" class="headerlink" title="防火墙的局限性"></a>防火墙的局限性</h3><ul>
+<li>防火墙防外不防内</li>
+<li>不能防范绕过防火墙的攻击</li>
+<li>安全性不当的局域网可能受到外部访问</li>
+<li>不能防范病毒</li>
+<li>配置复杂，容易出现漏洞</li>
+<li>往往只认机器不认人，控制粒度较粗</li>
+</ul>
+<h3 id="防火墙类型"><a href="#防火墙类型" class="headerlink" title="防火墙类型"></a>防火墙类型</h3><ul>
+<li>包过滤防火墙：对每个传入传出IP数据包的一组应用规则，然后转发或者丢弃该数据包</li>
+<li>状态检测防火墙：状态检测包过滤器通过建造了一个出站TCP连接目录加强了TCP流量的规则。</li>
+<li>应用层网关：也称代理服务器，充当应用程序级流量的中继</li>
+<li>链路层网关</li>
+</ul>
+<p><img src="\images\firewall.png" alt=""></p>
 
       
 
@@ -759,7 +950,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络安全应用"><span class="toc-number">1.</span> <span class="toc-text">网络安全应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#密钥分配和用户认证"><span class="toc-number">1.1.</span> <span class="toc-text">密钥分配和用户认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于对称加密的密钥分配"><span class="toc-number">1.1.1.</span> <span class="toc-text">基于对称加密的密钥分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kerberos"><span class="toc-number">1.1.2.</span> <span class="toc-text">Kerberos</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Kerberos4"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Kerberos4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kerberos5"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Kerberos5</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#X-509证书"><span class="toc-number">1.1.3.</span> <span class="toc-text">X.509证书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证书"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-509版本3"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">X.509版本3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公钥基础设施"><span class="toc-number">1.1.4.</span> <span class="toc-text">公钥基础设施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题思考"><span class="toc-number">1.1.5.</span> <span class="toc-text">问题思考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络访问控制和云安全"><span class="toc-number">1.2.</span> <span class="toc-text">网络访问控制和云安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络访问控制"><span class="toc-number">1.2.1.</span> <span class="toc-text">网络访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络访问控制系统组成元素"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">网络访问控制系统组成元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络访问强制措施"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">网络访问强制措施</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可扩展认证协议"><span class="toc-number">1.2.2.</span> <span class="toc-text">可扩展认证协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#认证方法"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">认证方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-802-1X基于端口的网络访问控制"><span class="toc-number">1.2.3.</span> <span class="toc-text">IEEE 802.1X基于端口的网络访问控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#云计算"><span class="toc-number">1.2.4.</span> <span class="toc-text">云计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#云计算组成元素"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">云计算组成元素</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传输层安全"><span class="toc-number">1.3.</span> <span class="toc-text">传输层安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web安全需求"><span class="toc-number">1.3.1.</span> <span class="toc-text">Web安全需求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Web安全威胁"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Web安全威胁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Web流量安全方法"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Web流量安全方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全套接字层和传输层安全"><span class="toc-number">1.3.2.</span> <span class="toc-text">安全套接字层和传输层安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL体系结构"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">SSL体系结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL记录协议"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">SSL记录协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改密码规格协议"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">修改密码规格协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#警报协议"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">警报协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#握手协议"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">握手协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#密码计算"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">密码计算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS"><span class="toc-number">1.3.3.</span> <span class="toc-text">HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#连接的初始化"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">连接的初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接关闭"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">连接关闭</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">1.3.4.</span> <span class="toc-text">SSH</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#传输层协议"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">传输层协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分组交换"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">分组交换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户身份认证协议"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">用户身份认证协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接协议"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">连接协议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题思考-1"><span class="toc-number">1.3.5.</span> <span class="toc-text">问题思考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无线网络安全"><span class="toc-number">1.4.</span> <span class="toc-text">无线网络安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无线安全"><span class="toc-number">1.4.1.</span> <span class="toc-text">无线安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#无线网络安全威胁"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">无线网络安全威胁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无线安全措施"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">无线安全措施</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-802-11无线局域网概述"><span class="toc-number">1.4.2.</span> <span class="toc-text">IEEE 802.11无线局域网概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE802协议架构"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">IEEE802协议架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11网络组成与架构模型"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">IEEE 802.11网络组成与架构模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-802-11i-无线局域网安全"><span class="toc-number">1.4.3.</span> <span class="toc-text">IEEE 802.11i 无线局域网安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11i服务"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">IEEE 802.11i服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11i操作阶段"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">IEEE 802.11i操作阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发现阶段"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">发现阶段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-number">1.4.4.</span> <span class="toc-text">思考题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP安全"><span class="toc-number">1.5.</span> <span class="toc-text">IP安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP安全概述"><span class="toc-number">1.5.1.</span> <span class="toc-text">IP安全概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IPSec的应用"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">IPSec的应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPSec的好处"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">IPSec的好处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#路由应用"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">路由应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPSec服务"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">IPSec服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传输模式和隧道模式"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">传输模式和隧道模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP安全策略"><span class="toc-number">1.5.2.</span> <span class="toc-text">IP安全策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全关联"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">安全关联</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP通信进程"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">IP通信进程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装安全载荷"><span class="toc-number">1.5.3.</span> <span class="toc-text">封装安全载荷</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ESP格式"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">ESP格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密和认证算法"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">加密和认证算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#防止重放服务"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">防止重放服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传输模式和隧道模式-1"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">传输模式和隧道模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全关联组合"><span class="toc-number">1.5.4.</span> <span class="toc-text">安全关联组合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#认证加保密"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">认证加保密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全关联的基本组合"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">安全关联的基本组合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#因特网密钥交换"><span class="toc-number">1.5.5.</span> <span class="toc-text">因特网密钥交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题-1"><span class="toc-number">1.5.6.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络安全应用"><span class="toc-number">1.</span> <span class="toc-text">网络安全应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#密钥分配和用户认证"><span class="toc-number">1.1.</span> <span class="toc-text">密钥分配和用户认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于对称加密的密钥分配"><span class="toc-number">1.1.1.</span> <span class="toc-text">基于对称加密的密钥分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kerberos"><span class="toc-number">1.1.2.</span> <span class="toc-text">Kerberos</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Kerberos4"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Kerberos4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kerberos5"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Kerberos5</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#X-509证书"><span class="toc-number">1.1.3.</span> <span class="toc-text">X.509证书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证书"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-509版本3"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">X.509版本3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公钥基础设施"><span class="toc-number">1.1.4.</span> <span class="toc-text">公钥基础设施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题思考"><span class="toc-number">1.1.5.</span> <span class="toc-text">问题思考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络访问控制和云安全"><span class="toc-number">1.2.</span> <span class="toc-text">网络访问控制和云安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络访问控制"><span class="toc-number">1.2.1.</span> <span class="toc-text">网络访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络访问控制系统组成元素"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">网络访问控制系统组成元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络访问强制措施"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">网络访问强制措施</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可扩展认证协议"><span class="toc-number">1.2.2.</span> <span class="toc-text">可扩展认证协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#认证方法"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">认证方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-802-1X基于端口的网络访问控制"><span class="toc-number">1.2.3.</span> <span class="toc-text">IEEE 802.1X基于端口的网络访问控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#云计算"><span class="toc-number">1.2.4.</span> <span class="toc-text">云计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#云计算组成元素"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">云计算组成元素</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传输层安全"><span class="toc-number">1.3.</span> <span class="toc-text">传输层安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web安全需求"><span class="toc-number">1.3.1.</span> <span class="toc-text">Web安全需求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Web安全威胁"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Web安全威胁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Web流量安全方法"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Web流量安全方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全套接字层和传输层安全"><span class="toc-number">1.3.2.</span> <span class="toc-text">安全套接字层和传输层安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL体系结构"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">SSL体系结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SSL记录协议"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">SSL记录协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改密码规格协议"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">修改密码规格协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#警报协议"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">警报协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#握手协议"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">握手协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#密码计算"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">密码计算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS"><span class="toc-number">1.3.3.</span> <span class="toc-text">HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#连接的初始化"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">连接的初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接关闭"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">连接关闭</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">1.3.4.</span> <span class="toc-text">SSH</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#传输层协议"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">传输层协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分组交换"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">分组交换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户身份认证协议"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">用户身份认证协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接协议"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">连接协议</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题思考-1"><span class="toc-number">1.3.5.</span> <span class="toc-text">问题思考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无线网络安全"><span class="toc-number">1.4.</span> <span class="toc-text">无线网络安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无线安全"><span class="toc-number">1.4.1.</span> <span class="toc-text">无线安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#无线网络安全威胁"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">无线网络安全威胁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无线安全措施"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">无线安全措施</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-802-11无线局域网概述"><span class="toc-number">1.4.2.</span> <span class="toc-text">IEEE 802.11无线局域网概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE802协议架构"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">IEEE802协议架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11网络组成与架构模型"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">IEEE 802.11网络组成与架构模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-802-11i-无线局域网安全"><span class="toc-number">1.4.3.</span> <span class="toc-text">IEEE 802.11i 无线局域网安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11i服务"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">IEEE 802.11i服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11i操作阶段"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">IEEE 802.11i操作阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发现阶段"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">发现阶段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题"><span class="toc-number">1.4.4.</span> <span class="toc-text">思考题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP安全"><span class="toc-number">1.5.</span> <span class="toc-text">IP安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP安全概述"><span class="toc-number">1.5.1.</span> <span class="toc-text">IP安全概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IPSec的应用"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">IPSec的应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPSec的好处"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">IPSec的好处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#路由应用"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">路由应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPSec服务"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">IPSec服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传输模式和隧道模式"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">传输模式和隧道模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP安全策略"><span class="toc-number">1.5.2.</span> <span class="toc-text">IP安全策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安全关联"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">安全关联</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP通信进程"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">IP通信进程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#封装安全载荷"><span class="toc-number">1.5.3.</span> <span class="toc-text">封装安全载荷</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ESP格式"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">ESP格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密和认证算法"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">加密和认证算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#防止重放服务"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">防止重放服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传输模式和隧道模式-1"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">传输模式和隧道模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全关联组合"><span class="toc-number">1.5.4.</span> <span class="toc-text">安全关联组合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#认证加保密"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">认证加保密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全关联的基本组合"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">安全关联的基本组合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#因特网密钥交换"><span class="toc-number">1.5.5.</span> <span class="toc-text">因特网密钥交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题-1"><span class="toc-number">1.5.6.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#系统安全"><span class="toc-number">2.</span> <span class="toc-text">系统安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意软件"><span class="toc-number">2.1.</span> <span class="toc-text">恶意软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#恶意软件类型"><span class="toc-number">2.1.1.</span> <span class="toc-text">恶意软件类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#恶意软件分类"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">恶意软件分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#传播-感染内容-病毒"><span class="toc-number">2.1.2.</span> <span class="toc-text">传播-感染内容-病毒</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒的本质"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">病毒的本质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒的四个阶段"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">病毒的四个阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒的结构"><span class="toc-number">2.1.2.3.</span> <span class="toc-text">病毒的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒的压缩过程"><span class="toc-number">2.1.2.4.</span> <span class="toc-text">病毒的压缩过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒分类"><span class="toc-number">2.1.2.5.</span> <span class="toc-text">病毒分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式拒绝服务攻击DDos"><span class="toc-number">2.1.3.</span> <span class="toc-text">分布式拒绝服务攻击DDos</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基于DDoS攻击的洪泛攻击分类"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">基于DDoS攻击的洪泛攻击分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DDos防护"><span class="toc-number">2.1.3.2.</span> <span class="toc-text">DDos防护</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考题-2"><span class="toc-number">2.1.4.</span> <span class="toc-text">思考题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#入侵者"><span class="toc-number">2.2.</span> <span class="toc-text">入侵者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#入侵者-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">入侵者</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#入侵者行为模式"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">入侵者行为模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#入侵技术"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">入侵技术</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入侵检测"><span class="toc-number">2.2.2.</span> <span class="toc-text">入侵检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#入侵检测方法"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">入侵检测方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于规则的入侵检测"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">基于规则的入侵检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式入侵检测"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">分布式入侵检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#蜜罐技术"><span class="toc-number">2.2.2.4.</span> <span class="toc-text">蜜罐技术</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#口令管理"><span class="toc-number">2.2.3.</span> <span class="toc-text">口令管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#口令选择策略"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">口令选择策略</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防火墙"><span class="toc-number">2.3.</span> <span class="toc-text">防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">2.3.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是防火墙？"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">什么是防火墙？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#防火墙设计目标"><span class="toc-number">2.3.1.2.</span> <span class="toc-text">防火墙设计目标</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防火墙的四种机制"><span class="toc-number">2.3.2.</span> <span class="toc-text">防火墙的四种机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#服务控制"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">服务控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方向控制"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">方向控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户控制"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">用户控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#行为控制"><span class="toc-number">2.3.2.4.</span> <span class="toc-text">行为控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防火墙的局限性"><span class="toc-number">2.3.3.</span> <span class="toc-text">防火墙的局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防火墙类型"><span class="toc-number">2.3.4.</span> <span class="toc-text">防火墙类型</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
