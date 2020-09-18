@@ -17,7 +17,7 @@
 <meta property="og:description" content="最近闲来无事，系统的学习记录一下Linux的一些命令，方便以熟练的使用Linux系统。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/fj53.jpg">
-<meta property="og:updated_time" content="2020-09-08T04:40:34.136Z">
+<meta property="og:updated_time" content="2020-09-18T08:25:29.729Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令学习">
 <meta name="twitter:description" content="最近闲来无事，系统的学习记录一下Linux的一些命令，方便以熟练的使用Linux系统。">
@@ -84,7 +84,7 @@
             
 		</nav>
 		<a class="header-subtitle">
-			总字数 <span class="post-count">129.5k</span>
+			总字数 <span class="post-count">135.4k</span>
 		</a>
 		<nav class="header-nav">
 			<div class="social">
@@ -181,7 +181,7 @@
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：9k字 | 预计阅读时长：34分钟</div>
+      字数：14.9k字 | 预计阅读时长：56分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
@@ -341,6 +341,136 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nc [-46CDdFhklNnrStUuvZz] [-I length] [-i interval] [-M ttl]</span><br><span class="line">         [-m minttl] [-O length] [-P proxy_username] [-p source_port]</span><br><span class="line">         [-q seconds] [-s source] [-T keyword] [-V rtable] [-W recvlimit] [-w timeout]</span><br><span class="line">         [-X proxy_protocol] [-x proxy_address[:port]]           [destination] [port]</span><br></pre></td></tr></table></figure>
 <p>参数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-l    用于指定nc将处于侦听模式。指定该参数，则意味着nc被当作server，侦听并接受连接，而非向其它地址发起连接。</span><br><span class="line">-p    暂未用到（老版本的nc可能需要在端口号前加-p参数，下面测试环境是centos6.6，nc版本是nc-1.84，未用到-p参数）</span><br><span class="line">-s    指定发送数据的源IP地址，适用于多网卡机</span><br><span class="line">-u    指定nc使用UDP协议，默认为TCP</span><br><span class="line">-v    输出交互或出错信息，新手调试时尤为有用</span><br><span class="line">-w    超时秒数，后面跟数字</span><br></pre></td></tr></table></figure>
+<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><p>Linux ifconfig命令用于显示或设置网络设备。<br>ifconfig可设置网络设备的状态，或是显示目前的设置。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig [网络设备][down up -allmulti -arp -promisc][add&lt;地址&gt;][del&lt;地址&gt;][&lt;hw&lt;网络设备类型&gt;&lt;硬件地址&gt;][io_addr&lt;I/O地址&gt;][irq&lt;IRQ地址&gt;][media&lt;网络媒介类型&gt;][mem_start&lt;内存地址&gt;][metric&lt;数目&gt;][mtu&lt;字节&gt;][netmask&lt;子网掩码&gt;][tunnel&lt;地址&gt;][-broadcast&lt;地址&gt;][-pointopoint&lt;地址&gt;][IP地址]</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<p>add&lt;地址&gt; 设置网络设备IPv6的IP地址。<br>del&lt;地址&gt; 删除网络设备IPv6的IP地址。<br>down 关闭指定的网络设备。</p>
+<p>&lt;hw&lt;网络设备类型&gt;&lt;硬件地址&gt; 设置网络设备的类型与硬件地址。<br>io_addr&lt;I/O地址&gt; 设置网络设备的I/O地址。<br>irq&lt;IRQ地址&gt; 设置网络设备的IRQ。<br>media&lt;网络媒介类型&gt; 设置网络设备的媒介类型。<br>mem_start&lt;内存地址&gt; 设置网络设备在主内存所占用的起始地址。<br>metric&lt;数目&gt; 指定在计算数据包的转送次数时，所要加上的数目。<br>mtu&lt;字节&gt; 设置网络设备的MTU。<br>netmask&lt;子网掩码&gt; 设置网络设备的子网掩码。<br>tunnel&lt;地址&gt; 建立IPv4与IPv6之间的隧道通信地址。<br>up 启动指定的网络设备。<br>-broadcast&lt;地址&gt; 将要送往指定地址的数据包当成广播数据包来处理。<br>-pointopoint&lt;地址&gt; 与指定地址的网络设备建立直接连线，此模式具有保密功能。<br>-promisc 关闭或启动指定网络设备的promiscuous模式。<br>[IP地址] 指定网络设备的IP地址。<br>[网络设备] 指定网络设备的名称。</p>
+<h4 id="mesg和wall"><a href="#mesg和wall" class="headerlink" title="mesg和wall"></a>mesg和wall</h4><p>mesg命令用于设置终端机的写入权限。<br>将mesg设置y时，其他用户可利用write指令将信息直接显示在您的屏幕上。</p>
+<p> wall命令会将讯息传给每一个 mesg 设定为 yes 的上线使用者。当使用终端机介面做为标准传入时, 讯息结束时需加上 EOF</p>
+<p>语法：wall [message]</p>
+<h4 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h4><p>netstat 命令用于显示网络状态。<br>利用 netstat 指令可让你得知整个 Linux 系统的网络情况。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][--ip]</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<p>-a或–all 显示所有连线中的Socket。<br>-A&lt;网络类型&gt;或–&lt;网络类型&gt; 列出该网络类型连线中的相关地址。<br>-c或–continuous 持续列出网络状态。<br>-C或–cache 显示路由器配置的快取信息。<br>-e或–extend 显示网络其他相关信息。<br>-F或–fib 显示FIB。<br>-g或–groups 显示多重广播功能群组组员名单。<br>-h或–help 在线帮助。<br>-i或–interfaces 显示网络界面信息表单。<br>-l或–listening 显示监控中的服务器的Socket。<br>-M或–masquerade 显示伪装的网络连线。<br>-n或–numeric 直接使用IP地址，而不通过域名服务器。<br>-N或–netlink或–symbolic 显示网络硬件外围设备的符号连接名称。<br>-o或–timers 显示计时器。<br>-p或–programs 显示正在使用Socket的程序识别码和程序名称。<br>-r或–route 显示Routing Table。<br>-s或–statistics 显示网络工作信息统计表。<br>-t或–tcp 显示TCP传输协议的连线状况。<br>-u或–udp 显示UDP传输协议的连线状况。<br>-v或–verbose 显示指令执行过程。<br>-V或–version 显示版本信息。<br>-w或–raw 显示RAW传输协议的连线状况。<br>-x或–unix 此参数的效果和指定”-A unix”参数相同。<br>–ip或–inet 此参数的效果和指定”-A inet”参数相同。</p>
+<h4 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h4><p>执行ping指令会使用ICMP传输协议，发出要求回应的信息，若远端主机的网络功能没有问题，就会回应该信息，因而得知该主机运作正常。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping [-dfnqrRv][-c&lt;完成次数&gt;][-i&lt;间隔秒数&gt;][-I&lt;网络界面&gt;][-l&lt;前置载入&gt;][-p&lt;范本样式&gt;][-s&lt;数据包大小&gt;][-t&lt;存活数值&gt;][主机名称或IP地址]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-d 使用Socket的SO_DEBUG功能。<br>-c&lt;完成次数&gt; 设置完成要求回应的次数。<br>-f 极限检测。<br>-i&lt;间隔秒数&gt; 指定收发信息的间隔时间。<br>-I&lt;网络界面&gt; 使用指定的网络接口送出数据包。<br>-l&lt;前置载入&gt; 设置在送出要求信息之前，先行发出的数据包。<br>-n 只输出数值。<br>-p&lt;范本样式&gt; 设置填满数据包的范本样式。<br>-q 不显示指令执行过程，开头和结尾的相关信息除外。<br>-r 忽略普通的Routing Table，直接将数据包送到远端主机上。<br>-R 记录路由过程。<br>-s&lt;数据包大小&gt; 设置数据包的大小。<br>-t&lt;存活数值&gt; 设置存活数值TTL的大小。<br>-v 详细显示指令的执行过程。</p>
+<h4 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h4><p>traceroute命令用于显示数据包到主机间的路径。<br>traceroute指令让你追踪网络数据包的路由途径，预设数据包大小是40Bytes，用户可另行设置。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute [-dFlnrvx][-f&lt;存活数值&gt;][-g&lt;网关&gt;...][-i&lt;网络界面&gt;][-m&lt;存活数值&gt;][-p&lt;通信端口&gt;][-s&lt;来源地址&gt;][-t&lt;服务类型&gt;][-w&lt;超时秒数&gt;][主机名称或IP地址][数据包大小]</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<p>-d 使用Socket层级的排错功能。<br>-f&lt;存活数值&gt; 设置第一个检测数据包的存活数值TTL的大小。<br>-F 设置勿离断位。<br>-g&lt;网关&gt; 设置来源路由网关，最多可设置8个。<br>-i&lt;网络界面&gt; 使用指定的网络界面送出数据包。<br>-I 使用ICMP回应取代UDP资料信息。<br>-m&lt;存活数值&gt; 设置检测数据包的最大存活数值TTL的大小。<br>-n 直接使用IP地址而非主机名称。<br>-p&lt;通信端口&gt; 设置UDP传输协议的通信端口。<br>-r 忽略普通的Routing Table，直接将数据包送到远端主机上。<br>-s&lt;来源地址&gt; 设置本地主机送出数据包的IP地址。<br>-t&lt;服务类型&gt; 设置检测数据包的TOS数值。<br>-w&lt;超时秒数&gt; 设置等待远端主机回报的时间。<br>-x 开启或关闭数据包的正确性检验。</p>
+<h4 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h4><p> tcpdump命令用于倾倒网络传输数据。<br>执行tcpdump指令可列出经过指定网络界面的数据包文件头，在Linux操作系统中，你必须是系统管理员。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump [-adeflnNOpqStvx][-c&lt;数据包数目&gt;][-dd][-ddd][-F&lt;表达文件&gt;][-i&lt;网络界面&gt;][-r&lt;数据包文件&gt;][-s&lt;数据包大小&gt;][-tt][-T&lt;数据包类型&gt;][-vv][-w&lt;数据包文件&gt;][输出数据栏位]</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<p>-a 尝试将网络和广播地址转换成名称。<br>-c&lt;数据包数目&gt; 收到指定的数据包数目后，就停止进行倾倒操作。<br>-d 把编译过的数据包编码转换成可阅读的格式，并倾倒到标准输出。<br>-dd 把编译过的数据包编码转换成C语言的格式，并倾倒到标准输出。<br>-ddd 把编译过的数据包编码转换成十进制数字的格式，并倾倒到标准输出。<br>-e 在每列倾倒资料上显示连接层级的文件头。<br>-f 用数字显示网际网络地址。<br>-F&lt;表达文件&gt; 指定内含表达方式的文件。<br>-i&lt;网络界面&gt; 使用指定的网络截面送出数据包。<br>-l 使用标准输出列的缓冲区。<br>-n 不把主机的网络地址转换成名字。<br>-N 不列出域名。<br>-O 不将数据包编码最佳化。<br>-p 不让网络界面进入混杂模式。<br>-q 快速输出，仅列出少数的传输协议信息。<br>-r&lt;数据包文件&gt; 从指定的文件读取数据包数据。<br>-s&lt;数据包大小&gt; 设置每个数据包的大小。<br>-S 用绝对而非相对数值列出TCP关联数。<br>-t 在每列倾倒资料上不显示时间戳记。<br>-tt 在每列倾倒资料上显示未经格式化的时间戳记。<br>-T&lt;数据包类型&gt; 强制将表达方式所指定的数据包转译成设置的数据包类型。<br>-v 详细显示指令执行过程。<br>-vv 更详细显示指令执行过程。<br>-x 用十六进制字码列出数据包资料。<br>-w&lt;数据包文件&gt; 把数据包数据写入指定的文件。</p>
+<h3 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h3><h4 id="adduser"><a href="#adduser" class="headerlink" title="adduser"></a>adduser</h4><p>adduser命令用于新增使用者帐号或更新预设的使用者资料。<br>adduser 与 useradd 指令为同一指令（经由符号连结 symbolic link）。<br>使用权限：系统管理员。<br>adduser是增加使用者。相对的，也有删除使用者的指令，userdel。语法:userdel [login ID]</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser [-c comment] [-d home_dir] [-e expire_date] [-f inactive_time] [-g initial_group] [-G group[,...]] [-m [-k skeleton_dir] | -M] [-p passwd] [-s shell] [-u uid [ -o]] [-n] [-r] loginid</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-c comment 新使用者位于密码档（通常是 /etc/passwd）的注解资料<br>-d home_dir 设定使用者的家目录为 home_dir ，预设值为预设的 home 后面加上使用者帐号 loginid<br>-e expire_date 设定此帐号的使用期限（格式为 YYYY-MM-DD），预设值为永久有效</p>
+<h4 id="chfn"><a href="#chfn" class="headerlink" title="chfn"></a>chfn</h4><p>chfn命令提供使用者更改个人资讯，用于 finger and mail username<br>使用权限：所有使用者。</p>
+<h4 id="组管理"><a href="#组管理" class="headerlink" title="组管理"></a>组管理</h4><p>groupadd 添加一个组</p>
+<p>groupmod 用于更改群组识别码或名称</p>
+<p>groupdel 用于删除群组</p>
+<h4 id="halt"><a href="#halt" class="headerlink" title="halt"></a>halt</h4><p>若系统的 runlevel 为 0 或 6 ，则Linux halt命令关闭系统，否则以 shutdown 指令（加上 -h 参数）来取代。<br>使用权限：系统管理者。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">halt [-n] [-w] [-d] [-f] [-i] [-p]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-n : 在关机前不做将记忆体资料写回硬盘的动作<br>-w : 并不会真的关机，只是把记录写到 /var/log/wtmp 文件里<br>-d : 不把记录写到 /var/log/wtmp 文件里（-n 这个参数包含了 -d） -f : 强迫关机，不呼叫 shutdown 这个指令<br>-i : 在关机之前先把所有网络相关的装置先停止<br>-p : 当关机的时候，顺便做关闭电源（poweroff）的动作</p>
+<h4 id="last"><a href="#last" class="headerlink" title="last"></a>last</h4><p> last 命令用于显示用户最近登录信息。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last [options]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-R 省略 hostname 的栏位<br>-num 展示前 num 个<br>username 展示 username 的登入讯息<br>tty 限制登入讯息包含终端机代号</p>
+<h4 id="lastb"><a href="#lastb" class="headerlink" title="lastb"></a>lastb</h4><p>lastb命令用于列出登入系统失败的用户相关信息。<br>单独执行lastb指令，它会读取位于/var/log目录下，名称为btmp的文件，并把该文件内容<br>记录的登入失败的用户名单，全部显示出来。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lastb [-adRx][-f &lt;记录文件&gt;][-n &lt;显示列数&gt;][帐号名称...][终端机编号...]</span><br></pre></td></tr></table></figure>
+<p>-a 　把从何处登入系统的主机名称或IP地址显示在最后一行。<br>-d 　将IP地址转换成主机名称。<br>-f&lt;记录文件&gt; 　指定记录文件。<br>-n&lt;显示列数&gt;或-&lt;显示列数&gt; 　设置列出名单的显示列数。<br>-R 　不显示登入系统的主机名称或IP地址。<br>-x 　显示系统关机，重新开机，以及执行等级的改变等信息。</p>
+<p>可以通过查看异常登录确定服务器是否遭受ssh爆破攻击，防范手段一般是进行ip的限制和禁止root用户登录和</p>
+<p>修改默认的端口。</p>
+<h4 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h4><p>ps （英文全拼：process status）命令用于显示当前进程的状态，类似于 windows 的任务管理器</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps [options] [--help]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>ps 的参数非常多, 在此仅列出几个常用的参数并大略介绍含义<br>-A 列出所有的行程<br>-w 显示加宽可以显示较多的资讯<br>-au 显示较详细的资讯<br>-aux 显示所有包含其他使用者的行程<br>au(x) 输出格式 :<br>USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND<br>USER: 行程拥有者<br>PID: pid<br>%CPU: 占用的 CPU 使用率<br>%MEM: 占用的记忆体使用率<br>VSZ: 占用的虚拟记忆体大小<br>RSS: 占用的记忆体大小<br>TTY: 终端的次要装置号码 (minor device number of tty)<br>STAT: 该行程的状态:<br>D: 无法中断的休眠状态 (通常 IO 的进程)<br>R: 正在执行中<br>S: 静止状态<br>T: 暂停执行<br>Z: 不存在但暂时无法消除<br>W: 没有足够的记忆体分页可分配<br>&lt;: 高优先序的行程<br>N: 低优先序的行程<br>L: 有记忆体分页分配并锁在记忆体内 (实时系统或捱A I/O)<br>START: 行程开始时间<br>TIME: 执行的时间<br>COMMAND:所执行的指令</p>
+<h4 id="nice"><a href="#nice" class="headerlink" title="nice"></a>nice</h4><p>nice命令以更改过的优先序来执行程序，如果未指定程序，则会印出目前的排程优先序，内定的 adjustment 为 10，范围为 -20（最高优先序）到 19（最低优先序）。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nice [-n adjustment] [-adjustment] [--adjustment=adjustment] [--help] [--version] [command [arg...]]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-n adjustment, -adjustment, –adjustment=adjustment 皆为将该原有优先序的增加 adjustment<br>–help 显示求助讯息<br>–version 显示版本资讯</p>
+<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>top命令用于实时显示 process 的动态。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top [-] [d delay] [q] [c] [S] [s] [i] [n] [b]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>d : 改变显示的更新速度，或是在交谈式指令列( interactive command)按 s<br>q : 没有任何延迟的显示速度，如果使用者是有 superuser 的权限，则 top 将会以最高的优先序执行<br>c : 切换显示模式，共有两种模式，一是只显示执行档的名称，另一种是显示完整的路径与名称S : 累积模式，会将己完成或消失的子行程 ( dead child process ) 的 CPU time 累积起来<br>s : 安全模式，将交谈式指令取消, 避免潜在的危机<br>i : 不显示任何闲置 (idle) 或无用 (zombie) 的行程<br>n : 更新的次数，完成后将会退出 top<br>b : 批次档模式，搭配 “n” 参数一起使用，可以用来将 top 的结果输出到档案内</p>
+<h4 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h4><p> pstree命令将所有进程以树状图显示，树状图将会以 pid (如果有指定) 或是以 init 这个基本行程为根 (root)，如果有指定使用者 id，则树状图会只显示该使用者所拥有的行程。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree [-a] [-c] [-h|-Hpid] [-l] [-n] [-p] [-u] [-G|-U] [pid|user]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-a 显示该行程的完整指令及参数, 如果是被记忆体置换出去的行程则会加上括号<br>-c 如果有重覆的行程名, 则分开列出（预设值是会在前面加上 *）</p>
+<h4 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h4><p>shutdown命令可以用来进行关机程序，并且在关机以前传送讯息给所有使用者正在执行的程序，shutdown 也可以用来重开机。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown [-t seconds] [-rkhncfF] time [message]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-t seconds : 设定在几秒钟之后进行关机程序。<br>-k : 并不会真的关机，只是将警告讯息传送给所有使用者。<br>-r : 关机后重新开机。<br>-h : 关机后停机。<br>-n : 不采用正常程序来关机，用强迫的方式杀掉所有执行中的程序后自行关机。<br>-c : 取消目前已经进行中的关机动作。<br>-f : 关机时，不做 fcsk 动作(检查 Linux 档系统)。<br>-F : 关机时，强迫进行 fsck 动作。<br>time : 设定关机的时间。<br>message : 传送给所有使用者的警告讯息。</p>
+<h4 id="usermod"><a href="#usermod" class="headerlink" title="usermod"></a>usermod</h4><p>usermod命令用于修改用户帐号。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod [-LU][-c &lt;备注&gt;][-d &lt;登入目录&gt;][-e &lt;有效期限&gt;][-f &lt;缓冲天数&gt;][-g &lt;群组&gt;][-G &lt;群组&gt;][-l &lt;帐号名称&gt;][-s &lt;shell&gt;][-u &lt;uid&gt;][用户帐号]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-c&lt;备注&gt; 　修改用户帐号的备注文字。<br>-d登入目录&gt; 　修改用户登入时的目录。<br>-e&lt;有效期限&gt; 　修改帐号的有效期限。<br>-f&lt;缓冲天数&gt; 　修改在密码过期后多少天即关闭该帐号。<br>-g&lt;群组&gt; 　修改用户所属的群组。<br>-G&lt;群组&gt; 　修改用户所属的附加群组。<br>-l&lt;帐号名称&gt; 　修改用户帐号名称。<br>-L 　锁定用户密码，使密码无效。<br>-s<shell> 　修改用户登入后所使用的shell。<br>-u<uid> 　修改用户ID。<br>-U 　解除密码锁定。</uid></shell></p>
+<h4 id="chsh"><a href="#chsh" class="headerlink" title="chsh"></a>chsh</h4><p>chsh命令用于更改使用者 shell 设定。</p>
+<h4 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h4><p>uname（英文全拼：unix name）命令用于显示系统信息。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname [-amnrsv][--help][--version]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-a或–all 　显示全部的信息。<br>-m或–machine 　显示电脑类型。<br>-n或-nodename 　显示在网络上的主机名称。<br>-r或–release 　显示操作系统的发行编号。<br>-s或–sysname 　显示操作系统名称。<br>-v 　显示操作系统的版本。<br>–help 　显示帮助。<br>–version 　显示版本信息。</p>
+<h4 id="who"><a href="#who" class="headerlink" title="who"></a>who</h4><p> who命令用于显示系统中有哪些使用者正在上面，显示的资料包含了使用者 ID、使用的终端机、从哪边连上来的、上线时间、呆滞时间、CPU 使用量、动作等等。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">who - [husfV] [user]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-H 或 –heading：显示各栏位的标题信息列；<br>-u 或 –idle：显示闲置时间，若该用户在前一分钟之内有进行任何动作，将标示成”.”号，如果该用户已超过24小时没有任何动作，则标示出”old”字符串；<br>-m：此参数的效果和指定”am i”字符串相同；<br>-q 或–count：只显示登入系统的帐号名称和总人数；<br>-s：此参数将忽略不予处理，仅负责解决who指令其他版本的兼容性问题；<br>-w 或-T或–mesg或–message或–writable：显示用户的信息状态栏；<br>–help：在线帮助；<br>–version：显示版本信息。</p>
+<h4 id="whoami"><a href="#whoami" class="headerlink" title="whoami"></a>whoami</h4><p> whoami命令用于显示自身用户名称。<br>显示自身的用户名称，本指令相当于执行”id -un”指令。</p>
+<h4 id="free"><a href="#free" class="headerlink" title="free"></a>free</h4><p>free命令用于显示内存状态。<br>free指令会显示内存的使用情况，包括实体内存，虚拟的交换文件内存，共享内存区段，以及系统核心使用的缓冲区等。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free [-bkmotV][-s &lt;间隔秒数&gt;]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-b 　以Byte为单位显示内存使用情况。<br>-k 　以KB为单位显示内存使用情况。<br>-m 　以MB为单位显示内存使用情况。<br>-h 　以合适的单位显示内存使用情况，最大为三位数，自动计算对应的单位值。单位有：<br>B = bytes<br>K = kilos<br>M = megas<br>G = gigas<br>T = teras<br>-o 　不显示缓冲区调节列。<br>-s&lt;间隔秒数&gt; 　持续观察内存使用状况。<br>-t 　显示内存总和列。<br>-V 　显示版本信息。</p>
+<h3 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h3><h4 id="dircolors"><a href="#dircolors" class="headerlink" title="dircolors"></a>dircolors</h4><p>dircolors命令用于设置 ls 指令在显示目录或文件时所用的色彩</p>
+<h4 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h4><p>crontab是用来定期执行程序的命令。<br>当安装完成操作系统之后，默认便会启动此任务调度命令。<br>crond 命令每分锺会定期检查是否有要执行的工作，如果有要执行的工作便会自动执行该工作。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab [ -u user ] &#123; -l | -r | -e &#125;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-e : 执行文字编辑器来设定时程表，内定的文字编辑器是 VI，如果你想用别的文字编辑器，则请先设定 VISUAL 环境变数来指定使用那个文字编辑器(比如说 setenv VISUAL joe)<br>-r : 删除目前的时程表<br>-l : 列出目前的时程表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f1 f2 f3 f4 f5 program</span><br><span class="line">*    *    *    *    *</span><br><span class="line">-    -    -    -    -</span><br><span class="line">|    |    |    |    |</span><br><span class="line">|    |    |    |    +----- 星期中星期几 (0 - 7) (星期天 为0)</span><br><span class="line">|    |    |    +---------- 月份 (1 - 12) </span><br><span class="line">|    |    +--------------- 一个月中的第几天 (1 - 31)</span><br><span class="line">|    +-------------------- 小时 (0 - 23)</span><br><span class="line">+------------------------- 分钟 (0 - 59)</span><br></pre></td></tr></table></figure>
+<h4 id="enable"><a href="#enable" class="headerlink" title="enable"></a>enable</h4><p>enable命令用于启动或关闭 shell 内建指令。<br>若要执行的文件名称与shell内建指令相同，可用enable -n来关闭shell内建指令。若不加-n参数，enable可重新启动关闭的指令。</p>
+<h4 id="export"><a href="#export" class="headerlink" title="export"></a>export</h4><p>export 命令用于设置或显示环境变量。<br>在 shell 中执行程序时，shell 会提供一组环境变量。export 可新增，修改或删除环境变量，供后续执行的程序使用。export 的效力仅限于该次登陆操作。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export [-fnp][变量名称]=[变量设置值]</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<p>-f 　代表[变量名称]中为函数名称。<br>-n 　删除指定的变量。变量实际上并未删除，只是不会输出到后续指令的执行环境中。<br>-p 　列出所有的shell赋予程序的环境变量。</p>
+<h4 id="insmod"><a href="#insmod" class="headerlink" title="insmod"></a>insmod</h4><p>insmod（英文全拼：install module）命令用于载入模块。<br>Linux有许多功能是通过模块的方式，在需要时才载入kernel。如此可使kernel较为精简，进而提高效率，以及保有较大的弹性。这类可载入的模块，通常是设备驱动程序。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insmod [-fkmpsvxX][-o &lt;模块名称&gt;][模块文件][符号名称 = 符号值]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-f 　不检查目前kernel版本与模块编译时的kernel版本是否一致，强制将模块载入。<br>-k 　将模块设置为自动卸除。<br>-m 　输出模块的载入信息。<br>-o&lt;模块名称&gt; 　指定模块的名称，可使用模块文件的文件名。<br>-p 　测试模块是否能正确地载入kernel。<br>-s 　将所有信息记录在系统记录文件中。<br>-v 　执行时显示详细的信息。<br>-x 　不要汇出模块的外部符号。<br>-X 　汇出模块所有的外部符号，此为预设置。</p>
+<h4 id="lsmod"><a href="#lsmod" class="headerlink" title="lsmod"></a>lsmod</h4><p>lsmod（英文全拼：list modules）命令用于显示已载入系统的模块。<br>执行 lsmod 指令，会列出所有已载入系统的模块。Linux 操作系统的核心具有模块化的特性，应此在编译核心时，务须把全部的功能都放入核心。您可以将这些功能编译成一个个单独的模块，待需要时再分别载入。</p>
+<h4 id="rmmod"><a href="#rmmod" class="headerlink" title="rmmod"></a>rmmod</h4><p>rmmod（英文全拼：remove module）命令用于删除模块。<br>执行 rmmod 指令，可删除不需要的模块。Linux 操作系统的核心具有模块化的特性，应此在编译核心时，务须把全部的功能都放如核心。你可以将这些功能编译成一个个单独的模块，待有需要时再分别载入它们。</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmmod [-as][模块名称...]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-a 　删除所有目前不需要的模块。<br>-s 　把信息输出至syslog常驻服务，而非终端机界面。</p>
+<h4 id="passwd"><a href="#passwd" class="headerlink" title="passwd"></a>passwd</h4><p>passwd命令用来更改使用者的密码</p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd [-k] [-l] [-u [-f]] [-d] [-S] [username]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>-d 删除密码<br>-f 强迫用户下次登录时必须修改口令<br>-w 口令要到期提前警告的天数<br>-k 更新只能发送在过期之后<br>-l 停止账号使用<br>-S 显示密码信息<br>-u 启用已被停止的账户<br>-x 指定口令最长存活期<br>-g 修改群组密码<br>指定口令最短存活期<br>-i 口令过期后多少天停用账户</p>
 
       
 
@@ -479,7 +609,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件管理"><span class="toc-number">1.</span> <span class="toc-text">文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件查看"><span class="toc-number">1.1.</span> <span class="toc-text">文件查看</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cat"><span class="toc-number">1.1.1.</span> <span class="toc-text">cat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#more"><span class="toc-number">1.1.2.</span> <span class="toc-text">more</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#less"><span class="toc-number">1.1.3.</span> <span class="toc-text">less</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档编辑"><span class="toc-number">1.2.</span> <span class="toc-text">文档编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tr"><span class="toc-number">1.2.1.</span> <span class="toc-text">tr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sort"><span class="toc-number">1.2.2.</span> <span class="toc-text">sort</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#col"><span class="toc-number">1.2.3.</span> <span class="toc-text">col</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sed"><span class="toc-number">1.2.4.</span> <span class="toc-text">sed</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件管理-1"><span class="toc-number">1.3.</span> <span class="toc-text">文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#chattr"><span class="toc-number">1.3.1.</span> <span class="toc-text">chattr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chgrp"><span class="toc-number">1.3.2.</span> <span class="toc-text">chgrp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chown"><span class="toc-number">1.3.3.</span> <span class="toc-text">chown</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#diff"><span class="toc-number">1.3.4.</span> <span class="toc-text">diff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lsattr"><span class="toc-number">1.3.5.</span> <span class="toc-text">lsattr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#whereis"><span class="toc-number">1.3.6.</span> <span class="toc-text">whereis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#locate"><span class="toc-number">1.3.7.</span> <span class="toc-text">locate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#patch"><span class="toc-number">1.3.8.</span> <span class="toc-text">patch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#updatedb"><span class="toc-number">1.3.9.</span> <span class="toc-text">updatedb</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#磁盘"><span class="toc-number">2.</span> <span class="toc-text">磁盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#磁盘管理"><span class="toc-number">2.1.</span> <span class="toc-text">磁盘管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#df"><span class="toc-number">2.1.1.</span> <span class="toc-text">df</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#du"><span class="toc-number">2.1.2.</span> <span class="toc-text">du</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stat"><span class="toc-number">2.1.3.</span> <span class="toc-text">stat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pwd"><span class="toc-number">2.1.4.</span> <span class="toc-text">pwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tree"><span class="toc-number">2.1.5.</span> <span class="toc-text">tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mount"><span class="toc-number">2.2.</span> <span class="toc-text">mount</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#umount"><span class="toc-number">2.2.1.</span> <span class="toc-text">umount</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#quota"><span class="toc-number">2.2.2.</span> <span class="toc-text">quota</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#磁盘维护"><span class="toc-number">2.3.</span> <span class="toc-text">磁盘维护</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#badblocks"><span class="toc-number">2.3.1.</span> <span class="toc-text">badblocks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cfdisk"><span class="toc-number">2.3.2.</span> <span class="toc-text">cfdisk</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dd"><span class="toc-number">2.3.3.</span> <span class="toc-text">dd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e2fsck"><span class="toc-number">2.3.4.</span> <span class="toc-text">e2fsck</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hdparm"><span class="toc-number">2.3.5.</span> <span class="toc-text">hdparm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mke2fs-mkfs-ext2"><span class="toc-number">2.3.6.</span> <span class="toc-text">mke2fs == mkfs.ext2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mkfs"><span class="toc-number">2.3.7.</span> <span class="toc-text">mkfs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mkswap"><span class="toc-number">2.3.8.</span> <span class="toc-text">mkswap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fdisk"><span class="toc-number">2.3.9.</span> <span class="toc-text">fdisk</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#swapon"><span class="toc-number">2.3.10.</span> <span class="toc-text">swapon</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络和系统"><span class="toc-number">3.</span> <span class="toc-text">网络和系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络通讯"><span class="toc-number">3.1.</span> <span class="toc-text">网络通讯</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#telnet"><span class="toc-number">3.1.1.</span> <span class="toc-text">telnet</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nc"><span class="toc-number">3.1.2.</span> <span class="toc-text">nc</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件管理"><span class="toc-number">1.</span> <span class="toc-text">文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件查看"><span class="toc-number">1.1.</span> <span class="toc-text">文件查看</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cat"><span class="toc-number">1.1.1.</span> <span class="toc-text">cat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#more"><span class="toc-number">1.1.2.</span> <span class="toc-text">more</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#less"><span class="toc-number">1.1.3.</span> <span class="toc-text">less</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档编辑"><span class="toc-number">1.2.</span> <span class="toc-text">文档编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tr"><span class="toc-number">1.2.1.</span> <span class="toc-text">tr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sort"><span class="toc-number">1.2.2.</span> <span class="toc-text">sort</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#col"><span class="toc-number">1.2.3.</span> <span class="toc-text">col</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sed"><span class="toc-number">1.2.4.</span> <span class="toc-text">sed</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件管理-1"><span class="toc-number">1.3.</span> <span class="toc-text">文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#chattr"><span class="toc-number">1.3.1.</span> <span class="toc-text">chattr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chgrp"><span class="toc-number">1.3.2.</span> <span class="toc-text">chgrp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chown"><span class="toc-number">1.3.3.</span> <span class="toc-text">chown</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#diff"><span class="toc-number">1.3.4.</span> <span class="toc-text">diff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lsattr"><span class="toc-number">1.3.5.</span> <span class="toc-text">lsattr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#whereis"><span class="toc-number">1.3.6.</span> <span class="toc-text">whereis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#locate"><span class="toc-number">1.3.7.</span> <span class="toc-text">locate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#patch"><span class="toc-number">1.3.8.</span> <span class="toc-text">patch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#updatedb"><span class="toc-number">1.3.9.</span> <span class="toc-text">updatedb</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#磁盘"><span class="toc-number">2.</span> <span class="toc-text">磁盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#磁盘管理"><span class="toc-number">2.1.</span> <span class="toc-text">磁盘管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#df"><span class="toc-number">2.1.1.</span> <span class="toc-text">df</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#du"><span class="toc-number">2.1.2.</span> <span class="toc-text">du</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stat"><span class="toc-number">2.1.3.</span> <span class="toc-text">stat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pwd"><span class="toc-number">2.1.4.</span> <span class="toc-text">pwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tree"><span class="toc-number">2.1.5.</span> <span class="toc-text">tree</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mount"><span class="toc-number">2.2.</span> <span class="toc-text">mount</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#umount"><span class="toc-number">2.2.1.</span> <span class="toc-text">umount</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#quota"><span class="toc-number">2.2.2.</span> <span class="toc-text">quota</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#磁盘维护"><span class="toc-number">2.3.</span> <span class="toc-text">磁盘维护</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#badblocks"><span class="toc-number">2.3.1.</span> <span class="toc-text">badblocks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cfdisk"><span class="toc-number">2.3.2.</span> <span class="toc-text">cfdisk</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dd"><span class="toc-number">2.3.3.</span> <span class="toc-text">dd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e2fsck"><span class="toc-number">2.3.4.</span> <span class="toc-text">e2fsck</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hdparm"><span class="toc-number">2.3.5.</span> <span class="toc-text">hdparm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mke2fs-mkfs-ext2"><span class="toc-number">2.3.6.</span> <span class="toc-text">mke2fs == mkfs.ext2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mkfs"><span class="toc-number">2.3.7.</span> <span class="toc-text">mkfs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mkswap"><span class="toc-number">2.3.8.</span> <span class="toc-text">mkswap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fdisk"><span class="toc-number">2.3.9.</span> <span class="toc-text">fdisk</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#swapon"><span class="toc-number">2.3.10.</span> <span class="toc-text">swapon</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络和系统"><span class="toc-number">3.</span> <span class="toc-text">网络和系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络通讯"><span class="toc-number">3.1.</span> <span class="toc-text">网络通讯</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#telnet"><span class="toc-number">3.1.1.</span> <span class="toc-text">telnet</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nc"><span class="toc-number">3.1.2.</span> <span class="toc-text">nc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ifconfig"><span class="toc-number">3.1.3.</span> <span class="toc-text">ifconfig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mesg和wall"><span class="toc-number">3.1.4.</span> <span class="toc-text">mesg和wall</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#netstat"><span class="toc-number">3.1.5.</span> <span class="toc-text">netstat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ping"><span class="toc-number">3.1.6.</span> <span class="toc-text">ping</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#traceroute"><span class="toc-number">3.1.7.</span> <span class="toc-text">traceroute</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcpdump"><span class="toc-number">3.1.8.</span> <span class="toc-text">tcpdump</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统管理"><span class="toc-number">3.2.</span> <span class="toc-text">系统管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#adduser"><span class="toc-number">3.2.1.</span> <span class="toc-text">adduser</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chfn"><span class="toc-number">3.2.2.</span> <span class="toc-text">chfn</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组管理"><span class="toc-number">3.2.3.</span> <span class="toc-text">组管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#halt"><span class="toc-number">3.2.4.</span> <span class="toc-text">halt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#last"><span class="toc-number">3.2.5.</span> <span class="toc-text">last</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lastb"><span class="toc-number">3.2.6.</span> <span class="toc-text">lastb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ps"><span class="toc-number">3.2.7.</span> <span class="toc-text">ps</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nice"><span class="toc-number">3.2.8.</span> <span class="toc-text">nice</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#top"><span class="toc-number">3.2.9.</span> <span class="toc-text">top</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pstree"><span class="toc-number">3.2.10.</span> <span class="toc-text">pstree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shutdown"><span class="toc-number">3.2.11.</span> <span class="toc-text">shutdown</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#usermod"><span class="toc-number">3.2.12.</span> <span class="toc-text">usermod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chsh"><span class="toc-number">3.2.13.</span> <span class="toc-text">chsh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#uname"><span class="toc-number">3.2.14.</span> <span class="toc-text">uname</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#who"><span class="toc-number">3.2.15.</span> <span class="toc-text">who</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#whoami"><span class="toc-number">3.2.16.</span> <span class="toc-text">whoami</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#free"><span class="toc-number">3.2.17.</span> <span class="toc-text">free</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统设置"><span class="toc-number">3.3.</span> <span class="toc-text">系统设置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dircolors"><span class="toc-number">3.3.1.</span> <span class="toc-text">dircolors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#crontab"><span class="toc-number">3.3.2.</span> <span class="toc-text">crontab</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#enable"><span class="toc-number">3.3.3.</span> <span class="toc-text">enable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#export"><span class="toc-number">3.3.4.</span> <span class="toc-text">export</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#insmod"><span class="toc-number">3.3.5.</span> <span class="toc-text">insmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lsmod"><span class="toc-number">3.3.6.</span> <span class="toc-text">lsmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rmmod"><span class="toc-number">3.3.7.</span> <span class="toc-text">rmmod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#passwd"><span class="toc-number">3.3.8.</span> <span class="toc-text">passwd</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -619,14 +749,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">保研</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
@@ -643,6 +765,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">保研</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -651,27 +797,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Linux基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">漏洞利用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Metasploitable2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工具使用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -707,11 +837,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
+                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">堆栈溢出</a>
+                <a href="javascript:void(0)" class="js-tag color5">实用工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -719,15 +849,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">无线渗透</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
+                <a href="javascript:void(0)" class="js-tag color5">堆栈溢出</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -739,6 +861,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">MISC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">渗透测试</a>
               </li>
              
@@ -747,19 +881,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">DP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">电子数据取证</a>
+                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">GDB</a>
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -767,7 +897,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color4">GDB</a>
               </li>
             
             <div class="clearfix"></div>
