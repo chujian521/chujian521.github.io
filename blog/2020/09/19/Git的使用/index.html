@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>C++学习笔记1 | X&#39;s blog</title>
+  <title>Git的使用 | X&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="继续本周的C++学习任务。">
-<meta name="keywords" content="C++">
+  <meta name="description" content="闲着也是闲着，学习一下程序员必备工具Git的使用方法吧。">
+<meta name="keywords" content="Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++学习笔记1">
-<meta property="og:url" content="http://yoursite.com/blog/2020/02/20/C-学习笔迹1/index.html">
+<meta property="og:title" content="Git的使用">
+<meta property="og:url" content="http://yoursite.com/blog/2020/09/19/Git的使用/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="继续本周的C++学习任务。">
+<meta property="og:description" content="闲着也是闲着，学习一下程序员必备工具Git的使用方法吧。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/fj31.jpg">
-<meta property="og:updated_time" content="2020-02-23T04:30:30.561Z">
+<meta property="og:image" content="http://yoursite.com/images/fj54.jpg">
+<meta property="og:updated_time" content="2020-09-19T12:17:21.073Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++学习笔记1">
-<meta name="twitter:description" content="继续本周的C++学习任务。">
-<meta name="twitter:image" content="http://yoursite.com/images/fj31.jpg">
+<meta name="twitter:title" content="Git的使用">
+<meta name="twitter:description" content="闲着也是闲着，学习一下程序员必备工具Git的使用方法吧。">
+<meta name="twitter:image" content="http://yoursite.com/images/fj54.jpg">
   
     <link rel="alternative" href="/atom.xml" title="X&#39;s blog" type="application/atom+xml">
   
@@ -162,94 +162,87 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-C-学习笔迹1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Git的使用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      C++学习笔记1
+      Git的使用
     </h1>
   
 
         
-        <a href="/blog/2020/02/20/C-学习笔迹1/" class="archive-article-date">
-  	<time datetime="2020-02-20T00:20:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-20</time>
+        <a href="/blog/2020/09/19/Git的使用/" class="archive-article-date">
+  	<time datetime="2020-09-19T09:22:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-19</time>
 </a>
         
       </header>
 	  
 	  <div align="center" class="post-count">
-      字数：1.4k字 | 预计阅读时长：5分钟</div>
+      字数：1.9k字 | 预计阅读时长：8分钟</div>
 	  
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>继续本周的C++学习任务。</strong></p>
-<p><img src="/images/fj31.jpg" alt=""></p>
+        <p>闲着也是闲着，学习一下程序员必备工具Git的使用方法吧。</p>
+<p><img src="/images/fj54.jpg" alt=""></p>
 <a id="more"></a>
-<h1 id="C语法的增强及对应的C-特性"><a href="#C语法的增强及对应的C-特性" class="headerlink" title="C语法的增强及对应的C++特性"></a>C语法的增强及对应的C++特性</h1><h2 id="引用、-C-11-空指针与动态内存分配"><a href="#引用、-C-11-空指针与动态内存分配" class="headerlink" title="引用、[C++11]空指针与动态内存分配"></a>引用、[C++11]空指针与动态内存分配</h2><h3 id="引用Reference"><a href="#引用Reference" class="headerlink" title="引用Reference"></a>引用Reference</h3><p>引用就是另一个变量的别名，通过引用所做的读写操作实际上是作用于原变量上。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span>&amp; rx=x;</span><br></pre></td></tr></table></figure>
-<p>C++指针与引用符号应靠近其类型名而非名字。</p>
-<p>引用可以作为函数参数，但调用时只需要传递普通变量即可。在被调用函数中改变引用变量的值，则改变的是实际参数的值。</p>
-<h3 id="空指针和动态内存分配"><a href="#空指针和动态内存分配" class="headerlink" title="空指针和动态内存分配"></a>空指针和动态内存分配</h3><p>1.空指针</p>
-<p>1.1 0带来的二义性问题</p>
-<ol>
-<li>C++03中，空指针使用“0”来表示。0既是一个常量整数，也是一个常量空指针。</li>
-<li>C语言中，空指针使用(void *)0来表示</li>
-<li>有时候，用“NULL”来表示空指针(一种可能的实现方式是#define NULL  0)</li>
-</ol>
-<p>1.2 C++标准化委员会希望“空指针”是一个确定的东西。<br>C++11中引入保留字“nullptr”作为空指针</p>
-<p>2.动态内存管理：分配/释放</p>
-<p>2.1     C++中通过运算符new申请动态内存</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span>  &lt;类型名&gt; (初值) ;     <span class="comment">//申请一个变量的空间</span></span><br><span class="line"><span class="keyword">new</span>  &lt;类型名&gt;[常量表达式] ;   <span class="comment">//申请数组</span></span><br></pre></td></tr></table></figure>
-<p>如果申请成功，返回指定类型内存的地址；<br>如果申请失败，抛出异常，或者返回空指针(nullptr)。(C++11)</p>
-<p>2.2.       动态内存使用完毕后，要用delete运算符来释放。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span>   &lt;指针名&gt;;    <span class="comment">//删除一个变量/对象</span></span><br><span class="line"><span class="keyword">delete</span> []  &lt;指针名&gt;;     <span class="comment">//删除数组空间</span></span><br></pre></td></tr></table></figure>
-<h2 id="数据类型与转换、列表初始化"><a href="#数据类型与转换、列表初始化" class="headerlink" title="数据类型与转换、列表初始化"></a>数据类型与转换、列表初始化</h2><h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3><p>逻辑运算符和C语言基本一致</p>
-<p>注：编码规范：布尔变量/函数的命名应使用前缀“is”，断行必须很明显，在逗号或运算符后换行，新行要对齐</p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3><p>列表初始化是C++11的一个新特性，“列表”是用花括号括起来的一(些)值。</p>
-<p>列表初始化分为两类：</p>
-<ul>
-<li>直接列表初始化</li>
-<li>拷贝列表初始化</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接列表初始化)</span></span><br><span class="line"><span class="comment">/* Variable initialization */</span> </span><br><span class="line"><span class="keyword">int</span> x&#123;&#125;; <span class="comment">// x is 0; </span></span><br><span class="line"><span class="keyword">int</span> y&#123; <span class="number">1</span> &#125;; <span class="comment">// y is 1; </span></span><br><span class="line"><span class="comment">/* Array initialization */</span> </span><br><span class="line"><span class="keyword">int</span> array1[]&#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s1[ <span class="number">3</span> ] &#123; <span class="string">'o'</span>, <span class="string">'k'</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s3[]&#123; <span class="string">"Hello"</span> &#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拷贝列表初始化</span></span><br><span class="line"><span class="comment">/* Variable initialization */</span> </span><br><span class="line"><span class="keyword">int</span> z = &#123; <span class="number">2</span> &#125;; </span><br><span class="line"><span class="comment">/* Array initialization */</span> </span><br><span class="line"><span class="keyword">int</span> array2[] = &#123; <span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s2[] = &#123; <span class="string">'y'</span>,<span class="string">'e'</span>,<span class="string">'s'</span> &#125;; </span><br><span class="line"><span class="keyword">char</span> s4[] = &#123; <span class="string">"World"</span> &#125;;</span><br><span class="line"><span class="keyword">char</span> s5[] = <span class="string">"Aloha"</span>; <span class="comment">// Omit curly braces (省略花括号)</span></span><br></pre></td></tr></table></figure>
-<p>尽量使用列表初始化，列表初始化不允许丢失数据精度的隐式类型转换。</p>
-<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>类型转换有两种：</p>
-<p><strong>1.隐式类型转换</strong></p>
-<ul>
-<li>由编译器按照数据类型的转换规则自动转换，无需程序员干预。</li>
-<li>可能导致数据精度损失，或者转换失败。</li>
-<li>应尽量避免使用隐式类型转换</li>
-</ul>
-<p><strong>2 显式类型转换（即：强制类型转换）</strong></p>
-<ul>
-<li>由程序员用明确的类型转换语法写出类型转换代码。</li>
-<li>好处是，程序员知道自己要做什么并且把这个想法明确表达出来。</li>
-</ul>
-<p>C++风格强制类型转换：<strong>语法：static_cast<type> value</type></strong></p>
-<p>编码规范：类型转换必须显式声明，永远不要依赖隐式类型转换。</p>
-<h2 id="自动类型推导：类型系统、auto与decltype"><a href="#自动类型推导：类型系统、auto与decltype" class="headerlink" title="自动类型推导：类型系统、auto与decltype"></a>自动类型推导：类型系统、auto与decltype</h2><p><strong>静态类型 v.s. 动态类型：</strong></p>
-<p>程序设计语言的类型系统机制会检查连接在一起的多个块的一致性</p>
-<p>上述检查若发生在编译期，称为静态类型<br>上述检查若发生在运行时，称为动态类型<br>上述检查若同时存在于编译期和运行时，称为混合类型</p>
-<h3 id="自动类型推导：auto关键字"><a href="#自动类型推导：auto关键字" class="headerlink" title="自动类型推导：auto关键字"></a>自动类型推导：auto关键字</h3><h4 id="1-关键字auto"><a href="#1-关键字auto" class="headerlink" title="1.关键字auto"></a>1.关键字auto</h4><p>C++11中，auto关键字放在变量之前，作用是在声明变量的时候根据变量初始值的类型自动为此变量选择匹配的类型。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span> au_a = a;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(au_a).name()<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="2-auto的使用限制"><a href="#2-auto的使用限制" class="headerlink" title="2.auto的使用限制"></a>2.auto的使用限制</h4><p>1.auto 变量必须在定义时初始化，这类似于const关键字</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a1 = <span class="number">10</span>;  <span class="comment">//正确</span></span><br><span class="line"><span class="keyword">auto</span> b1;   <span class="comment">//错误,编译器无法推导b1的类型</span></span><br><span class="line">b1 = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-<p>2.定义在一个auto序列的变量必须始终推导成同一类型</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a4 = <span class="number">10</span>, a5&#123;<span class="number">20</span>&#125;;   <span class="comment">//正确 </span></span><br><span class="line"><span class="keyword">auto</span> b4&#123;<span class="number">10</span>&#125;, b5 = <span class="number">20.0</span>; <span class="comment">//错误,没有推导为同一类型</span></span><br></pre></td></tr></table></figure>
-<p>3.如果初始化表达式是引用或const，则去除引用或const语义</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a&#123;<span class="number">10</span>&#125;; <span class="keyword">int</span> &amp;b = a;</span><br><span class="line"><span class="keyword">auto</span> c = b;   <span class="comment">//c的类型为int而非int&amp;（去除引用）</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a1&#123;<span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> b1 = a1; <span class="comment">//b1的类型为int而非const int（去除const）</span></span><br></pre></td></tr></table></figure>
-<p>4.如果auto关键字带上&amp;号，则不去除引用或const语意</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>; <span class="keyword">int</span>&amp; b = a;</span><br><span class="line"><span class="keyword">auto</span>&amp; d = b;<span class="comment">//此时d的类型才为int&amp;</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a2 = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">auto</span>&amp; b2 = a2;<span class="comment">//因为auto带上&amp;，故不去除const，b2类型为const in</span></span><br></pre></td></tr></table></figure>
-<p>5.初始化表达式为数组时，auto关键字推导类型为指针</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a3[<span class="number">3</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span> b3 = a3;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(b3).name() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//输出int * （输出与编译器有关）</span></span><br></pre></td></tr></table></figure>
-<p>6.若表达式为数组且auto带上&amp;，则推导类型为数组类型</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a7[<span class="number">3</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span>&amp; b7 = a7;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(b7).name() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//输出int [3] （输出与编译器有关）</span></span><br></pre></td></tr></table></figure>
-<p>7.C++14中，auto可以作为函数的返回值类型和参数类型</p>
+<h2 id="简易指南"><a href="#简易指南" class="headerlink" title="简易指南"></a>简易指南</h2><p><a href="https://www.bootcss.com/p/git-guide/" target="_blank" rel="noopener">https://www.bootcss.com/p/git-guide/</a></p>
+<h2 id="ProGit"><a href="#ProGit" class="headerlink" title="ProGit"></a>ProGit</h2><p><a href="https://www.progit.cn/" target="_blank" rel="noopener">https://www.progit.cn/</a></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>Git常用操作命令：</p>
+<p>1) 远程仓库相关命令</p>
+<p>检出仓库：$ git clone git://github.com/jquery/jquery.git</p>
+<p>查看远程仓库：$ git remote -v</p>
+<p>添加远程仓库：$ git remote add [name] [url]</p>
+<p>删除远程仓库：$ git remote rm [name]</p>
+<p>修改远程仓库：$ git remote set-url –push [name] [newUrl]</p>
+<p>拉取远程仓库：$ git pull [remoteName] [localBranchName]</p>
+<p>推送远程仓库：$ git push [remoteName] [localBranchName]</p>
+<p>*如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</p>
+<p>$git push origin test:master         // 提交本地test分支作为远程的master分支</p>
+<p>$git push origin test:test              // 提交本地test分支作为远程的test分支</p>
+<p>2）分支(branch)操作相关命令</p>
+<p>查看本地分支：$ git branch</p>
+<p>查看远程分支：$ git branch -r</p>
+<p>创建本地分支：$ git branch [name] —-注意新分支创建后不会自动切换为当前分支</p>
+<p>切换分支：$ git checkout [name]</p>
+<p>创建新分支并立即切换到新分支：$ git checkout -b [name]</p>
+<p>删除分支：$ git branch -d [name] —- -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</p>
+<p>合并分支：$ git merge [name] —-将名称为[name]的分支与当前分支合并</p>
+<p>创建远程分支(本地分支push到远程)：$ git push origin [name]</p>
+<p>删除远程分支：$ git push origin :heads/[name] 或 $ gitpush origin :[name] </p>
+<p>*创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</p>
+<p>$git symbolic-ref HEAD refs/heads/[name]</p>
+<p>$rm .git/index</p>
+<p>$git clean -fdx</p>
+<p>3）版本(tag)操作相关命令</p>
+<p>查看版本：$ git tag</p>
+<p>创建版本：$ git tag [name]</p>
+<p>删除版本：$ git tag -d [name]</p>
+<p>查看远程版本：$ git tag -r</p>
+<p>创建远程版本(本地版本push到远程)：$ git push origin [name]</p>
+<p>删除远程版本：$ git push origin :refs/tags/[name]</p>
+<p>合并远程仓库的tag到本地：$ git pull origin –tags</p>
+<p>上传本地tag到远程仓库：$ git push origin –tags</p>
+<p>创建带注释的tag：$ git tag -a [name] -m ‘yourMessage’</p>
+<p>4) 子模块(submodule)相关操作命令</p>
+<p>添加子模块：$ git submodule add [url] [path]</p>
+<p>   如：$git submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</p>
+<p>初始化子模块：$ git submodule init  —-只在首次检出仓库时运行一次就行</p>
+<p>更新子模块：$ git submodule update —-每次更新或切换分支后都需要运行一下</p>
+<p>删除子模块：（分4步走哦）</p>
+<p> 1) $ git rm –cached [path]</p>
+<p> 2) 编辑“.gitmodules”文件，将子模块的相关配置节点删除掉</p>
+<p> 3) 编辑“ .git/config”文件，将子模块的相关配置节点删除掉</p>
+<p> 4) 手动删除子模块残留的目录</p>
+<p>5）忽略一些文件、文件夹不提交</p>
+<p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如</p>
+<p>target</p>
+<p>bin</p>
+<p>*.db</p>
+<h3 id="Git命令参考手册-文本版"><a href="#Git命令参考手册-文本版" class="headerlink" title="Git命令参考手册(文本版)"></a>Git命令参考手册(文本版)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">git init                                                  # 初始化本地git仓库（创建新仓库） </span><br><span class="line">git config --global user.name &quot;xxx&quot;                       # 配置用户名 </span><br><span class="line">git config --global user.email &quot;xxx@xxx.com&quot;              # 配置邮件 </span><br><span class="line">git config --global color.ui true                         # git status等命令自动着色 </span><br><span class="line">git config --global color.status auto </span><br><span class="line">git config --global color.diff auto </span><br><span class="line">git config --global color.branch auto </span><br><span class="line">git config --global color.interactive auto </span><br><span class="line">git clone git+ssh://git@192.168.53.168/VT.git             # clone远程仓库 </span><br><span class="line">git status                                                # 查看当前版本状态（是否修改） </span><br><span class="line">git add xyz                                               # 添加xyz文件至index </span><br><span class="line">git add .                                                 # 增加当前子目录下所有更改过的文件至index </span><br><span class="line">git commit -m &apos;xxx&apos;                                       # 提交 </span><br><span class="line">git commit --amend -m &apos;xxx&apos;                               # 合并上一次提交（用于反复修改） </span><br><span class="line">git commit -am &apos;xxx&apos;                                      # 将add和commit合为一步 </span><br><span class="line">git rm xxx                                                # 删除index中的文件 </span><br><span class="line">git rm -r *                                               # 递归删除 </span><br><span class="line">git log                                                   # 显示提交日志 </span><br><span class="line">git log -1                                                # 显示1行日志 -n为n行 </span><br><span class="line">git log -5</span><br><span class="line">git log --stat                                            # 显示提交日志及相关变动文件 </span><br><span class="line">git log -p -m </span><br><span class="line">git show dfb02e6e4f2f7b573337763e5c0013802e392818         # 显示某个提交的详细内容 </span><br><span class="line">git show dfb02                                            # 可只用commitid的前几位 </span><br><span class="line">git show HEAD                                             # 显示HEAD提交日志 </span><br><span class="line">git show HEAD^                                            # 显示HEAD的父（上一个版本）的提交日志 ^^为上两个版本 ^5为上5个版本 </span><br><span class="line">git tag                                                   # 显示已存在的tag </span><br><span class="line">git tag -a v2.0 -m &apos;xxx&apos;                                  # 增加v2.0的tag </span><br><span class="line">git show v2.0                                             # 显示v2.0的日志及详细内容 </span><br><span class="line">git log v2.0                                              # 显示v2.0的日志 </span><br><span class="line">git diff                                                  # 显示所有未添加至index的变更 </span><br><span class="line">git diff --cached                                         # 显示所有已添加index但还未commit的变更 </span><br><span class="line">git diff HEAD^                                            # 比较与上一个版本的差异 </span><br><span class="line">git diff HEAD -- ./lib                                    # 比较与HEAD版本lib目录的差异 </span><br><span class="line">git diff origin/master..master                            # 比较远程分支master上有本地分支master上没有的 </span><br><span class="line">git diff origin/master..master --stat                     # 只显示差异的文件，不显示具体内容 </span><br><span class="line">git remote add origin git+ssh://git@192.168.53.168/VT.git # 增加远程定义（用于push/pull/fetch） </span><br><span class="line">git branch                                                # 显示本地分支 </span><br><span class="line">git branch --contains 50089                               # 显示包含提交50089的分支 </span><br><span class="line">git branch -a                                             # 显示所有分支 </span><br><span class="line">git branch -r                                             # 显示所有原创分支 </span><br><span class="line">git branch --merged                                       # 显示所有已合并到当前分支的分支 </span><br><span class="line">git branch --no-merged                                    # 显示所有未合并到当前分支的分支 </span><br><span class="line">git branch -m master master_copy                          # 本地分支改名 </span><br><span class="line">git checkout -b master_copy                               # 从当前分支创建新分支master_copy并检出 </span><br><span class="line">git checkout -b master master_copy                        # 上面的完整版 </span><br><span class="line">git checkout features/performance                         # 检出已存在的features/performance分支 </span><br><span class="line">git checkout --track hotfixes/BJVEP933                    # 检出远程分支hotfixes/BJVEP933并创建本地跟踪分支</span><br><span class="line">git checkout v2.0                                         # 检出版本v2.0</span><br><span class="line">git checkout -b devel origin/develop                      # 从远程分支develop创建新本地分支devel并检出 </span><br><span class="line">git checkout -- README                                    # 检出head版本的README文件（可用于修改错误回退） </span><br><span class="line">git merge origin/master                                   # 合并远程master分支至当前分支 </span><br><span class="line">git cherry-pick ff44785404a8e                             # 合并提交ff44785404a8e的修改 </span><br><span class="line">git push origin master                                    # 将当前分支push到远程master分支 </span><br><span class="line">git push origin :hotfixes/BJVEP933                        # 删除远程仓库的hotfixes/BJVEP933分支 </span><br><span class="line">git push --tags                                           # 把所有tag推送到远程仓库 </span><br><span class="line">git fetch                                                 # 获取所有远程分支（不更新本地分支，另需merge） </span><br><span class="line">git fetch --prune                                         # 获取所有原创分支并清除服务器上已删掉的分支 </span><br><span class="line">git pull origin master                                    # 获取远程分支master并merge到当前分支 </span><br><span class="line">git mv README README2                                     # 重命名文件README为README2 </span><br><span class="line">git reset --hard HEAD                                     # 将当前版本重置为HEAD（通常用于merge失败回退） </span><br><span class="line">git rebase </span><br><span class="line">git branch -d hotfixes/BJVEP933                           # 删除分支hotfixes/BJVEP933（本分支修改已合并到其他分支） </span><br><span class="line">git branch -D hotfixes/BJVEP933                           # 强制删除分支hotfixes/BJVEP933 </span><br><span class="line">git ls-files                                              # 列出git index包含的文件 </span><br><span class="line">git show-branch                                           # 图示当前分支历史 </span><br><span class="line">git show-branch --all                                     # 图示所有分支历史 </span><br><span class="line">git whatchanged                                           # 显示提交历史对应的文件修改 </span><br><span class="line">git revert dfb02e6e4f2f7b573337763e5c0013802e392818       # 撤销提交dfb02e6e4f2f7b573337763e5c0013802e392818 </span><br><span class="line">git ls-tree HEAD                                          # 内部命令：显示某个git对象 </span><br><span class="line">git rev-parse v2.0                                        # 内部命令：显示某个ref对于的SHA1 HASH </span><br><span class="line">git reflog                                                # 显示所有提交，包括孤立节点 </span><br><span class="line">git show HEAD@&#123;5&#125; </span><br><span class="line">git show master@&#123;yesterday&#125;                               # 显示master分支昨天的状态 </span><br><span class="line">git log --pretty=format:&apos;%h %s&apos; --graph                   # 图示提交日志 </span><br><span class="line">git show HEAD~3</span><br><span class="line">git show -s --pretty=raw 2be7fcb476 </span><br><span class="line">git stash                                                 # 暂存当前修改，将所有至为HEAD状态 </span><br><span class="line">git stash list                                            # 查看所有暂存 </span><br><span class="line">git stash show -p stash@&#123;0&#125;                               # 参考第一次暂存 </span><br><span class="line">git stash apply stash@&#123;0&#125;                                 # 应用第一次暂存 </span><br><span class="line">git grep &quot;delete from&quot;                                    # 文件中搜索文本“delete from” </span><br><span class="line">git grep -e &apos;#define&apos; --and -e SORT_DIRENT </span><br><span class="line">git gc </span><br><span class="line">git fsck</span><br></pre></td></tr></table></figure>
 
       
 
@@ -289,7 +282,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
         		</li>
       		
 		</ul>
@@ -345,7 +338,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/02/20/C-学习笔迹1/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/blog/2020/09/19/Git的使用/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -359,18 +352,9 @@
   
 <nav id="article-nav">
   
-    <a href="/blog/2020/02/22/算法练习/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          算法练习
-        
-      </div>
-    </a>
   
-  
-    <a href="/blog/2020/02/10/C-学习笔记0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">C++学习笔记0</div>
+    <a href="/blog/2020/09/03/Linux常用命令学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux常用命令学习</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -397,7 +381,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C语法的增强及对应的C-特性"><span class="toc-number">1.</span> <span class="toc-text">C语法的增强及对应的C++特性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用、-C-11-空指针与动态内存分配"><span class="toc-number">1.1.</span> <span class="toc-text">引用、[C++11]空指针与动态内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引用Reference"><span class="toc-number">1.1.1.</span> <span class="toc-text">引用Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空指针和动态内存分配"><span class="toc-number">1.1.2.</span> <span class="toc-text">空指针和动态内存分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型与转换、列表初始化"><span class="toc-number">1.2.</span> <span class="toc-text">数据类型与转换、列表初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔类型"><span class="toc-number">1.2.1.</span> <span class="toc-text">布尔类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表初始化"><span class="toc-number">1.2.2.</span> <span class="toc-text">列表初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型转换"><span class="toc-number">1.2.3.</span> <span class="toc-text">类型转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动类型推导：类型系统、auto与decltype"><span class="toc-number">1.3.</span> <span class="toc-text">自动类型推导：类型系统、auto与decltype</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自动类型推导：auto关键字"><span class="toc-number">1.3.1.</span> <span class="toc-text">自动类型推导：auto关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-关键字auto"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">1.关键字auto</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-auto的使用限制"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">2.auto的使用限制</span></a></li></ol></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简易指南"><span class="toc-number">1.</span> <span class="toc-text">简易指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ProGit"><span class="toc-number">2.</span> <span class="toc-text">ProGit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">3.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git命令参考手册-文本版"><span class="toc-number">3.1.</span> <span class="toc-text">Git命令参考手册(文本版)</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -422,7 +406,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/blog/2020/02/20/C-学习笔迹1/",
+  id: "http://yoursite.com/blog/2020/09/19/Git的使用/",
   owner: 'chujian521',
   repo: 'chujian521',
   oauth: {
