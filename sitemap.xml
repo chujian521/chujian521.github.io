@@ -27,26 +27,6 @@
  <changefreq>weekly</changefreq>
 </url>
 
-<url>
- <loc>https://www.tr0y.wang/</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>mailto:1583810565@qq.com</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://iliana-cheng.github.io/</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
 
 <url>
  <loc>https://chujian521.github.io/blog/2020/09/03/Linux常用命令学习</loc>
@@ -57,13 +37,6 @@
 
 <url>
  <loc>https://chujian521.github.io/blog/2020/05/08/图形化界面渗透软件：Armitage</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://ox1234.github.io/</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
  <changefreq>weekly</changefreq>
@@ -84,20 +57,6 @@
 </url>
 
 <url>
- <loc>https://www.google.com.hk/</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://www.baidu.com/</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
  <loc>https://chujian521.github.io/tags/随笔</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
@@ -106,13 +65,6 @@
 
 <url>
  <loc>https://chujian521.github.io/blog/2020/05/05/Metasploitable2系列练习-漏洞利用之vsftpd后门与linuxNFS共享目录配置漏洞</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://doubler.cn/</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
  <changefreq>weekly</changefreq>
@@ -134,13 +86,6 @@
 
 <url>
  <loc>https://chujian521.github.io/blog/2020/05/11/保研夏令营复习计划-密码学</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://www.k0rz3n.com/</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
  <changefreq>weekly</changefreq>
@@ -271,13 +216,6 @@
 </url>
 
 <url>
- <loc>https://chujian521.github.io/1583810565</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
  <loc>https://chujian521.github.io/blog/2020/04/15/how2heap堆溢出利用练习</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
@@ -355,13 +293,6 @@
 </url>
 
 <url>
- <loc>https://chujian521.github.io/1583810565</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
  <loc>https://chujian521.github.io/blog/2020/04/15/how2heap堆溢出利用练习</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
@@ -432,13 +363,6 @@
 
 <url>
  <loc>https://chujian521.github.io/blog/2020/05/02/Metasploitable2系列练习-漏洞利用之Telnet的登录提权</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://chujian521.github.io/1583810565</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
  <changefreq>weekly</changefreq>
@@ -522,21 +446,7 @@
 </url>
 
 <url>
- <loc>https://chujian521.github.io/1583810565</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
  <loc>https://chujian521.github.io/blog/2020/04/15/how2heap堆溢出利用练习</loc>
- <priority>0.3</priority>
- <lastmod>2021-01-07</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-
-<url>
- <loc>https://chujian521.github.io/tags/随笔</loc>
  <priority>0.3</priority>
  <lastmod>2021-01-07</lastmod>
  <changefreq>weekly</changefreq>
