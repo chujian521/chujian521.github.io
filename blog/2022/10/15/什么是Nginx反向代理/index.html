@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/proxy_yuanli.png">
 <meta property="og:image" content="https://chujian521.github.io/images/reproxy_yuanli.png">
 <meta property="article:published_time" content="2022-10-15T09:43:19.000Z">
-<meta property="article:modified_time" content="2022-10-15T13:20:55.140Z">
+<meta property="article:modified_time" content="2022-10-18T12:15:18.281Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="后端">
 <meta property="article:tag" content="Nginx">
@@ -365,7 +365,8 @@
 <p>根据上面的配置，当请求到达 Nginx 反向代理服务器时，会根据请求路径不同进行分发到不同的服务上。</p>
 <h4 id="location匹配说明"><a href="#location匹配说明" class="headerlink" title="location匹配说明"></a>location匹配说明</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> [ = | <span class="hljs-regexp">~ |</span> <span class="hljs-regexp">~* |</span><span class="hljs-regexp"> ^~]</span> uri &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>&#x3D; ：用于不含正则表达式的 uri 前，要求请求字符串与 uri 严格匹配，如果匹配成功，就停止继续向下搜索并立即处理该请求<br><del>：用于表示 uri 包含正则表达式，并且区分大小写<br>~*：用于表示 uri 包含正则表达式，并且不区分大小写<br>^</del>：用于不含正则表达式的 uri 前，要求 Nginx 服务器找到标识 uri 和请求。字符串匹配度最高的 location 后，立即使用此 location 处理请求，而不再使用 location块中的正则 uri 和请求字符串做匹配。</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">= ：用于不含正则表达式的 uri 前，要求请求字符串与 uri 严格匹配，如果匹配成功，就停止继续向下搜索并立即处理该请求</span><br>~：用于表示 uri 包含正则表达式，并且区分大小写<br>~*：用于表示 uri 包含正则表达式，并且不区分大小写<br>^~：用于不含正则表达式的 uri 前，要求 Nginx 服务器找到标识 uri 和请求。字符串匹配度最高的 location 后，立即使用此 location 处理请求，而不再使用 location块中的正则 uri 和请求字符串做匹配。<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -436,6 +437,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/blog/2022/10/17/OWASP-Top-10-for-2021-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8B%EF%BC%89/" title="OWASP-Top-10-for-2021-学习笔记（下）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">OWASP-Top-10-for-2021-学习笔记（下）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
