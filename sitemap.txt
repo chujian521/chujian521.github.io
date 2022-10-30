@@ -1,3 +1,5 @@
+https://chujian521.github.io/blog/2022/02/13/TPS%E8%96%84%E6%9D%BF%E6%A0%B7%E6%9D%A1%E5%8F%98%E6%8D%A2/
+https://chujian521.github.io/blog/2022/10/27/CSRF%E3%80%81XSS%E3%80%81SSRF%E5%82%BB%E5%82%BB%E5%88%86%E4%B8%8D%E6%B8%85/
 https://chujian521.github.io/blog/2020/09/03/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0/
 https://chujian521.github.io/blog/2020/05/17/%E4%BF%9D%E7%A0%94%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/
 https://chujian521.github.io/blog/2020/05/11/%E4%BF%9D%E7%A0%94%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E5%AF%86%E7%A0%81%E5%AD%A6/
@@ -8,7 +10,6 @@ https://chujian521.github.io/blog/2020/04/28/Metasploitable2%E7%B3%BB%E5%88%97%E
 https://chujian521.github.io/blog/2020/05/02/Metasploitable2%E7%B3%BB%E5%88%97%E7%BB%83%E4%B9%A0-%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E4%B9%8BTelnet%E7%9A%84%E7%99%BB%E5%BD%95%E6%8F%90%E6%9D%83/
 https://chujian521.github.io/blog/2020/05/08/%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E6%B8%97%E9%80%8F%E8%BD%AF%E4%BB%B6%EF%BC%9AArmitage/
 https://chujian521.github.io/blog/2020/05/05/Metasploitable2%E7%B3%BB%E5%88%97%E7%BB%83%E4%B9%A0-%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E4%B9%8Bvsftpd%E5%90%8E%E9%97%A8%E4%B8%8ElinuxNFS%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE%E6%BC%8F%E6%B4%9E/
-https://chujian521.github.io/blog/2022/10/27/CSRF%E3%80%81XSS%E3%80%81SSRF%E5%82%BB%E5%82%BB%E5%88%86%E4%B8%8D%E6%B8%85/
 https://chujian521.github.io/about/index.html
 https://chujian521.github.io/blog/2022/10/17/OWASP-Top-10-for-2021-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8B%EF%BC%89/
 https://chujian521.github.io/blog/2022/10/15/%E4%BB%80%E4%B9%88%E6%98%AFNginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/

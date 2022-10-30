@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="之前使用TPS（Thin-Plate Spline）对弯曲的文本进行处理，进而识别处理之后的水平文本，记录一下备忘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TPS薄板样条变换">
+<meta property="og:url" content="https://chujian521.github.io/blog/2022/02/13/TPS%E8%96%84%E6%9D%BF%E6%A0%B7%E6%9D%A1%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="之前使用TPS（Thin-Plate Spline）对弯曲的文本进行处理，进而识别处理之后的水平文本，记录一下备忘。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj37.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/1-1.png">
+<meta property="og:image" content="https://chujian521.github.io/images/1-1-1.png">
+<meta property="og:image" content="https://chujian521.github.io/images/1-1-2.png">
+<meta property="og:image" content="https://chujian521.github.io/images/1-1-0.png">
+<meta property="article:published_time" content="2022-02-13T12:48:32.000Z">
+<meta property="article:modified_time" content="2022-10-30T13:42:56.690Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="图像处理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj37.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>TPS薄板样条变换 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TPS薄板样条变换"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-02-13 20:48" pubdate>
+          2022年2月13日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TPS薄板样条变换</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>之前使用TPS（Thin-Plate Spline）对弯曲的文本进行处理，进而识别处理之后的水平文本，记录一下备忘。</strong></p>
+<p><img src="/images/fj37.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<p>话不多说，直接使用CV2 的 TPS Transformer：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;Label.txt&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    content = f.read()<br>contents = content.split(<span class="hljs-string">&quot;\n&quot;</span>)<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;testTps.txt&quot;</span>,<span class="hljs-string">&quot;a&quot;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> wf:<br>    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> contents:<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;\t&quot;</span> <span class="hljs-keyword">in</span> c:<br>            tmp = c.split(<span class="hljs-string">&quot;\t&quot;</span>)<br>            img = <span class="hljs-string">&quot;./&quot;</span>+tmp[<span class="hljs-number">0</span>]<br>            boxes = json.loads(tmp[<span class="hljs-number">1</span>])<br>            imgori = cv2.imread(img)<br>            box_num = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">for</span> box <span class="hljs-keyword">in</span> boxes:<br>                <span class="hljs-comment">#开始执行TPS变换，points是弯曲文本的标注，从左上角开始顺时针</span><br>                points = box[<span class="hljs-string">&quot;points&quot;</span>]<br>                <span class="hljs-comment">#获取能把弯曲文本框包围住的矩形框</span><br>                x, y, w, h = cv2.boundingRect(np.array(points))<br>                <span class="hljs-comment"># print([x,y,w,h])</span><br>                <span class="hljs-comment">#分割出矩形框</span><br>                roi_img = imgori[y:y + h, x:x + w]<br>                <span class="hljs-comment"># cv2.imwrite(&quot;./roiimg&quot;+str(box_num)+&quot;.png&quot;,roi_img)</span><br>                <span class="hljs-comment">#初始化Transformer</span><br>                tps = cv2.createThinPlateSplineShapeTransformer()<br><br>                sourceshape = np.array(points, np.int32)<br>                sourceshape = sourceshape.reshape(<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>                <span class="hljs-comment"># print(sourceshape)</span><br>                matches = []<br>                N = <span class="hljs-built_in">len</span>(points)<br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, N):<br>                    matches.append(cv2.DMatch(i, i, <span class="hljs-number">0</span>))<br>                <span class="hljs-comment">#最终结果的高度采用第一个点与最后一个点之间的距离</span><br>                h = <span class="hljs-built_in">int</span>(math.sqrt(((points[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] - points[N - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>]) ** <span class="hljs-number">2</span>) +<br>                                    ((points[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] - points[N - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>]) ** <span class="hljs-number">2</span>)))<br>                <span class="hljs-comment"># print(&quot;height is &quot;+str(h))</span><br>                <span class="hljs-comment"># 开始变动，计算变换后的目标点</span><br>                newpoints = []<br>                N = N // <span class="hljs-number">2</span><br>                dx = <span class="hljs-built_in">int</span>(w / (N - <span class="hljs-number">1</span>))<br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, N):<br>                    newpoints.append((dx * i, <span class="hljs-number">2</span>))<br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(N - <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>                    newpoints.append((dx * i, h))<br>                <span class="hljs-comment"># print(newpoints)</span><br>                targetshape = np.array(newpoints, np.int32)<br>                targetshape = targetshape.reshape(<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>                tps.estimateTransformation(targetshape, sourceshape, matches)<br>                <span class="hljs-comment"># print(targetshape)</span><br>                <span class="hljs-keyword">try</span>:<br>                    roi_img_ = tps.warpImage(imgori)<br>                <span class="hljs-keyword">except</span>:<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;TPS变换错误&quot;</span>)<br>                    <span class="hljs-keyword">break</span><br>                <span class="hljs-comment"># cv2.imwrite(&quot;./roi_img_&quot;+str(box_num)+&quot;.png&quot;,roi_img_)</span><br>                <span class="hljs-keyword">try</span>:<br>                    img = roi_img_[newpoints[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]:newpoints[N][<span class="hljs-number">1</span>], newpoints[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]:newpoints[N][<span class="hljs-number">0</span>]]<br>                <span class="hljs-keyword">except</span>:<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;TPS变换后无法存储&quot;</span>)<br>                    <span class="hljs-keyword">break</span><br>                filename = <span class="hljs-string">&quot;./tps/&quot;</span>+tmp[<span class="hljs-number">0</span>].split(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">0</span>]+<span class="hljs-string">&quot;-&quot;</span>+<span class="hljs-built_in">str</span>(box_num)+<span class="hljs-string">&quot;.png&quot;</span><br>                <span class="hljs-comment"># print(filename)</span><br>                wf.write(tmp[<span class="hljs-number">0</span>].split(<span class="hljs-string">&quot;.&quot;</span>)[<span class="hljs-number">0</span>]+<span class="hljs-string">&quot;-&quot;</span>+<span class="hljs-built_in">str</span>(box_num)+<span class="hljs-string">&quot;.png&quot;</span>+<span class="hljs-string">&quot;\t&quot;</span>+box[<span class="hljs-string">&quot;transcription&quot;</span>]+<span class="hljs-string">&quot;\n&quot;</span>)<br>                cv2.imwrite(filename,img)<br>                box_num += <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>Label.txt的格式为PaddleOCR的标注格式：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs prolog">seal/<span class="hljs-number">1</span><span class="hljs-number">-1.</span>png	[&#123;<span class="hljs-string">&quot;transcription&quot;</span>: <span class="hljs-string">&quot;全国统一发票监制章&quot;</span>, <span class="hljs-string">&quot;points&quot;</span>: [[<span class="hljs-number">23</span>, <span class="hljs-number">66</span>], [<span class="hljs-number">35</span>, <span class="hljs-number">49</span>], [<span class="hljs-number">54</span>, <span class="hljs-number">36</span>], [<span class="hljs-number">80</span>, <span class="hljs-number">25</span>], [<span class="hljs-number">107</span>, <span class="hljs-number">21</span>], [<span class="hljs-number">137</span>, <span class="hljs-number">21</span>], [<span class="hljs-number">162</span>, <span class="hljs-number">25</span>], [<span class="hljs-number">184</span>, <span class="hljs-number">33</span>], [<span class="hljs-number">207</span>, <span class="hljs-number">49</span>], [<span class="hljs-number">220</span>, <span class="hljs-number">66</span>], [<span class="hljs-number">203</span>, <span class="hljs-number">78</span>], [<span class="hljs-number">189</span>, <span class="hljs-number">64</span>], [<span class="hljs-number">175</span>, <span class="hljs-number">53</span>], [<span class="hljs-number">155</span>, <span class="hljs-number">46</span>], [<span class="hljs-number">135</span>, <span class="hljs-number">42</span>], [<span class="hljs-number">109</span>, <span class="hljs-number">40</span>], [<span class="hljs-number">84</span>, <span class="hljs-number">42</span>], [<span class="hljs-number">64</span>, <span class="hljs-number">51</span>], [<span class="hljs-number">50</span>, <span class="hljs-number">64</span>], [<span class="hljs-number">40</span>, <span class="hljs-number">77</span>]]&#125;, &#123;<span class="hljs-string">&quot;transcription&quot;</span>: <span class="hljs-string">&quot;国家税务总局&quot;</span>, <span class="hljs-string">&quot;points&quot;</span>: [[<span class="hljs-number">64</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">76</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">89</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">102</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">115</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">128</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">141</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">154</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">167</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">180</span>, <span class="hljs-number">73</span>], [<span class="hljs-number">180</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">167</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">154</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">141</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">128</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">115</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">102</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">89</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">76</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">64</span>, <span class="hljs-number">94</span>]]&#125;, &#123;<span class="hljs-string">&quot;transcription&quot;</span>: <span class="hljs-string">&quot;山东省税务局&quot;</span>, <span class="hljs-string">&quot;points&quot;</span>: [[<span class="hljs-number">71</span>, <span class="hljs-number">112</span>], [<span class="hljs-number">81</span>, <span class="hljs-number">115</span>], [<span class="hljs-number">91</span>, <span class="hljs-number">116</span>], [<span class="hljs-number">102</span>, <span class="hljs-number">118</span>], [<span class="hljs-number">115</span>, <span class="hljs-number">119</span>], [<span class="hljs-number">129</span>, <span class="hljs-number">119</span>], [<span class="hljs-number">139</span>, <span class="hljs-number">118</span>], [<span class="hljs-number">149</span>, <span class="hljs-number">116</span>], [<span class="hljs-number">157</span>, <span class="hljs-number">114</span>], [<span class="hljs-number">172</span>, <span class="hljs-number">110</span>], [<span class="hljs-number">178</span>, <span class="hljs-number">130</span>], [<span class="hljs-number">164</span>, <span class="hljs-number">134</span>], [<span class="hljs-number">154</span>, <span class="hljs-number">138</span>], [<span class="hljs-number">143</span>, <span class="hljs-number">141</span>], [<span class="hljs-number">131</span>, <span class="hljs-number">142</span>], [<span class="hljs-number">115</span>, <span class="hljs-number">142</span>], [<span class="hljs-number">102</span>, <span class="hljs-number">140</span>], [<span class="hljs-number">87</span>, <span class="hljs-number">137</span>], [<span class="hljs-number">76</span>, <span class="hljs-number">134</span>], [<span class="hljs-number">65</span>, <span class="hljs-number">130</span>]]&#125;]<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/1-1.png" srcset="/img/loading.gif" lazyload alt="1-1"></p>
+<p>最终输出：</p>
+<p><strong>testTps.txt ：</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">seal</span>/<span class="hljs-number">1</span>-<span class="hljs-number">1</span>-<span class="hljs-number">0</span>.png	全国统一发票监制章<br><span class="hljs-attribute">seal</span>/<span class="hljs-number">1</span>-<span class="hljs-number">1</span>-<span class="hljs-number">1</span>.png	国家税务总局<br><span class="hljs-attribute">seal</span>/<span class="hljs-number">1</span>-<span class="hljs-number">1</span>-<span class="hljs-number">2</span>.png	山东省税务局<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/1-1-1.png" srcset="/img/loading.gif" lazyload alt="1-1-1"></p>
+<p><img src="/images/1-1-2.png" srcset="/img/loading.gif" lazyload alt="1-1-2"></p>
+<p><img src="/images/1-1-0.png" srcset="/img/loading.gif" lazyload alt="1-1-0"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">#图像处理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TPS薄板样条变换</div>
+      <div>https://chujian521.github.io/blog/2022/02/13/TPS薄板样条变换/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年2月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2022/06/10/MIT6-858-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%EF%BC%88%E4%B8%80%EF%BC%89/" title="MIT6.858-计算机系统安全（一）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MIT6.858-计算机系统安全（一）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2021/03/09/%E4%BD%BF%E7%94%A8Python%E5%92%8C%E6%9E%81%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E5%B0%86%E6%A4%AD%E5%9C%86%E7%8E%AF%E5%B1%95%E5%BC%80%E4%B8%BA%E7%9F%A9%E5%BD%A2/" title="使用Python和极坐标变换将椭圆环展开为矩形">
+                        <span class="hidden-mobile">使用Python和极坐标变换将椭圆环展开为矩形</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2022/02/13/TPS%E8%96%84%E6%9D%BF%E6%A0%B7%E6%9D%A1%E5%8F%98%E6%8D%A2/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
