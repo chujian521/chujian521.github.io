@@ -24,15 +24,15 @@
 <meta property="og:description" content="今天学习一款图形化渗透软件Armitage的使用，它拥有友好的可视化图形操作界面、强大的集成环境与自动化的渗透流程，是一款Java写的Metasploit图形界面化的渗透软件。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj48.jpg">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage1.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage2.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage3.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage4.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage5.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Carmitage6.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage1.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage2.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage3.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage4.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage5.png">
+<meta property="og:image" content="https://chujian521.github.io/images/armitage6.png">
 <meta property="article:published_time" content="2020-05-08T10:27:57.000Z">
-<meta property="article:modified_time" content="2020-05-08T11:30:30.000Z">
+<meta property="article:modified_time" content="2022-10-30T04:51:43.949Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="漏洞利用">
 <meta name="twitter:card" content="summary_large_image">
@@ -325,24 +325,24 @@
 <span id="more"></span>
 
 <h2 id="打开Armitage"><a href="#打开Armitage" class="headerlink" title="打开Armitage"></a>打开Armitage</h2><p>点击图标即可打开，但是kali2020始终打不开，不知道为什么。直接换命令行sudo armitage即可，直接连接默认配置就好：</p>
-<p><img src="/%5Cimages%5Carmitage.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage.png" srcset="/img/loading.gif" lazyload></p>
 <p>用Armitage之前先要开启Metasploit相关服务。如果没开的话，在这里直接点击“是”他就会帮你开启</p>
-<p><img src="/%5Cimages%5Carmitage1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage1.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="扫描"><a href="#扫描" class="headerlink" title="扫描"></a>扫描</h2><p>刚开始还是一片空白，我们需要去扫描内网下的主机。依次选择Hosts-&gt;Nmap Scan-&gt;QuickScan(OS detect)，然后填写内网网段</p>
-<p><img src="/%5Cimages%5Carmitage2.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/%5Cimages%5Carmitage3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage3.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="Find-Attacks"><a href="#Find-Attacks" class="headerlink" title="Find Attacks"></a>Find Attacks</h2><p>可以点击主机，services，查看nmap的扫描结果：</p>
-<p><img src="/%5Cimages%5Carmitage4.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage4.png" srcset="/img/loading.gif" lazyload></p>
 <p>如何对靶机进行攻击？依次选择Attacks-&gt;Find Attacks，就可以自动搜索这些设备可能存在漏洞及风险</p>
 <p>如果没有，点击Armitage菜单-Set exploit rank-&gt;poor就可以了</p>
 <p>扫描以后，我们右键靶机，发现菜单中多了一项“Attack”，在“smb”里面列出了一些漏洞名称。请注意，这里列出的漏洞仅是一部分目标主机系统（也就是win7）可能存在的漏洞，并不一定存在，更别说利用了。为了确定这些漏洞的可用性，我们需要检查一下。依次选择192.168.1.110（右键）-&gt;Attack-&gt;smb-&gt;checkexploits，他会自动扫描检查上面所显示的每一个漏洞是否存在及可用。</p>
 <p>当他显示“This module doesnot support check”或者“Cannot reliably check exploitability”类似的结果时（如下图），就证明这个漏洞不存在或无法利用。</p>
 <p>我们在左边依次点开exploit-&gt;windows-&gt;smb,这里列出了一长串漏洞，我们不妨挑一个试试。</p>
 <p>双击“ms17_010_eternalblue”，这里基本不用改什么，只需要确认这里是445端口就行了</p>
-<p><img src="/%5Cimages%5Carmitage5.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage5.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>点击launch，发起攻击</p>
 <p>然后发现我们成功发起了攻击，然后点击shell取得win7靶机的shell</p>
-<p><img src="/%5Cimages%5Carmitage6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/armitage6.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>

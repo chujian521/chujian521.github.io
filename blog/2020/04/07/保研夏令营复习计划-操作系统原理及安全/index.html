@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="X&#39;s blog">
 <meta property="og:description" content="从今天开始复习专业课，准备保研夏令营的面试工作，复习一下专业课，争取能去个比较好的学校。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Cfj39.jpg">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Cprocessstate.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Cprocessdiaodu.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Cthreading.png">
+<meta property="og:image" content="https://chujian521.github.io/images/fj39.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/processstate.png">
+<meta property="og:image" content="https://chujian521.github.io/images/processdiaodu.png">
+<meta property="og:image" content="https://chujian521.github.io/images/threading.png">
 <meta property="article:published_time" content="2020-04-07T03:39:51.000Z">
-<meta property="article:modified_time" content="2020-04-07T10:27:16.000Z">
+<meta property="article:modified_time" content="2022-10-30T05:12:54.692Z">
 <meta property="article:author" content="Encounter">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://chujian521.github.io/%5Cimages%5Cfj39.jpg">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj39.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -316,14 +316,14 @@
               <div class="markdown-body">
                 
                 <p><strong>从今天开始复习专业课，准备保研夏令营的面试工作，复习一下专业课，争取能去个比较好的学校。</strong></p>
-<p><img src="/%5Cimages%5Cfj39.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/fj39.jpg" srcset="/img/loading.gif" lazyload></p>
 <span id="more"></span>
 
 <h2 id="0x00进程和线程概念及区别"><a href="#0x00进程和线程概念及区别" class="headerlink" title="0x00进程和线程概念及区别"></a>0x00进程和线程概念及区别</h2><h3 id="进程的概念"><a href="#进程的概念" class="headerlink" title="进程的概念"></a>进程的概念</h3><p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
 <p>内存中的进程从高到低：栈-&gt;          &lt;-堆      数据     文本（代码）  </p>
 <h3 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">就绪状态：进程已获得除处理机以外的所需资源，等待分配处理机资源；<br>运行状态：占用处理机资源运行，处于此状态的进程数小于等于<span class="hljs-meta">CPU</span>数；<br>阻塞状态： 进程等待某种条件，在条件满足之前无法执行；<br></code></pre></td></tr></table></figure>
 
-<p><img src="/%5Cimages%5Cprocessstate.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/processstate.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="进程间的通信方式"><a href="#进程间的通信方式" class="headerlink" title="进程间的通信方式"></a>进程间的通信方式</h3><ol>
 <li>管道（pipe）及命名管道（named pipe）：管道可用于具有亲缘关系的父子进程间的通信，有名管道除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信；</li>
 <li>信号（signal）：信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生；</li>
@@ -348,9 +348,9 @@
 <li>进程可能创建一个新的子进程，并等待其结束。</li>
 <li>进程可能会由于中断而强制释放CPU，并被放回到就绪队列</li>
 </ul>
-<p><img src="/%5Cimages%5Cprocessdiaodu.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/processdiaodu.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="线程的概念"><a href="#线程的概念" class="headerlink" title="线程的概念"></a>线程的概念</h3><p>线程（英语：thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p>
-<p><img src="/%5Cimages%5Cthreading.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/threading.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><ul>
 <li>多对一模型：多个用户线程对应一个内核线程，效率高但是如果有一个线程阻塞系统调用，那么整个进程会阻塞</li>
 <li>一对一模型（多数）：将每个用户线程映射到一个内核线程，提供更好的并发功能，缺点就是每创建一个用户线程就要创建一个对应的内核线程，开销太大</li>

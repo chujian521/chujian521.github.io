@@ -24,9 +24,9 @@
 <meta property="og:description" content="继续上一篇的内容，本次使用的是vsftpd后门与linuxNFS共享目录配置漏洞和Samba3.X漏洞利用。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj46.jpg">
-<meta property="og:image" content="https://chujian521.github.io/%5Cimages%5Cmetasploitable2-0.png">
+<meta property="og:image" content="https://chujian521.github.io/images/metasploitable2-0.png">
 <meta property="article:published_time" content="2020-05-05T07:36:47.000Z">
-<meta property="article:modified_time" content="2020-05-05T09:16:02.000Z">
+<meta property="article:modified_time" content="2022-10-30T04:50:32.642Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="漏洞利用">
 <meta property="article:tag" content="Metasploitable2">
@@ -319,7 +319,7 @@
 <p><img src="/images/fj46.jpg" srcset="/img/loading.gif" lazyload></p>
 <span id="more"></span>
 
-<h2 id="vsftpd后门"><a href="#vsftpd后门" class="headerlink" title="vsftpd后门"></a>vsftpd后门</h2><h3 id="nmap扫描"><a href="#nmap扫描" class="headerlink" title="nmap扫描"></a>nmap扫描</h3><p><img src="/%5Cimages%5Cmetasploitable2-0.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="vsftpd后门"><a href="#vsftpd后门" class="headerlink" title="vsftpd后门"></a>vsftpd后门</h2><h3 id="nmap扫描"><a href="#nmap扫描" class="headerlink" title="nmap扫描"></a>nmap扫描</h3><p><img src="/images/metasploitable2-0.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现21端口运行着vsftpd服务，版本是2.3.4</p>
 <p>这个特别的版本包含一个后门允许一个未知的入侵者进入核心代码。这个后门很快就被确认并且移除。但是移除之前已经被少数人下载下来。如果在发送的用户名后面加上”：）“（笑脸符号），这个版本的后门会在6200端口上打开一个监听的shell。</p>
 <p>我们可以通过telnet确认或者通过metasploit上面的攻击模块自动攻击。</p>
