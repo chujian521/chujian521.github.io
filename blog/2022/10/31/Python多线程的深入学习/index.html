@@ -1,0 +1,752 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="做一个漏洞扫描器的时候偶然听到学长们聊Python的多线程是伪多线程，但是自己第一次知道，之前没有深入去了解过Python多线程具体的底层是什么样子的，遂学习记录一下，一直学习就好了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python多线程的深入学习">
+<meta property="og:url" content="https://chujian521.github.io/blog/2022/10/31/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="做一个漏洞扫描器的时候偶然听到学长们聊Python的多线程是伪多线程，但是自己第一次知道，之前没有深入去了解过Python多线程具体的底层是什么样子的，遂学习记录一下，一直学习就好了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj38.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/python-thread.png">
+<meta property="og:image" content="https://chujian521.github.io/images/coroutine.jpg">
+<meta property="article:published_time" content="2022-10-31T11:56:39.000Z">
+<meta property="article:modified_time" content="2022-11-02T12:39:39.363Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="python学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj38.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python多线程的深入学习 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python多线程的深入学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-31 19:56" pubdate>
+          2022年10月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python多线程的深入学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>做一个漏洞扫描器的时候偶然听到学长们聊Python的多线程是伪多线程，但是自己第一次知道，之前没有深入去了解过Python多线程具体的底层是什么样子的，遂学习记录一下，一直学习就好了。</strong></p>
+<p><img src="/images/fj38.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="Python中的并发任务"><a href="#Python中的并发任务" class="headerlink" title="Python中的并发任务"></a>Python中的并发任务</h2><h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><p>操作系统书本上的定义：并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。 </p>
+<p>在多道程序环境下，并发性是指在一段时间内宏观上有多个程序在同时运行，但在单处理机系统中，每一时刻却仅能有一道程序执行，故微观上这些程序只能是分时地交替执行。</p>
+<p>Python中并发任务实现方式包含：多线程threading和协程asyncio，它们的共同点都是交替执行，而区别是多线程threading是抢占式的，而协程asyncio是协作式的。</p>
+<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程也叫轻量级进程，是操作系统能够进行运算调度的最小单位，它被包涵在进程之中，是进程中的实际运作单位。线程自己不拥有系统资源，只拥有一点儿在运行中必不可少的资源，但它可与同属一个进程的其他线程共享进程所拥有的全部资源。一个进程可以有很多线程，每条线程并行执行不同的任务。</p>
+<p>多线程执行任务实例：</p>
+<p><img src="/images/python-thread.png" srcset="/img/loading.gif" lazyload alt="thread"></p>
+<h3 id="什么是协程"><a href="#什么是协程" class="headerlink" title="什么是协程"></a>什么是协程</h3><p>协程运行在线程之上，当一个协程执行完成后，可以选择主动让出，让另一个协程运行在当前线程之上。<strong>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程</strong>，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。协程和异步IO一起使用才会发挥最好效果。</p>
+<p><img src="/images/coroutine.jpg" srcset="/img/loading.gif" lazyload alt="coroutine"></p>
+<h2 id="为什么说Python是伪多线程"><a href="#为什么说Python是伪多线程" class="headerlink" title="为什么说Python是伪多线程"></a>为什么说Python是伪多线程</h2><h3 id="全局解释器锁（GIL）"><a href="#全局解释器锁（GIL）" class="headerlink" title="全局解释器锁（GIL）"></a>全局解释器锁（GIL）</h3><p>GIL的全称是全局解释器，来源是python设计之初的考虑，为了数据安全所做的决定。某个线程想要执行，必须先拿到GIL，我们可以把GIL看做是“通行证”，并且在一个python进程之中，GIL只有一个。拿不到线程的通行证，并且在一个python进程中，GIL只有一个，拿不到通行证的线程，就不允许进入CPU执行。GIL只在<strong>cpython</strong>中才有，因为cpython调用的是c语言的原生线程，所以他不能直接操作cpu，而只能利用GIL保证同一时间只能有一个线程拿到数据。</p>
+<h3 id="Python多线程下线程执行方式"><a href="#Python多线程下线程执行方式" class="headerlink" title="Python多线程下线程执行方式"></a>Python多线程下线程执行方式</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vim">获取GIL<br><br>执行代码直到<span class="hljs-keyword">sleep</span>或者是<span class="hljs-keyword">python</span>虚拟机将其挂起<br><br>释放GIL<br></code></pre></td></tr></table></figure>
+
+<p>在非python环境中，单核情况下，同时只能有一个任务执行。多核时可以支持多个线程同时执行。但是在python中，无论有多少个核同时只能执行一个线程。究其原因，这就是由于GIL的存在导致的。</p>
+<p>在Python3.2之前，GIL的释放逻辑是当前线程遇见IO操作或者ticks计数达到100 （ticks可以看作是Python自身的一个计数器，专门作用于GIL，每次释放后归零，这个计数可以通过 sys.setcheckinterval 来调整），进行释放。之后版本已经不是通过指令条数来切换了，而是时间间隔，采用sys.setswitchinterval。</p>
+<p>而每次释放GIL锁，线程进行锁竞争、切换线程，会消耗资源。并且由于GIL锁存在，python里一个进程永远只能同时执行一个线程(拿到GIL的线程才能执行)，这就是为什么在多核CPU上，python的多线程效率并不高。</p>
+<p>这里需要注意一下：GIL只会对CPU密集型的程序产生较大的负面影响（主要完成计算任务的程序）</p>
+<h3 id="如何打破GIL锁的限制"><a href="#如何打破GIL锁的限制" class="headerlink" title="如何打破GIL锁的限制"></a>如何打破GIL锁的限制</h3><ol>
+<li>如果完全使用Python来编程，可以使用<code>multiprocessing</code>模块来创建进程池，多进程就可以避免GIL的限制</li>
+<li>第二种方式是把重点放在C语言的扩展编程上。主要思想就是将计算密集的任务转移到C语言中，使其独立于Python，在C代码中释放GIL。</li>
+<li>使用非官方解释器，比如JPython</li>
+</ol>
+<h2 id="Python-多线程、协程、多进程的使用"><a href="#Python-多线程、协程、多进程的使用" class="headerlink" title="Python 多线程、协程、多进程的使用"></a>Python 多线程、协程、多进程的使用</h2><h3 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h3><p>多进程适用于CPU运算密集型任务</p>
+<h4 id="使用multiprocessing"><a href="#使用multiprocessing" class="headerlink" title="使用multiprocessing"></a>使用multiprocessing</h4><p>通过对Process类实例化之后获得一个进程p之后，通过p.start()就可以启动该进程了。<strong>p.join()方法就是让主进程进入阻塞状态，等对应的子进程执行完毕再执行下一行，主要用于进程同步</strong>。</p>
+<p>这里采用Queue的方法进行进程间的通信，创建了一个接收进程和一个发送进程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os, time, random<br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Process, Queue<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">recv</span>(<span class="hljs-params">q</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;子进程：接收进程（<span class="hljs-subst">&#123;os.getpid()&#125;</span>）开始！&#x27;</span>)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-comment"># 用产生随机数的方法模拟数据的接收</span><br>        data = random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;子进程：接收进程接收到数据<span class="hljs-subst">&#123;data&#125;</span>！&#x27;</span>)<br>        q.put(data)<br>        sleep_time = random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>)<br>        time.sleep(sleep_time/<span class="hljs-number">10</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">send</span>(<span class="hljs-params">q</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;子进程：转发进程（<span class="hljs-subst">&#123;os.getpid()&#125;</span>）开始！&#x27;</span>)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-comment"># 注意：如果q里面没有数据，get()方法就会等待，直到获得一个数据并赋值给data</span><br>        data = q.get()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;子进程：转发进程接收到数据<span class="hljs-subst">&#123;data&#125;</span>并开始处理、转发！&#x27;</span>)<br>        time.sleep(<span class="hljs-number">0.3</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;主进程（<span class="hljs-subst">&#123;os.getpid()&#125;</span>）开始...&#x27;</span>)<br>    q = Queue()<br>    p1 = Process(target=recv, args=(q,))<br>    p2 = Process(target=send, args=(q,))<br>    p1.start()<br>    p2.start()<br>    p1.join()<br>    p2.join()<br></code></pre></td></tr></table></figure>
+
+<p>注：参考的实例代码来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/493699150">Python多进程详解 - 知乎 (zhihu.com)</a></p>
+<h4 id="concurrent-futures-ProcessPoolExecutor"><a href="#concurrent-futures-ProcessPoolExecutor" class="headerlink" title="concurrent.futures.ProcessPoolExecutor()"></a>concurrent.futures.ProcessPoolExecutor()</h4><p>concurrent.futures 是 3.2 中引入的新模块，它为异步执行可调用对象提供了高层接口。可以使用 ThreadPoolExecutor 来进行多线程编程，ProcessPoolExecutor 进行多进程编程，两者实现了同样的接口，这些接口由抽象类 Executor 定义。这个模块提供了两大类型，一个是执行器类 Executor，另一个是 Future 类。执行器用来管理工作池，future 用来管理工作计算出来的结果，通常不用直接操作 future 对象，因为有丰富的 API。</p>
+<p>一个判断是否为素数的实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> concurrent <span class="hljs-keyword">import</span> futures<br><span class="hljs-keyword">import</span> math<br><br>PRIMES = [<br>    <span class="hljs-number">112272535095293</span>,<br>    <span class="hljs-number">112582705942171</span>,<br>    <span class="hljs-number">112272535095293</span>,<br>    <span class="hljs-number">115280095190773</span>,<br>    <span class="hljs-number">115797848077099</span>,<br>    <span class="hljs-number">1099726899285419</span>]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_prime</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br>    sqrt_n = <span class="hljs-built_in">int</span>(math.floor(math.sqrt(n)))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>, sqrt_n + <span class="hljs-number">1</span>, <span class="hljs-number">2</span>):<br>        <span class="hljs-keyword">if</span> n % i == <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-keyword">with</span> futures.ProcessPoolExecutor() <span class="hljs-keyword">as</span> executor:<br>        <span class="hljs-keyword">for</span> number, prime <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(PRIMES, executor.<span class="hljs-built_in">map</span>(is_prime, PRIMES)):<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;%d is prime: %s&#x27;</span> % (number, prime))<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><p><strong>守护线程</strong>：只有所有守护线程都结束，整个Python程序才会退出，但并不是说Python程序会等待守护线程运行完毕，相反，当程序退出时，如果还有守护线程在运行，程序会去强制终结所有守护线程，当守所有护线程都终结后，程序才会真正退出。可以通过修改daemon属性或者初始化线程时指定daemon参数来指定某个线程为守护线程。</p>
+<p><strong>非守护线程</strong>：一般创建的线程默认就是非守护线程，包括主线程也是，即在Python程序退出时，如果还有非守护线程在运行，程序会等待直到所有非守护线程都结束后才会退出。</p>
+<p><strong>注</strong>：守护线程会在程序关闭时突然关闭（如果守护线程在程序关闭时还在运行），它们占用的资源可能没有被正确释放，比如正在修改文档内容等，需要谨慎使用。</p>
+<h4 id="threading"><a href="#threading" class="headerlink" title="threading"></a>threading</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> threading<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;task&quot;</span>, n)<br>    time.sleep(<span class="hljs-number">1</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;2s&#x27;</span>, n)<br>    time.sleep(<span class="hljs-number">1</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;1s&#x27;</span>, n)<br>    time.sleep(<span class="hljs-number">1</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;0s&#x27;</span>, n)<br>    time.sleep(<span class="hljs-number">1</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    t1 = threading.Thread(target=run, args=(<span class="hljs-string">&quot;t1&quot;</span>,))<br>    t2 = threading.Thread(target=run, args=(<span class="hljs-string">&quot;t2&quot;</span>,))<br>    t1.start()    <span class="hljs-comment">#当调用start()时，才会真正的创建线程，并且开始执行</span><br>    <span class="hljs-comment"># t1.join() #调用join时与多进程一样，等待t1执行结束执行t2</span><br>    t2.start()<br></code></pre></td></tr></table></figure>
+
+<p>利用lock机制，避免多个线程同时修改同一份数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> threading <span class="hljs-keyword">import</span> Thread,Lock<br><span class="hljs-keyword">import</span> os,time<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">work</span>():<br>    <span class="hljs-keyword">global</span> n<br>    lock.acquire() <span class="hljs-comment">#加锁</span><br>    temp=n<br>    time.sleep(<span class="hljs-number">0.1</span>)<br>    n=temp-<span class="hljs-number">1</span><br>    lock.release()  <span class="hljs-comment">#解锁</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    lock=Lock()<br>    n=<span class="hljs-number">100</span><br>    l=[]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):<br>        p=Thread(target=work)<br>        l.append(p)<br>        p.start()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;####################&quot;</span>)<br>    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> l:<br>        p.join()<br>        <span class="hljs-built_in">print</span>(n)<br></code></pre></td></tr></table></figure>
+
+<p>还有递归锁、信号量等多种机制避免数据竞争。</p>
+<h4 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h4><p>注意：当属于一个 <code>Future</code> 对象的可调用对象等待另一个 <code>Future</code> 的返回时，会发生死锁 <code>deadlock</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> concurrent.futures<br><span class="hljs-keyword">import</span> urllib.request<br><br>URLS = [<span class="hljs-string">&#x27;https://www.baidu.com/&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://www.sjtu.edu.cn/&#x27;</span>,<br>        <span class="hljs-string">&#x27;https://chujian521.github.io/&#x27;</span>]<br><br><span class="hljs-comment"># 检索单个页面并报告URL和内容</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">load_url</span>(<span class="hljs-params">url, timeout</span>):<br>    <span class="hljs-keyword">with</span> urllib.request.urlopen(url, timeout=timeout) <span class="hljs-keyword">as</span> conn:<br>        <span class="hljs-keyword">return</span> conn.read()<br><br><span class="hljs-comment"># 我们可以使用with语句来确保线程被及时清理</span><br><span class="hljs-keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> executor:<br>    <span class="hljs-comment"># 启动加载操作，并用其URL标记每个future</span><br>    future_to_url = &#123;executor.submit(load_url, url, <span class="hljs-number">60</span>): url <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> URLS&#125;<br>    <span class="hljs-keyword">for</span> future <span class="hljs-keyword">in</span> concurrent.futures.as_completed(future_to_url):<br>        url = future_to_url[future]<br>        <span class="hljs-keyword">try</span>:<br>            data = future.result()<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> exc:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;%r generated an exception: %s&#x27;</span> % (url, exc))<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;%r page is %d bytes&#x27;</span> % (url, <span class="hljs-built_in">len</span>(data)))<br><br></code></pre></td></tr></table></figure>
+
+<p>注：concurrent.futures.as_completed(fs, timeout&#x3D;None)<br>当通过 fs 指定的 Future 实例全部执行完毕或者被取消后，返回这些 Future 实例组成的迭代器。fs 中的 Future 实例可以被不同的执行器创建。任何在 as_completed() 调用之前就已经完成的 Future 实例会被最先生成。</p>
+<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><h4 id="asyncio"><a href="#asyncio" class="headerlink" title="asyncio"></a>asyncio</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> asyncio<br><br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">work</span>(<span class="hljs-params">num: <span class="hljs-built_in">int</span></span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    一个工作协程，接收一个数字，将它 +1 后返回</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;working <span class="hljs-subst">&#123;num&#125;</span> ...&#x27;</span>)<br>    <span class="hljs-keyword">await</span> asyncio.sleep(<span class="hljs-number">1</span>)    <span class="hljs-comment"># 模拟耗时的IO操作</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;num&#125;</span> -&gt; <span class="hljs-subst">&#123;num+<span class="hljs-number">1</span>&#125;</span> done&#x27;</span>)<br>    <span class="hljs-keyword">return</span> num + <span class="hljs-number">1</span><br><br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    主协程，创建一系列并发协程并运行它们</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-comment"># 任务队列</span><br>    tasks = [work(num) <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>)]<br>    <span class="hljs-comment"># 并发执行队列中的协程并等待结果返回</span><br>    results = <span class="hljs-keyword">await</span> asyncio.gather(*tasks)<br>    <span class="hljs-built_in">print</span>(results)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    asyncio.run(main())<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python%E5%AD%A6%E4%B9%A0/">#python学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python多线程的深入学习</div>
+      <div>https://chujian521.github.io/blog/2022/10/31/Python多线程的深入学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2022/10/27/CSRF%E3%80%81XSS%E3%80%81SSRF%E5%82%BB%E5%82%BB%E5%88%86%E4%B8%8D%E6%B8%85/" title="CSRF、XSS、SSRF傻傻分不清">
+                        <span class="hidden-mobile">CSRF、XSS、SSRF傻傻分不清</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2022/10/31/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
