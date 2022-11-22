@@ -23,11 +23,13 @@
 <meta property="og:site_name" content="X&#39;s blog">
 <meta property="og:description" content="在使用Linux服务器时，偶然发现有些可执行文件有一些除了rwx权限之外的权限s，之前了解过有一些特殊的文件权限，是使用chattr设置，lsattr查看的一些特殊文件属性（详见文件管理），但是这种s权限不在隐藏属性中，于是好奇心驱使下特地研究一下。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj60.jpg">
 <meta property="article:published_time" content="2022-11-19T13:01:27.000Z">
-<meta property="article:modified_time" content="2022-11-20T11:06:26.317Z">
+<meta property="article:modified_time" content="2022-11-21T10:05:00.965Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj60.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -312,7 +314,7 @@
               <div class="markdown-body">
                 
                 <p><strong>在使用Linux服务器时，偶然发现有些可执行文件有一些除了rwx权限之外的权限s，之前了解过有一些特殊的文件权限，是使用chattr设置，lsattr查看的一些特殊文件属性（详见<a href="https://chujian521.github.io/blog/2020/09/03/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0/#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86-1">文件管理</a>），但是这种s权限不在隐藏属性中，于是好奇心驱使下特地研究一下。</strong></p>
-<p><a href="images/fj60.jpg"></a></p>
+<p><img src="/images/fj60.jpg" srcset="/img/loading.gif" lazyload></p>
 <span id="more"></span>
 
 <h2 id="SUID权限"><a href="#SUID权限" class="headerlink" title="SUID权限"></a>SUID权限</h2><h3 id="什么是SUID权限"><a href="#什么是SUID权限" class="headerlink" title="什么是SUID权限"></a>什么是SUID权限</h3><p>SUID (Set UID)是Linux中的一种特殊权限,其功能为用户运行某个程序时，如果该程序有SUID权限，那么程序运行为进程时，进程的属主不是发起者，而是程序文件所属的属主。但是SUID权限的设置只针对二进制可执行文件,对于非可执行文件设置SUID没有任何意义。</p>
@@ -464,6 +466,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/blog/2022/11/21/Linux%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" title="Linux中常用的文本处理工具学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux中常用的文本处理工具学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
@@ -776,7 +784,12 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-  <!-- 雪花特效 -->
-  <script type="text/javascript" src="\js\snow.js"></script>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景-->
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+  
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
