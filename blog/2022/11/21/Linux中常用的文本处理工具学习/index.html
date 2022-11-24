@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj61.jpg">
 <meta property="article:published_time" content="2022-11-21T07:38:07.000Z">
-<meta property="article:modified_time" content="2022-11-22T14:22:35.223Z">
+<meta property="article:modified_time" content="2022-11-24T13:10:03.598Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k 字
+          5.7k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          42 分钟
+          48 分钟
         
       </span>
     
@@ -403,6 +403,11 @@
 </tr>
 </tbody></table>
 <h3 id="循环分支和数组"><a href="#循环分支和数组" class="headerlink" title="循环分支和数组"></a>循环分支和数组</h3><p>语句之间使用分号分隔，循环使用for循环，类似于其他编程语言，分支使用的if：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">if</span>(condition)<br>&#123;<br>action <span class="hljs-number">1</span>;<br>action <span class="hljs-number">2</span>;<br>...<br>&#125;<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span><br>&#123;<br>action <span class="hljs-number">1</span>;<br>action <span class="hljs-number">2</span>;<br>...<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br>action <span class="hljs-number">1</span>;<br>action <span class="hljs-number">2</span>;<br>...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">for</span>(变量初始值;结束条件;操作符)<br>&#123;<br>action<br>&#125;<br><br><span class="hljs-keyword">for</span>(变量 <span class="hljs-keyword">in</span> 数组)<br>&#123;<br>action<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>示例：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">&#123;sum=<span class="hljs-number">0</span>;<span class="hljs-keyword">for</span>(c=<span class="hljs-number">2</span>;c&lt;NF;c++)  sum+=<span class="hljs-variable">$c</span>;average[<span class="hljs-variable">$1</span>]=sum/(NF-<span class="hljs-number">1</span>)&#125; <span class="hljs-keyword">END</span>&#123;<span class="hljs-keyword">for</span>(user <span class="hljs-keyword">in</span> average) print user,average[user]&#125;<br><span class="hljs-keyword">BEGIN</span>&#123; last=<span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> &#125;  &#123;<span class="hljs-keyword">if</span> (last!= <span class="hljs-variable">$1</span>) print(<span class="hljs-variable">$1</span>); last=<span class="hljs-variable">$1</span>;&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="一些函数"><a href="#一些函数" class="headerlink" title="一些函数"></a>一些函数</h3><p>length：awk -F: ‘length($1) &gt;6 {print $1}’ &#x2F;etc&#x2F;passwd 统计长度<br>split： 将一段字符串分割符号，对文本进行分割，存放到数组里，使用for循环遍历读取数组里的内容<br>substr： awk -F: ‘{if (length($1)&gt;6) print substr($1,1,6)}’ &#x2F;etc&#x2F;passwd<br>substr($1,1,6) 类似于切片操作 对$1 第一个开始 切6个<br>system： 将linux命令放在awk里面</p>
@@ -501,6 +506,42 @@
 <td>指定需要排序的列</td>
 </tr>
 </tbody></table>
+<h2 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a>uniq</h2><h3 id="简介-3"><a href="#简介-3" class="headerlink" title="简介"></a>简介</h3><p>Linux uniq 命令用于检查及删除文本文件中重复出现的行列，一般与 sort 命令结合使用。</p>
+<p>uniq 可检查文本文件中重复出现的行列。</p>
+<h3 id="使用-3"><a href="#使用-3" class="headerlink" title="使用"></a>使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uniq</span> [-cdui][-f&lt;栏位&gt;][-s&lt;字符位置&gt;][-w&lt;字符位置&gt;][--<span class="hljs-built_in">help</span>][--version][输入文件][输出文件]<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>或–count ,在每列旁边显示该行重复出现的次数。</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>或–repeated ，仅显示重复出现的行列。</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>或–unique，仅显示出一次的行列。</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>比较时忽略大小写</td>
+</tr>
+</tbody></table>
+<p>需要注意的是，当重复的行并不相邻时，uniq 命令是不起作用的，因此该命令一般配合sort使用。</p>
+<p>比如统计各行在文件中出现的次数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sort</span> 10.txt | <span class="hljs-built_in">uniq</span> -c<br>      2 Line 1 192.168.1.1<br>      1 Line 10 192.168.1.18<br>      1 Line 2 192.168.1.15<br>      1 Line 3 192.168.1.14<br>      1 Line 4 192.168.1.17<br>      1 Line 5 192.168.1.13<br>      1 Line 7 192.168.1.12<br>      1 Line 8 192.168.1.11<br>      1 Line 9 192.168.1.1<br></code></pre></td></tr></table></figure>
+
+<p>找出重复行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sort</span> 10.txt | <span class="hljs-built_in">uniq</span> -d<br>      Line 1 192.168.1.1<br></code></pre></td></tr></table></figure>
+
+<h2 id="tr、col等"><a href="#tr、col等" class="headerlink" title="tr、col等"></a>tr、col等</h2><p>详见<a href="https://chujian521.github.io/blog/2020/09/03/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0/#%E6%96%87%E6%A1%A3%E7%BC%96%E8%BE%91">Linux常用命令学习–文档编辑</a></p>
 
                 
               </div>
