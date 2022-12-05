@@ -16,28 +16,28 @@
   <meta name="author" content="Encounter">
   <meta name="keywords" content="">
   
-    <meta name="description" content="从今天开始复习专业课，准备保研夏令营的面试工作，复习一下专业课，争取能去个比较好的学校。">
+    <meta name="description" content="之前学过的知识慢慢捡起来，为实习面试准备基础知识！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="保研夏令营复习计划-操作系统原理及安全">
-<meta property="og:url" content="https://chujian521.github.io/blog/2020/04/07/%E4%BF%9D%E7%A0%94%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:title" content="操作系统原理——虚拟内存">
+<meta property="og:url" content="https://chujian521.github.io/blog/2022/12/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="从今天开始复习专业课，准备保研夏令营的面试工作，复习一下专业课，争取能去个比较好的学校。">
+<meta property="og:description" content="之前学过的知识慢慢捡起来，为实习面试准备基础知识！">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chujian521.github.io/images/fj39.jpg">
-<meta property="og:image" content="https://chujian521.github.io/images/processstate.png">
-<meta property="og:image" content="https://chujian521.github.io/images/processdiaodu.png">
-<meta property="og:image" content="https://chujian521.github.io/images/threading.png">
-<meta property="article:published_time" content="2020-04-07T03:39:51.000Z">
-<meta property="article:modified_time" content="2022-12-04T12:49:17.879Z">
+<meta property="og:image" content="https://chujian521.github.io/images/fj63.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/mmu_with_fastpage.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/mulit-page.png">
+<meta property="article:published_time" content="2022-12-04T13:33:43.000Z">
+<meta property="article:modified_time" content="2022-12-05T10:37:04.754Z">
 <meta property="article:author" content="Encounter">
+<meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://chujian521.github.io/images/fj39.jpg">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj63.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>保研夏令营复习计划-操作系统原理及安全 - X&#39;s blog</title>
+  <title>操作系统原理——虚拟内存 - X&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="保研夏令营复习计划-操作系统原理及安全"></span>
+            <span id="subtitle" data-typed-text="操作系统原理——虚拟内存"></span>
           
         </div>
 
@@ -241,8 +241,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-04-07 11:39" pubdate>
-          2020年4月7日 中午
+        <time datetime="2022-12-04 21:33" pubdate>
+          2022年12月4日 晚上
         </time>
       </span>
     
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          3k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          20 分钟
+          26 分钟
         
       </span>
     
@@ -310,76 +310,64 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">保研夏令营复习计划-操作系统原理及安全</h1>
+            <h1 style="display: none">操作系统原理——虚拟内存</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>从今天开始复习专业课，准备保研夏令营的面试工作，复习一下专业课，争取能去个比较好的学校。</strong></p>
-<p><img src="/images/fj39.jpg" srcset="/img/loading.gif" lazyload></p>
+                <p><strong>之前学过的知识慢慢捡起来，为实习面试准备基础知识！</strong></p>
+<p><img src="/images/fj63.jpg" srcset="/img/loading.gif" lazyload></p>
 <span id="more"></span>
 
-<h2 id="0x00进程和线程概念及区别"><a href="#0x00进程和线程概念及区别" class="headerlink" title="0x00进程和线程概念及区别"></a>0x00进程和线程概念及区别</h2><h3 id="进程的概念"><a href="#进程的概念" class="headerlink" title="进程的概念"></a>进程的概念</h3><p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
-<p>内存中的进程从高到低：栈-&gt;          &lt;-堆      数据     文本（代码）  </p>
-<h3 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">就绪状态：进程已获得除处理机以外的所需资源，等待分配处理机资源；<br>运行状态：占用处理机资源运行，处于此状态的进程数小于等于<span class="hljs-meta">CPU</span>数；<br>阻塞状态： 进程等待某种条件，在条件满足之前无法执行；<br></code></pre></td></tr></table></figure>
-
-<p><img src="/images/processstate.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="进程间的通信方式"><a href="#进程间的通信方式" class="headerlink" title="进程间的通信方式"></a>进程间的通信方式</h3><ol>
-<li>管道（pipe）及命名管道（named pipe）：管道可用于具有亲缘关系的父子进程间的通信，有名管道除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信；</li>
-<li>信号（signal）：信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生；</li>
-<li>消息队列：消息队列是消息的链接表，它克服了上两种通信方式中信号量有限的缺点，具有写权限得进程可以按照一定得规则向消息队列中添加新信息；对消息队列有读权限得进程则可以从消息队列中读取信息；</li>
-<li>共享内存：可以说这是最有用的进程间通信方式。它使得多个进程可以访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存中数据得更新。这种方式需要依靠某种同步操作，如互斥锁和信号量等</li>
-<li>信号量：主要作为进程之间及同一种进程的不同线程之间得同步和互斥手段；</li>
-<li>套接字：这是一种更为一般得进程间通信机制，它可用于网络中不同机器之间的进程间通信，应用非常广泛。</li>
+<h2 id="虚拟内存的一些概念"><a href="#虚拟内存的一些概念" class="headerlink" title="虚拟内存的一些概念"></a>虚拟内存的一些概念</h2><h3 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h3><p>时间局部性:如果执行了程序中的某条指令，那么不久后这条指令很有可能再次执行;如果某个数据被访问过，不久之后该数据很可能再次被访问。(因为程序中存在大量的循环)</p>
+<p>空间局部性:一日程序访问了某个存储单元，在不久之后，其附近的存储单元也很有可能被访问。(因为很多数据在内存中都是连续存放的，并且程序的指令也是顺序地在内存中存放的)</p>
+<h3 id="高速缓冲思想"><a href="#高速缓冲思想" class="headerlink" title="高速缓冲思想"></a>高速缓冲思想</h3><p>将近期会频繁访问到的数据放到更高速的存储器中，暂时用不到的数据放在更低速存储器中。</p>
+<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p>基于局部性原理，在程序装入时，可以将程序中很快会用到的部分装入内存，暂时用不到的部分留在外存，就可以让程序开始执行。<br>在程序执行过程中，当所访问的信息不在内存时，由操作系统负责将所需信息从外存调入内存，然后继续执行程序。<br>若内存空间不够，由操作系统负责将内存中暂时用不到的信息换出到外存。<br>在操作系统的管理下，进程的可用内存大小比实际内存大小要大得多,但这个“内存大小”不是真实存在的，是通过OS和硬件MMU模拟出来的，在用户看来似乎有一个比实际内存大得多的内存，这就是<strong>虚拟内存</strong>。</p>
+<h3 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h3><ol>
+<li>多次性：无需在作业运行时一次性全部装入内存，而是允许被分成多次调入内存。</li>
+<li>对换性：在作业运行时无需一直常驻内存，而是允许在作业运行过程中，将作业换入、换出。</li>
+<li>虚拟性：从逻辑上扩充了内存的容量，使用户看到的内存容量，远大于实际的容量。</li>
 </ol>
-<h3 id="进程控制块PCB"><a href="#进程控制块PCB" class="headerlink" title="进程控制块PCB"></a>进程控制块PCB</h3><p>包括以下内容：</p>
-<ul>
-<li>进程状态</li>
-<li>程序计数器</li>
-<li>CPU寄存器</li>
-<li>CPU调度信息</li>
-<li>内存管理信息</li>
-<li>记账信息</li>
-<li>I&#x2F;O状态信息</li>
-</ul>
-<h3 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h3><p>新的进程开始时处于就绪队列，它在就绪队列中等待直到被选中执行或被派遣。当进程分配到CPU并执行时，它可能发生以下几种事件的一种：</p>
-<ul>
-<li>进程可能发出一个I&#x2F;O请求，并被放到I&#x2F;O队列中。</li>
-<li>进程可能创建一个新的子进程，并等待其结束。</li>
-<li>进程可能会由于中断而强制释放CPU，并被放回到就绪队列</li>
-</ul>
-<p><img src="/images/processdiaodu.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="线程的概念"><a href="#线程的概念" class="headerlink" title="线程的概念"></a>线程的概念</h3><p>线程（英语：thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p>
-<p><img src="/images/threading.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><ul>
-<li>多对一模型：多个用户线程对应一个内核线程，效率高但是如果有一个线程阻塞系统调用，那么整个进程会阻塞</li>
-<li>一对一模型（多数）：将每个用户线程映射到一个内核线程，提供更好的并发功能，缺点就是每创建一个用户线程就要创建一个对应的内核线程，开销太大</li>
-<li>多对多模型：多路复用了许多用户线程到同样数量或者更小数量的内核线程上</li>
-</ul>
-<h3 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h3><ol>
-<li>互斥量 Synchronized&#x2F;Lock：采用互斥对象机制，只有拥有互斥对象的线程才有访问公共资源的权限。因为互斥对象只有一个，所以可以保证公共资源不会被多个线程同时访问</li>
-<li>信号量 Semphare：它允许同一时刻多个线程访问同一资源，但是需要控制同一时刻访问此资源的最大线程数量</li>
-<li>事件(信号)，Wait&#x2F;Notify：通过通知操作的方式来保持多线程同步，还可以方便的实现多线程优先级的比较操作</li>
+<h3 id="几种地址"><a href="#几种地址" class="headerlink" title="几种地址"></a>几种地址</h3><ol>
+<li>虚拟地址：虚拟内存中某字节的地址，仿佛该字节存在内存中，其实可能位于磁盘，但这对用户透明</li>
+<li>虚拟地址空间：分配给某程序的虚拟地址范围。</li>
+<li>实地址：物理内存中的某字节地址</li>
+<li>驻留集：进程运行时装入内存的部分</li>
+<li>工作集：实际进程访问到的物理块，驻留集 &gt;工作集</li>
 </ol>
-<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
-<li>进程是对运行时程序的封装，是系统进行资源调度和分配的的基本单位，实现了操作系统的并发；</li>
-<li>线程是进程的子任务，是CPU调度和分派的基本单位，用于保证程序的 实时性，实现进程内部的并发；</li>
-<li>一个程序至少有一个进程，一个进程至少有一个线程，线程依赖于进程而存在；</li>
-<li>进程在执行过程中拥有独立的内存单元，而多个线程共享进程的内存。</li>
-</ul>
-<h2 id="0x01死锁及其成因"><a href="#0x01死锁及其成因" class="headerlink" title="0x01死锁及其成因"></a>0x01死锁及其成因</h2><h3 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h3><p>在两个或者多个并发进程中，如果每个进程持有某种资源而又等待其它进程释放它或它们现在保持着的资源，在未改变这种状态之前都不能向前推进，称这一组进程产生了死锁。通俗的讲，就是两个或多个进程无限期的阻塞、相互等待的一种状态。</p>
-<h3 id="死锁产生的四个必要条件"><a href="#死锁产生的四个必要条件" class="headerlink" title="死锁产生的四个必要条件"></a>死锁产生的四个必要条件</h3><p>互斥：至少有一个资源必须属于非共享模式，即一次只能被一个进程使用；若其他申请使用该资源，那么申请进程必须等到该资源被释放为止；<br>占有且等待：一个进程因请求资源而阻塞时，对已获得的资源保持不放。<br>非抢占：进程已获得的资源，在末使用完之前，不能强行剥夺。<br>循环等待条件：若干进程之间形成一种头尾相接的循环等待资源关系。</p>
-<h3 id="死锁解决的基本方法"><a href="#死锁解决的基本方法" class="headerlink" title="死锁解决的基本方法"></a>死锁解决的基本方法</h3><p>预防死锁、避免死锁、检测死锁、解除死锁 、鸵鸟策略 等</p>
-<h2 id="0x02常见问题"><a href="#0x02常见问题" class="headerlink" title="0x02常见问题"></a>0x02常见问题</h2><h3 id="大端序和小端序的区别"><a href="#大端序和小端序的区别" class="headerlink" title="大端序和小端序的区别"></a>大端序和小端序的区别</h3><p><strong>小端字节序</strong>：低字节存于内存低地址；高字节存于内存高地址;</p>
-<p><strong>大端字节序</strong>：高字节存于内存低地址；低字节存于内存高地址;</p>
-<p>x86工作在小端序</p>
-<h3 id="编译的流程"><a href="#编译的流程" class="headerlink" title="编译的流程"></a>编译的流程</h3><p>预处理</p>
-<p>编译</p>
-<p>汇编</p>
-<p>链接</p>
-<h3 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h3><h4 id="1-空间分配"><a href="#1-空间分配" class="headerlink" title="1.空间分配"></a>1.空间分配</h4><p>栈（操作系统）：由操作系统自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。<br>堆（操作系统）： 一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收，分配方式倒是类似于链表</p>
-<h4 id="2-缓存方式"><a href="#2-缓存方式" class="headerlink" title="2.缓存方式"></a>2.缓存方式</h4><p>栈使用的是一级缓存， 他们通常都是被调用时处于存储空间中，调用完毕立即释放。<br>堆则是存放在二级缓存中，生命周期由虚拟机的垃圾回收算法来决定（并不是一旦成为孤儿对象就能被回收）。所以调用这些对象的速度要相对来得低一些。</p>
-<h4 id="3-数据结构区别"><a href="#3-数据结构区别" class="headerlink" title="3.数据结构区别"></a>3.数据结构区别</h4><p>堆（数据结构）：堆可以被看成是一棵树，如：堆排序。<br>栈（数据结构）：一种先进后出的数据结构。</p>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><h3 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h3><p>将程序的逻辑地址空间划分为固定大小的页(page)，而物理内存划分为同样大小的页框(page frame)。程序加载时，可将任意一页放人内存中任意一个页框，这些页框不必连续，从而实现了离散分配。该方法需要CPU的硬件支持，来实现逻辑地址和物理地址之间的映射。</p>
+<p>在系统每次访问虚存页时，都要在内存的所有页表中寻找该页的页框，这是一个很费时间的工作。但是，<strong>人们发现，系统一旦访问了某一个页，那么系统就会在一段时间内稳定地工作在这个页上。所以，为了提高访问页表的速度，系统还配备了一组正好能容纳一个页表的硬件寄存器，这样当系统再访问虚存时，就首先到这组硬件寄存器中去访问，系统速度就快多了。这组存放当前页表的寄存器叫做快表。</strong>工作过程如下图：</p>
+<p><img src="/images/mmu_with_fastpage.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="缺页中断"><a href="#缺页中断" class="headerlink" title="缺页中断"></a>缺页中断</h3><p>在请求分页系统中，每当要访问的页面不在内存时，便产生一个缺页中断，然后由操作系统的缺页中断处理程序处理中断。此时缺页的进程阻塞，放入阻塞队列，调页完成后再将其唤醒，放入就绪队列。</p>
+<p>若该页面在内存期间被修改过，要将其写回外存。</p>
+<p>缺页中断是因为当前执行的指令想要访问的目标页面未调入内存而产生的，因此属于内中断。一条指令在执行期间，可能产生多次缺页中断。</p>
+<h3 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h3><p>两极页表:32-bit机器上，每个进程地址空间为(2^32^)B,页长4KB，则页表最长将到达(2^20^)1M个项。若每个页表项占4B，则存放这张表将需要连续的4MB连续内存。而且每个进程的页表都可能这么大。</p>
+<p>于是我们可以将这张长页表划分为多个“页表页”（也就是将这张长页表拆开，然后再搞一张页表，这个页表存的是这张长页表被拆开之后各个片段的编号（地址））,这样可以使得页表页也离散地、尽量地占用内存，甚至仅部分装入内存</p>
+<p><img src="/images/mulit-page.png" srcset="/img/loading.gif" lazyload></p>
+<p>在寻址的过程中，根据p1找到根页表页，根页表中的值再拿去查询内存中的块号（帧号），查到了之后就得到了真正存储想要数值的页表，然后根据页内偏移定位数值。</p>
+<p><strong>Linux系统使用了三级页表结构：页目录（Page Directory，PGD）、中间页目录（Page Middle Directory，PMD）、页表（Page Table，PTE）</strong></p>
+<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h2><p>页面的换入、换出需要磁盘I&#x2F;O，会有较大的开销，因此算法追求更少的缺页率。</p>
+<h3 id="OPT算法-最佳置换"><a href="#OPT算法-最佳置换" class="headerlink" title="OPT算法(最佳置换)"></a>OPT算法(最佳置换)</h3><p>淘汰那些永不再使用或者下次访问距当前时间最长的页面</p>
+<p>最佳，但不可实现，用于衡量其它置换算法性能</p>
+<h3 id="LRU算法-最近最久未使用算法"><a href="#LRU算法-最近最久未使用算法" class="headerlink" title="LRU算法(最近最久未使用算法)"></a>LRU算法(最近最久未使用算法)</h3><p>淘汰在最近一段时间内最近未使用的一页。</p>
+<p>实现: 可为每页添加“上次访问时间戳”，空间开销大。以过去预测将来，最近使用过的页可能很快被再次使用，很久未用的页可能不会被立即使用</p>
+<h3 id="FIFO算法-先入先出算法"><a href="#FIFO算法-先入先出算法" class="headerlink" title="FIFO算法(先入先出算法)"></a>FIFO算法(先入先出算法)</h3><p>淘汰驻留内存时间最久的一页。</p>
+<p>实现：将页面按<strong>调入内存的时间</strong>先后排成一个队列,每次将淘汰队首页，性能差</p>
+<p>Belady异常现象：通常,帧越多则缺页次数越少，但FIFO算法中，有时，帧越多反而缺页率越高</p>
+<h3 id="简单时钟算法"><a href="#简单时钟算法" class="headerlink" title="简单时钟算法"></a>简单时钟算法</h3><p>为每个页面设置一个访问位，再将内存中的页面都通过链接指针链接成一个循环队列。当某页被访问时，其访问位置为1。当需要淘汰一个页面时，只需检查页的访问位。如果是0，就选择该页换出;如果是1，则将它置为0，暂不换出，继续检查下一个页面，若第一轮扫描中所有页面都是1，则将这些页面的访问位依次置为0后，再进行第二轮扫描（第二轮扫描中一定会有访问位为0的页面，因此简单的CLOCK算法选择一个淘汰页面最多会经过两轮扫描)</p>
+<h3 id="时钟算法改进"><a href="#时钟算法改进" class="headerlink" title="时钟算法改进"></a>时钟算法改进</h3><p>简单的时钟置换算法仅考虑到一个页面最近是否被访问过。事实上，如果被淘汰的页面没有被修改过，就不需要执行I&#x2F;O操作写回外存。只有被淘汰的页面被修改过时，才需要写回外存。<br>因此，除了考虑一个页面最近有没有被访问过之外，操作系统还应考虑页面有没有被修改过。在其他条件都相同时，应优先淘汰没有修改过的页面，避免I&#x2F;O操作。这就是改进型的时钟置换算法的思想。修改位&#x3D;0，表示页面没有被修改过;修改位&#x3D;1，表示页面被修改过。</p>
+<p>为方便讨论，用（访问位，修改位）的形式表示各页面状态。如（1，1）表示一个页面近期被访问过，且被修改过。</p>
+<p>算法规则:将所有可能被置换的页面排成一个循环队列<br>第一轮:从当前位置开始扫描到第一个(0,0）的帧用于替换。本轮扫描不修改任何标志位<br>第二轮:若第一轮扫描失败，则重新扫描，查找第一个（0,1）的帧用于替换。本轮将所有扫描过的帧访问位设为0<br>第三轮:若第二轮扫描失败，则重新扫描，查找第一个(0,0）的帧用于替换。本轮扫描不修改任何标志位<br>第四轮:若第三轮扫描失败，则重新扫描，查找第一个(0,1）的帧用于替换。<br>由于第二轮已将所有帧的访问位设为0，因此经过第三轮、第四轮扫描一定会有一个帧被选中，因此改进型时钟置换算法选择一个淘汰页面最多会进行四轮扫描。</p>
+<h2 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h2><p>刚刚换出的页面马上又换入主存，刚刚换入的页面马上又换出主存，这种频繁的页面调度行为称为抖动或颠簸。</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>抖动发生的主要原因是，进程频繁访问的页面数目高于可用的物理页帧数目，即分配给进程的物理块不够。所有进程工作集的帧需求总量 &gt; 内存帧数</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>抖动时，挂起 一 些进程，释放它们的帧</p>
+<h3 id="预防抖动"><a href="#预防抖动" class="headerlink" title="预防抖动"></a>预防抖动</h3><ol>
+<li>在调度程序中引入工作集算法：当各进程的内存驻 留集足够大时，才调入新作业。</li>
+<li>L&#x3D;S 准则：调整并发度，使得 产生缺页的平均时间 ( 即缺页中断之间的平均时间 ) 等于处理一次缺页中断的平均时间 ，此时 CPU 利用率最高。</li>
+<li>50%准则：磁盘利用率50%时，CPU利用率最高。</li>
+<li>采用局部置换：只在本进程的内存范围内置换。</li>
+<li>当系统并发度较高时，挂起若干进程 （如优先级最低的、最年轻的、发生缺页的、占空间最少的、占空间最多的、剩余运行时间最长的进程</li>
+</ol>
 
                 
               </div>
@@ -389,6 +377,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>
+      
+    </div>
+  
 </div>
 
 
@@ -397,8 +392,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>保研夏令营复习计划-操作系统原理及安全</div>
-      <div>https://chujian521.github.io/blog/2020/04/07/保研夏令营复习计划-操作系统原理及安全/</div>
+      <div>操作系统原理——虚拟内存</div>
+      <div>https://chujian521.github.io/blog/2022/12/04/操作系统原理——虚拟内存/</div>
     </div>
     <div class="license-meta">
       
@@ -410,7 +405,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2020年4月7日</div>
+          <div>2022年12月4日</div>
         </div>
       
       
@@ -442,18 +437,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2020/04/14/%E4%BF%9D%E7%A0%94%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="保研夏令营复习计划-计算机网络">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">保研夏令营复习计划-计算机网络</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2020/03/19/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0-DP%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="算法练习-DP动态规划">
-                        <span class="hidden-mobile">算法练习-DP动态规划</span>
+                      <a href="/blog/2022/11/26/SQL%E6%B3%A8%E5%85%A5%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" title="SQL注入的一些理解">
+                        <span class="hidden-mobile">SQL注入的一些理解</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -466,7 +455,7 @@
             
   <article id="comments" lazyload>
     
-  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2020/04/07/%E4%BF%9D%E7%A0%94%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E4%B9%A0%E8%AE%A1%E5%88%92-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%89%E5%85%A8/'></div>
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2022/12/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/'></div>
   <script type="text/javascript">
     Fluid.utils.loadComments('#SOHUCS', function() {
       Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
