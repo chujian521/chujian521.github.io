@@ -1,0 +1,784 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="入侵检测系统（IDS, Intrusion Detection System）即通过从网络系统中的若干关键节点收集并分析信息，监控网络中是 否有违反安全策略的行为或者是否存在入侵行为。入侵防御系统（IPS,  Intrusion Prevention System）是一部能够监视网络或网络设备的网络资料传输行为的计算机网络安全设备，能够即时的中断、调整或隔离一些不正常或是具有伤害性的网络资料传输行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="入侵检测系统与入侵防御系统">
+<meta property="og:url" content="https://chujian521.github.io/blog/2022/12/10/%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%85%A5%E4%BE%B5%E9%98%B2%E5%BE%A1%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="入侵检测系统（IDS, Intrusion Detection System）即通过从网络系统中的若干关键节点收集并分析信息，监控网络中是 否有违反安全策略的行为或者是否存在入侵行为。入侵防御系统（IPS,  Intrusion Prevention System）是一部能够监视网络或网络设备的网络资料传输行为的计算机网络安全设备，能够即时的中断、调整或隔离一些不正常或是具有伤害性的网络资料传输行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj65.jpg">
+<meta property="article:published_time" content="2022-12-10T13:46:52.000Z">
+<meta property="article:modified_time" content="2022-12-13T13:48:59.112Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="IDS">
+<meta property="article:tag" content="IPS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj65.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>入侵检测系统与入侵防御系统 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="入侵检测系统与入侵防御系统"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-10 21:46" pubdate>
+          2022年12月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">入侵检测系统与入侵防御系统</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>入侵检测系统（IDS, Intrusion Detection System）即通过从网络系统中的若干关键节点收集并分析信息，监控网络中是 否有违反安全策略的行为或者是否存在入侵行为。入侵防御系统（IPS,  Intrusion Prevention System）是一部能够监视网络或网络设备的网络资料传输行为的计算机网络安全设备，能够即时的中断、调整或隔离一些不正常或是具有伤害性的网络资料传输行为。</strong></p>
+<p><img src="/images/fj65.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="入侵检测系统"><a href="#入侵检测系统" class="headerlink" title="入侵检测系统"></a>入侵检测系统</h2><p>IDS是计算机的监视系统，它通过实时监视系统，一旦发现异常情况就发出警告。以信息来源的不同和检测方法的差异分为几类：根据信息来源可分为HIDS（Host-based Intrusion Detection System）和NIDS（Network Intrusion Detection System），根据检测方法又可分为异常入侵检测（类似于白名单，误报率较高）和误用入侵检测（类似于黑名单，漏报率较高）。<strong>绝大多数IDS系统都是被动的</strong>，也就是说，在攻击实际发生之前，它们往往无法预先发出警报。</p>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><h4 id="检测信息收集"><a href="#检测信息收集" class="headerlink" title="检测信息收集"></a>检测信息收集</h4><p>信息收集包括收集系统，网络，数据及用户活动的状态和行为，入侵检测利用的信息一般来自：系统和网络日志文件、非正常的目录和文件改变、非正常的程序执行这三个方面。</p>
+<h4 id="信息分析"><a href="#信息分析" class="headerlink" title="信息分析"></a>信息分析</h4><p>对收集到的有关系统、网络、数据以及用户的活动状态和行为等信息，进行基于签名、基于统计异常和有状态协议等分析。</p>
+<h4 id="告警与响应"><a href="#告警与响应" class="headerlink" title="告警与响应"></a>告警与响应</h4><p>根据入侵性质和类型，做出相应的告警与响应。 它能够提供安全审计、监视、攻击识别和反攻击等多项功能，对内部攻击、外部攻击和误操作进行实时监控，在网络安全技术中起到了不可替代的作用。</p>
+<h3 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h3><h4 id="实时监测"><a href="#实时监测" class="headerlink" title="实时监测"></a>实时监测</h4><p>实时地监视、分析网络中所有的数据报文，发现并实时处理所捕获的数据报文。</p>
+<h4 id="安全审计"><a href="#安全审计" class="headerlink" title="安全审计"></a>安全审计</h4><p>对系统记录的网络事件进行统计分析，发现异常现象，得出系统的安全状态，找出所需要的证据</p>
+<h4 id="主动响应"><a href="#主动响应" class="headerlink" title="主动响应"></a>主动响应</h4><p>主动切断连接或与防火墙联动，调用其他程序处理</p>
+<h3 id="根据信息来源分类"><a href="#根据信息来源分类" class="headerlink" title="根据信息来源分类"></a>根据信息来源分类</h3><h4 id="主机入侵检测系统"><a href="#主机入侵检测系统" class="headerlink" title="主机入侵检测系统"></a>主机入侵检测系统</h4><p>主机入侵检测系统 （HIDS） 在网络上的各个主机或设备上运行。其检测的目标主要是主机系统和系统本地用户，检测原理是根据主机的审计数据和系统日志发现可疑事件。HIDS 仅监视来自设备的入站和出站数据包，并在检测到可疑活动时向用户或管理员发出警报。它拍摄现有系统文件的快照，并将其与上一个快照匹配。如果修改或删除了关键系统文件，则会向管理员发送警报进行调查。</p>
+<ol>
+<li>优点：信息更详细、误报率要低、部署灵活。</li>
+<li>缺点：会降低应用系统的性能；依赖于服务器原有的日志与监视能力；代价较大；不能对网络进行监测；需安装多个针对不同系统的检测系统。</li>
+</ol>
+<h4 id="网络入侵检测系统"><a href="#网络入侵检测系统" class="headerlink" title="网络入侵检测系统"></a>网络入侵检测系统</h4><p>网络入侵检测系统 （NIDS） 放置在网络中的一个或多个关键位置，以监控进出网络上所有设备的流量。它对整个子网上的传递流量进行分析，并将子网上传递的流量与已知攻击库进行匹配。一旦识别出攻击或检测到异常行为，就可以将警报发送给管理员。当我们根据系统交互性对NIDS的设计进行分类时，有两种类型：在线和离线NIDS，通常分别称为内联和抽头模式。在线NIDS实时处理网络。它分析以太网数据帧并应用一些规则，以确定它是否是攻击。离线NIDS处理存储的数据，并通过一些过程来决定它是否是攻击。NIDS还可以与深度神经网络技术结合使用，以提高检测率和预测率。</p>
+<ol>
+<li>优点：能够检测那些来自网络的攻击和超过授权的非法访问；不需要改变服务器等主机的配置，也不会影响主机性能；风险低；配置简单。</li>
+<li>缺点：成本高、检测范围受局限；大量计算，影响系统性能；大量分析数据流，影响系统性能；对加密的会话过程处理较难；网络流速高时可能会丢失许多封包，容易让入侵者有机可乘。</li>
+</ol>
+<h3 id="根据检测方法分类"><a href="#根据检测方法分类" class="headerlink" title="根据检测方法分类"></a>根据检测方法分类</h3><h4 id="异常入侵检测"><a href="#异常入侵检测" class="headerlink" title="异常入侵检测"></a>异常入侵检测</h4><p>由于恶意软件的快速发展，因此引入基于异常的入侵检测系统，主要用于检测未知攻击。基本方法是使用机器学习创建可信活动模型，然后将新行为与此模型进行比较。由于这些模型可以根据应用程序和硬件配置进行训练，因此与传统的基于签名的IDS相比，基于机器学习的方法具有更好的通用属性。尽管此方法能够检测以前未知的攻击，但它可能会遭受误报：以前未知的合法活动也可能被归类为恶意。大多数现有的 IDS 在检测过程中都非常耗时，这会降低 IDS 的性能。</p>
+<p>常用检测方法：</p>
+<ol>
+<li><strong>基于统计的技术：</strong>通过使用标准差、均值、阈值和概率对偏离特定行为的程度进行评分来<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0950705119304897#b64">识别异常</a>。最早的方法使用单变量模型，后来的方法采用了<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0950705119304897#b5">多变量模型和时间序列模型</a>。</li>
+<li><strong>基于知识的技术</strong>：这些技术依赖于过去在异常和正常的操作下观察到的参数和知识的存在。基于专家知识的技术可以使用专家知识系统、有限状态机、描述语言和数据聚类。</li>
+<li><strong>机器学习和深度学习技术</strong>：学习算法通过从过去的经验中学习而无需人工干预来提高IDS的性能。已经针对IDS应用研究了各种机器学习算法。文献中最常用的算法包括<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/computer-science/support-vector-machine">支持向量机</a>（SVM）、<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/mathematics/naive-bayes">朴素贝叶</a>斯、<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/mathematics/genetic-algorithms">遗传算法</a>（GA）、k-最近邻（K-NN）、决策树（DT）、模糊逻辑和<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/computer-science/artificial-neural-network">人工神经网络</a>（ANN）。此外，具有不平衡类分布的入侵数据集可以通过采样技术或不平衡学习算法来解决。最近，也有研究人员利用深度网络的独特性质进行特征学习和分类。</li>
+</ol>
+<h4 id="误用入侵检测（基于签名的IDS）"><a href="#误用入侵检测（基于签名的IDS）" class="headerlink" title="误用入侵检测（基于签名的IDS）"></a>误用入侵检测（基于签名的IDS）</h4><p>通过查找特定模式来检测攻击，例如网络流量中的字节序列或恶意软件使用的已知恶意指令序列。 此类IDS 可以轻松检测已知攻击，但很难检测到没有可用模式的新攻击。</p>
+<p>常用检测方法：</p>
+<ol>
+<li><p><strong>模式匹配法</strong>：是常常被用于入侵检测技术中。它是通过把收集到的信息与网络入侵和系统误用模式数据库中的已知信息进行比较，从而对违背安全策略的行为进行发现。模式匹配法可以显著地减少系统负担，有较高的检测率和准确率。</p>
+</li>
+<li><p><strong>专家系统法</strong>：这个方法的思想是把安全专家的知识表示成规则知识库，再用推理算法检测入侵。主要是针对有特征的入侵行为。</p>
+</li>
+<li><p><strong>基于状态转移分析的检测法</strong>：该方法的基本思想是将攻击看成一个连续的、分步骤的并且各个步骤之间有一定的关联的过程。在网络中发生入侵时及时阻断入侵行为，防止可能还会进一步发生的类似攻击行为。在状态转移分析方法中，一个渗透过程可以看作是由攻击者做出的一系列的行为而导致系统从某个初始状态变为最终某个被危害的状态。</p>
+</li>
+</ol>
+<h3 id="IDS系统的限制"><a href="#IDS系统的限制" class="headerlink" title="IDS系统的限制"></a>IDS系统的限制</h3><ol>
+<li>噪声会严重限制入侵检测系统的有效性。由软件错误、损坏的 DNS 数据以及逃逸的本地数据包生成的错误数据包可能会产生非常高的误报率。</li>
+<li>真实攻击的数量通常远远低于误报的数量，以至于真正的攻击经常被遗漏和忽略。</li>
+<li>许多攻击都是针对通常过时的特定版本的软件。需要一个不断变化的签名库来缓解威胁。过时的签名数据库可能会使 IDS 容易受到新策略的影响。</li>
+<li>对于基于签名的 IDS，新的威胁发现与其签名应用于 IDS 之间存在延迟。在此滞后时间内，IDS 将无法识别威胁。</li>
+<li>它无法弥补薄弱的识别和认证机制或网络协议的弱点。当攻击者由于身份验证机制较弱而获得访问权限时，IDS 无法阻止攻击者发生任何不当行为。</li>
+<li>大多数入侵检测设备不处理加密数据包。因此，加密数据包可以允许在发生更严重的网络入侵之前未发现的网络入侵。</li>
+<li>入侵检测软件根据与发送到网络的 IP 数据包关联的网络地址提供信息。如果 IP 数据包中包含的网络地址准确，这将非常有用。但是，IP 数据包中包含的地址可能是伪造或加扰的。</li>
+<li>由于NIDS系统的性质，以及它们需要在捕获协议时对其进行分析，NIDS系统可能容易受到网络主机可能易受攻击的基于协议的攻击。无效数据和 TCP&#x2F;IP 堆栈攻击可能会导致 NIDS 崩溃。</li>
+<li>云计算上的安全措施没有考虑用户隐私需求的变化。它们为所有用户提供相同的安全机制，无论用户是公司还是个人。</li>
+</ol>
+<h3 id="IDS绕过技术"><a href="#IDS绕过技术" class="headerlink" title="IDS绕过技术"></a>IDS绕过技术</h3><ol>
+<li>分段：通过发送分段数据包，攻击者将在雷达下，可以轻松绕过检测系统检测攻击特征的能力。</li>
+<li>避免默认值：协议使用的 TCP 端口并不总是为正在传输的协议提供指示。例如，IDS 可能期望在端口 12345 上检测到特洛伊木马。如果攻击者将其重新配置为使用其他端口，IDS 可能无法检测到特洛伊木马的存在。</li>
+<li>协调的低带宽攻击：协调众多攻击者（或代理）之间的扫描并将不同的端口或主机分配给不同的攻击者，使 IDS 难以关联捕获的数据包并推断网络扫描正在进行中。</li>
+<li>地址欺骗&#x2F;代理：攻击者可以使用安全性差或配置不正确的代理服务器来阻止攻击，从而增加安全管理员确定攻击来源的难度。如果源被服务器欺骗和退回，则IDS很难检测到攻击的来源。</li>
+<li>模式更改规避：IDS通常依靠“模式匹配”来检测攻击。通过稍微改变攻击中使用的数据，有可能逃避检测。例如，Internet 邮件访问协议 （IMAP） 服务器可能容易受到缓冲区溢出的影响，而 IDS 能够检测到 10 种常见攻击工具的攻击特征。通过修改工具发送的有效负载，使其与 IDS 期望的数据不相似，可以逃避检测。</li>
+</ol>
+<h2 id="入侵防御系统"><a href="#入侵防御系统" class="headerlink" title="入侵防御系统"></a>入侵防御系统</h2><p><strong>入侵防御</strong>系统 （<strong>IPS</strong>），也称为<strong>入侵检测和防御</strong>系统 （<strong>IDPS</strong>），是监控网络或系统活动中恶意活动的网络安全设备。入侵防御系统的主要功能是识别恶意活动，记录有关此活动的信息，报告并尝试阻止或停止它。</p>
+<p>入侵防御系统被认为是入侵检测系统的扩展，因为它们都监视网络流量和&#x2F;或系统活动中的恶意活动。主要区别在于，与入侵检测系统不同，入侵防御系统是在线放置的，能够主动防止或阻止检测到的入侵。IPS 可以采取诸如发送警报、丢弃检测到的恶意数据包、重置连接或阻止来自违规 IP 地址的流量等操作。IPS 还可以纠正循环冗余校验（CRC） 错误、对数据包流进行碎片整理、缓解 TCP 排序问题以及清理不需要的传输和网络层选项。</p>
+<h3 id="为什么产生了IPS系统？"><a href="#为什么产生了IPS系统？" class="headerlink" title="为什么产生了IPS系统？"></a>为什么产生了IPS系统？</h3><ol>
+<li>串行部署的防火墙可以拦截低层攻击行为，但对应用层的深层攻击行为无能为力。</li>
+<li>旁路部署的IDS可以及时发现那些穿透防火墙的深层攻击行为，作为防火墙的有益补充，但很可惜的是无法实时的阻断。</li>
+<li>IDS和防火墙联动：通过IDS来发现，通过防火墙来阻断。但由于迄今为止没有统一的接口规范，加上越来越频发的“瞬间攻击”（一个会话就可以达成攻击效果，如SQL注入、溢出攻击等），使得IDS与防火墙联动在实际应用中的效果不显著。</li>
+</ol>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ol>
+<li><strong>基于网络的入侵防御系统（NIPS）：</strong>通过分析协议活动来监控整个网络的可疑流量。</li>
+<li><strong>无线入侵防御系统 （WIPS）：</strong>通过分析无线网络协议来监控无线网络中的可疑流量。</li>
+<li><strong>网络行为分析 （NBA）：</strong>检查网络流量以识别产生异常流量的威胁，例如分布式拒绝服务 （DDoS） 攻击、某些形式的恶意软件和违反策略的行为。</li>
+<li><strong>基于主机的入侵防御系统 （HIPS）：</strong>已安装的软件包，通过分析单个主机内发生的事件来监视该主机是否存在可疑活动。</li>
+</ol>
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ol>
+<li>入侵防护：实时、主动拦截黑客攻击、蠕虫、网络病毒、后门木马、Dos等恶意流量，保护企业信息系统和网络架构免受侵害，防止操作系统和应用程序损坏或宕机。</li>
+<li>Web安全：基于互联网Web站点的挂马检测结果，结合URL信誉评价技术，保护用户在访问被植入木马等恶意代码的网站时不受侵害，及时、有效地第一时间拦截Web威胁。</li>
+<li>流量控制：阻断一切非授权用户流量，管理合法网络资源的利用，有效保证关键应用全天候畅通无阻，通过保护关键应用带宽来不断提升企业IT产出率和收益率。</li>
+<li>上网监管：全面监测和管理IM即时通讯、P2P下载、网络游戏、在线视频，以及在线炒股等网络行为，协助企业辨识和限制非授权网络流量，更好地执行企业的安全策略。</li>
+</ol>
+<h3 id="检测方法"><a href="#检测方法" class="headerlink" title="检测方法"></a>检测方法</h3><p>大多数入侵防御系统使用三种检测方法之一：基于签名、基于统计异常和有状态协议分析。</p>
+<h4 id="基于签名的检测"><a href="#基于签名的检测" class="headerlink" title="基于签名的检测"></a>基于签名的检测</h4><p>基于签名的 （误用检测）IDS 监控网络中的数据包，并与预配置和预先确定的攻击模式（称为签名）进行比较。</p>
+<h4 id="基于统计异常的检测"><a href="#基于统计异常的检测" class="headerlink" title="基于统计异常的检测"></a>基于统计异常的检测</h4><p>基于异常的 IDS 将监控网络流量并将其与已建立的基线进行比较。基线将确定该网络的“正常”内容 - 通常使用哪种带宽以及使用什么协议。但是，如果未智能配置基线，则可能会针对合法使用流量发出误报警报。</p>
+<h4 id="有状态协议分析检测"><a href="#有状态协议分析检测" class="headerlink" title="有状态协议分析检测"></a>有状态协议分析检测</h4><p>该方法通过将观察到的事件与“普遍接受的良性活动定义的预定配置文件”进行比较来识别协议状态的偏差。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/IDS/">#IDS</a>
+      
+        <a href="/tags/IPS/">#IPS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>入侵检测系统与入侵防御系统</div>
+      <div>https://chujian521.github.io/blog/2022/12/10/入侵检测系统与入侵防御系统/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2022/12/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" title="操作系统原理——虚拟内存">
+                        <span class="hidden-mobile">操作系统原理——虚拟内存</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2022/12/10/%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%85%A5%E4%BE%B5%E9%98%B2%E5%BE%A1%E7%B3%BB%E7%BB%9F/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景-->
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
