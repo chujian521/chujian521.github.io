@@ -16,16 +16,16 @@
   <meta name="author" content="Encounter">
   <meta name="keywords" content="">
   
-    <meta name="description" content="之前针对Linux提权学习过利用SUID权限进行提权的方法，现在又看到了一种可以利用Linux内核竟态条件去写入文件导致只读文件可以写入的脏牛（Dirty COW）漏洞，学习一下基础原理。  简介为什么这个漏洞叫脏牛（Dirty COW）漏洞Linux内核的内存子系统在处理写时拷贝（Copy-on-Write)时存在条件竞争漏洞，导致可以破坏私有只读内存映射。 一个低权限的本地用户能够利用此漏洞获">
+    <meta name="description" content="之前针对Linux提权学习过利用SUID权限进行提权的方法，现在又看到了一种可以利用Linux内核竟态条件去写入文件导致只读文件可以写入的脏牛（Dirty COW）漏洞，学习一下基础原理。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux内核提权——Dirty Copy-on-Write">
 <meta property="og:url" content="https://chujian521.github.io/blog/2022/12/15/Linux%E5%86%85%E6%A0%B8%E6%8F%90%E6%9D%83%E2%80%94%E2%80%94Dirty-Copy-on-Write/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="之前针对Linux提权学习过利用SUID权限进行提权的方法，现在又看到了一种可以利用Linux内核竟态条件去写入文件导致只读文件可以写入的脏牛（Dirty COW）漏洞，学习一下基础原理。  简介为什么这个漏洞叫脏牛（Dirty COW）漏洞Linux内核的内存子系统在处理写时拷贝（Copy-on-Write)时存在条件竞争漏洞，导致可以破坏私有只读内存映射。 一个低权限的本地用户能够利用此漏洞获">
+<meta property="og:description" content="之前针对Linux提权学习过利用SUID权限进行提权的方法，现在又看到了一种可以利用Linux内核竟态条件去写入文件导致只读文件可以写入的脏牛（Dirty COW）漏洞，学习一下基础原理。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj66.jpg">
 <meta property="article:published_time" content="2022-12-15T08:49:14.000Z">
-<meta property="article:modified_time" content="2022-12-16T07:14:51.759Z">
+<meta property="article:modified_time" content="2022-12-22T06:17:17.402Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="提权">
@@ -316,6 +316,8 @@
                 
                 <p><strong>之前针对Linux提权学习过利用SUID权限进行提权的方法，现在又看到了一种可以利用Linux内核竟态条件去写入文件导致只读文件可以写入的脏牛（Dirty COW）漏洞，学习一下基础原理。</strong></p>
 <p><img src="/images/fj66.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="为什么这个漏洞叫脏牛（Dirty-COW）漏洞"><a href="#为什么这个漏洞叫脏牛（Dirty-COW）漏洞" class="headerlink" title="为什么这个漏洞叫脏牛（Dirty COW）漏洞"></a>为什么这个漏洞叫脏牛（Dirty COW）漏洞</h3><p>Linux内核的内存子系统在处理写时拷贝（Copy-on-Write)时存在条件竞争漏洞，导致可以破坏私有只读内存映射。</p>
 <p>一个低权限的本地用户能够利用此漏洞获取其他只读内存映射的写权限，有可能进一步导致提权漏洞</p>
 <h3 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h3><ul>
