@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj39.jpg">
 <meta property="article:published_time" content="2022-11-05T09:44:14.000Z">
-<meta property="article:modified_time" content="2022-11-05T13:14:29.238Z">
+<meta property="article:modified_time" content="2023-01-03T14:30:16.150Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="python学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          5.4k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          33 分钟
+          46 分钟
         
       </span>
     
@@ -359,6 +359,20 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">login_check</span>(<span class="hljs-params">func</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">request, *args, **kwargs</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> request.session.get(<span class="hljs-string">&#x27;login_status&#x27;</span>):<br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(<span class="hljs-string">&#x27;/api/login/&#x27;</span>)<br>        <span class="hljs-keyword">return</span> func(request, *args, **kwargs)<br><br>    <span class="hljs-keyword">return</span> wrapper<br><br><span class="hljs-meta">@login_check</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">edit_config</span>():<br>    <span class="hljs-comment"># do some edit func</span><br>	<span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
 
 <p>当我们执行edit_config时，首先将edit_config作为参数传入login_check，然而login_check返回了wrapper函数对象，我们进入wrapper可以看到，会检查登录状态，如果未登录直接重定向到登录页面，否则执行func(request, *args, **kwargs)，而此时我们知道func就是传入的edit_config，因此最终如果登录成功就会执行edit_config(request, *args, **kwargs)。</p>
+<h3 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h3><p>@staticmethod </p>
+<p>静态方法是类中的函数，不需要实例。静态方法主要是用来存放逻辑性的代码，主要是一些逻辑属于类，但是和类本身没有交互，即在静态方法中，不会涉及到类中的方法和属性的操作。可以理解为将静态方法存在此类的名称空间中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TimeTest</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,hour,minute,second</span>):<br>        self.hour = hour<br>        self.minute = minute<br>        self.second = second<br><span class="hljs-meta">    @staticmethod   </span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">showTime</span>():      <br>        <span class="hljs-keyword">return</span> time.strftime(<span class="hljs-string">&quot;%H:%M:%S&quot;</span>, time.localtime())<br> <br>     <br><span class="hljs-built_in">print</span>(TimeTest.showTime())<br>t = TimeTest(<span class="hljs-number">2</span>,<span class="hljs-number">10</span>,<span class="hljs-number">10</span>)<br>nowTime = t.showTime()<br><span class="hljs-built_in">print</span>(nowTime)<br></code></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">16</span>:<span class="hljs-number">39</span>:<span class="hljs-number">03</span><br><span class="hljs-attribute">16</span>:<span class="hljs-number">39</span>:<span class="hljs-number">03</span><br></code></pre></td></tr></table></figure>
+
+<p>静态函数可以通过类名以及实例两种方法调用。</p>
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><p>@classmethod</p>
+<p>类方法是当调用这个方法时，将类作为第一个参数传递，而不是该类的实例(就像我们通常对方法所做的那样)。这意味着您可以在该方法中使用类及其属性，而不是在特定实例中使用。</p>
+<p>类方法可以通过实例对象和类对象进行调用，在编码过程中发现类方法调用在实例对象初始化之前，故如果实现功能时需要在初始化前做一些校验的工作时可以考虑使用类方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">testFunction</span>():<br><br>    classAttribute =<span class="hljs-string">&#x27;monica&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,example_name</span>):<br>        self.example_name = example_name<br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">testStatic</span>():<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;静态方法使用&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;调用类属性&#x27;</span>,testFunction.classAttribute)<br>        <span class="hljs-comment">#print(&#x27;调用实例属性&#x27;,self.example_name)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">testExample</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;实例方法&#x27;</span>)<br>        <span class="hljs-comment">#print(&#x27;调用实例属性:&#x27;,self.example_name)</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;调用类属性:&#x27;</span>,testFunction.classAttribute)<br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">testClassMethod</span>(<span class="hljs-params">cls</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;类方法&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;调用类属性：&#x27;</span>,cls.classAttribute)<br>        <span class="hljs-comment">#print(&#x27;调用实例属性:&#x27;,cls.example_name)</span><br><br>tf = testFunction(<span class="hljs-string">&#x27;example_monica&#x27;</span>)<br><span class="hljs-comment">#实例对象调用静态方法</span><br>tf.testStatic()<br><span class="hljs-comment">#类对象调用静态方法</span><br>testFunction.testStatic()<br><span class="hljs-comment">#实例对象调用方法</span><br>tf.testExample()<br><span class="hljs-comment">#类对象调用实例方法</span><br>testFunction.testExample(<span class="hljs-string">&#x27;test&#x27;</span>)<br><span class="hljs-comment">#实例对象调用类方法</span><br>tf.testClassMethod()<br><span class="hljs-comment">#类对象调用类方法</span><br>testFunction.testClassMethod()<br></code></pre></td></tr></table></figure>
+
+<p>上面的例子表明，类方法是不能调用实例属性的。</p>
 
                 
               </div>
