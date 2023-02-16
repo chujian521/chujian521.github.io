@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj31.jpg">
 <meta property="article:published_time" content="2023-01-14T08:07:34.000Z">
-<meta property="article:modified_time" content="2023-01-15T13:03:48.889Z">
+<meta property="article:modified_time" content="2023-02-06T10:55:34.530Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k 字
+          3.2k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          24 分钟
+          27 分钟
         
       </span>
     
@@ -356,6 +356,13 @@
 </ol>
 <p>缺点：</p>
 <p>指针需要额外的空间，故当结点规模较小时，开放定址法较为节省空间，而若将节省的指针空间用来扩大散列表的规模，可使装填因子变小，这又减少了开放定址法中的冲突，从而提高平均查找速度。</p>
+<h3 id="Java中HashMap和HashTable的区别"><a href="#Java中HashMap和HashTable的区别" class="headerlink" title="Java中HashMap和HashTable的区别"></a>Java中HashMap和HashTable的区别</h3><ol>
+<li>HashMap是Hashtable的轻量级实现（非线程安全的实现），HashMap允许空（null）键值（key）,由于非线程安全，在只有一个线程访问的情况下，效率要高于Hashtable</li>
+<li>HashMap把HashTable的contains方法去掉了，改成containsValue和containsKey</li>
+<li>HashTable继承自Dictionary类，而HashMap是Java1.2引进的Map interface的一个实现</li>
+<li>HashMap：在不指定容量的情况下的默认容量为16;要求一定为2的整数次幂;扩容时，将容量变为原来的2倍。HashTable中hash数组默认大小是11，增加的方式是old*2+1</li>
+<li>HashTable直接使用对象的hashCode，HashMap重新计算hash值</li>
+</ol>
 
                 
               </div>

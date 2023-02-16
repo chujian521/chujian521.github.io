@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj39.jpg">
 <meta property="article:published_time" content="2022-11-05T09:44:14.000Z">
-<meta property="article:modified_time" content="2023-01-03T14:30:16.150Z">
+<meta property="article:modified_time" content="2023-02-14T10:00:49.558Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="python学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.4k 字
+          5.8k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          46 分钟
+          49 分钟
         
       </span>
     
@@ -356,7 +356,7 @@
 
 <h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>常用于鉴权、日志记录、缓存等</p>
 <p>下面举一个鉴权的实际例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">login_check</span>(<span class="hljs-params">func</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">request, *args, **kwargs</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> request.session.get(<span class="hljs-string">&#x27;login_status&#x27;</span>):<br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(<span class="hljs-string">&#x27;/api/login/&#x27;</span>)<br>        <span class="hljs-keyword">return</span> func(request, *args, **kwargs)<br><br>    <span class="hljs-keyword">return</span> wrapper<br><br><span class="hljs-meta">@login_check</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">edit_config</span>():<br>    <span class="hljs-comment"># do some edit func</span><br>	<span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">login_check</span>(<span class="hljs-params">func</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">request, *args, **kwargs</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> request.session.get(<span class="hljs-string">&#x27;login_status&#x27;</span>):<br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(<span class="hljs-string">&#x27;/api/login/&#x27;</span>)<br>        <span class="hljs-keyword">return</span> func(request, *args, **kwargs)<br><br>    <span class="hljs-keyword">return</span> wrapper<br><br><span class="hljs-meta">@login_check</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">edit_config</span>(<span class="hljs-params">request, *args, **kwargs</span>):<br>    <span class="hljs-comment"># do some edit func</span><br>	<span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
 
 <p>当我们执行edit_config时，首先将edit_config作为参数传入login_check，然而login_check返回了wrapper函数对象，我们进入wrapper可以看到，会检查登录状态，如果未登录直接重定向到登录页面，否则执行func(request, *args, **kwargs)，而此时我们知道func就是传入的edit_config，因此最终如果登录成功就会执行edit_config(request, *args, **kwargs)。</p>
 <h3 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h3><p>@staticmethod </p>
@@ -373,6 +373,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">testFunction</span>():<br><br>    classAttribute =<span class="hljs-string">&#x27;monica&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,example_name</span>):<br>        self.example_name = example_name<br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">testStatic</span>():<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;静态方法使用&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;调用类属性&#x27;</span>,testFunction.classAttribute)<br>        <span class="hljs-comment">#print(&#x27;调用实例属性&#x27;,self.example_name)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">testExample</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;实例方法&#x27;</span>)<br>        <span class="hljs-comment">#print(&#x27;调用实例属性:&#x27;,self.example_name)</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;调用类属性:&#x27;</span>,testFunction.classAttribute)<br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">testClassMethod</span>(<span class="hljs-params">cls</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;类方法&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;调用类属性：&#x27;</span>,cls.classAttribute)<br>        <span class="hljs-comment">#print(&#x27;调用实例属性:&#x27;,cls.example_name)</span><br><br>tf = testFunction(<span class="hljs-string">&#x27;example_monica&#x27;</span>)<br><span class="hljs-comment">#实例对象调用静态方法</span><br>tf.testStatic()<br><span class="hljs-comment">#类对象调用静态方法</span><br>testFunction.testStatic()<br><span class="hljs-comment">#实例对象调用方法</span><br>tf.testExample()<br><span class="hljs-comment">#类对象调用实例方法</span><br>testFunction.testExample(<span class="hljs-string">&#x27;test&#x27;</span>)<br><span class="hljs-comment">#实例对象调用类方法</span><br>tf.testClassMethod()<br><span class="hljs-comment">#类对象调用类方法</span><br>testFunction.testClassMethod()<br></code></pre></td></tr></table></figure>
 
 <p>上面的例子表明，类方法是不能调用实例属性的。</p>
+<h2 id="其他python问题"><a href="#其他python问题" class="headerlink" title="其他python问题"></a>其他python问题</h2><h3 id="python如何完成异常处理"><a href="#python如何完成异常处理" class="headerlink" title="python如何完成异常处理"></a>python如何完成异常处理</h3><p><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-exceptions.html">Python 异常处理 | 菜鸟教程 (runoob.com)</a></p>
+<h3 id="Python-init-与-new-的区别"><a href="#Python-init-与-new-的区别" class="headerlink" title="Python __init__  与 __new__的区别"></a>Python __init__  与 __new__的区别</h3><h4 id="同"><a href="#同" class="headerlink" title="同"></a>同</h4><p>二者均是Python面向对象语言中的函数，__new__比较少用，__init__则用的比较多。</p>
+<h4 id="异"><a href="#异" class="headerlink" title="异"></a>异</h4><p>__new__是在实例创建之前被调用的，因为它的任务就是创建实例然后返回该实例对象，是个静态方法。<br>__init__是当实例对象创建完成后被调用的，然后设置对象属性的一些初始值，通常用在初始化一个类实例的时候。是一个实例方法。<br>也就是： __new__先被调用，__init__后被调用，__new__的返回值（实例）将传递给__init__方法的第一个参数，然后__init__给这个实例设置一些参数。</p>
 
                 
               </div>

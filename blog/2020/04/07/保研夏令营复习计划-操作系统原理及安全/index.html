@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/processdiaodu.png">
 <meta property="og:image" content="https://chujian521.github.io/images/threading.png">
 <meta property="article:published_time" content="2020-04-07T03:39:51.000Z">
-<meta property="article:modified_time" content="2022-12-04T12:49:17.879Z">
+<meta property="article:modified_time" content="2023-01-24T09:51:21.459Z">
 <meta property="article:author" content="Encounter">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://chujian521.github.io/images/fj39.jpg">
@@ -324,7 +324,7 @@
 <h3 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">就绪状态：进程已获得除处理机以外的所需资源，等待分配处理机资源；<br>运行状态：占用处理机资源运行，处于此状态的进程数小于等于<span class="hljs-meta">CPU</span>数；<br>阻塞状态： 进程等待某种条件，在条件满足之前无法执行；<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/processstate.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="进程间的通信方式"><a href="#进程间的通信方式" class="headerlink" title="进程间的通信方式"></a>进程间的通信方式</h3><ol>
+<h3 id="进程间的通信方式（IPC，进程间通信）"><a href="#进程间的通信方式（IPC，进程间通信）" class="headerlink" title="进程间的通信方式（IPC，进程间通信）"></a>进程间的通信方式（IPC，进程间通信）</h3><ol>
 <li>管道（pipe）及命名管道（named pipe）：管道可用于具有亲缘关系的父子进程间的通信，有名管道除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信；</li>
 <li>信号（signal）：信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生；</li>
 <li>消息队列：消息队列是消息的链接表，它克服了上两种通信方式中信号量有限的缺点，具有写权限得进程可以按照一定得规则向消息队列中添加新信息；对消息队列有读权限得进程则可以从消息队列中读取信息；</li>
