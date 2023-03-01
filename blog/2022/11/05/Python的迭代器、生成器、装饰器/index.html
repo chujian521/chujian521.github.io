@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj39.jpg">
 <meta property="article:published_time" content="2022-11-05T09:44:14.000Z">
-<meta property="article:modified_time" content="2023-02-14T10:00:49.558Z">
+<meta property="article:modified_time" content="2023-02-17T12:13:20.038Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="python学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.8k 字
+          6.3k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          49 分钟
+          53 分钟
         
       </span>
     
@@ -376,6 +376,33 @@
 <h2 id="其他python问题"><a href="#其他python问题" class="headerlink" title="其他python问题"></a>其他python问题</h2><h3 id="python如何完成异常处理"><a href="#python如何完成异常处理" class="headerlink" title="python如何完成异常处理"></a>python如何完成异常处理</h3><p><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-exceptions.html">Python 异常处理 | 菜鸟教程 (runoob.com)</a></p>
 <h3 id="Python-init-与-new-的区别"><a href="#Python-init-与-new-的区别" class="headerlink" title="Python __init__  与 __new__的区别"></a>Python __init__  与 __new__的区别</h3><h4 id="同"><a href="#同" class="headerlink" title="同"></a>同</h4><p>二者均是Python面向对象语言中的函数，__new__比较少用，__init__则用的比较多。</p>
 <h4 id="异"><a href="#异" class="headerlink" title="异"></a>异</h4><p>__new__是在实例创建之前被调用的，因为它的任务就是创建实例然后返回该实例对象，是个静态方法。<br>__init__是当实例对象创建完成后被调用的，然后设置对象属性的一些初始值，通常用在初始化一个类实例的时候。是一个实例方法。<br>也就是： __new__先被调用，__init__后被调用，__new__的返回值（实例）将传递给__init__方法的第一个参数，然后__init__给这个实例设置一些参数。</p>
+<h3 id="Python2与Python3的区别"><a href="#Python2与Python3的区别" class="headerlink" title="Python2与Python3的区别"></a>Python2与Python3的区别</h3><h4 id="1-print-从语句变为函数："><a href="#1-print-从语句变为函数：" class="headerlink" title="1.print 从语句变为函数："></a>1.print 从语句变为函数：</h4><p> 原:   print  1, 2+3</p>
+<p>改为: print ( 1, 2+3 )</p>
+<h4 id="2-range-与-xrange"><a href="#2-range-与-xrange" class="headerlink" title="2.range 与 xrange"></a>2.range 与 xrange</h4><p>原 : range( 0, 4 )   结果 是 列表 [0,1,2,3 ]</p>
+<p>改为：list( range(0,4) )</p>
+<p>原 : xrange( 0, 4 )    适用于 for 循环的变量控制</p>
+<p>改为：range(0,4)</p>
+<h4 id="3-try-except-语句的变化"><a href="#3-try-except-语句的变化" class="headerlink" title="3.try except 语句的变化"></a>3.try except 语句的变化</h4><p>原:</p>
+<pre><code class="hljs"> try:
+    ......
+ except    Exception, e :
+    ......
+</code></pre>
+<p>改为</p>
+<pre><code class="hljs">try:
+    ......
+except    Exception as e :
+    ......
+</code></pre>
+<h4 id="4-除法运算符"><a href="#4-除法运算符" class="headerlink" title="4.除法运算符"></a>4.除法运算符</h4><p>python 2.4.2以前</p>
+<p>   10&#x2F;3      结果为 3     </p>
+<p>python 3.0</p>
+<p>   10 &#x2F; 3 结果为 3.3333333333333335</p>
+<p>   10 &#x2F;&#x2F; 3 结果为 3</p>
+<h4 id="5-lib缓存"><a href="#5-lib缓存" class="headerlink" title="5.lib缓存"></a>5.lib缓存</h4><p>在导入模块运行时  python2  只会在模块同级目录下生成.pyc文件  python3  生成__pycache__目录</p>
+<h4 id="6-默认编码"><a href="#6-默认编码" class="headerlink" title="6.默认编码"></a>6.默认编码</h4><p>python2的编码是ascii码，python3的默认编码是utf-8</p>
+<h4 id="7-输入"><a href="#7-输入" class="headerlink" title="7.输入"></a>7.输入</h4><p>python3中input得到的数据都是str型</p>
+<p>python2中input默认是int型，str要使用引号包裹，raw_input得到的都是str</p>
 
                 
               </div>

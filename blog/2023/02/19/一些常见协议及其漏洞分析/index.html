@@ -1,0 +1,797 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="网络协议是一套已建立的规则，通过遵循一种安全，可靠和简单的方法来控制和控制信息的交换。这些规则集适用于各种应用程序。协议的一些知名示例包括有线网络（如以太网），无线网络（如WLAN）和Internet通信。用于在Internet上广播和传输数据的Internet协议套件包括数十种协议。 这些协议中存在许多漏洞，这些漏洞导致它们被积极利用，并对网络安全提出了严峻挑战。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些常见协议及其漏洞分析">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/02/19/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E5%8D%8F%E8%AE%AE%E5%8F%8A%E5%85%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="网络协议是一套已建立的规则，通过遵循一种安全，可靠和简单的方法来控制和控制信息的交换。这些规则集适用于各种应用程序。协议的一些知名示例包括有线网络（如以太网），无线网络（如WLAN）和Internet通信。用于在Internet上广播和传输数据的Internet协议套件包括数十种协议。 这些协议中存在许多漏洞，这些漏洞导致它们被积极利用，并对网络安全提出了严峻挑战。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/arpqipian.png">
+<meta property="og:image" content="https://chujian521.github.io/images/DNSpooq.png">
+<meta property="article:published_time" content="2023-02-19T08:18:12.000Z">
+<meta property="article:modified_time" content="2023-02-19T13:49:23.129Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="安全">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/arpqipian.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>一些常见协议及其漏洞分析 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="一些常见协议及其漏洞分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-19 16:18" pubdate>
+          2023年2月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">一些常见协议及其漏洞分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>网络协议是一套已建立的规则，通过遵循一种安全，可靠和简单的方法来控制和控制信息的交换。这些规则集适用于各种应用程序。协议的一些知名示例包括有线网络（如以太网），无线网络（如WLAN）和Internet通信。用于在Internet上广播和传输数据的Internet协议套件包括数十种协议。</p>
+<p><strong>这些协议中存在许多漏洞，这些漏洞导致它们被积极利用，并对网络安全提出了严峻挑战。</strong></p>
+<span id="more"></span>
+
+<h2 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h2><p>TCP连接和释放的过程之前有记录过：<a href="https://chujian521.github.io/blog/2020/11/18/%E8%AE%BF%E9%97%AE%E4%B8%80%E4%B8%AAhttps%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%BD%91%E7%AB%99%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B/#TCP%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E8%A7%A3%E9%99%A4">TCP连接的建立与解除</a></p>
+<h3 id="SYN泛洪"><a href="#SYN泛洪" class="headerlink" title="SYN泛洪"></a>SYN泛洪</h3><p>SYN攻击利用的是TCP的三次握手机制，攻击端利用伪造的IP地址向被攻击端发出请求，而被攻击端发出的响应报文将永远发送不到目的地，那么被攻击端在等待关闭这个连接的过程中消耗了资源，如果有成千上万的这种连接，主机资源将被耗尽，从而达到攻击的目的。</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>如果在TCP的三步握手中，只进行前两步握手，在服务器端等待客户端确认时客户端不回送ACK数据包建立连接，那么此时服务器就处于“半连接”状态，这个过程会持续数分钟左右，如果大量这样的情况出现，对服务端来说就不堪重负了，维护这些半连接是需要消耗很多服务器的网络连接资源，如果短时间内这些资源几乎都被半连接占满，那么正常的业务请求在这期间就得不到服务，处于等待状态。</p>
+<h4 id="缓解措施"><a href="#缓解措施" class="headerlink" title="缓解措施"></a>缓解措施</h4><ol>
+<li>降低SYN timeout时间，使得主机尽快释放半连接的占用；</li>
+<li>采用SYN cookie设置，如果短时间内连续收到某个IP的重复SYN请求，则认为受到了该IP的攻击，丢弃来自该IP的后续请求报文。</li>
+<li>合理地采用防火墙等外部网络安全设施也可缓解SYN泛洪攻击。</li>
+</ol>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><h4 id="DoS拒绝服务流量放大方法"><a href="#DoS拒绝服务流量放大方法" class="headerlink" title="DoS拒绝服务流量放大方法"></a>DoS拒绝服务流量放大方法</h4><p>放大攻击的原理是利用第三方设备，使网络流量压倒目标。 对于多数放大攻击，必须满足两个条件：</p>
+<ul>
+<li>用于执行攻击的协议不验证请求源</li>
+<li>来自所使用的网络功能的响应应该显着大于用于请求它的请求。</li>
+</ul>
+<p>满足以上条件的协议有：</p>
+<ol>
+<li>DNS放大：DNS查询请求流量小，但是响应流量可能非常巨大，Linux下使用<code>dig ANY baidu.com @8.8.8.8</code>查询，流量放大8倍左右</li>
+<li>简单网络管理协议SNMP，服务端口为UDP 161&#x2F;162</li>
+<li>网络时间协议NTP，用于同步网络设备时间，服务端口为UDP 123，NTP服务支持monlist查询功能，客户端查询时服务器会返回最后同步时间的600个客户端IP，流量约放大100倍</li>
+</ol>
+<h2 id="地址解析协议ARP"><a href="#地址解析协议ARP" class="headerlink" title="地址解析协议ARP"></a>地址解析协议ARP</h2><h3 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h3><p>ARP欺骗攻击的工作原理是通过伪造通信双方一端的IP地址或 MAC 地址，让另一端误以为该主机为正确主机从而达到欺骗目的。</p>
+<h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p><img src="/images/arpqipian.png" srcset="/img/loading.gif" lazyload></p>
+<p>当网络中源主机A想和目的主机 B 进行通信，A会先广播ARP请求报文，期望B能收到并返回给A自己的 MAC 地址。但由于报文采用的是广播形式，因此攻击者 C在收到A的请求报文时会将自己的IP地址伪造成B的IP地址，这在 ARP请求报文中可以很容易获得，接着攻击者C向发送带有 B 的IP地址，C的 MAC地址的返回消息，让A误以为C就是合法的目的主机 B，从而攻击者C就达到了盗取AB之间的通信信息的目的。</p>
+<h4 id="防范措施"><a href="#防范措施" class="headerlink" title="防范措施"></a>防范措施</h4><ol>
+<li>双向绑定：在小规模网络中，比较推荐使用双向绑定，也就是在路由器和终端上都进行IP-MAC绑定的措施。</li>
+<li>ARP防火墙：通过在终端电脑上对网关进行绑定，保证不受网络中假网关的影响，从而保护自身数据不被窃取的措施。但是它不能保证绑定的网关一定是正确的，如果网络中已经发生了ARP欺骗，ARP防火墙绑定的就是错误的网关</li>
+<li>划分VLAN，减少广播域范围，防止发生大范围的影响。</li>
+<li>在交换机上配置防网关冲突功能（该功能要求交换机必须做网关），ARP网关冲突防攻击功能使能后，系统生成ARP防攻击表项，在后续一段时间内对收到具有相同源MAC地址的报文直接丢弃，这样可以防止与网关地址冲突的ARP报文在VLAN内广播。</li>
+</ol>
+<h2 id="路由信息协议RIP"><a href="#路由信息协议RIP" class="headerlink" title="路由信息协议RIP"></a>路由信息协议RIP</h2><p>RIP是一种基于距离矢量（Distance-Vector）算法的协议，它使用跳数（Hop Count）作为度量值来衡量到达目的地址的距离。度量值等于从本网络到达目的网络间的设备数量。大于或等于16的跳数被定义为无穷大，即目的网络或主机不可达。RIP通过UDP报文进行路由信息的交换，使用的端口号为520。</p>
+<h3 id="RIP路由欺骗"><a href="#RIP路由欺骗" class="headerlink" title="RIP路由欺骗"></a>RIP路由欺骗</h3><h4 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h4><p>运行着 RIP 协议的路由器会无条件的接受任何来自网路中的报文，包括一些非法的路由表更新报文。路由器在接受这些报文时会在没有执行路由表更新命令的情况下改变自身的路由表。从而导致该路由器的路由表紊乱，甚至可能影响该路由器的邻接路由器，继而导致整个网络瘫痪，带来严重的后果。</p>
+<h4 id="防范措施-1"><a href="#防范措施-1" class="headerlink" title="防范措施"></a>防范措施</h4><ol>
+<li>升级到RIPv2，RIPv2 协议能够通过更新消息所包含的口令来验证某个路由选择消息源的合法性，但是认证的口令是明文的简单验证</li>
+</ol>
+<h2 id="域名系统DNS"><a href="#域名系统DNS" class="headerlink" title="域名系统DNS"></a>域名系统DNS</h2><p>DNS主要是负责把域名解析为IP（UDP 53端口）</p>
+<p>传统的DNS解析主要涉及Stub Resolver（存根解析器）、Recursive Resolver（递归解析器）和Authoritative Resolver（权威域名解析器）</p>
+<p>权威域名解析器能够从自己的数据满足查询，而不需要引用其他来源，即能够给出DNS查询请求的权威应答</p>
+<p>递归解析器则是通过询问其他域名服务器获取答案，递归解析器最后能够权威域名解析器得到查询响应</p>
+<p>根据DNS协议的初始标准，当域名需要解析时，DNS客户端向递归解析器发送查询请求，递归解析器会从权威域名解析获取答案，然后将结果返回给客户端。</p>
+<h3 id="DNS缓存中毒"><a href="#DNS缓存中毒" class="headerlink" title="DNS缓存中毒"></a>DNS缓存中毒</h3><p>DNS缓存中毒也称为DNS欺骗，是一种攻击，旨在查找并利用DNS或域名系统中存在的漏洞，以便将有机流量从合法服务器吸引到虚假服务器上。这种攻击往往被归类为域欺骗攻击(pharming attack)，由此它会导致出现很多严重问题。用户往往会以为登录的是自己熟悉的网站，而它们却并不是。与钓鱼攻击采用非法URL不同的是，这种攻击使用的是合法的URL地址。</p>
+<h4 id="DNSpooq"><a href="#DNSpooq" class="headerlink" title="DNSpooq"></a>DNSpooq</h4><p><a target="_blank" rel="noopener" href="https://github.com/knqyf263/dnspooq">GitHub - knqyf263&#x2F;dnspooq: DNSpooq - dnsmasq cache poisoning (CVE-2020-25686, CVE-2020-25684, CVE-2020-25685)</a></p>
+<p><img src="/images/DNSpooq.png" srcset="/img/loading.gif" lazyload></p>
+<p>首先先开启3个容器，分别是attack（攻击机器），forwarder（DNS转发器），cache server（DNS服务器）</p>
+<ol>
+<li><p>攻击机器向转发器发送大量查询报文</p>
+</li>
+<li><p>转发器向服务器查询解析域名</p>
+</li>
+<li><p>攻击机器伪装成服务器，向转发器回复构造后的响应报文，并实现投毒</p>
+</li>
+</ol>
+<p>为了进行DNS缓存中毒，需要两个数据：</p>
+<ul>
+<li>QID</li>
+<li>UDP源端口（需要注意，53是DNS协议端口，并非此处提到的源端口）</li>
+</ul>
+<p>这两个数据都是随机的，因此都是需要爆破的，每个16位，共计需要爆破2^32次方次，实际情况下留给攻击者的时间一般不超过2s，因此实际很难进行攻击</p>
+<h4 id="防范措施-2"><a href="#防范措施-2" class="headerlink" title="防范措施"></a>防范措施</h4><ol>
+<li><p>DNS服务器应该配置为尽可能少地依赖与其他DNS服务器的信任关系。以这种方式配置将使攻击者更难以使用他们自己的DNS服务器来破坏目标服务器。</p>
+</li>
+<li><p>企业应该设置DNS服务器，只允许所需的服务运行。因为在DNS服务器上运行不需要的其他服务，只会增加攻击向量大小。</p>
+</li>
+<li><p>安全人员还应确保使用最新版本的DNS。较新版本的BIND具有加密安全事务ID和端口随机化等功能，可以帮助防止缓存中毒攻击。</p>
+</li>
+<li><p>用户的安全教育对于防止这些攻击也非常重要。用户应接受有关识别可疑网站的培训，用户要学会只访问HTTPS网站，这有助于防止人们成为中毒攻击的受害者，因为他们会确保不将他们的个人信息输入黑客的网站。如果他们在连接到网站之前收到SSL警告，则不会单击“忽略”按钮。 这样就不会受到DNS缓存中毒攻击。</p>
+</li>
+</ol>
+<h2 id="超文本传输协议-x2F-安全的-HTTP-x2F-S"><a href="#超文本传输协议-x2F-安全的-HTTP-x2F-S" class="headerlink" title="超文本传输协议&#x2F;安全的 HTTP&#x2F;S"></a>超文本传输协议&#x2F;安全的 HTTP&#x2F;S</h2><p>HTTP是一个基于请求与响应模式的、无状态的应用层协议。<br>常基于TCP的连接方式 ，即http是将数据打包成TCP数据包来进行传送的，绝大多数Web应用，都是构建在HTTP协议之上，即目前使用浏览器访问web网站都是以http协议为标准的。</p>
+<h3 id="HTTP协议的缺陷"><a href="#HTTP协议的缺陷" class="headerlink" title="HTTP协议的缺陷"></a>HTTP协议的缺陷</h3><h4 id="明文传输"><a href="#明文传输" class="headerlink" title="明文传输"></a>明文传输</h4><p>通信使用明文可能会被窃听</p>
+<h4 id="防范措施-3"><a href="#防范措施-3" class="headerlink" title="防范措施"></a>防范措施</h4><p>使用HTTPS</p>
+<h3 id="SSL-心脏滴血漏洞"><a href="#SSL-心脏滴血漏洞" class="headerlink" title="SSL 心脏滴血漏洞"></a>SSL 心脏滴血漏洞</h3><h4 id="心跳协议"><a href="#心跳协议" class="headerlink" title="心跳协议"></a>心跳协议</h4><p>目的：及时检测连接状态问题</p>
+<p>过程：通过发送特定的数据包Heartbeat给服务器，来查看服务器是否在线，当服务器在线时，会发送回复信息给主机，然后允许进行安全通信，此外，服务器、主机会间断性发送该信号确保彼此在线。</p>
+<h4 id="Heartbleed漏洞"><a href="#Heartbleed漏洞" class="headerlink" title="Heartbleed漏洞"></a>Heartbleed漏洞</h4><p>产生原因：<strong>OpenSSL代码实现中的心跳处理逻辑没有检测心跳包中的长度字段是否和后续的数据字段相符合</strong>，攻击者能够利用Heartbeat构造异常数据包发送给服务器，<strong>读取心跳数据所在的内存区域的后续数据</strong>，一次可以收到64KB的服务器内存数据。多次请求，则能够得到更多的服务器内存信息。</p>
+<h3 id="DROWN漏洞"><a href="#DROWN漏洞" class="headerlink" title="DROWN漏洞"></a>DROWN漏洞</h3><p>“DROWN”全称是 Decrypting RSA with Obsolete and Weakened eNcryption，是指”利用过时的脆弱加密算法来对RSA算法进破解”，主要针对SSLv2协议漏洞来对TLS进行跨协议攻击。</p>
+<p>  “DROWN攻击”主要影响支持SSLv2的服务端和客户端。SSLv2是一种古老的协议，许多客户端已经不支持使用，但由于配置上的问题，可能有服务器仍然支持SSLv2。</p>
+<p>“DROWN”使得攻击者可以通过发送probe到支持SSLv2的使用相同密钥的服务端和客户端解密TLS通信。例如：将相同的私钥同时用在Web服务端和Email服务端，如果Email服务支持SSLv2，但web服务不支持，那么攻击者仍然能够利用EMAIL服务的SSLv2漏洞获取到web服务器的TLS连接数据。</p>
+<h4 id="防范措施-4"><a href="#防范措施-4" class="headerlink" title="防范措施"></a>防范措施</h4><ol>
+<li>不要用相同的私钥生成多张SSL证书，也不要将同一张SSL证书部署在多台服务器上</li>
+<li>禁用SSLv2</li>
+</ol>
+<h2 id="IMAP-x2F-POP3-x2F-SMTP"><a href="#IMAP-x2F-POP3-x2F-SMTP" class="headerlink" title="IMAP&#x2F;POP3&#x2F;SMTP"></a>IMAP&#x2F;POP3&#x2F;SMTP</h2><p>MAP能使本地和服务器端邮件同步，你在本地删除或阅读邮件，服务器上也自动删除或显示已读。所以你用outlook和用 webmail看到的内容是一样。 SMTP&#x2F;POP3的邮箱，本地和服务器不同步，本地只会下载服务器上未读的邮件。</p>
+<h3 id="安全缺陷"><a href="#安全缺陷" class="headerlink" title="安全缺陷"></a>安全缺陷</h3><p>这三种协议都是明文传输</p>
+<h3 id="防范措施-5"><a href="#防范措施-5" class="headerlink" title="防范措施"></a>防范措施</h3><p>使用PGP等邮件安全工具进行加密</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AE%89%E5%85%A8/">#安全</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>一些常见协议及其漏洞分析</div>
+      <div>https://chujian521.github.io/blog/2023/02/19/一些常见协议及其漏洞分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2023/02/26/Java%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-JVM%E7%AF%87/" title="Java学习之路--JVM篇">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java学习之路--JVM篇</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/02/18/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%A4%8D%E4%B9%A0/" title="Java基础知识复习">
+                        <span class="hidden-mobile">Java基础知识复习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/02/19/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E5%8D%8F%E8%AE%AE%E5%8F%8A%E5%85%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景-->
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

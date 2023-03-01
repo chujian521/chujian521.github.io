@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/fj35.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/ssrf.png">
 <meta property="article:published_time" content="2022-10-17T08:46:35.000Z">
-<meta property="article:modified_time" content="2022-11-26T09:00:48.520Z">
+<meta property="article:modified_time" content="2023-03-01T13:51:49.153Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Web安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.6k 字
+          8k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          64 分钟
+          67 分钟
         
       </span>
     
@@ -490,6 +490,10 @@
 <p><strong>场景 #2：</strong>敏感数据泄露 – 攻击者可以访问本地文件或内部服务以获取敏感信息，例如 <code>file:///etc/passwd</code>和<code>http://localhost:28017/</code> 。</p>
 <p><strong>场景 #3：</strong>访问云服务的元数据存储 – 大多数云提供商都有元数据存储，例如 <code>http://169.254.169.254/</code>。攻击者可以读取元数据以获取敏感信息。</p>
 <p><strong>场景 #4：</strong>危害内部服务 – 攻击者可以滥用内部服务进行进一步的攻击，例如远程执行代码 （RCE） 或拒绝服务 （DoS）。</p>
+<h3 id="SSRF常用的几种协议"><a href="#SSRF常用的几种协议" class="headerlink" title="SSRF常用的几种协议"></a>SSRF常用的几种协议</h3><h4 id="file"><a href="#file" class="headerlink" title="file"></a>file</h4><p>使用file协议可以尝试进行的任意文件读取，file协议的格式为：file:&#x2F;&#x2F;文件路径</p>
+<h4 id="http"><a href="#http" class="headerlink" title="http"></a>http</h4><p>向目标发送http请求，由于get请求的参数是直接加在url里的，所以可以探测内网那些使用get请求即可攻击的应用。</p>
+<h4 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h4><p>dict协议与http协议可用来探测内网的主机存活与端口开放情况。dict协议不支持换行符，没有办法进行换行，相当于一次只能执行一条命令，所以不能用来攻击那些需要交互的应用（比如需要认证的redis）。</p>
+<h4 id="Gopher"><a href="#Gopher" class="headerlink" title="Gopher"></a>Gopher</h4><p>Gopher是Internet上一个非常有名的信息查找系统，它将Internet 上的文件组织成某种索引，很方便地将用户从Internet的一处带到另一处如果发起post请求，回车换行需要使用%0d%0a，如果多个参数，参数之间的&amp;也需要进行URL编码<br>在SSRF中经常会使用Gopher来构造GET&#x2F;POST包攻击应用。</p>
 
                 
               </div>
