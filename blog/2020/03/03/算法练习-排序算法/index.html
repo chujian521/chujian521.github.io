@@ -29,8 +29,9 @@
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMyMDE3LmNuYmxvZ3MuY29tL2Jsb2cvODQ5NTg5LzIwMTcxMC84NDk1ODktMjAxNzEwMTUyMjU2NDUyNzctMTE1MTEwMDAwMC5naWY">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMyMDE3LmNuYmxvZ3MuY29tL2Jsb2cvODQ5NTg5LzIwMTcxMC84NDk1ODktMjAxNzEwMTUyMzA1NTcwNDMtMzczNzUwMTAuZ2lm">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMyMDE3LmNuYmxvZ3MuY29tL2Jsb2cvODQ5NTg5LzIwMTcxMC84NDk1ODktMjAxNzEwMTUyMzA5MzYzNzEtMTQxMzUyMzQxMi5naWY">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200210211952977.gif">
 <meta property="article:published_time" content="2020-03-03T04:30:03.000Z">
-<meta property="article:modified_time" content="2023-03-07T14:22:21.084Z">
+<meta property="article:modified_time" content="2023-03-08T14:21:50.672Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
@@ -256,7 +257,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.8k 字
+          6k 字
         
       </span>
     
@@ -267,7 +268,7 @@
         
         
         
-          49 分钟
+          50 分钟
         
       </span>
     
@@ -352,7 +353,15 @@
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMyMDE3LmNuYmxvZ3MuY29tL2Jsb2cvODQ5NTg5LzIwMTcxMC84NDk1ODktMjAxNzEwMTUyMzA5MzYzNzEtMTQxMzUyMzQxMi5naWY" srcset="/img/loading.gif" lazyload></p>
 <h3 id="6-2代码"><a href="#6-2代码" class="headerlink" title="6.2代码"></a>6.2代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.BufferedReader;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.InputStreamReader;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">quickSort</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">partSort</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums, <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span>&#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> left, tmp;<br>        <span class="hljs-keyword">while</span> (left &lt; right)&#123;<br>            <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; nums[right] &gt;= nums[key])&#123;<br>                right--;<br>            &#125;<br>            <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; nums[left] &lt;= nums[key])&#123;<br>                left++;<br>            &#125;<br>            tmp = nums[left];<br>            nums[left] = nums[right];<br>            nums[right] = tmp;<br>        &#125;<br>        tmp = nums[key];<br>        nums[key] = nums[left];<br>        nums [left] = tmp;<br>        <span class="hljs-keyword">return</span> left;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums, <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span>&#123;<br>        <span class="hljs-keyword">if</span>(right - left &lt;= <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> partSort(nums,left,right);<br>        sort(nums, left, key-<span class="hljs-number">1</span>);<br>        sort(nums,key+<span class="hljs-number">1</span>, right);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">input</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(System.in));<br>        <span class="hljs-type">String</span> <span class="hljs-variable">in</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            in = input.readLine();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>        &#125;<br>        String[] inArr = in.split(<span class="hljs-string">&quot; &quot;</span>);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">cnt</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span>[] nums = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[inArr.length];<br>        <span class="hljs-keyword">for</span>(String s : inArr)&#123;<br>            nums[cnt] = Integer.parseInt(s);<br>            cnt++;<br>        &#125;<br>        sort(nums,<span class="hljs-number">0</span>,nums.length-<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> num:nums)&#123;<br>            System.out.print(num);<br>            System.out.print(<span class="hljs-string">&quot; &quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="7-计数排序"><a href="#7-计数排序" class="headerlink" title="7.计数排序"></a>7.计数排序</h2><h3 id="7-1算法描述"><a href="#7-1算法描述" class="headerlink" title="7.1算法描述"></a>7.1算法描述</h3>
+<h2 id="7-计数排序"><a href="#7-计数排序" class="headerlink" title="7.计数排序"></a>7.计数排序</h2><h3 id="7-1算法描述"><a href="#7-1算法描述" class="headerlink" title="7.1算法描述"></a>7.1算法描述</h3><p>时间复杂度O（k），空间复杂度O（n + k），k是最大值与最小值差值</p>
+<ol>
+<li>根据待排序集合中最大元素和最小元素的差值范围，申请额外空间；</li>
+<li>遍历待排序集合，将每一个元素出现的次数记录到元素值对应的额外空间内；</li>
+<li>对额外空间内数据进行计算，得出每一个元素的正确位置；</li>
+<li>将待排序集合每一个元素移动到计算得出的正确位置上。</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20200210211952977.gif" srcset="/img/loading.gif" lazyload></p>
+
                 
               </div>
             
