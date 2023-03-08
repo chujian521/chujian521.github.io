@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/python-thread.png">
 <meta property="og:image" content="https://chujian521.github.io/images/coroutine.jpg">
 <meta property="article:published_time" content="2022-10-31T11:56:39.000Z">
-<meta property="article:modified_time" content="2022-11-02T12:39:39.363Z">
+<meta property="article:modified_time" content="2023-03-06T05:49:40.819Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="python学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.9k 字
+          6.4k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          50 分钟
+          54 分钟
         
       </span>
     
@@ -366,6 +366,13 @@
 <p>注：concurrent.futures.as_completed(fs, timeout&#x3D;None)<br>当通过 fs 指定的 Future 实例全部执行完毕或者被取消后，返回这些 Future 实例组成的迭代器。fs 中的 Future 实例可以被不同的执行器创建。任何在 as_completed() 调用之前就已经完成的 Future 实例会被最先生成。</p>
 <h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><h4 id="asyncio"><a href="#asyncio" class="headerlink" title="asyncio"></a>asyncio</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> asyncio<br><br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">work</span>(<span class="hljs-params">num: <span class="hljs-built_in">int</span></span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    一个工作协程，接收一个数字，将它 +1 后返回</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;working <span class="hljs-subst">&#123;num&#125;</span> ...&#x27;</span>)<br>    <span class="hljs-keyword">await</span> asyncio.sleep(<span class="hljs-number">1</span>)    <span class="hljs-comment"># 模拟耗时的IO操作</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;num&#125;</span> -&gt; <span class="hljs-subst">&#123;num+<span class="hljs-number">1</span>&#125;</span> done&#x27;</span>)<br>    <span class="hljs-keyword">return</span> num + <span class="hljs-number">1</span><br><br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    主协程，创建一系列并发协程并运行它们</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-comment"># 任务队列</span><br>    tasks = [work(num) <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>)]<br>    <span class="hljs-comment"># 并发执行队列中的协程并等待结果返回</span><br>    results = <span class="hljs-keyword">await</span> asyncio.gather(*tasks)<br>    <span class="hljs-built_in">print</span>(results)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    asyncio.run(main())<br></code></pre></td></tr></table></figure>
 
+<h2 id="Python锁"><a href="#Python锁" class="headerlink" title="Python锁"></a>Python锁</h2><ul>
+<li>同步锁（互斥锁）：Lock，同步锁一次只能放行一个线程，一个被加锁的线程在运行时不会将执行权交出去，只有当该线程被解锁时才会将执行权通过系统调度交由其他线程。</li>
+<li>递归锁：RLock（一次只能放行一个）递归锁是同步锁的一个升级版本，在同步锁的基础上可以做到连续重复使用多次acquire()后再重复使用多次release()的操作，但是一定要注意加锁次数和解锁次数必须一致，否则也将引发死锁现象。</li>
+<li>条件锁：Condition（一次可以放行任意个）条件锁是在递归锁的基础上增加了能够暂停线程运行的功能。并且我们可以使用wait()与notify()来控制线程执行的个数。</li>
+<li>事件锁：Event（一次全部放行）事件锁是基于条件锁来做的，它与条件锁的区别在于一次只能放行全部，不能放行任意个数量的子线程继续运行。</li>
+<li>信号量锁：Semaphore（一次可以放行特定个）通过规定，成批的放行特定个处于“上锁”状态的线程，条件锁和事件锁放行的都是处于等待状态的线程</li>
+</ul>
 
                 
               </div>

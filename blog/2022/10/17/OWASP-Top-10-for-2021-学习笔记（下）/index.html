@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/fj35.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/ssrf.png">
 <meta property="article:published_time" content="2022-10-17T08:46:35.000Z">
-<meta property="article:modified_time" content="2023-03-01T13:51:49.153Z">
+<meta property="article:modified_time" content="2023-03-04T11:07:46.263Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Web安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8k 字
+          9.2k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          67 分钟
+          77 分钟
         
       </span>
     
@@ -490,10 +490,21 @@
 <p><strong>场景 #2：</strong>敏感数据泄露 – 攻击者可以访问本地文件或内部服务以获取敏感信息，例如 <code>file:///etc/passwd</code>和<code>http://localhost:28017/</code> 。</p>
 <p><strong>场景 #3：</strong>访问云服务的元数据存储 – 大多数云提供商都有元数据存储，例如 <code>http://169.254.169.254/</code>。攻击者可以读取元数据以获取敏感信息。</p>
 <p><strong>场景 #4：</strong>危害内部服务 – 攻击者可以滥用内部服务进行进一步的攻击，例如远程执行代码 （RCE） 或拒绝服务 （DoS）。</p>
+<p><strong>场景 #5：</strong>如果通过端口扫描等方法发现目标主机上开放<strong>6379</strong>端口，则目标主机上很有可能存在Redis服务。此时，如果目标主机上的Redis由于没有设置密码认证、没有进行添加防火墙等原因存在未授权访问漏洞的话，那我们就可以利用Gopher协议远程操纵目标主机上的Redis，可以利用 Redis 自身的提供的 config 命令像目标主机写WebShell、写SSH公钥、创建计划任务反弹Shell等（先将Redis的本地数据库存放目录设置为web目录、~&#x2F;.ssh目录或&#x2F;var&#x2F;spool&#x2F;cron目录等，然后将dbfilename（本地数据库文件名）设置为文件名你想要写入的文件名称，最后再执行save或bgsave保存，则我们就指定的目录里写入指定的文件了）。</p>
 <h3 id="SSRF常用的几种协议"><a href="#SSRF常用的几种协议" class="headerlink" title="SSRF常用的几种协议"></a>SSRF常用的几种协议</h3><h4 id="file"><a href="#file" class="headerlink" title="file"></a>file</h4><p>使用file协议可以尝试进行的任意文件读取，file协议的格式为：file:&#x2F;&#x2F;文件路径</p>
 <h4 id="http"><a href="#http" class="headerlink" title="http"></a>http</h4><p>向目标发送http请求，由于get请求的参数是直接加在url里的，所以可以探测内网那些使用get请求即可攻击的应用。</p>
 <h4 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h4><p>dict协议与http协议可用来探测内网的主机存活与端口开放情况。dict协议不支持换行符，没有办法进行换行，相当于一次只能执行一条命令，所以不能用来攻击那些需要交互的应用（比如需要认证的redis）。</p>
 <h4 id="Gopher"><a href="#Gopher" class="headerlink" title="Gopher"></a>Gopher</h4><p>Gopher是Internet上一个非常有名的信息查找系统，它将Internet 上的文件组织成某种索引，很方便地将用户从Internet的一处带到另一处如果发起post请求，回车换行需要使用%0d%0a，如果多个参数，参数之间的&amp;也需要进行URL编码<br>在SSRF中经常会使用Gopher来构造GET&#x2F;POST包攻击应用。</p>
+<h3 id="SSRF绕过姿势"><a href="#SSRF绕过姿势" class="headerlink" title="SSRF绕过姿势"></a>SSRF绕过姿势</h3><h4 id="符号绕过"><a href="#符号绕过" class="headerlink" title="@符号绕过"></a>@符号绕过</h4><p><a target="_blank" rel="noopener" href="http://www.baidu.com@bing.com与http//bing.com%E8%AF%B7%E6%B1%82%E6%98%AF%E7%9B%B8%E5%90%8C%E7%9A%84%E3%80%82%E8%AF%A5%E8%AF%B7%E6%B1%82%E5%BE%97%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E9%83%BD%E6%98%AFbing.com%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%8C%E6%AD%A4%E7%BB%95%E8%BF%87%E5%90%8C%E6%A0%B7%E5%9C%A8URL%E8%B7%B3%E8%BD%AC%E7%BB%95%E8%BF%87%E4%B8%AD%E9%80%82%E7%94%A8%E3%80%82%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0%E6%98%AF%E8%A7%A3%E6%9E%90URL%E7%9A%84%E6%97%B6%E5%80%99%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98">http://www.baidu.com@bing.com与http://bing.com请求是相同的。该请求得到的内容都是bing.com的内容，此绕过同样在URL跳转绕过中适用。根本原因是解析URL的时候规则的问题</a></p>
+<h4 id="点分割符号替换"><a href="#点分割符号替换" class="headerlink" title="点分割符号替换"></a>点分割符号替换</h4><p>多数用于钓鱼邮件绕过检测，在浏览器中使用句号、空格、点+空格等形式代替</p>
+<h4 id="本地地址多种表现形式"><a href="#本地地址多种表现形式" class="headerlink" title="本地地址多种表现形式"></a>本地地址多种表现形式</h4><p><a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.0.0.1</a><br><a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a><br><a target="_blank" rel="noopener" href="http://127.255.255.254/">http://127.255.255.254</a><br>127.0.0.1 - 127.255.255.254<br>http:&#x2F;&#x2F;[::1]<br>http:&#x2F;&#x2F;[::ffff:7f00:1]<br>http:&#x2F;&#x2F;[::ffff:127.0.0.1]<br><a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.1</a><br><a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.0.1</a><br><a target="_blank" rel="noopener" href="http://0.0.0.0/">http://0:80</a></p>
+<h4 id="利用IP地址进制转换"><a href="#利用IP地址进制转换" class="headerlink" title="利用IP地址进制转换"></a>利用IP地址进制转换</h4><p>转换成点分八进制或者点分16进制或整数IP地址</p>
+<h4 id="利用短网址"><a href="#利用短网址" class="headerlink" title="利用短网址"></a>利用短网址</h4><h4 id="利用重定向"><a href="#利用重定向" class="headerlink" title="利用重定向"></a>利用重定向</h4><p>利用重定向搭建一个302跳转服务，访问302跳转到内网</p>
+<h4 id="DNS重绑定"><a href="#DNS重绑定" class="headerlink" title="DNS重绑定"></a>DNS重绑定</h4><p>DNS的解析原理大家都知道，域名-&gt;DNS服务器查询-&gt;返回IP地址，但是域名的持有者可以随时设置解析的IP，比如访问chujian521.github.io，解析域名为185.199.109.153，但是在第二次访问之前，我们故意把域名解析修改为127.0.0.1，用户第二次访问的时候就会解析到127.0.0.1，操作系统默认会保存一段时间的IP（也可以将TTL调低），之后就会重新请求DNS，对于浏览器来说，两次访问的都是同一域名，是符合浏览器的同源策略的，但是第二次访问解析到其他IP，调用到了其他资源。</p>
+<p>1.服务器端获得URL参数，进行第一次DNS解析，获得了一个非内网的IP</p>
+<p>2.对于获得的IP进行判断，发现为指定范围IP，则通过验证</p>
+<p>3.接下来服务器端对URL进行访问，由于DNS服务器设置的TTL为0，所以再次进行DNS解析，这一次DNS服务器返回的是内网地址</p>
+<p>4.由于已经绕过验证，所以服务器端返回访问内网资源的内容</p>
 
                 
               </div>

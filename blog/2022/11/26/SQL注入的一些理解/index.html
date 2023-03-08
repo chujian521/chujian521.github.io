@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/fj64.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/mysqlLogInfo.png">
 <meta property="article:published_time" content="2022-11-26T13:00:40.000Z">
-<meta property="article:modified_time" content="2022-12-16T08:41:16.671Z">
+<meta property="article:modified_time" content="2023-03-06T08:10:30.105Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="漏洞原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.9k 字
+          11k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          75 分钟
+          89 分钟
         
       </span>
     
@@ -328,6 +328,9 @@
 <li>group by 重复键冲突：<code>select 1 from ( select count(*),concat( (select database() from information_schema.tables limit 0,1) , floor(rand()*2) )x from information_schema.tables group by x )a;</code>其中<code>select database() from information_schema.tables limit 0,1</code>查询部分可以更换为任意查询语句，但是需要保证每次输出一个数据，如果想查看下一个需要将limit中的0,1改为1,1，第一个1意思是从第一个开始，第二个1是向下查看一行。</li>
 <li>利用Xpath报错：extractvalue() 函数：<code>extractvalue(1,concat(&#39;^&#39;,(select database()),&#39;^&#39;))</code>或者<code>updatexml(1,concat(&#39;^&#39;,(需要查询的内容),&#39;^&#39;),1)</code></li>
 </ul>
+<h4 id="Floor报错注入"><a href="#Floor报错注入" class="headerlink" title="Floor报错注入"></a>Floor报错注入</h4><p>count(*)建立虚表计算数量时，因为计算时的rand和插入时的rand数值不同而引起的主键冲突从而报错，我们将数据库的名连接，于是就会把数据库名爆出来（本质上报的是冲突的主键名）</p>
+<h4 id="extractvalue"><a href="#extractvalue" class="headerlink" title="extractvalue"></a>extractvalue</h4><p>extractvalue()：从目标XML中返回包含所查询值的字符串。<br>EXTRACTVALUE (XML_document, XPath_string);<br>第一个参数：XML_document是String格式，为XML文档对象的名称<br>第二个参数：XPath_string (Xpath格式的字符串)</p>
+<p>第一个参数可以随意输入，第二个参数可以是~或者^等不符合xpath格式，于是会把我们查询的报错出来</p>
 <h3 id="布尔盲注和基于时间的盲注"><a href="#布尔盲注和基于时间的盲注" class="headerlink" title="布尔盲注和基于时间的盲注"></a>布尔盲注和基于时间的盲注</h3><p>布尔盲注利用页面是否有错误来判断SQL语句有没有正确执行；基于时间的盲注利用是否执行了延时函数判断语句有没有正确查询。</p>
 <p>因此针对这两种类型的注入，我们要构造判断语句，根据页面是否回显证实猜想，一般用到的函数ascii() 、substr() 、length()，exists()、concat()等，一般步骤如下：</p>
 <ol>
@@ -371,6 +374,7 @@
 <h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>宽字节注入准确来说不是注入手法，而是另外一种比较特殊的情况。如果后端堆单引号等注入点做了一些转义，而我们需要绕过这个转义，一般有两种情况：让转义符失去作用，对转义符进行转义，另一个就是让转义符消失，让它变成别的符号。宽字节注入就是属于后者，宽字节是指多个字节宽度的编码，GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，实际上只有两字节。转义函数在对这些编码进行转义时会将转义字符 ‘\’ 转为 %5c ,于是我们在他前面输入一个单字符编码与它组成一个新的多字符编码，使得原本的转义字符没有发生作用。</p>
 <p>由于在数据库查询前使用了GBK多字节编码，即在汉字编码范围内使用两个字节会被编码为一个汉字（前一个ascii码要大于128，才到汉字的范围）。然后mysql服务器会对查询语句进行GBK编码，即下面所说的</p>
 <p>我们在前面加上 %df’  ,转义函数会将%df’改成%df\’ , 而\ 就是%5c ，即最后变成了%df%5c’，而%df%5c在GBK中这两个字节对应着一个汉字 “運” ，就是说 \ 已经失去了作用，%df ‘ ,被认为運’ ,成功消除了转义函数的影响。</p>
+<h3 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>在第一次进行数据库插入数据的时候，仅仅只是使用了 addslashes 或者是借助 get_magic_quotes_gpc 对其中的特殊字符进行了转义，但是addslashes有一个特点就是虽然参数在过滤后会添加 “\” 进行转义，但是“\”并不会插入到数据库中，在写入数据库的时候还是保留了原来的数据。<br>在将数据存入到了数据库中之后，开发者就认为数据是可信的。在下一次进行需要进行查询的时候，直接从数据库中取出了脏数据，没有进行进一步的检验和处理，这样就会造成SQL的二次注入。比如在第一次插入数据的时候，数据中带有单引号，直接插入到了数据库中；然后在下一次使用中在拼凑的过程中，就形成了二次注入。</p>
 <h2 id="getshell和提权"><a href="#getshell和提权" class="headerlink" title="getshell和提权"></a>getshell和提权</h2><h3 id="get-shell"><a href="#get-shell" class="headerlink" title="get shell"></a>get shell</h3><h4 id="写入常规日志"><a href="#写入常规日志" class="headerlink" title="写入常规日志"></a>写入常规日志</h4><p>前提条件：</p>
 <p><strong>1、知道网站真实物理路径</strong><br><strong>2、root用户身份</strong><br><strong>3、MySQL 版本 &gt; 5.0</strong></p>
 <p>使用<code>SHOW VARIABLES LIKE &#39;%general%&#39;</code>查看日志开启状态</p>
@@ -407,16 +411,45 @@
 <h4 id="写入启动项（未经尝试）"><a href="#写入启动项（未经尝试）" class="headerlink" title="写入启动项（未经尝试）"></a>写入启动项（未经尝试）</h4><h2 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h2><h3 id="控制权限"><a href="#控制权限" class="headerlink" title="控制权限"></a>控制权限</h3><p>普通用户和管理员权限要做严格的区分，在权限设计阶段，对于应用软件的使用者，没有必要给它们数据库对象建立和删除的权限，即使他们使用SQL注入使用恶意代码，也无法执行很多特殊的功能，这样可以最大限度地减少注入对系统的危害。</p>
 <h3 id="使用参数化语句"><a href="#使用参数化语句" class="headerlink" title="使用参数化语句"></a>使用参数化语句</h3><p>如果在编写SQL语句的时候，用户输入的变量不是直接嵌入到SQL语句，而是通过参数来传递这个变量的话，那么就可以有效的防治SQL注入式攻击。也就是说，用户的输入绝对不能够直接被嵌入到SQL语句中。</p>
 <p>比如使用一些ORM（Object&#x2F;Relation Mapping, 即对象&#x2F;关系数据库映射）框架就可以实现上述这些功能，比如在使用Mybatis时，使用#{}会在预编译期，生成两个  ？，作为占位符，传入的参数只会作为字段的值，不会拼接到SQL语句中，这样就可以达到防止SQL注入的问题。然而使用时如果采用${}的方式，预编译时还是会将值拼接到SQL语句中，还是会产生SQL注入的问题。</p>
+<h4 id="什么时候不能用参数化语句？"><a href="#什么时候不能用参数化语句？" class="headerlink" title="什么时候不能用参数化语句？"></a>什么时候不能用参数化语句？</h4><p>表名、列名需要动态传入的时候无法预编译</p>
 <h3 id="对用户的输入进行验证"><a href="#对用户的输入进行验证" class="headerlink" title="对用户的输入进行验证"></a>对用户的输入进行验证</h3><p>总体来说，防御SQL注入式攻击可以采用两种方法，一是上面说的<strong>强迫使用参数化语句来传递用户输入的内容</strong>；第二个就是<strong>加强对用户输入内容的检查与验证</strong>。</p>
 <p>假设来自用户的输入都是不安全的，来自用户的内容都要经过检查，如果发现有转义字符、注释字符、二进制数据等特殊数据，可以拒绝处理。在不影响数据库应用的前提下，过滤和转义引号、注释等容易引发SQL注入的特殊字符。</p>
 <h3 id="隐藏错误信息"><a href="#隐藏错误信息" class="headerlink" title="隐藏错误信息"></a>隐藏错误信息</h3><p>错误信息是不需要展现给用户的，因此当数据库异常时不要把错误信息传递给客户端。</p>
 <h3 id="多使用数据库自带的安全参数"><a href="#多使用数据库自带的安全参数" class="headerlink" title="多使用数据库自带的安全参数"></a>多使用数据库自带的安全参数</h3><h3 id="使用漏洞扫描工具寻找可能被攻击的点"><a href="#使用漏洞扫描工具寻找可能被攻击的点" class="headerlink" title="使用漏洞扫描工具寻找可能被攻击的点"></a>使用漏洞扫描工具寻找可能被攻击的点</h3><h3 id="设置陷阱账号"><a href="#设置陷阱账号" class="headerlink" title="设置陷阱账号"></a>设置陷阱账号</h3><p>设置一个蜜罐，比如将admin账号设置为伪装的管理账户，口令非常复杂难以破解，吸引攻击者分析破解。</p>
 <h3 id="禁用某些参数"><a href="#禁用某些参数" class="headerlink" title="禁用某些参数"></a>禁用某些参数</h3><p>某些参数可能引起getshell，比如mysql的secure_file_priv参数，应当将其设置为不允许导入导出。</p>
-<h2 id="附：数据库事务的四大特征"><a href="#附：数据库事务的四大特征" class="headerlink" title="附：数据库事务的四大特征"></a>附：数据库事务的四大特征</h2><p>事务具有四个特征：原子性（ Atomicity ）、一致性（ Consistency ）、隔离性（ Isolation ）和持续性（ Durability ）。这四个特性简称为 ACID 特性。</p>
-<p>1 、原子性。事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用。</p>
-<p>2 、一致性。执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的。</p>
-<p>3 、隔离性。一个事务的执行不能其它事务干扰。即一个事务内部的操作及使用的数据对其它并发事务是隔离的，并发执行的各个事务之间不能互相干扰。</p>
-<p>4 、持续性。也称永久性，指一个事务一旦提交，它对数据库中的数据的改变就应该是永久性的。接下来的其它操作或故障不应该对其执行结果有任何影响。</p>
+<h2 id="SQLMap"><a href="#SQLMap" class="headerlink" title="SQLMap"></a>SQLMap</h2><p><a target="_blank" rel="noopener" href="https://sqlmap.org/">sqlmap: automatic SQL injection and database takeover tool</a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p><a target="_blank" rel="noopener" href="https://github.com/sqlmapproject/sqlmap/wiki/Usage">Usage · sqlmapproject&#x2F;sqlmap Wiki · GitHub</a></p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>SQLMap 整个运行机制：</p>
+<ol>
+<li>获取 url、thread、headers 等信息存储至变量中；</li>
+<li>网站存活性检测；</li>
+<li>WAF 检测 &amp; WAF 类型识别；</li>
+<li>稳定性检测；</li>
+<li>注入检测。</li>
+</ol>
+<h2 id="WAF以及绕过WAF"><a href="#WAF以及绕过WAF" class="headerlink" title="WAF以及绕过WAF"></a>WAF以及绕过WAF</h2><h3 id="大小写变换"><a href="#大小写变换" class="headerlink" title="大小写变换"></a>大小写变换</h3><p>比如WAF拦截了union，那就使用Union、UnloN等方式绕过。</p>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><ol>
+<li>WAF检测敏感字~，则可以用0x7e代替，如extractvalue(1,concat(‘~’,database())) 可以写成extractvalue(1,concat(0x7e,database()))</li>
+<li>可以用%09、%0a、%0b、%0c、%0d、%a0、&#x2F;**&#x2F;、&#x2F;<em>somewords</em>&#x2F;等来替换空格</li>
+<li>WAF检测敏感字select,可以在URL中将select变成%73elEcT编码结合大小写变换绕过WAF</li>
+</ol>
+<h3 id="利用注释符"><a href="#利用注释符" class="headerlink" title="利用注释符"></a>利用注释符</h3><p>适用于WAF只过滤了一次危险的语句，而没有阻断整个查询语句的场合，比如：原查询语句为: ?id&#x3D;1 union select 1,2,3，对于这条查询,WAF过滤了一次union和select，我们可以利用注释将注释里面的关键字过滤掉，如?id&#x3D;1&#x2F;*union*&#x2F;union &#x2F;*select*&#x2F;select 1,2,3</p>
+<h3 id="重复写"><a href="#重复写" class="headerlink" title="重复写"></a>重复写</h3><p>适用于WAF只过滤一次敏感字的情况，WAF过滤敏感字union，但只过滤一次，则可以写出类似ununionion</p>
+<h3 id="比较符替换"><a href="#比较符替换" class="headerlink" title="比较符替换"></a>比较符替换</h3><p>!&#x3D;不等于，&lt;&gt;不等于，&lt;小于，&gt;大于，这些都可以用来替换&#x3D;来绕过</p>
+<h3 id="同功能函数替换"><a href="#同功能函数替换" class="headerlink" title="同功能函数替换"></a>同功能函数替换</h3><p>假如substring()被WAF过滤，但substring()可以用同功能的mid()，substr()等函数来替换</p>
+<p>floor() &#x3D;&#x3D;&gt;  updatexml()，extractvalue()</p>
+<p>Substring() &#x3D;&#x3D;&gt;  Mid()，Substr()，Lpad()，Rpad()，Left()</p>
+<p>concat() &#x3D;&#x3D;&gt;  concat_ws()，group_concat()</p>
+<p>limit 0，1  &#x3D;&#x3D;&gt;  limit1 offset 0</p>
+<p>and  &#x3D;&#x3D;&gt; &amp;&amp; </p>
+<p>or  &#x3D;&#x3D;&gt; ||</p>
+<p>&#x3D; &#x3D;&#x3D;&gt;  &lt;，&gt;</p>
+<p>&#x3D; &#x3D;&#x3D;&gt;  like</p>
+<p>Sleep()  &#x3D;&#x3D;&gt; benchmark()</p>
+<h3 id="00-截断"><a href="#00-截断" class="headerlink" title="%00 截断"></a>%00 截断</h3><p>部分WAF在解析参数的时候当遇到%00时，就会认为参数读取已结束，这样就会只对部分内容进行了过滤检测。</p>
+<h3 id="协议未覆盖、异常Method绕过"><a href="#协议未覆盖、异常Method绕过" class="headerlink" title="协议未覆盖、异常Method绕过"></a>协议未覆盖、异常Method绕过</h3><p>有些WAF只检测GET，POST方法，可通过使用异常方法进行绕过，或者检测GET请求使用POST发送绕过，修改方法请求头</p>
+<p>部分WAF可能只对一种content-type类型增加了检测规则，可以尝试互相替换尝试去绕过WAF过滤机制。</p>
+<h3 id="超大数据包绕过"><a href="#超大数据包绕过" class="headerlink" title="超大数据包绕过"></a>超大数据包绕过</h3><p>部分WAF只检测固定大小的内容，可通过添加无用字符进行绕过检测</p>
 
                 
               </div>
