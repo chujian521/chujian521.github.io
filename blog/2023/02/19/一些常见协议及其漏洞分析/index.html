@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/arpqipian.png">
 <meta property="og:image" content="https://chujian521.github.io/images/DNSpooq.png">
 <meta property="article:published_time" content="2023-02-19T08:18:12.000Z">
-<meta property="article:modified_time" content="2023-03-03T03:20:41.754Z">
+<meta property="article:modified_time" content="2023-03-22T09:20:50.445Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k 字
+          4.6k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          36 分钟
+          39 分钟
         
       </span>
     
@@ -337,6 +337,18 @@
 <li>简单网络管理协议SNMP，服务端口为UDP 161&#x2F;162</li>
 <li>网络时间协议NTP，用于同步网络设备时间，服务端口为UDP 123，NTP服务支持monlist查询功能，客户端查询时服务器会返回最后同步时间的600个客户端IP，流量约放大100倍</li>
 </ol>
+<h4 id="DDos"><a href="#DDos" class="headerlink" title="DDos"></a>DDos</h4><p>DDos是分布式拒绝服务攻击，比较完善的DDos攻击体系分为四大部分，分别是攻击者、控制傀儡机、攻击傀儡机和受害者，第二和第三部分分别被用作控制和实际发起攻击。</p>
+<ul>
+<li>SYN Flood：如上</li>
+<li>TCP全连接：为了绕过常规防火墙检查，常规的TCP连接防火墙不会拦截，TCP全连接通过许多僵尸主机不断与受害者服务器建立大量TCP连接，直到服务器内存等资源被耗尽</li>
+<li>提交大量GET or POST指令，耗费服务器数据库等查询资源，缺点是针对静态页面效果大打折扣，并且有些代理会暴露DDos攻击者的IP</li>
+</ul>
+<p>防护策略：</p>
+<ul>
+<li>尽量不使用NAT、升级主机和网络设备性能</li>
+<li>对异常流量进行清洗和过滤，通过数据包规则过滤、数据流指纹检测过滤、数据包内容过滤等判断流量是否异常</li>
+<li>分布式集群防御</li>
+</ul>
 <h2 id="地址解析协议ARP"><a href="#地址解析协议ARP" class="headerlink" title="地址解析协议ARP"></a>地址解析协议ARP</h2><h3 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h3><p>ARP欺骗攻击的工作原理是通过伪造通信双方一端的IP地址或 MAC 地址，让另一端误以为该主机为正确主机从而达到欺骗目的。</p>
 <h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p><img src="/images/arpqipian.png" srcset="/img/loading.gif" lazyload></p>
 <p>当网络中源主机A想和目的主机 B 进行通信，A会先广播ARP请求报文，期望B能收到并返回给A自己的 MAC 地址。但由于报文采用的是广播形式，因此攻击者 C在收到A的请求报文时会将自己的IP地址伪造成B的IP地址，这在 ARP请求报文中可以很容易获得，接着攻击者C向发送带有 B 的IP地址，C的 MAC地址的返回消息，让A误以为C就是合法的目的主机 B，从而攻击者C就达到了盗取AB之间的通信信息的目的。</p>

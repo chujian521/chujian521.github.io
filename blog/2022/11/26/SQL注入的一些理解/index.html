@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/fj64.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/mysqlLogInfo.png">
 <meta property="article:published_time" content="2022-11-26T13:00:40.000Z">
-<meta property="article:modified_time" content="2023-03-06T08:10:30.105Z">
+<meta property="article:modified_time" content="2023-04-09T09:12:45.853Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="漏洞原理">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          89 分钟
+          97 分钟
         
       </span>
     
@@ -329,6 +329,7 @@
 <li>利用Xpath报错：extractvalue() 函数：<code>extractvalue(1,concat(&#39;^&#39;,(select database()),&#39;^&#39;))</code>或者<code>updatexml(1,concat(&#39;^&#39;,(需要查询的内容),&#39;^&#39;),1)</code></li>
 </ul>
 <h4 id="Floor报错注入"><a href="#Floor报错注入" class="headerlink" title="Floor报错注入"></a>Floor报错注入</h4><p>count(*)建立虚表计算数量时，因为计算时的rand和插入时的rand数值不同而引起的主键冲突从而报错，我们将数据库的名连接，于是就会把数据库名爆出来（本质上报的是冲突的主键名）</p>
+<p>group by会产生虚拟表，floor(rand(0)*2)产生0或1，导致虚拟表主键重复,产生报错</p>
 <h4 id="extractvalue"><a href="#extractvalue" class="headerlink" title="extractvalue"></a>extractvalue</h4><p>extractvalue()：从目标XML中返回包含所查询值的字符串。<br>EXTRACTVALUE (XML_document, XPath_string);<br>第一个参数：XML_document是String格式，为XML文档对象的名称<br>第二个参数：XPath_string (Xpath格式的字符串)</p>
 <p>第一个参数可以随意输入，第二个参数可以是~或者^等不符合xpath格式，于是会把我们查询的报错出来</p>
 <h3 id="布尔盲注和基于时间的盲注"><a href="#布尔盲注和基于时间的盲注" class="headerlink" title="布尔盲注和基于时间的盲注"></a>布尔盲注和基于时间的盲注</h3><p>布尔盲注利用页面是否有错误来判断SQL语句有没有正确执行；基于时间的盲注利用是否执行了延时函数判断语句有没有正确查询。</p>
@@ -411,7 +412,7 @@
 <h4 id="写入启动项（未经尝试）"><a href="#写入启动项（未经尝试）" class="headerlink" title="写入启动项（未经尝试）"></a>写入启动项（未经尝试）</h4><h2 id="防范方法"><a href="#防范方法" class="headerlink" title="防范方法"></a>防范方法</h2><h3 id="控制权限"><a href="#控制权限" class="headerlink" title="控制权限"></a>控制权限</h3><p>普通用户和管理员权限要做严格的区分，在权限设计阶段，对于应用软件的使用者，没有必要给它们数据库对象建立和删除的权限，即使他们使用SQL注入使用恶意代码，也无法执行很多特殊的功能，这样可以最大限度地减少注入对系统的危害。</p>
 <h3 id="使用参数化语句"><a href="#使用参数化语句" class="headerlink" title="使用参数化语句"></a>使用参数化语句</h3><p>如果在编写SQL语句的时候，用户输入的变量不是直接嵌入到SQL语句，而是通过参数来传递这个变量的话，那么就可以有效的防治SQL注入式攻击。也就是说，用户的输入绝对不能够直接被嵌入到SQL语句中。</p>
 <p>比如使用一些ORM（Object&#x2F;Relation Mapping, 即对象&#x2F;关系数据库映射）框架就可以实现上述这些功能，比如在使用Mybatis时，使用#{}会在预编译期，生成两个  ？，作为占位符，传入的参数只会作为字段的值，不会拼接到SQL语句中，这样就可以达到防止SQL注入的问题。然而使用时如果采用${}的方式，预编译时还是会将值拼接到SQL语句中，还是会产生SQL注入的问题。</p>
-<h4 id="什么时候不能用参数化语句？"><a href="#什么时候不能用参数化语句？" class="headerlink" title="什么时候不能用参数化语句？"></a>什么时候不能用参数化语句？</h4><p>表名、列名需要动态传入的时候无法预编译</p>
+<h4 id="什么时候不能用参数化语句？"><a href="#什么时候不能用参数化语句？" class="headerlink" title="什么时候不能用参数化语句？"></a>什么时候不能用参数化语句？</h4><p>表名、列名需要动态传入的时候无法预编译，in、order by后面的字段无法参数化，因为参数化本质是添加‘’包裹字段，由于SQL自身原因这些字段不能加引号</p>
 <h3 id="对用户的输入进行验证"><a href="#对用户的输入进行验证" class="headerlink" title="对用户的输入进行验证"></a>对用户的输入进行验证</h3><p>总体来说，防御SQL注入式攻击可以采用两种方法，一是上面说的<strong>强迫使用参数化语句来传递用户输入的内容</strong>；第二个就是<strong>加强对用户输入内容的检查与验证</strong>。</p>
 <p>假设来自用户的输入都是不安全的，来自用户的内容都要经过检查，如果发现有转义字符、注释字符、二进制数据等特殊数据，可以拒绝处理。在不影响数据库应用的前提下，过滤和转义引号、注释等容易引发SQL注入的特殊字符。</p>
 <h3 id="隐藏错误信息"><a href="#隐藏错误信息" class="headerlink" title="隐藏错误信息"></a>隐藏错误信息</h3><p>错误信息是不需要展现给用户的，因此当数据库异常时不要把错误信息传递给客户端。</p>
@@ -450,6 +451,17 @@
 <h3 id="协议未覆盖、异常Method绕过"><a href="#协议未覆盖、异常Method绕过" class="headerlink" title="协议未覆盖、异常Method绕过"></a>协议未覆盖、异常Method绕过</h3><p>有些WAF只检测GET，POST方法，可通过使用异常方法进行绕过，或者检测GET请求使用POST发送绕过，修改方法请求头</p>
 <p>部分WAF可能只对一种content-type类型增加了检测规则，可以尝试互相替换尝试去绕过WAF过滤机制。</p>
 <h3 id="超大数据包绕过"><a href="#超大数据包绕过" class="headerlink" title="超大数据包绕过"></a>超大数据包绕过</h3><p>部分WAF只检测固定大小的内容，可通过添加无用字符进行绕过检测</p>
+<h3 id="单引号被过滤"><a href="#单引号被过滤" class="headerlink" title="单引号被过滤"></a>单引号被过滤</h3><p>如果语句是select * from xxx where id&#x3D;&#39;1&#39; and pwd&#x3D;’xxx’，我们可以尝试将id设置为 1\，pwd设置为or 1&#x3D;1–+，此时sql语句就变成 select * from xxx where id&#x3D;&#39;1\&#39; and pwd&#x3D;’or 1&#x3D;1–+’，SQL语句中id就变成了1\&#39; and pwd&#x3D;，如果返回逻辑为true即可进行SQL注入</p>
+<h3 id="列名未知如何处理"><a href="#列名未知如何处理" class="headerlink" title="列名未知如何处理"></a>列名未知如何处理</h3><p>查询information_schema表，如果该表无权限访问，可以利用联合查询，进行查询时的语句字段必须和指定表中的字段数一样，不然会报错，例如select 1,2,3 union select * from xxx，通过这种将未知原列名转换为其他值的方法，就可以注入出所有的数据</p>
+<h3 id="limit之后如何注入"><a href="#limit之后如何注入" class="headerlink" title="limit之后如何注入"></a>limit之后如何注入</h3><p>procedure analyse(extractvalue(rand(),concat(0x3a,version())),1) ;</p>
+<p>通过分析select查询结果对现有的表的每一列给出优化的建议，语法：SELECT … FROM … WHERE … PROCEDURE ANALYSE([max_elements,[max_memory]])</p>
+<h3 id="information-schema被过滤"><a href="#information-schema被过滤" class="headerlink" title="information_schema被过滤"></a>information_schema被过滤</h3><h4 id="获取表名"><a href="#获取表名" class="headerlink" title="获取表名"></a>获取表名</h4><p>在mysql系统库也有两个表中包含部分表名：</p>
+<p>innodb_index_stats<br>innodb_table_stats</p>
+<p>当我们通过<code>database()</code>获得数据库名后就可以利用sys.schema_auto_increment_columns视图去获得带有自增列的<strong>表名和列名</strong></p>
+<p>通过统计视图sys.schema_table_statistics</p>
+<h4 id="获取列名"><a href="#获取列名" class="headerlink" title="获取列名"></a>获取列名</h4><p>利用重复列名报错：</p>
+<p>select * from (select * from users as a join users b using (,,,))c;</p>
+<p>其中(,,,)中为已知的列名，都不知道时去掉using (,,,)</p>
 
                 
               </div>

@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj39.jpg">
 <meta property="article:published_time" content="2022-11-05T09:44:14.000Z">
-<meta property="article:modified_time" content="2023-02-17T12:13:20.038Z">
+<meta property="article:modified_time" content="2023-04-08T12:45:16.820Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="python学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.3k 字
+          7.7k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          53 分钟
+          64 分钟
         
       </span>
     
@@ -403,6 +403,18 @@ except    Exception as e :
 <h4 id="6-默认编码"><a href="#6-默认编码" class="headerlink" title="6.默认编码"></a>6.默认编码</h4><p>python2的编码是ascii码，python3的默认编码是utf-8</p>
 <h4 id="7-输入"><a href="#7-输入" class="headerlink" title="7.输入"></a>7.输入</h4><p>python3中input得到的数据都是str型</p>
 <p>python2中input默认是int型，str要使用引号包裹，raw_input得到的都是str</p>
+<h3 id="python-xxx-xxx和-xxx-的区别"><a href="#python-xxx-xxx和-xxx-的区别" class="headerlink" title="python _xxx __xxx和__xxx__的区别"></a>python _xxx __xxx和__xxx__的区别</h3><ol>
+<li>单前导下划线 _xxx：内部私有变量,protected</li>
+<li>单末尾下划线 xxx_：避免与python关键字产生命名冲突，比如想用class名称作为变量，可以用class_</li>
+<li>双前导下划线__xxx: “__spam”这种形式（至少两个前导下划线，最多一个后续下划线）的任何标识符将会被“_classname__spam”这种形式原文取代，private</li>
+<li>双前导和双末尾下划线 __xxx__：一种约定,Python内部的名字,用来区别其他用户自定义的命名,以防冲突，就是例__init__(), __del__(),__call__()这些特殊方法</li>
+</ol>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>确保某一个类只有一个实例存在</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__new__</span>(<span class="hljs-params">cls, *args, **kwargs</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">hasattr</span>(Singleton, <span class="hljs-string">&quot;_instance&quot;</span>): <span class="hljs-comment"># 反射</span><br>            Singleton._instance = <span class="hljs-built_in">object</span>.__new__(cls)<br>        <span class="hljs-keyword">return</span> Singleton._instance<br><br>obj1 = Singleton()<br>obj2 = Singleton()<br><span class="hljs-built_in">print</span>(obj1, obj2) <span class="hljs-comment"># &lt;__main__.Singleton object at 0x000002511B67B448&gt; &lt;__main__.Singleton object at 0x000002511B67B448&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p>创建一个特定类型的对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.name = <span class="hljs-literal">None</span><br>        self.gender = <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> self.name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getGender</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> self.gender<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Male</span>(<span class="hljs-title class_ inherited__">Person</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Hello Mr.&quot;</span> + name)<br>        self.name = name<br>        self.gender = <span class="hljs-string">&#x27;M&#x27;</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Female</span>(<span class="hljs-title class_ inherited__">Person</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Hello Miss.&quot;</span> + name)<br>        self.name = name<br>        self.gender = <span class="hljs-string">&#x27;F&#x27;</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Factory</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getPerson</span>(<span class="hljs-params">self, name, gender</span>):<br>        <span class="hljs-keyword">if</span> gender == <span class="hljs-string">&#x27;M&#x27;</span>:<br>                <span class="hljs-keyword">return</span> Male(name)<br>        <span class="hljs-keyword">if</span> gender == <span class="hljs-string">&#x27;F&#x27;</span>:<br>            <span class="hljs-keyword">return</span> Female(name)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    factory = Factory()<br>    person = factory.getPerson(<span class="hljs-string">&quot;Chetan&quot;</span>, <span class="hljs-string">&quot;M&quot;</span>)<br>    <span class="hljs-built_in">print</span>(person.name, person.gender)<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>

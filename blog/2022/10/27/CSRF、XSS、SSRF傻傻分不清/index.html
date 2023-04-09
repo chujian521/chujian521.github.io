@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/fj36.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/csrf.png">
 <meta property="article:published_time" content="2022-10-27T03:59:38.000Z">
-<meta property="article:modified_time" content="2023-03-05T12:33:52.389Z">
+<meta property="article:modified_time" content="2023-03-30T11:12:48.177Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Web安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k 字
+          5k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          34 分钟
+          42 分钟
         
       </span>
     
@@ -337,10 +337,10 @@
 </ol>
 <p><strong>CSRF攻击是源于WEB的隐式身份验证机制，WEB的身份验证机制虽然可以保证一个请求是来自于某个用户的浏览器，但却无法保证该请求是用户批准发送的</strong></p>
 <h3 id="预防措施"><a href="#预防措施" class="headerlink" title="预防措施"></a>预防措施</h3><ol>
-<li><strong>将cookie设置为HttpOnly：</strong>在cookie中设置“HttpOnly”属性，这样通过程序（如JavaScript脚本、Applet等）就无法读取到cookie信息，避免了攻击者伪造cookie的情况出现。</li>
 <li><strong>Token 验证：</strong>攻击者可以伪造用户的请求，该请求中所有的用户验证信息都存在于cookie中，因此攻击者可以在不知道用户验证信息的情况下直接利用用户的cookie来通过安全验证。<strong>在请求中放入攻击者所不能伪造的信息，并且该信总不存在于cookie之中，即可防止此类攻击</strong>。服务器发送给客户端一个token；客户端提交的表单中带着这个token；如果这个token不合法，那么服务器拒绝这个请求。</li>
 <li><strong>Referer验证：</strong>Referer指的是页面请求来源。意思是，只接受本站的请求，服务器才做响应；如果不是，就拦截。（有一些方法可以篡改 Referer 值，用户可以设置不提供Referer，只采用这种方式依然有隐患<a target="_blank" rel="noopener" href="https://www.cnblogs.com/-qing-/p/11015147.html">CSRF 花式绕过Referer技巧</a>）</li>
 <li>设置验证码或者自定义http头并验证。</li>
+<li><strong>设置 SameSite</strong>：设置 cookie 的 SameSite 值为 strict，这样只有同源网站的请求才会带上 cookie。这样 cookies 就不能被其他域名网站使用，达到了防御的目的。</li>
 </ol>
 <h2 id="0x03-XSS-跨站脚本攻击"><a href="#0x03-XSS-跨站脚本攻击" class="headerlink" title="0x03 XSS(跨站脚本攻击)"></a>0x03 XSS(跨站脚本攻击)</h2><p>在OWASP TOP 10中属于注入的一种 <a href="https://chujian521.github.io/blog/2022/10/13/OWASP-Top-10-for-2021-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#A03-%E6%B3%A8%E5%85%A5%E5%BC%8F%E6%94%BB%E5%87%BB">注入式攻击</a></p>
 <h3 id="什么是XSS"><a href="#什么是XSS" class="headerlink" title="什么是XSS"></a>什么是XSS</h3><p>XSS 是一种在 web 应用中的安全漏洞，它允许恶意 web 用户将代码植入到 web 网站里面，供给其它用户访问，当用户访问到有恶意代码的网页就会产生 xss 攻击。</p>
@@ -354,13 +354,28 @@
 <h3 id="预防措施-1"><a href="#预防措施-1" class="headerlink" title="预防措施"></a>预防措施</h3><ol>
 <li>使用经过审查的库或框架，该库或框架不允许出现此弱点，或者提供使此弱点更容易避免的构造。例如：包括Microsoft的Anti-XSS库，OWASP ESAPI编码模块和Apache Wicket</li>
 <li>对于将输出到另一个网页的任何数据，尤其是从外部输入接收的任何数据，请对所有非字母数字字符使用适当的编码。</li>
-<li>为了帮助缓解针对用户会话 Cookie 的 XSS 攻击，请将会话 Cookie 设置为 HttpOnly。在支持 HttpOnly 功能的浏览器中（例如最新版本的 Internet Explorer 和 Firefox），此属性可以防止使用 document.cookie 的恶意客户端脚本访问用户的会话 Cookie。这不是一个完整的解决方案，因为并非所有浏览器都支持HttpOnly。更重要的是，XMLHTTPRequest 和其他强大的浏览器技术提供对 HTTP 标头的读取访问，包括设置 HttpOnly 标志的 Set-Cookie 标头。</li>
+<li>为了帮助缓解针对用户会话 Cookie 的 XSS 攻击，请将会话 <strong>Cookie 设置为 HttpOnly</strong>。在支持 HttpOnly 功能的浏览器中（例如最新版本的 Internet Explorer 和 Firefox），此属性可以防止使用 document.cookie 的恶意客户端脚本访问用户的会话 Cookie。这不是一个完整的解决方案，因为并非所有浏览器都支持HttpOnly。更重要的是，XMLHTTPRequest 和其他强大的浏览器技术提供对 HTTP 标头的读取访问，包括设置 HttpOnly 标志的 Set-Cookie 标头。</li>
 <li>输入验证：假设所有输入都是恶意的。使用“接受已知良好”的输入验证策略，即使用严格符合规范的可接受输入列表。拒绝任何不严格符合规范的输入，或将其转换为符合规范的输入。</li>
 <li>当可接受的对象集（如文件名或 URL）受到限制或已知时，请创建从一组固定输入值（如数字 ID）到实际文件名或 URL 的映射，并拒绝所有其他输入。</li>
 </ol>
+<p>注：Cookie的一些安全属性：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1</span>、<span class="hljs-keyword">domain</span>属性：决定该cookie作用在哪个域。<br><span class="hljs-number">2</span>、<span class="hljs-type">path</span>属性：决定该cookie字段作用在哪个路径下面。<br><span class="hljs-number">3</span>、secure属性：决定该cookie只能通过https传输。<br><span class="hljs-number">4</span>、HttpOnly属性：决定该cookie不能通过js读取。<br><span class="hljs-number">5</span>、expires属性：决定该cookie的过期时间<br></code></pre></td></tr></table></figure>
+
 <h3 id="浏览器同源策略"><a href="#浏览器同源策略" class="headerlink" title="浏览器同源策略"></a>浏览器同源策略</h3><p>同源策略限制从一个源加载的文档或脚本与来自另一个源的资源进行交互的方式，是用于隔离潜在恶意文件的关键安全机制。同协议、同域名（或 IP）、以及同端口视为同一个域，一个域内的脚本仅仅具有本域内的权限，即本域脚本只能读写本域内的资源，而无法访问其它域的资源。这种安全限制称为同源策略。</p>
+<h4 id="绕过同源策略"><a href="#绕过同源策略" class="headerlink" title="绕过同源策略"></a>绕过同源策略</h4><p>1.CORS跨域请求</p>
+<p>是一种基于HTTP头的机制，其中的HTTP头决定浏览器<strong>是否阻止</strong>前端 JavaScript 代码获取跨域请求的响应，该机制允许 Web 应用服务器进行跨源访问控制，从而使跨源数据传输得以安全进行</p>
+<p>Access-Control-Allow-Origin: <a target="_blank" rel="noopener" href="http://foo.example/">http://foo.example</a><br>Access-Control-Allow-Methods: POST, GET, OPTIONS   &#x2F;&#x2F;表明服务器允许客户端使用 POST, GET 和 OPTIONS 方法发起请求<br>Access-Control-Allow-Headers: X-PINGOTHER, Content-Type   &#x2F;&#x2F;表明表明服务器允许请求中携带字段 X-PINGOTHER 与 Content-Type<br>Access-Control-Max-Age: 86400   &#x2F;&#x2F;该字段表明该响应的有效时间为 86400 秒，也就是 24 小时，在有效时间内，浏览器无须为同一请求再次发起预检请求</p>
+<p>2.JSONP</p>
+<p>3.iframe</p>
 <h3 id="内容安全策略CSP"><a href="#内容安全策略CSP" class="headerlink" title="内容安全策略CSP"></a>内容安全策略CSP</h3><p>内容安全策略(CSP)，是一种安全策略，其原理是当浏览器请求某一个网站时，告诉该浏览器申明文件可以执行，什么不可以执行。<br>CSP的引入会使得我们的引入扩展程序更加安全，并且可以由开发者指定可以加载扩展程序的类型，避免恶意的脚本在浏览器中执行，造成信息泄露问题。<br>CSP对前端攻击的防御主要有两个：</p>
 <p>1、限制js的执行。<br>2、限制对不可信域的请求。</p>
+<p>CSP是如何工作的：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/260535.html">CSP常见配置及绕过姿势</a></p>
+<p><strong>通过响应包头（Response Header）实现：</strong></p>
+<figure class="highlight csp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csp"><span class="hljs-attribute">Content-Security-policy</span>: <span class="hljs-keyword">default-src</span> <span class="hljs-string">&#x27;self&#x27;</span>; <span class="hljs-keyword">script-src</span> <span class="hljs-string">&#x27;self&#x27;</span> allowed.com; <span class="hljs-keyword">img-src</span> <span class="hljs-string">&#x27;self&#x27;</span> allowed.com; <span class="hljs-keyword">style-src</span> <span class="hljs-string">&#x27;self&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>通过HTML 元标签实现：</strong></p>
+<figure class="highlight csp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csp">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;<span class="hljs-keyword">default-src</span> <span class="hljs-string">&#x27;self&#x27;</span>; <span class="hljs-keyword">img-src</span> https://*; <span class="hljs-keyword">child-src</span> <span class="hljs-string">&#x27;none&#x27;</span>;&quot;&gt;<br></code></pre></td></tr></table></figure>
+
 <h4 id="CSP的绕过策略"><a href="#CSP的绕过策略" class="headerlink" title="CSP的绕过策略"></a>CSP的绕过策略</h4><ol>
 <li>配置CSP规则错误，header(“Content-Security-Policy: default-src ‘self ‘; script-src * “);导致允许加载任何域的js</li>
 <li>如果只允许加载当前域，可以寻找有没有文件上传的位置，让恶意js成为当前域</li>

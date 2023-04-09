@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/b+tree.png">
 <meta property="article:published_time" content="2023-02-28T02:53:31.000Z">
-<meta property="article:modified_time" content="2023-03-08T02:37:15.325Z">
+<meta property="article:modified_time" content="2023-03-25T07:39:30.504Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.6k 字
+          6k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          47 分钟
+          50 分钟
         
       </span>
     
@@ -482,6 +482,9 @@
 <p>当前读就是读取最新数据而不是历史数据</p>
 <h3 id="MVCC及实现"><a href="#MVCC及实现" class="headerlink" title="MVCC及实现"></a>MVCC及实现</h3><p>MVCC多版本并发控制，可以做到读写相互不阻塞，用于解决不可重复读和幻读是提高并发效率</p>
 <p>原理是通过多个版本管理来实现数据库的并发控制，保存数据的历史版本，通过比较版本号决定数据是否显示，读取数据时候不用加锁就可以保证事务的隔离效果</p>
+<h2 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h2><h3 id="语句书写和执行顺序"><a href="#语句书写和执行顺序" class="headerlink" title="语句书写和执行顺序"></a>语句书写和执行顺序</h3><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">(7)     <span class="hljs-keyword">SELECT</span> <br>(<span class="hljs-number">8</span>)     <span class="hljs-keyword">DISTINCT</span> &lt;select_list&gt; <br>(<span class="hljs-number">1</span>)     <span class="hljs-keyword">FROM</span> &lt;left_table&gt; <br>(<span class="hljs-number">3</span>)     &lt;join_type&gt; <span class="hljs-keyword">JOIN</span> &lt;right_table&gt; <br>(<span class="hljs-number">2</span>)     <span class="hljs-keyword">ON</span> &lt;join_condition&gt; <br>(<span class="hljs-number">4</span>)     <span class="hljs-keyword">WHERE</span> &lt;where_condition&gt; <br>(<span class="hljs-number">5</span>)     <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> &lt;group_by_list&gt; <br>(<span class="hljs-number">6</span>)     <span class="hljs-keyword">HAVING</span> &lt;having_condition&gt; <br>(<span class="hljs-number">9</span>)     <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> &lt;order_by_condition&gt; <br>(<span class="hljs-number">10</span>)    <span class="hljs-keyword">LIMIT</span> &lt;limit_number&gt;<br></code></pre></td></tr></table></figure>
+
+<p>序号代表执行顺序</p>
 
                 
               </div>
@@ -550,6 +553,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/blog/2023/03/30/%E5%8F%8D%E7%88%AC%E8%99%AB%E5%A7%BF%E5%8A%BF%E4%B8%8E%E7%BB%95%E8%BF%87/" title="反爬虫姿势与绕过">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">反爬虫姿势与绕过</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

