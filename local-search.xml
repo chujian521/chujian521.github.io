@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>git emoji的使用</title>
+    <link href="/blog/2023/06/15/git-emoji%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <url>/blog/2023/06/15/git-emoji%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p><strong>执行 <code>git commit</code> 时使用 emoji 为本次提交打上一个 “标识”, 使得此次 commit 的主要工作得以凸现，也能够使得其在整个提交历史中易于区分与查找。</strong></p><span id="more"></span><table><thead><tr><th align="left">Commit type</th><th align="left">Emoji</th></tr></thead><tbody><tr><td align="left">首次提交</td><td align="left">:tada: <code>:tada:</code></td></tr><tr><td align="left">版本标签</td><td align="left">:bookmark: <code>:bookmark:</code></td></tr><tr><td align="left">引入新功能</td><td align="left">:sparkles: <code>:sparkles:</code></td></tr><tr><td align="left">修复bug</td><td align="left">:bug: <code>:bug:</code></td></tr><tr><td align="left">元数据</td><td align="left">:card_index: <code>:card_index:</code></td></tr><tr><td align="left">文档</td><td align="left">:books: <code>:books:</code></td></tr><tr><td align="left">编写源代码</td><td align="left">:bulb: <code>:bulb:</code></td></tr><tr><td align="left">提升性能</td><td align="left">:racehorse: <code>:racehorse:</code></td></tr><tr><td align="left">更新UI和样式文件</td><td align="left">:lipstick: <code>:lipstick:</code></td></tr><tr><td align="left">Tests</td><td align="left">:rotating_light: <code>:rotating_light:</code></td></tr><tr><td align="left">增加测试</td><td align="left">:white_check_mark: <code>:white_check_mark:</code></td></tr><tr><td align="left">通过测试</td><td align="left">:heavy_check_mark: <code>:heavy_check_mark:</code></td></tr><tr><td align="left">一般更新</td><td align="left">:zap: <code>:zap:</code></td></tr><tr><td align="left">改进代码格式&#x2F;结构</td><td align="left">:art: <code>:art:</code></td></tr><tr><td align="left">重构代码</td><td align="left">:hammer: <code>:hammer:</code></td></tr><tr><td align="left">移除代码&#x2F;文件</td><td align="left">:fire: <code>:fire:</code></td></tr><tr><td align="left">持续集成CI</td><td align="left">:green_heart: <code>:green_heart:</code></td></tr><tr><td align="left">修复安全问题</td><td align="left">:lock: <code>:lock:</code></td></tr><tr><td align="left">升级依赖</td><td align="left">:arrow_up: <code>:arrow_up:</code></td></tr><tr><td align="left">降级依赖</td><td align="left">:arrow_down: <code>:arrow_down:</code></td></tr><tr><td align="left">去除代码中可能存在问题</td><td align="left">:shirt: <code>:shirt:</code></td></tr><tr><td align="left">翻译</td><td align="left">:alien: <code>:alien:</code></td></tr><tr><td align="left">文本</td><td align="left">:pencil: <code>:pencil:</code></td></tr><tr><td align="left">重要补丁</td><td align="left">:ambulance: <code>:ambulance:</code></td></tr><tr><td align="left">部署功能</td><td align="left">:rocket: <code>:rocket:</code></td></tr><tr><td align="left">修复MacOS下的问题</td><td align="left">:apple: <code>:apple:</code></td></tr><tr><td align="left">修复Linux下的问题</td><td align="left">:penguin: <code>:penguin:</code></td></tr><tr><td align="left">修复Windows下的问题</td><td align="left">:checkered_flag: <code>:checkered_flag:</code></td></tr><tr><td align="left">工作进行中</td><td align="left">:construction:  <code>:construction:</code></td></tr><tr><td align="left">添加持续集成CI构建系统</td><td align="left">:construction_worker: <code>:construction_worker:</code></td></tr><tr><td align="left">添加分析或跟踪代码</td><td align="left">:chart_with_upwards_trend: <code>:chart_with_upwards_trend:</code></td></tr><tr><td align="left">移除一个依赖</td><td align="left">:heavy_minus_sign: <code>:heavy_minus_sign:</code></td></tr><tr><td align="left">增加一个依赖</td><td align="left">:heavy_plus_sign: <code>:heavy_plus_sign:</code></td></tr><tr><td align="left">Docker相关</td><td align="left">:whale: <code>:whale:</code></td></tr><tr><td align="left">修改配置文件</td><td align="left">:wrench: <code>:wrench:</code></td></tr><tr><td align="left">Package.json in JS</td><td align="left">:package: <code>:package:</code></td></tr><tr><td align="left">合并分支</td><td align="left">:twisted_rightwards_arrows: <code>:twisted_rightwards_arrows:</code></td></tr><tr><td align="left">糟糕的代码&#x2F;需要改进</td><td align="left">:hankey: <code>:hankey:</code></td></tr><tr><td align="left">回滚改变</td><td align="left">:rewind: <code>:rewind:</code></td></tr><tr><td align="left">突发的变更</td><td align="left">:boom: <code>:boom:</code></td></tr><tr><td align="left">代码评审变更</td><td align="left">:ok_hand: <code>:ok_hand:</code></td></tr><tr><td align="left">无障碍</td><td align="left">:wheelchair: <code>:wheelchair:</code></td></tr><tr><td align="left">移动&#x2F;重命名仓库</td><td align="left">:truck: <code>:truck:</code></td></tr><tr><td align="left">国际化与本地化</td><td align="left">:globe_with_meridians:<code>:globe_with_meridians:</code></td></tr></tbody></table>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>反爬虫姿势与绕过</title>
     <link href="/blog/2023/03/30/%E5%8F%8D%E7%88%AC%E8%99%AB%E5%A7%BF%E5%8A%BF%E4%B8%8E%E7%BB%95%E8%BF%87/"/>
     <url>/blog/2023/03/30/%E5%8F%8D%E7%88%AC%E8%99%AB%E5%A7%BF%E5%8A%BF%E4%B8%8E%E7%BB%95%E8%BF%87/</url>

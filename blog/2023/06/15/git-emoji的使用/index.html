@@ -16,27 +16,24 @@
   <meta name="author" content="Encounter">
   <meta name="keywords" content="">
   
-    <meta name="description" content="爬虫是指使用任何技术手段，批量获取网站信息的一种方式。反爬虫是指使用任何技术手段，阻止别人批量获取自己网站信息的一种方式。">
+    <meta name="description" content="执行 git commit 时使用 emoji 为本次提交打上一个 “标识”, 使得此次 commit 的主要工作得以凸现，也能够使得其在整个提交历史中易于区分与查找。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="反爬虫姿势与绕过">
-<meta property="og:url" content="https://chujian521.github.io/blog/2023/03/30/%E5%8F%8D%E7%88%AC%E8%99%AB%E5%A7%BF%E5%8A%BF%E4%B8%8E%E7%BB%95%E8%BF%87/index.html">
+<meta property="og:title" content="git emoji的使用">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/06/15/git-emoji%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="爬虫是指使用任何技术手段，批量获取网站信息的一种方式。反爬虫是指使用任何技术手段，阻止别人批量获取自己网站信息的一种方式。">
+<meta property="og:description" content="执行 git commit 时使用 emoji 为本次提交打上一个 “标识”, 使得此次 commit 的主要工作得以凸现，也能够使得其在整个提交历史中易于区分与查找。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chujian521.github.io/images/fj44.jpg">
-<meta property="article:published_time" content="2023-03-30T14:00:41.000Z">
-<meta property="article:modified_time" content="2023-03-31T06:09:04.787Z">
+<meta property="article:published_time" content="2023-06-15T13:51:50.000Z">
+<meta property="article:modified_time" content="2023-06-15T13:52:44.906Z">
 <meta property="article:author" content="Encounter">
-<meta property="article:tag" content="反爬虫">
-<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://chujian521.github.io/images/fj44.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>反爬虫姿势与绕过 - X&#39;s blog</title>
+  <title>git emoji的使用 - X&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +226,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="反爬虫姿势与绕过"></span>
+            <span id="subtitle" data-typed-text="git emoji的使用"></span>
           
         </div>
 
@@ -240,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-30 22:00" pubdate>
-          2023年3月30日 晚上
+        <time datetime="2023-06-15 21:51" pubdate>
+          2023年6月15日 晚上
         </time>
       </span>
     
@@ -252,7 +249,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.4k 字
         
       </span>
     
@@ -263,7 +260,7 @@
         
         
         
-          10 分钟
+          12 分钟
         
       </span>
     
@@ -309,27 +306,200 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">反爬虫姿势与绕过</h1>
+            <h1 style="display: none">git emoji的使用</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>爬虫是指使用任何技术手段，批量获取网站信息的一种方式。</strong><br><strong>反爬虫是指使用任何技术手段，阻止别人批量获取自己网站信息的一种方式。</strong></p>
-<p><img src="/./images/fj44.jpg" srcset="/img/loading.gif" lazyload></p>
+                <p><strong>执行 <code>git commit</code> 时使用 emoji 为本次提交打上一个 “标识”, 使得此次 commit 的主要工作得以凸现，也能够使得其在整个提交历史中易于区分与查找。</strong></p>
 <span id="more"></span>
 
-<h2 id="常见的反爬虫机制"><a href="#常见的反爬虫机制" class="headerlink" title="常见的反爬虫机制"></a>常见的反爬虫机制</h2><h3 id="通过User-Agent识别爬虫"><a href="#通过User-Agent识别爬虫" class="headerlink" title="通过User-Agent识别爬虫"></a>通过User-Agent识别爬虫</h3><p>网站可以通过User-Agent来判断用户是使用什么浏览器访问，不同浏览器的User-Agent是不一样的，但是如果爬虫使用Requests库访问，没有配置UA，即可判断出该请求不是浏览器发出，通过识别特征UA，直接封掉爬虫请求。</p>
-<h3 id="访问频率限制"><a href="#访问频率限制" class="headerlink" title="访问频率限制"></a>访问频率限制</h3><h4 id="设置IP访问频率"><a href="#设置IP访问频率" class="headerlink" title="设置IP访问频率"></a>设置IP访问频率</h4><p>如果超过一定频率，弹出验证码验证，如果输入正确的验证码，则放行，如果没有输入，则禁止访问一段时间，如果超过禁爬时间，再次触发验证码，则拉入黑名单。可以根据具体的业务，为不同场景设置不同阈值，比如登录用户和非登录用户，请求是否含有referer。</p>
-<h4 id="统计并发最高的IP"><a href="#统计并发最高的IP" class="headerlink" title="统计并发最高的IP"></a>统计并发最高的IP</h4><p>有些爬虫的并发是很高的，统计并发最高的IP，加入黑名单</p>
-<h4 id="请求时间窗口过滤统计"><a href="#请求时间窗口过滤统计" class="headerlink" title="请求时间窗口过滤统计"></a>请求时间窗口过滤统计</h4><p>爬虫爬取网页的频率都是比较固定的，不像人去访问网页，中间的间隔时间比较无规则，所以我们可以给每个IP地址建立一个时间窗口，记录IP地址最近访问时间，每记录一次就滑动一次窗口，比较最近访问时间和当前时间。如果间隔时间很长判断不是爬虫，清除时间窗口；如果间隔不长，就回溯计算指定时间段的访问频率，如果访问频率超过阀值，就转向验证码页面让用户填写验证码</p>
-<h4 id="限制api-token的访问量"><a href="#限制api-token的访问量" class="headerlink" title="限制api token的访问量"></a>限制api token的访问量</h4><h4 id="识别合法搜索引擎爬虫"><a href="#识别合法搜索引擎爬虫" class="headerlink" title="识别合法搜索引擎爬虫"></a>识别合法搜索引擎爬虫</h4><h3 id="蜜罐资源"><a href="#蜜罐资源" class="headerlink" title="蜜罐资源"></a>蜜罐资源</h3><p>爬虫解析离不开正则匹配，适当在页面添加一些正常浏览器浏览访问不到的资源，一旦有IP访问，过滤下头部是不是搜素引擎的蜘蛛，不是就可以直接封了。比如说隐式链接。</p>
-<h2 id="绕过反爬虫机制"><a href="#绕过反爬虫机制" class="headerlink" title="绕过反爬虫机制"></a>绕过反爬虫机制</h2><h3 id="爬取随机延迟"><a href="#爬取随机延迟" class="headerlink" title="爬取随机延迟"></a>爬取随机延迟</h3><p>设置爬取延迟为随机ns，n越大越越不容易被反爬虫机制发现，但是会影响爬取效率</p>
-<h3 id="禁用Cookie"><a href="#禁用Cookie" class="headerlink" title="禁用Cookie"></a>禁用Cookie</h3><p>某些网站可以通过Cookie识别用户身份，禁用Cookie可能可以防止服务器追踪爬虫</p>
-<h3 id="使用User-Agent池"><a href="#使用User-Agent池" class="headerlink" title="使用User-Agent池"></a>使用User-Agent池</h3><p>每次发送的时候随机从池中选择不一样的浏览器头信息，防止暴露爬虫身份</p>
-<h3 id="使用IP代理池"><a href="#使用IP代理池" class="headerlink" title="使用IP代理池"></a>使用IP代理池</h3><p>需要大量IP资源</p>
-<h3 id="分布式爬取"><a href="#分布式爬取" class="headerlink" title="分布式爬取"></a>分布式爬取</h3><p>针对大型爬虫系统实现一个分布式爬虫：</p>
-<p>1、基本的http抓取工具，如scrapy； 2、避免重复抓取网页，如Bloom Filter； 3、维护一个所有集群机器能够有效分享的分布式队列； 4、将分布式队列和Scrapy的结合； 5、后续处理，网页析取，存储(如Mongodb)。</p>
-<h3 id="针对蜜罐采取定向爬虫"><a href="#针对蜜罐采取定向爬虫" class="headerlink" title="针对蜜罐采取定向爬虫"></a>针对蜜罐采取定向爬虫</h3><p>定向爬虫获取信息，配上手工或者自动的模版进行信息匹配，将信息进行格式化分析存储。<br>优势：<br>基于模版的信息提取技术，能提供更加精准的信息。<br>劣势：<br>目标网站难以大面积覆盖，因为基于模版匹配的信息提取技术，需要人工的参与配置模版，欲要大面积覆盖各个目标网站，需要大量的人力成本，同样维护模板也需要很大的人力成本。</p>
+
+
+<table>
+<thead>
+<tr>
+<th align="left">Commit type</th>
+<th align="left">Emoji</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">首次提交</td>
+<td align="left">:tada: <code>:tada:</code></td>
+</tr>
+<tr>
+<td align="left">版本标签</td>
+<td align="left">:bookmark: <code>:bookmark:</code></td>
+</tr>
+<tr>
+<td align="left">引入新功能</td>
+<td align="left">:sparkles: <code>:sparkles:</code></td>
+</tr>
+<tr>
+<td align="left">修复bug</td>
+<td align="left">:bug: <code>:bug:</code></td>
+</tr>
+<tr>
+<td align="left">元数据</td>
+<td align="left">:card_index: <code>:card_index:</code></td>
+</tr>
+<tr>
+<td align="left">文档</td>
+<td align="left">:books: <code>:books:</code></td>
+</tr>
+<tr>
+<td align="left">编写源代码</td>
+<td align="left">:bulb: <code>:bulb:</code></td>
+</tr>
+<tr>
+<td align="left">提升性能</td>
+<td align="left">:racehorse: <code>:racehorse:</code></td>
+</tr>
+<tr>
+<td align="left">更新UI和样式文件</td>
+<td align="left">:lipstick: <code>:lipstick:</code></td>
+</tr>
+<tr>
+<td align="left">Tests</td>
+<td align="left">:rotating_light: <code>:rotating_light:</code></td>
+</tr>
+<tr>
+<td align="left">增加测试</td>
+<td align="left">:white_check_mark: <code>:white_check_mark:</code></td>
+</tr>
+<tr>
+<td align="left">通过测试</td>
+<td align="left">:heavy_check_mark: <code>:heavy_check_mark:</code></td>
+</tr>
+<tr>
+<td align="left">一般更新</td>
+<td align="left">:zap: <code>:zap:</code></td>
+</tr>
+<tr>
+<td align="left">改进代码格式&#x2F;结构</td>
+<td align="left">:art: <code>:art:</code></td>
+</tr>
+<tr>
+<td align="left">重构代码</td>
+<td align="left">:hammer: <code>:hammer:</code></td>
+</tr>
+<tr>
+<td align="left">移除代码&#x2F;文件</td>
+<td align="left">:fire: <code>:fire:</code></td>
+</tr>
+<tr>
+<td align="left">持续集成CI</td>
+<td align="left">:green_heart: <code>:green_heart:</code></td>
+</tr>
+<tr>
+<td align="left">修复安全问题</td>
+<td align="left">:lock: <code>:lock:</code></td>
+</tr>
+<tr>
+<td align="left">升级依赖</td>
+<td align="left">:arrow_up: <code>:arrow_up:</code></td>
+</tr>
+<tr>
+<td align="left">降级依赖</td>
+<td align="left">:arrow_down: <code>:arrow_down:</code></td>
+</tr>
+<tr>
+<td align="left">去除代码中可能存在问题</td>
+<td align="left">:shirt: <code>:shirt:</code></td>
+</tr>
+<tr>
+<td align="left">翻译</td>
+<td align="left">:alien: <code>:alien:</code></td>
+</tr>
+<tr>
+<td align="left">文本</td>
+<td align="left">:pencil: <code>:pencil:</code></td>
+</tr>
+<tr>
+<td align="left">重要补丁</td>
+<td align="left">:ambulance: <code>:ambulance:</code></td>
+</tr>
+<tr>
+<td align="left">部署功能</td>
+<td align="left">:rocket: <code>:rocket:</code></td>
+</tr>
+<tr>
+<td align="left">修复MacOS下的问题</td>
+<td align="left">:apple: <code>:apple:</code></td>
+</tr>
+<tr>
+<td align="left">修复Linux下的问题</td>
+<td align="left">:penguin: <code>:penguin:</code></td>
+</tr>
+<tr>
+<td align="left">修复Windows下的问题</td>
+<td align="left">:checkered_flag: <code>:checkered_flag:</code></td>
+</tr>
+<tr>
+<td align="left">工作进行中</td>
+<td align="left">:construction:  <code>:construction:</code></td>
+</tr>
+<tr>
+<td align="left">添加持续集成CI构建系统</td>
+<td align="left">:construction_worker: <code>:construction_worker:</code></td>
+</tr>
+<tr>
+<td align="left">添加分析或跟踪代码</td>
+<td align="left">:chart_with_upwards_trend: <code>:chart_with_upwards_trend:</code></td>
+</tr>
+<tr>
+<td align="left">移除一个依赖</td>
+<td align="left">:heavy_minus_sign: <code>:heavy_minus_sign:</code></td>
+</tr>
+<tr>
+<td align="left">增加一个依赖</td>
+<td align="left">:heavy_plus_sign: <code>:heavy_plus_sign:</code></td>
+</tr>
+<tr>
+<td align="left">Docker相关</td>
+<td align="left">:whale: <code>:whale:</code></td>
+</tr>
+<tr>
+<td align="left">修改配置文件</td>
+<td align="left">:wrench: <code>:wrench:</code></td>
+</tr>
+<tr>
+<td align="left">Package.json in JS</td>
+<td align="left">:package: <code>:package:</code></td>
+</tr>
+<tr>
+<td align="left">合并分支</td>
+<td align="left">:twisted_rightwards_arrows: <code>:twisted_rightwards_arrows:</code></td>
+</tr>
+<tr>
+<td align="left">糟糕的代码&#x2F;需要改进</td>
+<td align="left">:hankey: <code>:hankey:</code></td>
+</tr>
+<tr>
+<td align="left">回滚改变</td>
+<td align="left">:rewind: <code>:rewind:</code></td>
+</tr>
+<tr>
+<td align="left">突发的变更</td>
+<td align="left">:boom: <code>:boom:</code></td>
+</tr>
+<tr>
+<td align="left">代码评审变更</td>
+<td align="left">:ok_hand: <code>:ok_hand:</code></td>
+</tr>
+<tr>
+<td align="left">无障碍</td>
+<td align="left">:wheelchair: <code>:wheelchair:</code></td>
+</tr>
+<tr>
+<td align="left">移动&#x2F;重命名仓库</td>
+<td align="left">:truck: <code>:truck:</code></td>
+</tr>
+<tr>
+<td align="left">国际化与本地化</td>
+<td align="left">:globe_with_meridians:<code>:globe_with_meridians:</code></td>
+</tr>
+</tbody></table>
 
                 
               </div>
@@ -342,9 +512,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/">#反爬虫</a>
-      
-        <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+        <a href="/tags/Git/">#Git</a>
       
     </div>
   
@@ -356,8 +524,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>反爬虫姿势与绕过</div>
-      <div>https://chujian521.github.io/blog/2023/03/30/反爬虫姿势与绕过/</div>
+      <div>git emoji的使用</div>
+      <div>https://chujian521.github.io/blog/2023/06/15/git-emoji的使用/</div>
     </div>
     <div class="license-meta">
       
@@ -369,7 +537,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月30日</div>
+          <div>2023年6月15日</div>
         </div>
       
       
@@ -401,18 +569,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2023/06/15/git-emoji%E7%9A%84%E4%BD%BF%E7%94%A8/" title="git emoji的使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">git emoji的使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2023/02/28/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%A4%8D%E4%B9%A0-%E6%95%B0%E6%8D%AE%E5%BA%93/" title="基础知识复习--数据库">
-                        <span class="hidden-mobile">基础知识复习--数据库</span>
+                      <a href="/blog/2023/03/30/%E5%8F%8D%E7%88%AC%E8%99%AB%E5%A7%BF%E5%8A%BF%E4%B8%8E%E7%BB%95%E8%BF%87/" title="反爬虫姿势与绕过">
+                        <span class="hidden-mobile">反爬虫姿势与绕过</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -425,7 +587,7 @@
             
   <article id="comments" lazyload>
     
-  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/03/30/%E5%8F%8D%E7%88%AC%E8%99%AB%E5%A7%BF%E5%8A%BF%E4%B8%8E%E7%BB%95%E8%BF%87/'></div>
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/06/15/git-emoji%E7%9A%84%E4%BD%BF%E7%94%A8/'></div>
   <script type="text/javascript">
     Fluid.utils.loadComments('#SOHUCS', function() {
       Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
