@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/arpqipian.png">
 <meta property="og:image" content="https://chujian521.github.io/images/DNSpooq.png">
 <meta property="article:published_time" content="2023-02-19T08:18:12.000Z">
-<meta property="article:modified_time" content="2023-03-22T09:20:50.445Z">
+<meta property="article:modified_time" content="2023-09-09T06:08:25.426Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          4.9k 字
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
         
-          39 分钟
+          41 分钟
         
       </span>
     
@@ -414,6 +414,13 @@
 <h2 id="IMAP-x2F-POP3-x2F-SMTP"><a href="#IMAP-x2F-POP3-x2F-SMTP" class="headerlink" title="IMAP&#x2F;POP3&#x2F;SMTP"></a>IMAP&#x2F;POP3&#x2F;SMTP</h2><p>MAP能使本地和服务器端邮件同步，你在本地删除或阅读邮件，服务器上也自动删除或显示已读。所以你用outlook和用 webmail看到的内容是一样。 SMTP&#x2F;POP3的邮箱，本地和服务器不同步，本地只会下载服务器上未读的邮件。</p>
 <h3 id="安全缺陷"><a href="#安全缺陷" class="headerlink" title="安全缺陷"></a>安全缺陷</h3><p>这三种协议都是明文传输</p>
 <h3 id="防范措施-5"><a href="#防范措施-5" class="headerlink" title="防范措施"></a>防范措施</h3><p>使用PGP等邮件安全工具进行加密</p>
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><ol>
+<li><strong>服务器建立公钥。</strong>若远程服务器是新系统，会在&#x2F;etc&#x2F;ssh目录下生成一个名为ssh_host_ecdsa_key.pub的公钥，同时生成一个名为ssh_host_ecdsa_key的私钥，这一对就是远程服务器的公钥与私钥。之后每次启动sshd服务的时候，系统会自动在此路径下查找公钥。</li>
+<li><strong>客户端请求连接。</strong></li>
+<li><strong>服务端将发送公钥给客户端。</strong></li>
+<li><strong>客户端记录服务器公钥并计算自己的公私钥。</strong>客户端选择yes接收服务器公钥后，将服务器传来的公钥文件记录在<code>~/.ssh/known_hosts</code>中，然后客户端计算自己的公钥和私钥存放在<code>~/.ssh/</code>目录下。</li>
+<li><strong>客户端发送给服务器公钥，后面就可以使用非对称加密进行通信</strong></li>
+</ol>
 
                 
               </div>
