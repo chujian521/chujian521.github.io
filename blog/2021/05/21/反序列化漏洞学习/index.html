@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj30.jpg">
 <meta property="article:published_time" content="2021-05-21T10:07:17.000Z">
-<meta property="article:modified_time" content="2023-09-16T16:26:08.550Z">
+<meta property="article:modified_time" content="2023-09-20T13:49:35.792Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="反序列化">
 <meta name="twitter:card" content="summary_large_image">
@@ -262,7 +262,7 @@
         
         
         
-          99 分钟
+          104 分钟
         
       </span>
     
@@ -356,6 +356,11 @@
 
 <p>这个exec的内容如果是外部输入可以控制的，那么这里就会引发远程命令执行。当然，大多数开发人员不会写出这么离谱的代码，这只是一个最简单的示例，用来说明反序列化漏洞。</p>
 <h4 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h4><p>反序列化对象重写了反序列化函数 <code>readObject</code>，并且 <code>readObject</code> 方法存在执行命令的机会。</p>
+<h4 id="举个例子CC6链"><a href="#举个例子CC6链" class="headerlink" title="举个例子CC6链"></a>举个例子CC6链</h4><p><code>InvokerTransformer</code>类中天然的有一个调用invoke方法的transform方法，并且是可控的，可以用来执行命令，<code>ChainedTransformer</code>类调用了这个类的transform方法，然后<code>TiedMapEntry</code>类中的<code>getValue()</code>方法调用了<code>LazyMap</code>的<code>get()</code>方法，然后<code>hashCode()</code>方法中调用<code>getValue()</code>方法，然而HashMap类的put方法会自动调用hash方法，到此我们就可以反向地构造出EXP：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">xxx.read<span class="hljs-constructor">Object()</span><br>	<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashMap</span>.</span></span>put<span class="hljs-literal">()</span><br>	<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashMap</span>.</span></span>hash<span class="hljs-literal">()</span><br>		<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">TiedMapEntry</span>.</span></span>hash<span class="hljs-constructor">Code()</span><br>		<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">TiedMapEntry</span>.</span></span>get<span class="hljs-constructor">Value()</span><br>			<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LazyMap</span>.</span></span>get<span class="hljs-literal">()</span><br>				<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ChainedTransformer</span>.</span></span>transform<span class="hljs-literal">()</span><br>					<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">InvokerTransformer</span>.</span></span>transform<span class="hljs-literal">()</span><br>						<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Runtime</span>.</span></span>exec<span class="hljs-literal">()</span><br></code></pre></td></tr></table></figure>
+
+
+
 <h3 id="Java反序列化漏洞实例–shiro反序列化漏洞"><a href="#Java反序列化漏洞实例–shiro反序列化漏洞" class="headerlink" title="Java反序列化漏洞实例–shiro反序列化漏洞"></a>Java反序列化漏洞实例–shiro反序列化漏洞</h3><h4 id="shiro"><a href="#shiro" class="headerlink" title="shiro"></a>shiro</h4><p>Apache Shiro是一个强大且易用的Java安全框架，执行身份验证、授权、密码和会话管理。</p>
 <h4 id="shiro指纹特征"><a href="#shiro指纹特征" class="headerlink" title="shiro指纹特征"></a>shiro指纹特征</h4><p>在请求包的Cookie中为 rememberMe字段赋任意值，收到返回包的 Set-Cookie 中存在 rememberMe&#x3D;deleteMe 字段，说明目标有使用Shiro框架，可以进一步测试。</p>
 <h4 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h4><p>Apache Shiro框架提供了记住我的功能（RememberMe），用户登陆成功后会生成经过加密并编码的cookie，在服务端接收cookie值后，Base64解码–&gt;AES解密–&gt;反序列化。攻击者只要找到AES加密的密钥，就可以构造一个恶意对象，对其进行序列化–&gt;AES加密–&gt;Base64编码，然后将其作为cookie的rememberMe字段发送，Shiro将rememberMe进行解密并且反序列化，最终造成反序列化漏洞。</p>
@@ -384,6 +389,7 @@
 
 <p>因此在反序列时，payload中的dataSourceName和autoCommit通过setDataSourceName和setAutoCommit进行赋值，而在setAutoCommit中会调用connect方法，connect方法中又调用了lookup()方法，lookup在传入的参数就是JNDI名称，因此导致可以利用rmi&#x2F;ldap方法进行远程调用。</p>
 <p>fastjson在反序列化json字符时，可以通过autoType来指定反序列化的类，并调用相关方法的set方法（这里调用了dataSourceName和autoCommit方法，反序列化后自动会调用setdataSourceName和setautoCommit方法并把参数传入），而setautoCommit方法中调用了connect方法，connect方法中调用了lookup方法，可以通过JNDI去访问LDAP、RMI等服务，又因为ldap存在命名引用，如果不存在指定文件，就会去指定的url下载到本地,如果下载的.class文件包含无参构造函数和静态代码块就会被自动执行，从而造成任意代码执行。</p>
+<p>高版本默认关闭autoCommit，这时候需要利用白名单中可以生成实例的类去进行利用，比如Throwable和AutoCloseable，刚好为expectClass的子类，那么接下来就能生成typename的对象，从而达成绕过autotype的目的。</p>
 <p> 和log4j JNDI注入漏洞极其相似，都是因为lookup方法没有进行限制导致的漏洞，但前期利用的方式缺不同，fastjson是通过autoType来反序列化JdbcRowSetlmpl类，通过setautoCommit方法调用到lookup方法，而log4j是因为日志调用方法中调用了lookup方法。</p>
 <h4 id="不出网的情况"><a href="#不出网的情况" class="headerlink" title="不出网的情况"></a>不出网的情况</h4><p>参考<a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/where-is-bcel-classloader.html">BCEL ClassLoader去哪了 | 离别歌 (leavesongs.com)</a></p>
 <p><strong>TemplatesImpl利用链</strong> 版本 1.2.24<br>条件：</p>
