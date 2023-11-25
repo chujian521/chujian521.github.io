@@ -16,28 +16,34 @@
   <meta name="author" content="Encounter">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近读了苹果终端安全白皮书和鸿蒙OS安全技术白皮书，记录一下其中身份认证相关的一些行业技术手段。  HarmonyOS “正确的人”鸿蒙OS除了提供传统的数字密码、图形密码等身份认证方式之外，还提供了指纹识别、人脸识别等生物认证手段，并且提供了分布式协同认证的能力，使用户可便捷地以近端设备为入口完成用户身份认证。 指纹认证鸿蒙OS目前提供了电容指纹、光学指纹以及超声指纹识别的支持，三种技术方案的体">
+    <meta name="description" content="一次针对加壳加固的APP的脱壳简单学习，继续深入学习一下Android应用的分析。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="终端安全白皮书--身份认证">
-<meta property="og:url" content="https://chujian521.github.io/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/index.html">
+<meta property="og:title" content="一次Android APP脱壳记录">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="最近读了苹果终端安全白皮书和鸿蒙OS安全技术白皮书，记录一下其中身份认证相关的一些行业技术手段。  HarmonyOS “正确的人”鸿蒙OS除了提供传统的数字密码、图形密码等身份认证方式之外，还提供了指纹识别、人脸识别等生物认证手段，并且提供了分布式协同认证的能力，使用户可便捷地以近端设备为入口完成用户身份认证。 指纹认证鸿蒙OS目前提供了电容指纹、光学指纹以及超声指纹识别的支持，三种技术方案的体">
+<meta property="og:description" content="一次针对加壳加固的APP的脱壳简单学习，继续深入学习一下Android应用的分析。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chujian521.github.io/images/fj71.jpg">
-<meta property="og:image" content="https://chujian521.github.io/images/image-20231120180050366.png">
-<meta property="og:image" content="https://chujian521.github.io/images/image-20231120183120016.png">
-<meta property="article:published_time" content="2023-11-20T07:58:55.000Z">
-<meta property="article:modified_time" content="2023-11-21T11:40:46.579Z">
+<meta property="og:image" content="https://chujian521.github.io/images/fj72.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125171315509.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125171611523.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125193724288.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125193800926.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125193926306.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125194021359.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125195616901.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231125200019474.png">
+<meta property="article:published_time" content="2023-11-25T08:52:02.000Z">
+<meta property="article:modified_time" content="2023-11-25T12:06:30.674Z">
 <meta property="article:author" content="Encounter">
-<meta property="article:tag" content="身份认证">
+<meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://chujian521.github.io/images/fj71.jpg">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj72.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>终端安全白皮书--身份认证 - X&#39;s blog</title>
+  <title>一次Android APP脱壳记录 - X&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -230,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="终端安全白皮书--身份认证"></span>
+            <span id="subtitle" data-typed-text="一次Android APP脱壳记录"></span>
           
         </div>
 
@@ -241,8 +247,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-20 15:58" pubdate>
-          2023年11月20日 下午
+        <time datetime="2023-11-25 16:52" pubdate>
+          2023年11月25日 下午
         </time>
       </span>
     
@@ -253,7 +259,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          1.6k 字
         
       </span>
     
@@ -264,7 +270,7 @@
         
         
         
-          27 分钟
+          14 分钟
         
       </span>
     
@@ -310,41 +316,48 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">终端安全白皮书--身份认证</h1>
+            <h1 style="display: none">一次Android APP脱壳记录</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>最近读了<a target="_blank" rel="noopener" href="https://help.apple.com/pdf/security/zh_CN/apple-platform-security-guide-cn.pdf">苹果终端安全白皮书</a>和<a target="_blank" rel="noopener" href="https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/privacy/privary-new/down/HarmonyOS%203.0.0%20%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6%E6%96%87%E6%A1%A3.pdf">鸿蒙OS安全技术白皮书</a>，记录一下其中身份认证相关的一些行业技术手段。</strong></p>
-<p><img src="/images/fj71.jpg" srcset="/img/loading.gif" lazyload></p>
-<h2 id="HarmonyOS-“正确的人”"><a href="#HarmonyOS-“正确的人”" class="headerlink" title="HarmonyOS “正确的人”"></a>HarmonyOS “正确的人”</h2><p>鸿蒙OS除了提供传统的数字密码、图形密码等身份认证方式之外，还提供了指纹识别、人脸识别等生物认证手段，并且提供了分布式协同认证的能力，使用户可便捷地以近端设备为入口完成用户身份认证。</p>
-<h3 id="指纹认证"><a href="#指纹认证" class="headerlink" title="指纹认证"></a>指纹认证</h3><p>鸿蒙OS目前提供了电容指纹、光学指纹以及超声指纹识别的支持，三种技术方案的体验及安全能力基本一致。</p>
-<p><img src="/images/image-20231120180050366.png" srcset="/img/loading.gif" lazyload alt="指纹识别安全框架"></p>
-<p>鸿蒙OS在指纹传感器和iTrustee之间建立安全通道，确保指纹图像安全地传递，特征提取、活体检测、特征比对完全在iTrustee中进行，基于可信区域进行安全隔离。指纹服务只负责指纹的认证发起和认证结果获取，不接触原始指纹数据。</p>
-<p>指纹模板录入时，特征数据通过iTrustee的安全存储进行保存，并且采用高强度的密码算法加密和完整性保护。指纹数据仅存在于iTrustee，外部应用无法获取指纹的原始数据。</p>
-<p>指纹识别错误接受率大约1&#x2F;50000。鸿蒙OS 的指纹识别支持防暴力破解机制，亮屏场景下指纹识别连续错误 5 次，或熄屏场景下指纹识别连续错误 10 次，将锁定 30 秒不能进行指纹识别。如果指纹识别连续失败 20 次，则必须使用密码来解锁设备。</p>
-<p>72小时未使用密码解锁设备会强制用户输入密码解锁，增强用户对密码的记忆（MIUI等其他OS也是这么做的）。</p>
-<h3 id="人脸认证"><a href="#人脸认证" class="headerlink" title="人脸认证"></a>人脸认证</h3><p>鸿蒙OS提供2D和3D人脸识别方案，3D人脸识别依赖特殊的深度摄像头来实现，2D识别基于普通的前置摄像头来实现。3D人脸识别的安全性更高，可以支持原生支付应用。</p>
-<p><img src="/images/image-20231120183120016.png" srcset="/img/loading.gif" lazyload alt="人脸识别安全框架图"></p>
-<p>存储和录入过程与指纹类似，也是在可信区域进行加密存储。</p>
-<p>人脸识别3D方案的错误接受率大约1&#x2F;3000000，2D方案与指纹类似，在1&#x2F;50000-1&#x2F;100000。人脸识别连续错误5次必须输入密码解锁。双胞胎、亲属、未满13岁儿童错误匹配概率会增加，并且摄像头采集数据可能无法分辨制作精良的头模。</p>
-<h3 id="分布式协同认证"><a href="#分布式协同认证" class="headerlink" title="分布式协同认证"></a>分布式协同认证</h3><p>鸿蒙OS构建了分布式身份认证能力，用户可以将手边最便携的同等安全级别的设备作为访问入口与身份认证入口。</p>
-<h4 id="基于用户秘密的分布式认证"><a href="#基于用户秘密的分布式认证" class="headerlink" title="基于用户秘密的分布式认证"></a>基于用户秘密的分布式认证</h4><p>在设备已经建立可信关系前提下，鸿蒙OS支持身份认证数据采集端和认证端的解耦，采集端提供采集信息和对认证信息的脱敏处理能力，认证端提供认证凭据的比对能力，两端通过PAKE协议（Password-authenticated key agreement，密码认证秘钥协商，窃听者或者中间人无法在不与其他方互动的情况下暴力破解密码，<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Password-authenticated_key_agreement%EF%BC%89%E5%AE%8C%E6%88%90%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A4%E8%AF%81%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%88%B7%E7%A7%98%E5%AF%86%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%97%A0%E9%9C%80%E4%BC%A0%E8%BE%93%E5%88%B0%E5%AF%B9%E7%AB%AF%E6%83%85%E5%86%B5%E4%B8%8B%E5%AE%8C%E6%88%90%E8%BF%9C%E7%A8%8B%E8%AE%A4%E8%AF%81%E3%80%82">https://en.wikipedia.org/wiki/Password-authenticated_key_agreement）完成分布式认证，使用户秘密可以在无需传输到对端情况下完成远程认证。</a></p>
-<p>为了保证采集端与认证端的信息来自合法的安全模块，鸿蒙OS的分布式秘密认证服务会在采集端和认证端设备各自本地的可信环境内生成执行器的身份标识，该身份标识是一个Ed25519（ed25519是一种EdDSA签名，基于SHA-512和Curve25519）公私钥对，用于在远程秘密认证过程中在采集器和认证器之间签名本地传出的数据，验证对方传入的数据。</p>
-<p>身份认证信息在采集设备上完成数据采集和脱敏处理后，在可信环境中生成PAKE认证协议字段，并使用采集端身份标识的私钥对协议字段数据进行签名，之后通过基于设备间的可信关系的端到端加密安全通道传输到认证设备，在认证设备的可信环境中验证签名后完成PAKE认证过程</p>
-<h4 id="基于可信持有物的分布式认证"><a href="#基于可信持有物的分布式认证" class="headerlink" title="基于可信持有物的分布式认证"></a>基于可信持有物的分布式认证</h4><p>用户绑定的蓝牙配件可作为“可信持有物”，以认证用户身份。协同认证提供多因子叠加的增强认证能力，当蓝牙设备连接到待解锁设备并处于佩戴状态时，可以用于解锁设备。当使用该蓝牙配件对用户发起认证时，协同认证将判断蓝牙配件的连接状态、蓝牙配件与手机的距离、并基于持续佩戴 TOKEN 发起手机与配件间的持续佩戴检测， 当三个因子同时满足要求时，才会认证成功。  </p>
-<h2 id="IOS身份认证"><a href="#IOS身份认证" class="headerlink" title="IOS身份认证"></a>IOS身份认证</h2><p>密码是Apple设备安全性的基础，同时用户需要能便捷地访问自己的设备，通常一天会访问上百次。生物认证兼具强密码的安全性同时提供了便利性，只需要手指轻轻一按或者看一眼就可以快速解锁。面容ID和触控ID不会取代密码，而是在大多数情况下实现更快和更简单的访问。</p>
-<p>Apple的生物识别安全性架构依赖于生物识别传感器和安全隔离区之间严格的职责独立性和二者之间的安全的关联性。传感器会捕捉生物识别图像并将其安全传输到安全隔离区（与上面的鸿蒙OS基本一致），同样，这样的架构支持包含传感器和安全隔离区的设备，并且支持将传感器在物理上独立于外围设备，然后与搭载Apple芯片的Mac中的安全隔离区安全配对（类似于鸿蒙OS的分布协同认证）</p>
-<h3 id="面容ID"><a href="#面容ID" class="headerlink" title="面容ID"></a>面容ID</h3><p>借助于原深感摄像头系统所使用的先进技术来准确绘制用户面部的几何特征，从而提供安全直观的认证方法。使用神经网络来确认用户对屏幕的注视、匹配和反欺诈。用户只需要看一眼即可解锁手机，使用支持的设备时，甚至带着口罩也能解锁，并且可以自适应外貌变化，并谨慎的保护用户生物识别数据的隐私和安全。</p>
-<p>在需要用到面容ID时摄像头首先会检测用户的脸部，检测到脸部后面容ID通过检测到用户<strong>睁开双眼注释设备</strong>来确认用户是否有解锁意图；对于辅助功能，当“旁白”激活时，注视检测会停用；戴口罩使用时始终会检测注视</p>
-<p>原深感摄像头确认存在注视着设备的脸部后，会投影并读取数千个红外点以绘制脸部的深度图和 2D 红外图像。此数据用于创建一个 2D 图像和深度图序列，经过数字签名后发送到安全隔区。为抵制数字和实体诈骗，原深感摄像头会随机化捕捉到的 2D 图像和深度图序列，并投影出特定设备的随机图案。神经网络引擎（在安全隔区中受到保护）中的一部分会将此数据转换为数学表达式，并将该表达式与注册的脸部数据进行对比。此注册的脸部数据本身就是捕捉自用户脸部各种姿态转换而成的数学表达式。</p>
-<h3 id="触控ID"><a href="#触控ID" class="headerlink" title="触控ID"></a>触控ID</h3><p>指纹传感器检测到指纹接触后，会触发先进的成像阵列来扫描手指，然后将扫描结果发送至安全隔区。用于保护这种连接的通道各有不同，具体取决于触控 ID 传感器是否内建于带安全隔区的设备中或者是否处于独立的外围设备中。</p>
-<p> 指纹扫描被向量化处理以进行分析的同时，光栅扫描结果会临时储存在安全隔区的加密内存中，之后便会被丢弃。 此分析采用皮下纹路走向角度映射，这是一种有损过程，会在分析完成后丢弃所需用于重建用户实际指纹的“指纹详细数据”。在注册期间，生成的节点图以一种只能由安全隔区读取的加密格式作为模板储存，但不包含任何身份信息， 以用于对比将来的匹配对象。此数据绝对不会离开设备，不会发送给 Apple，也不会包括在设备备份中。</p>
-<p>大家方案基本都差不多。</p>
-<h2 id="科研领域的一些智能手机上的认证技术"><a href="#科研领域的一些智能手机上的认证技术" class="headerlink" title="科研领域的一些智能手机上的认证技术"></a>科研领域的一些智能手机上的认证技术</h2><h3 id="手势认证-Gesture-authentication"><a href="#手势认证-Gesture-authentication" class="headerlink" title="手势认证(Gesture authentication)"></a>手势认证(Gesture authentication)</h3><p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9152710">Gesture Authentication for Smartphones: Evaluation of Gesture Password Selection Policies | IEEE Conference Publication | IEEE Xplore</a></p>
-<h3 id="运动和触摸状态"><a href="#运动和触摸状态" class="headerlink" title="运动和触摸状态"></a>运动和触摸状态</h3><p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9852519">Hold On and Swipe: A Touch-Movement Based Continuous Authentication Schema based on Machine Learning | IEEE Conference Publication | IEEE Xplore</a></p>
-<h3 id="声音和唇部动作"><a href="#声音和唇部动作" class="headerlink" title="声音和唇部动作"></a>声音和唇部动作</h3><p><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8851272">LVID: A Multimodal Biometrics Authentication System on Smartphones | IEEE Journals &amp; Magazine | IEEE Xplore</a></p>
-<h3 id="步态、击键等等"><a href="#步态、击键等等" class="headerlink" title="步态、击键等等"></a>步态、击键等等</h3>
+                <p><strong>一次针对加壳加固的APP的脱壳简单学习，继续深入学习一下Android应用的分析。</strong></p>
+<p><img src="/images/fj72.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="Jadx初步分析确认壳"><a href="#Jadx初步分析确认壳" class="headerlink" title="Jadx初步分析确认壳"></a>Jadx初步分析确认壳</h2><p>最开始使用一些ApkScan-PKID之类的查壳工具没有检测出壳（后来用Xposed后使用MT管理器也正确检查到了壳），于是就使用Jadx手动看一下情况。</p>
+<h3 id="Jadx简介"><a href="#Jadx简介" class="headerlink" title="Jadx简介"></a>Jadx简介</h3><p>Jadx仓库Github地址：<a target="_blank" rel="noopener" href="https://github.com/skylot/jadx">skylot&#x2F;jadx: Dex to Java decompiler (github.com)</a></p>
+<p>jadx - Dex 到 Java 反编译器，用于从 Android Dex 和 Apk 文件生成 Java 源代码的命令行和 GUI 工具</p>
+<p>从release中下载最新的压缩包：<a target="_blank" rel="noopener" href="https://github.com/skylot/jadx/releases">Releases · skylot&#x2F;jadx (github.com)</a></p>
+<p>解压后打开&#x2F;bin&#x2F;目录，可以看到下面的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop/jadx/bin]<br>└─$ ll<br>total 40<br>-rwxr-xr-x 1 kali kali  9698 Apr 20  2023 jadx<br>-rwxr-xr-x 1 kali kali  4115 Apr 20  2023 jadx.bat<br>-rwxr-xr-x 1 kali kali 10419 Apr 20  2023 jadx-gui<br>-rwxr-xr-x 1 kali kali  4871 Apr 20  2023 jadx-gui.bat<br></code></pre></td></tr></table></figure>
+
+<p>.bat批处理文件是Windows平台运行的，Linux可以使用<code>./jadx</code>运行命令行版本或者<code>./jadx-gui</code>运行gui版本，运行gui版本会展示如下界面：</p>
+<p><img src="/images/image-20231125171315509.png" srcset="/img/loading.gif" lazyload alt="jadx-gui"></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>我们将待分析的app拖进去就可以。可以看到代码很少，只有一个入口包装代理应用，初步怀疑加壳保护：</p>
+<p><img src="/images/image-20231125171611523.png" srcset="/img/loading.gif" lazyload></p>
+<p>打开Resource发现里面有一个tencent_stub文件，搜索一下就发现了完全符合腾讯御安全加固的特征，入口类的load的文件目录等也都符合。</p>
+<h2 id="Xposed-反射大师脱壳"><a href="#Xposed-反射大师脱壳" class="headerlink" title="Xposed+反射大师脱壳"></a>Xposed+反射大师脱壳</h2><p>利用xposed，将loadClass方法劫持住，每当loadClass方法调用完成后，用xposed执行后置方法。获取方法加载的class对象，然后调用getDex方法。拿到对应的dex文件引用，最后将dex文件序列成byte数据，写到自定义保存文件里面去。就能拿到脱壳后的dex文件。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装Xposed的app链接:<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/13f_xXnFRSvT-yotaxL7Igg">https://pan.baidu.com/s/13f_xXnFRSvT-yotaxL7Igg</a> 提取码: kthq</p>
+<p>也可以使用夜神安卓模拟器 Android 5中的应用商店直接搜索Xposed安装即可，安装过程详见：<a target="_blank" rel="noopener" href="https://support.yeshen.com/zh-CN/qt/xp">夜神模拟器如何安装xposed框架 | 夜神模拟器帮助中心 (yeshen.com)</a></p>
+<p>反射大师下载地址：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1ALN5n9rsfrV1lqWgaXXY2A">https://pan.baidu.com/s/1ALN5n9rsfrV1lqWgaXXY2A</a> 提取码：h5nc</p>
+<p>下载之后直接拖到模拟器安装，然后打开Xposed选择该模块，然后按照提示重启即可。</p>
+<h3 id="脱壳"><a href="#脱壳" class="headerlink" title="脱壳"></a>脱壳</h3><p>打开反射大师，选择需要脱壳的APP：</p>
+<p><img src="/images/image-20231125193724288.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/image-20231125193800926.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后打开需要调试的程序，点击红色的芒星：</p>
+<p><img src="/images/image-20231125193926306.png" srcset="/img/loading.gif" lazyload></p>
+<p>点击写出DEX，然后确定即可：</p>
+<p><img src="/images/image-20231125194021359.png" srcset="/img/loading.gif" lazyload></p>
+<p>随后使用文件查看器在目录<code>/storage/emulated/0/</code>下即可看到导出的classes.dex文件。</p>
+<p>随后使用adb或者直接使用夜神模拟器的文件共享将classes文件导出即可。</p>
+<p><a target="_blank" rel="noopener" href="https://support.yeshen.com/zh-CN/often/wjhc">模拟器与电脑文件如何互传？ | 夜神模拟器帮助中心 (yeshen.com)</a></p>
+<h2 id="Jadx分析脱壳后的Class文件"><a href="#Jadx分析脱壳后的Class文件" class="headerlink" title="Jadx分析脱壳后的Class文件"></a>Jadx分析脱壳后的Class文件</h2><p>运行Jadx-gui，将导出的Classes.dex文件拖到窗口，如果报错dex校验和校验失败就点击File-&gt;Preferences，将checksum选项改为no：</p>
+<p><img src="/images/image-20231125195616901.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后就得到了源代码，可以用于审计：</p>
+<p><img src="/images/image-20231125200019474.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>中间其实有尝试使用ida去逆向，参考的<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/478322871">某APP加固产品的深入分析 - 知乎 (zhihu.com)</a>，但是由于ida用的不熟，混淆的逻辑也比较复杂，暂时没有使用该方法成功脱壳，未来仍需努力</p>
+
                 
               </div>
             
@@ -356,7 +369,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/">#身份认证</a>
+        <a href="/tags/Android/">#Android</a>
       
     </div>
   
@@ -368,8 +381,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>终端安全白皮书--身份认证</div>
-      <div>https://chujian521.github.io/blog/2023/11/20/终端安全白皮书-身份认证/</div>
+      <div>一次Android APP脱壳记录</div>
+      <div>https://chujian521.github.io/blog/2023/11/25/一次Android-APP脱壳记录/</div>
     </div>
     <div class="license-meta">
       
@@ -381,7 +394,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月20日</div>
+          <div>2023年11月25日</div>
         </div>
       
       
@@ -413,18 +426,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/" title="一次Android APP脱壳记录">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">一次Android APP脱壳记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2023/11/19/%E4%B8%80%E6%AC%A1%E5%AF%B9Android-APP%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="一次对Android APP简单的逆向分析">
-                        <span class="hidden-mobile">一次对Android APP简单的逆向分析</span>
+                      <a href="/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" title="终端安全白皮书--身份认证">
+                        <span class="hidden-mobile">终端安全白皮书--身份认证</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -437,7 +444,7 @@
             
   <article id="comments" lazyload>
     
-  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/'></div>
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/'></div>
   <script type="text/javascript">
     Fluid.utils.loadComments('#SOHUCS', function() {
       Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {

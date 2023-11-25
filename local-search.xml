@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>一次Android APP脱壳记录</title>
+    <link href="/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/"/>
+    <url>/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/</url>
+    
+    <content type="html"><![CDATA[<p><strong>一次针对加壳加固的APP的脱壳简单学习，继续深入学习一下Android应用的分析。</strong></p><p><img src="/images/fj72.jpg"></p><span id="more"></span><h2 id="Jadx初步分析确认壳"><a href="#Jadx初步分析确认壳" class="headerlink" title="Jadx初步分析确认壳"></a>Jadx初步分析确认壳</h2><p>最开始使用一些ApkScan-PKID之类的查壳工具没有检测出壳（后来用Xposed后使用MT管理器也正确检查到了壳），于是就使用Jadx手动看一下情况。</p><h3 id="Jadx简介"><a href="#Jadx简介" class="headerlink" title="Jadx简介"></a>Jadx简介</h3><p>Jadx仓库Github地址：<a href="https://github.com/skylot/jadx">skylot&#x2F;jadx: Dex to Java decompiler (github.com)</a></p><p>jadx - Dex 到 Java 反编译器，用于从 Android Dex 和 Apk 文件生成 Java 源代码的命令行和 GUI 工具</p><p>从release中下载最新的压缩包：<a href="https://github.com/skylot/jadx/releases">Releases · skylot&#x2F;jadx (github.com)</a></p><p>解压后打开&#x2F;bin&#x2F;目录，可以看到下面的文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop/jadx/bin]<br>└─$ ll<br>total 40<br>-rwxr-xr-x 1 kali kali  9698 Apr 20  2023 jadx<br>-rwxr-xr-x 1 kali kali  4115 Apr 20  2023 jadx.bat<br>-rwxr-xr-x 1 kali kali 10419 Apr 20  2023 jadx-gui<br>-rwxr-xr-x 1 kali kali  4871 Apr 20  2023 jadx-gui.bat<br></code></pre></td></tr></table></figure><p>.bat批处理文件是Windows平台运行的，Linux可以使用<code>./jadx</code>运行命令行版本或者<code>./jadx-gui</code>运行gui版本，运行gui版本会展示如下界面：</p><p><img src="/images/image-20231125171315509.png" alt="jadx-gui"></p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>我们将待分析的app拖进去就可以。可以看到代码很少，只有一个入口包装代理应用，初步怀疑加壳保护：</p><p><img src="/images/image-20231125171611523.png"></p><p>打开Resource发现里面有一个tencent_stub文件，搜索一下就发现了完全符合腾讯御安全加固的特征，入口类的load的文件目录等也都符合。</p><h2 id="Xposed-反射大师脱壳"><a href="#Xposed-反射大师脱壳" class="headerlink" title="Xposed+反射大师脱壳"></a>Xposed+反射大师脱壳</h2><p>利用xposed，将loadClass方法劫持住，每当loadClass方法调用完成后，用xposed执行后置方法。获取方法加载的class对象，然后调用getDex方法。拿到对应的dex文件引用，最后将dex文件序列成byte数据，写到自定义保存文件里面去。就能拿到脱壳后的dex文件。</p><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装Xposed的app链接:<a href="https://pan.baidu.com/s/13f_xXnFRSvT-yotaxL7Igg">https://pan.baidu.com/s/13f_xXnFRSvT-yotaxL7Igg</a> 提取码: kthq</p><p>也可以使用夜神安卓模拟器 Android 5中的应用商店直接搜索Xposed安装即可，安装过程详见：<a href="https://support.yeshen.com/zh-CN/qt/xp">夜神模拟器如何安装xposed框架 | 夜神模拟器帮助中心 (yeshen.com)</a></p><p>反射大师下载地址：<a href="https://pan.baidu.com/s/1ALN5n9rsfrV1lqWgaXXY2A">https://pan.baidu.com/s/1ALN5n9rsfrV1lqWgaXXY2A</a> 提取码：h5nc</p><p>下载之后直接拖到模拟器安装，然后打开Xposed选择该模块，然后按照提示重启即可。</p><h3 id="脱壳"><a href="#脱壳" class="headerlink" title="脱壳"></a>脱壳</h3><p>打开反射大师，选择需要脱壳的APP：</p><p><img src="/images/image-20231125193724288.png"></p><p><img src="/images/image-20231125193800926.png"></p><p>然后打开需要调试的程序，点击红色的芒星：</p><p><img src="/images/image-20231125193926306.png"></p><p>点击写出DEX，然后确定即可：</p><p><img src="/images/image-20231125194021359.png"></p><p>随后使用文件查看器在目录<code>/storage/emulated/0/</code>下即可看到导出的classes.dex文件。</p><p>随后使用adb或者直接使用夜神模拟器的文件共享将classes文件导出即可。</p><p><a href="https://support.yeshen.com/zh-CN/often/wjhc">模拟器与电脑文件如何互传？ | 夜神模拟器帮助中心 (yeshen.com)</a></p><h2 id="Jadx分析脱壳后的Class文件"><a href="#Jadx分析脱壳后的Class文件" class="headerlink" title="Jadx分析脱壳后的Class文件"></a>Jadx分析脱壳后的Class文件</h2><p>运行Jadx-gui，将导出的Classes.dex文件拖到窗口，如果报错dex校验和校验失败就点击File-&gt;Preferences，将checksum选项改为no：</p><p><img src="/images/image-20231125195616901.png"></p><p>然后就得到了源代码，可以用于审计：</p><p><img src="/images/image-20231125200019474.png"></p><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>中间其实有尝试使用ida去逆向，参考的<a href="https://zhuanlan.zhihu.com/p/478322871">某APP加固产品的深入分析 - 知乎 (zhihu.com)</a>，但是由于ida用的不熟，混淆的逻辑也比较复杂，暂时没有使用该方法成功脱壳，未来仍需努力</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>终端安全白皮书--身份认证</title>
     <link href="/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/"/>
     <url>/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</url>
