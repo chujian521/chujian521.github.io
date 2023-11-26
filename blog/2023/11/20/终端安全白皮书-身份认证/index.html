@@ -16,18 +16,18 @@
   <meta name="author" content="Encounter">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近读了苹果终端安全白皮书和鸿蒙OS安全技术白皮书，记录一下其中身份认证相关的一些行业技术手段。  HarmonyOS “正确的人”鸿蒙OS除了提供传统的数字密码、图形密码等身份认证方式之外，还提供了指纹识别、人脸识别等生物认证手段，并且提供了分布式协同认证的能力，使用户可便捷地以近端设备为入口完成用户身份认证。 指纹认证鸿蒙OS目前提供了电容指纹、光学指纹以及超声指纹识别的支持，三种技术方案的体">
+    <meta name="description" content="最近读了苹果终端安全白皮书和鸿蒙OS安全技术白皮书，记录一下其中身份认证相关的一些行业技术手段。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="终端安全白皮书--身份认证">
 <meta property="og:url" content="https://chujian521.github.io/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/index.html">
 <meta property="og:site_name" content="X&#39;s blog">
-<meta property="og:description" content="最近读了苹果终端安全白皮书和鸿蒙OS安全技术白皮书，记录一下其中身份认证相关的一些行业技术手段。  HarmonyOS “正确的人”鸿蒙OS除了提供传统的数字密码、图形密码等身份认证方式之外，还提供了指纹识别、人脸识别等生物认证手段，并且提供了分布式协同认证的能力，使用户可便捷地以近端设备为入口完成用户身份认证。 指纹认证鸿蒙OS目前提供了电容指纹、光学指纹以及超声指纹识别的支持，三种技术方案的体">
+<meta property="og:description" content="最近读了苹果终端安全白皮书和鸿蒙OS安全技术白皮书，记录一下其中身份认证相关的一些行业技术手段。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj71.jpg">
 <meta property="og:image" content="https://chujian521.github.io/images/image-20231120180050366.png">
 <meta property="og:image" content="https://chujian521.github.io/images/image-20231120183120016.png">
 <meta property="article:published_time" content="2023-11-20T07:58:55.000Z">
-<meta property="article:modified_time" content="2023-11-21T11:40:46.579Z">
+<meta property="article:modified_time" content="2023-11-26T06:03:05.812Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="身份认证">
 <meta name="twitter:card" content="summary_large_image">
@@ -317,6 +317,8 @@
                 
                 <p><strong>最近读了<a target="_blank" rel="noopener" href="https://help.apple.com/pdf/security/zh_CN/apple-platform-security-guide-cn.pdf">苹果终端安全白皮书</a>和<a target="_blank" rel="noopener" href="https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/privacy/privary-new/down/HarmonyOS%203.0.0%20%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6%E6%96%87%E6%A1%A3.pdf">鸿蒙OS安全技术白皮书</a>，记录一下其中身份认证相关的一些行业技术手段。</strong></p>
 <p><img src="/images/fj71.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
 <h2 id="HarmonyOS-“正确的人”"><a href="#HarmonyOS-“正确的人”" class="headerlink" title="HarmonyOS “正确的人”"></a>HarmonyOS “正确的人”</h2><p>鸿蒙OS除了提供传统的数字密码、图形密码等身份认证方式之外，还提供了指纹识别、人脸识别等生物认证手段，并且提供了分布式协同认证的能力，使用户可便捷地以近端设备为入口完成用户身份认证。</p>
 <h3 id="指纹认证"><a href="#指纹认证" class="headerlink" title="指纹认证"></a>指纹认证</h3><p>鸿蒙OS目前提供了电容指纹、光学指纹以及超声指纹识别的支持，三种技术方案的体验及安全能力基本一致。</p>
 <p><img src="/images/image-20231120180050366.png" srcset="/img/loading.gif" lazyload alt="指纹识别安全框架"></p>
