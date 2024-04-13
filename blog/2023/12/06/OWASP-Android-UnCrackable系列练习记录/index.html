@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前一阵子学习了一些简单的APP逆向分析技术，以及使用Frida进行对关键逻辑挂钩子修改获取一些数值，现在针对学习过的东西做一下实践，尝试破解一下MAS Crackmes - OWASP Mobile Application Security。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OWASP Android UnCrackable系列练习记录">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/12/06/OWASP-Android-UnCrackable%E7%B3%BB%E5%88%97%E7%BB%83%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="前一阵子学习了一些简单的APP逆向分析技术，以及使用Frida进行对关键逻辑挂钩子修改获取一些数值，现在针对学习过的东西做一下实践，尝试破解一下MAS Crackmes - OWASP Mobile Application Security。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231207221728531.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231206153045187.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231206152729115.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231206154230807.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231206154637800.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231206170744015.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231207181412335.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231207190649721.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231214160641224.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231214155830206.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231214161006657.png">
+<meta property="article:published_time" content="2023-12-06T05:52:24.000Z">
+<meta property="article:modified_time" content="2023-12-25T08:43:00.000Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/image-20231207221728531.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>OWASP Android UnCrackable系列练习记录 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OWASP Android UnCrackable系列练习记录"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-06 13:52" pubdate>
+          2023年12月6日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          35k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          291 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">OWASP Android UnCrackable系列练习记录</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前一阵子学习了一些简单的APP逆向分析技术，以及使用Frida进行对关键逻辑挂钩子修改获取一些数值，现在针对学习过的东西做一下实践，尝试破解一下<a target="_blank" rel="noopener" href="https://mas.owasp.org/crackmes/">MAS Crackmes - OWASP Mobile Application Security</a>。</p>
+<p><img src="/images/image-20231207221728531.png" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="Android-UnCrackable-L1"><a href="#Android-UnCrackable-L1" class="headerlink" title="Android UnCrackable L1"></a>Android UnCrackable L1</h2><h3 id="分析逻辑"><a href="#分析逻辑" class="headerlink" title="分析逻辑"></a>分析逻辑</h3><p>模拟器安装app：</p>
+<p><img src="/images/image-20231206153045187.png" srcset="/img/loading.gif" lazyload></p>
+<p>提示检测到了root环境，点击ok就会自动退出。</p>
+<p>jadx一键分析，可以得到如下代码：</p>
+<h4 id="sg-vantagepoint-uncrackable1-MainActivity："><a href="#sg-vantagepoint-uncrackable1-MainActivity：" class="headerlink" title="sg.vantagepoint.uncrackable1.MainActivity："></a>sg.vantagepoint.uncrackable1.MainActivity：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.uncrackable1;<br><br><span class="hljs-keyword">import</span> android.app.Activity;<br><span class="hljs-keyword">import</span> android.app.AlertDialog;<br><span class="hljs-keyword">import</span> android.content.DialogInterface;<br><span class="hljs-keyword">import</span> android.os.Bundle;<br><span class="hljs-keyword">import</span> android.view.View;<br><span class="hljs-keyword">import</span> android.widget.EditText;<br><span class="hljs-keyword">import</span> owasp.mstg.uncrackable1.R;<br><span class="hljs-keyword">import</span> sg.vantagepoint.a.b;<br><span class="hljs-keyword">import</span> sg.vantagepoint.a.c;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Activity</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">a</span><span class="hljs-params">(String str)</span> &#123;<br>        <span class="hljs-type">AlertDialog</span> <span class="hljs-variable">create</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AlertDialog</span>.Builder(<span class="hljs-built_in">this</span>).create();<br>        create.setTitle(str);<br>        create.setMessage(<span class="hljs-string">&quot;This is unacceptable. The app is now going to exit.&quot;</span>);<br>        create.setButton(-<span class="hljs-number">3</span>, <span class="hljs-string">&quot;OK&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DialogInterface</span>.OnClickListener() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable1.MainActivity.1</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.content.DialogInterface.OnClickListener</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClick</span><span class="hljs-params">(DialogInterface dialogInterface, <span class="hljs-type">int</span> i)</span> &#123;<br>                System.exit(<span class="hljs-number">0</span>);<br>            &#125;<br>        &#125;);<br>        create.setCancelable(<span class="hljs-literal">false</span>);<br>        create.show();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.app.Activity</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle bundle)</span> &#123;<br>        <span class="hljs-keyword">if</span> (c.a() || c.b() || c.c()) &#123;<br>            a(<span class="hljs-string">&quot;Root detected!&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (b.a(getApplicationContext())) &#123;<br>            a(<span class="hljs-string">&quot;App is debuggable!&quot;</span>);<br>        &#125;<br>        <span class="hljs-built_in">super</span>.onCreate(bundle);<br>        setContentView(R.layout.activity_main);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">verify</span><span class="hljs-params">(View view)</span> &#123;<br>        String str;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> ((EditText) findViewById(R.id.edit_text)).getText().toString();<br>        <span class="hljs-type">AlertDialog</span> <span class="hljs-variable">create</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AlertDialog</span>.Builder(<span class="hljs-built_in">this</span>).create();<br>        <span class="hljs-keyword">if</span> (a.a(obj)) &#123;<br>            create.setTitle(<span class="hljs-string">&quot;Success!&quot;</span>);<br>            str = <span class="hljs-string">&quot;This is the correct secret.&quot;</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            create.setTitle(<span class="hljs-string">&quot;Nope...&quot;</span>);<br>            str = <span class="hljs-string">&quot;That&#x27;s not it. Try again.&quot;</span>;<br>        &#125;<br>        create.setMessage(str);<br>        create.setButton(-<span class="hljs-number">3</span>, <span class="hljs-string">&quot;OK&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DialogInterface</span>.OnClickListener() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable1.MainActivity.2</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.content.DialogInterface.OnClickListener</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClick</span><span class="hljs-params">(DialogInterface dialogInterface, <span class="hljs-type">int</span> i)</span> &#123;<br>                dialogInterface.dismiss();<br>            &#125;<br>        &#125;);<br>        create.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这是APP的主逻辑，首先对设备root状态进行检测，如果c.a()、c.b()、c.c()任意一个返回true就认定为设备已经被root就会退出，然后有一个verify方法调用了a.a(obj)，如果a.a(obj)返回true就认为secret正确，那么本次分析的主逻辑就是先去除root检测，然后再找到secret即可。</p>
+<h4 id="sg-vantagepoint-uncrackable1-a："><a href="#sg-vantagepoint-uncrackable1-a：" class="headerlink" title="sg.vantagepoint.uncrackable1.a："></a>sg.vantagepoint.uncrackable1.a：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.uncrackable1;<br><br><span class="hljs-keyword">import</span> android.util.Base64;<br><span class="hljs-keyword">import</span> android.util.Log;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">a</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">a</span><span class="hljs-params">(String str)</span> &#123;<br>        <span class="hljs-type">byte</span>[] bArr;<br>        <span class="hljs-type">byte</span>[] bArr2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">try</span> &#123;<br>            bArr = sg.vantagepoint.a.a.a(b(<span class="hljs-string">&quot;8d127684cbc37c17616d806cf50473cc&quot;</span>), Base64.decode(<span class="hljs-string">&quot;5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc=&quot;</span>, <span class="hljs-number">0</span>));<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            Log.d(<span class="hljs-string">&quot;CodeCheck&quot;</span>, <span class="hljs-string">&quot;AES error:&quot;</span> + e.getMessage());<br>            bArr = bArr2;<br>        &#125;<br>        <span class="hljs-keyword">return</span> str.equals(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(bArr));<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">byte</span>[] b(String str) &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">length</span> <span class="hljs-operator">=</span> str.length();<br>        <span class="hljs-type">byte</span>[] bArr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[length / <span class="hljs-number">2</span>];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; length; i += <span class="hljs-number">2</span>) &#123;<br>            bArr[i / <span class="hljs-number">2</span>] = (<span class="hljs-type">byte</span>) ((Character.digit(str.charAt(i), <span class="hljs-number">16</span>) &lt;&lt; <span class="hljs-number">4</span>) + Character.digit(str.charAt(i + <span class="hljs-number">1</span>), <span class="hljs-number">16</span>));<br>        &#125;<br>        <span class="hljs-keyword">return</span> bArr;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这段代码是判断输入的信息与原始AES加密的信息是否一致的方法，到智利其实已经给出了密文和密钥，直接去破译secret应该也可以，不过我们既然是实践frida就继续分析下去吧。</p>
+<h4 id="sg-vantagepoint-a-a："><a href="#sg-vantagepoint-a-a：" class="headerlink" title="sg.vantagepoint.a.a："></a>sg.vantagepoint.a.a：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.a;<br><br><span class="hljs-keyword">import</span> javax.crypto.Cipher;<br><span class="hljs-keyword">import</span> javax.crypto.spec.SecretKeySpec;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">a</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">byte</span>[] a(<span class="hljs-type">byte</span>[] bArr, <span class="hljs-type">byte</span>[] bArr2) &#123;<br>        <span class="hljs-type">SecretKeySpec</span> <span class="hljs-variable">secretKeySpec</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SecretKeySpec</span>(bArr, <span class="hljs-string">&quot;AES/ECB/PKCS7Padding&quot;</span>);<br>        <span class="hljs-type">Cipher</span> <span class="hljs-variable">cipher</span> <span class="hljs-operator">=</span> Cipher.getInstance(<span class="hljs-string">&quot;AES&quot;</span>);<br>        cipher.init(<span class="hljs-number">2</span>, secretKeySpec);<br>        <span class="hljs-keyword">return</span> cipher.doFinal(bArr2);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个就是上面sg.vantagepoint.uncrackable1.a中调用的解密的方法。</p>
+<h4 id="sg-vantagepoint-a-b："><a href="#sg-vantagepoint-a-b：" class="headerlink" title="sg.vantagepoint.a.b："></a>sg.vantagepoint.a.b：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.a;<br><br><span class="hljs-keyword">import</span> android.content.Context;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">b</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">a</span><span class="hljs-params">(Context context)</span> &#123;<br>        <span class="hljs-keyword">return</span> (context.getApplicationContext().getApplicationInfo().flags &amp; <span class="hljs-number">2</span>) != <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>主逻辑里面调用用来判断是否处于调试状态的代码</p>
+<h4 id="sg-vantagepoint-a-c："><a href="#sg-vantagepoint-a-c：" class="headerlink" title="sg.vantagepoint.a.c："></a>sg.vantagepoint.a.c：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.a;<br><br><span class="hljs-keyword">import</span> android.os.Build;<br><span class="hljs-keyword">import</span> java.io.File;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">c</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">a</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">for</span> (String str : System.getenv(<span class="hljs-string">&quot;PATH&quot;</span>).split(<span class="hljs-string">&quot;:&quot;</span>)) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(str, <span class="hljs-string">&quot;su&quot;</span>).exists()) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">b</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> Build.TAGS;<br>        <span class="hljs-keyword">return</span> str != <span class="hljs-literal">null</span> &amp;&amp; str.contains(<span class="hljs-string">&quot;test-keys&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">c</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">for</span> (String str : <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;/system/app/Superuser.apk&quot;</span>, <span class="hljs-string">&quot;/system/xbin/daemonsu&quot;</span>, <span class="hljs-string">&quot;/system/etc/init.d/99SuperSUDaemon&quot;</span>, <span class="hljs-string">&quot;/system/bin/.ext/.su&quot;</span>, <span class="hljs-string">&quot;/system/etc/.has_su_daemon&quot;</span>, <span class="hljs-string">&quot;/system/etc/.installed_su_daemon&quot;</span>, <span class="hljs-string">&quot;/dev/com.koushikdutta.superuser.daemon/&quot;</span>&#125;) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(str).exists()) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面提到的用于判断是否Root的代码。</p>
+<h3 id="Frida挂钩子"><a href="#Frida挂钩子" class="headerlink" title="Frida挂钩子"></a>Frida挂钩子</h3><h4 id="绕过Root检测"><a href="#绕过Root检测" class="headerlink" title="绕过Root检测"></a>绕过Root检测</h4><p>根据上面的分析，我们只需要将三个检测root特征的函数全部返回false即可，因此我们就可以编写如下frida脚本：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.a.c&#x27;</span>);<br>    func.<span class="hljs-property">a</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;;<br>	func.<span class="hljs-property">b</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.<span class="hljs-property">c</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>运行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">frida -U -f owasp.mstg.uncrackable1 -l frida_script.js<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20231206152729115.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以看到原本检测到了root的界面就消失了，不会自动退出。</p>
+<h3 id="获取secret"><a href="#获取secret" class="headerlink" title="获取secret"></a>获取secret</h3><p>根据上面的分析，我们只需要在调用<code>sg.vantagepoint.a.a.a</code>方法的时候勾取返回值输出即可，因此可以继续完善我们的最终脚本如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.a.c&#x27;</span>);<br>    func.<span class="hljs-property">a</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;;<br>	func.<span class="hljs-property">b</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.<span class="hljs-property">c</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	<span class="hljs-comment">//var func1 = Java.use(&#x27;sg.vantagepoint.uncrackable1.a&#x27;);</span><br>	<span class="hljs-comment">//func1.a.implementation = function(str) &#123;</span><br>    <span class="hljs-comment">//    return true;</span><br>    <span class="hljs-comment">//&#125;;</span><br>	<span class="hljs-keyword">var</span> func2 = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.a.a&#x27;</span>);<br>	func2.<span class="hljs-property">a</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">str1, str2</span>) &#123;<br>		<span class="hljs-keyword">var</span> res = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">a</span>(str1, str2);<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res);<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>执行脚本后，随意输入字符点击VERIFY</p>
+<p><img src="/images/image-20231206154230807.png" srcset="/img/loading.gif" lazyload></p>
+<p>虽然是错误的，但是我们可以在控制台看到正确的字节序列</p>
+<p>最终的执行结果打印出的数据如下：</p>
+<p><code>[SM-N976N::owasp.mstg.uncrackable1 ]-&gt; 73,32,119,97,110,116,32,116,111,32,98,101,108,105,101,118,101</code></p>
+<p>我们使用python将字节数组转换一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(<span class="hljs-built_in">bytes</span>([<span class="hljs-number">73</span>,<span class="hljs-number">32</span>,<span class="hljs-number">119</span>,<span class="hljs-number">97</span>,<span class="hljs-number">110</span>,<span class="hljs-number">116</span>,<span class="hljs-number">32</span>,<span class="hljs-number">116</span>,<span class="hljs-number">111</span>,<span class="hljs-number">32</span>,<span class="hljs-number">98</span>,<span class="hljs-number">101</span>,<span class="hljs-number">108</span>,<span class="hljs-number">105</span>,<span class="hljs-number">101</span>,<span class="hljs-number">118</span>,<span class="hljs-number">101</span>]).decode())<br>I want to believe<br></code></pre></td></tr></table></figure>
+
+<p>最终结果就是<code>I want to believe</code>：</p>
+<p><img src="/images/image-20231206154637800.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="Android-UnCrackable-L2"><a href="#Android-UnCrackable-L2" class="headerlink" title="Android UnCrackable L2"></a>Android UnCrackable L2</h2><h3 id="分析逻辑-1"><a href="#分析逻辑-1" class="headerlink" title="分析逻辑"></a>分析逻辑</h3><p>Root检测和调试检测与L1中相同，这里就不再冗余分析了。</p>
+<h4 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a>MainActivity</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><code class="hljs typescript">package sg.<span class="hljs-property">vantagepoint</span>.<span class="hljs-property">uncrackable2</span>;<br><br><span class="hljs-keyword">import</span> android.<span class="hljs-property">app</span>.<span class="hljs-property">AlertDialog</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">content</span>.<span class="hljs-property">DialogInterface</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">os</span>.<span class="hljs-property">AsyncTask</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">os</span>.<span class="hljs-property">Bundle</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">os</span>.<span class="hljs-property">Debug</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">os</span>.<span class="hljs-property">SystemClock</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">support</span>.<span class="hljs-property">v7</span>.<span class="hljs-property">app</span>.<span class="hljs-property">c</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">view</span>.<span class="hljs-property">View</span>;<br><span class="hljs-keyword">import</span> android.<span class="hljs-property">widget</span>.<span class="hljs-property">EditText</span>;<br><span class="hljs-keyword">import</span> owasp.<span class="hljs-property">mstg</span>.<span class="hljs-property">uncrackable2</span>.<span class="hljs-property">R</span>;<br><span class="hljs-keyword">import</span> sg.<span class="hljs-property">vantagepoint</span>.<span class="hljs-property">a</span>.<span class="hljs-property">a</span>;<br><span class="hljs-keyword">import</span> sg.<span class="hljs-property">vantagepoint</span>.<span class="hljs-property">a</span>.<span class="hljs-property">b</span>;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">c</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-title class_">CodeCheck</span> m;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-title class_">System</span>.<span class="hljs-title function_">loadLibrary</span>(<span class="hljs-string">&quot;foo&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: private */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">a</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> str</span>) &#123;<br>        <span class="hljs-title class_">AlertDialog</span> create = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AlertDialog</span>.<span class="hljs-title class_">Builder</span>(<span class="hljs-variable language_">this</span>).<span class="hljs-title function_">create</span>();<br>        create.<span class="hljs-title function_">setTitle</span>(str);<br>        create.<span class="hljs-title function_">setMessage</span>(<span class="hljs-string">&quot;This is unacceptable. The app is now going to exit.&quot;</span>);<br>        create.<span class="hljs-title function_">setButton</span>(-<span class="hljs-number">3</span>, <span class="hljs-string">&quot;OK&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DialogInterface</span>.<span class="hljs-title class_">OnClickListener</span>() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable2.MainActivity.1</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.content.DialogInterface.OnClickListener</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onClick</span>(<span class="hljs-params">DialogInterface dialogInterface, int i</span>) &#123;<br>                <span class="hljs-title class_">System</span>.<span class="hljs-title function_">exit</span>(<span class="hljs-number">0</span>);<br>            &#125;<br>        &#125;);<br>        create.<span class="hljs-title function_">setCancelable</span>(<span class="hljs-literal">false</span>);<br>        create.<span class="hljs-title function_">show</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> native <span class="hljs-built_in">void</span> <span class="hljs-title function_">init</span>();<br><br>    <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>    <span class="hljs-comment">/* JADX WARN: Type inference failed for: r0v4, types: [sg.vantagepoint.uncrackable2.MainActivity$2] */</span><br>    <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.support.v7.app.c, android.support.v4.app.h, android.support.v4.app.z, android.app.Activity</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onCreate</span>(<span class="hljs-params">Bundle bundle</span>) &#123;<br>        <span class="hljs-title function_">init</span>();<br>        <span class="hljs-keyword">if</span> (b.<span class="hljs-title function_">a</span>() || b.<span class="hljs-title function_">b</span>() || b.<span class="hljs-title function_">c</span>()) &#123;<br>            <span class="hljs-title function_">a</span>(<span class="hljs-string">&quot;Root detected!&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (a.<span class="hljs-title function_">a</span>(<span class="hljs-title function_">getApplicationContext</span>())) &#123;<br>            <span class="hljs-title function_">a</span>(<span class="hljs-string">&quot;App is debuggable!&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">AsyncTask</span>&lt;<span class="hljs-title class_">Void</span>, <span class="hljs-title class_">String</span>, <span class="hljs-title class_">String</span>&gt;() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable2.MainActivity.2</span><br>            <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.os.AsyncTask</span><br>            <span class="hljs-comment">/* renamed from: a */</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">doInBackground</span>(<span class="hljs-params">Void... voidArr</span>) &#123;<br>                <span class="hljs-keyword">while</span> (!<span class="hljs-title class_">Debug</span>.<span class="hljs-title function_">isDebuggerConnected</span>()) &#123;<br>                    <span class="hljs-title class_">SystemClock</span>.<span class="hljs-title function_">sleep</span>(100L);<br>                &#125;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>            &#125;<br><br>            <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.os.AsyncTask</span><br>            <span class="hljs-comment">/* renamed from: a */</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onPostExecute</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> str</span>) &#123;<br>                <span class="hljs-title class_">MainActivity</span>.<span class="hljs-property">this</span>.<span class="hljs-title function_">a</span>(<span class="hljs-string">&quot;Debugger detected!&quot;</span>);<br>            &#125;<br>        &#125;.<span class="hljs-title function_">execute</span>(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">m</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">CodeCheck</span>();<br>        <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">onCreate</span>(bundle);<br>        <span class="hljs-title function_">setContentView</span>(R.<span class="hljs-property">layout</span>.<span class="hljs-property">activity_main</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">verify</span>(<span class="hljs-params">View view</span>) &#123;<br>        <span class="hljs-title class_">String</span> str;<br>        <span class="hljs-title class_">String</span> obj = ((<span class="hljs-title class_">EditText</span>) <span class="hljs-title function_">findViewById</span>(R.<span class="hljs-property">id</span>.<span class="hljs-property">edit_text</span>)).<span class="hljs-title function_">getText</span>().<span class="hljs-title function_">toString</span>();<br>        <span class="hljs-title class_">AlertDialog</span> create = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AlertDialog</span>.<span class="hljs-title class_">Builder</span>(<span class="hljs-variable language_">this</span>).<span class="hljs-title function_">create</span>();<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">m</span>.<span class="hljs-title function_">a</span>(obj)) &#123;<br>            create.<span class="hljs-title function_">setTitle</span>(<span class="hljs-string">&quot;Success!&quot;</span>);<br>            str = <span class="hljs-string">&quot;This is the correct secret.&quot;</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            create.<span class="hljs-title function_">setTitle</span>(<span class="hljs-string">&quot;Nope...&quot;</span>);<br>            str = <span class="hljs-string">&quot;That&#x27;s not it. Try again.&quot;</span>;<br>        &#125;<br>        create.<span class="hljs-title function_">setMessage</span>(str);<br>        create.<span class="hljs-title function_">setButton</span>(-<span class="hljs-number">3</span>, <span class="hljs-string">&quot;OK&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DialogInterface</span>.<span class="hljs-title class_">OnClickListener</span>() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable2.MainActivity.3</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.content.DialogInterface.OnClickListener</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onClick</span>(<span class="hljs-params">DialogInterface dialogInterface, int i</span>) &#123;<br>                dialogInterface.<span class="hljs-title function_">dismiss</span>();<br>            &#125;<br>        &#125;);<br>        create.<span class="hljs-title function_">show</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>主逻辑跟L1的类似，只是verify的方法中判断逻辑改为了<code>CodeCheck</code>的a方法。</p>
+<h4 id="CodeCheck"><a href="#CodeCheck" class="headerlink" title="CodeCheck"></a>CodeCheck</h4><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-keyword">package</span> sg.<span class="hljs-property">vantagepoint</span>.<span class="hljs-property">uncrackable2</span>;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CodeCheck</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">native</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">bar</span>(<span class="hljs-type">byte</span>[] bArr);<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">a</span>(<span class="hljs-built_in">String</span> <span class="hljs-built_in">str</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title function_">bar</span>(<span class="hljs-built_in">str</span>.<span class="hljs-property">getBytes</span>());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个类中的a方法调用了一个native方法bar，将输入提交的字符串给so文件中的方法去处理，如果native方法返回true就会显示输入了正确的secret。</p>
+<h4 id="libfoo-so"><a href="#libfoo-so" class="headerlink" title="libfoo.so"></a>libfoo.so</h4><p>导出表中有下面两个函数，可以看出该JNI调用符合静态注册的特征，<code>Java_sg_vantagepoint_uncrackable2_CodeCheck_bar</code>函数就是CodeCheck中的native bar方法。这里其实看ida逆向之后的逻辑就可以知道secret就是<code>Thanks for all the fish</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">Java_sg_vantagepoint_uncrackable2_MainActivity_init</span><span class="hljs-params">()</span><br>&#123;<br>  <span class="hljs-type">int</span> result; <span class="hljs-comment">// eax</span><br><br>  result = sub_720();<br>  byte_4008 = <span class="hljs-number">1</span>;<br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br><br>_BOOL4 __cdecl <span class="hljs-title function_">Java_sg_vantagepoint_uncrackable2_CodeCheck_bar</span><span class="hljs-params">(<span class="hljs-type">int</span> a1, <span class="hljs-type">int</span> a2, <span class="hljs-type">int</span> a3)</span><br>&#123;<br>  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *v3; <span class="hljs-comment">// esi</span><br>  _BOOL4 result; <span class="hljs-comment">// eax</span><br>  <span class="hljs-type">char</span> s2[<span class="hljs-number">24</span>]; <span class="hljs-comment">// [esp+0h] [ebp-2Ch] BYREF</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v6; <span class="hljs-comment">// [esp+18h] [ebp-14h]</span><br><br>  v6 = __readgsdword(<span class="hljs-number">0x14</span>u);<br>  result = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> ( byte_4008 == <span class="hljs-number">1</span> )<br>  &#123;<br>    <span class="hljs-built_in">strcpy</span>(s2, <span class="hljs-string">&quot;Thanks for all the fish&quot;</span>);<br>    v3 = (<span class="hljs-type">const</span> <span class="hljs-type">char</span> *)(*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, _DWORD))(*(_DWORD *)a1 + <span class="hljs-number">736</span>))(a1, a3, <span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">if</span> ( (*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>))(*(_DWORD *)a1 + <span class="hljs-number">684</span>))(a1, a3) == <span class="hljs-number">23</span> &amp;&amp; !<span class="hljs-built_in">strncmp</span>(v3, s2, <span class="hljs-number">0x17</span>u) )<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>导入表</p>
+<p><img src="/images/image-20231206170744015.png" srcset="/img/loading.gif" lazyload></p>
+<p>其实这里已经得到了secret的信息，后面我们可以尝试hook native层的导入函数尝试获取这个secret并且让bar函数一直返回true</p>
+<h3 id="Frida脚本"><a href="#Frida脚本" class="headerlink" title="Frida脚本"></a>Frida脚本</h3><h4 id="勾取bar函数一直返回true"><a href="#勾取bar函数一直返回true" class="headerlink" title="勾取bar函数一直返回true"></a>勾取bar函数一直返回true</h4><p>绕过root检测逻辑与L1一致，setTimeout是想等加载完成再hook libfoo.so，或许有更优雅的方法暂时还没想到。然后就寻找导出函数地址进行attach，在函数返回时进行返回值替换即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.a.b&#x27;</span>);<br>    func.<span class="hljs-property">a</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;;<br>	func.<span class="hljs-property">b</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.<span class="hljs-property">c</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	<span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">x</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">var</span> func_addr = <span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libfoo.so&quot;</span>,<span class="hljs-string">&quot;Java_sg_vantagepoint_uncrackable2_CodeCheck_bar&quot;</span>);<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(func_addr);<br>		<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(func_addr, &#123;<br>			<span class="hljs-comment">//onEnter: function(args)顾名思义就是进入该函数前要执行的代码，其中args是传入的参数，一般so层函数第一个参数都是JniEnv，第二个参数是jclass，从第三个参数开始才是我们java层传入的参数</span><br>			<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>				<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hook start&quot;</span>);<br>				<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;args[2]=&quot;</span> + args[<span class="hljs-number">2</span>]); <span class="hljs-comment">//打印我们java层第一个传入的参数，这里是字节数组指针地址byte[] bArr</span><br>			&#125;,<br>			<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>)&#123; <span class="hljs-comment">//onLeave: function(retval)是该函数执行结束要执行的代码，其中retval参数即是返回值</span><br>				<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;return original value:&quot;</span>+retval); <span class="hljs-comment">//打印原始返回值</span><br>				retval.<span class="hljs-title function_">replace</span>(<span class="hljs-number">1</span>);<br>			&#125;<br>		&#125;);<br>	&#125;, <span class="hljs-number">1000</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">frida -U -f owasp.mstg.uncrackable2 -l frida_script.js<br></code></pre></td></tr></table></figure>
+
+<p>然后在页面任意输入一个值：</p>
+<p><img src="/images/image-20231207181412335.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到下面的输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[SM-N976N::owasp.mstg.uncrackable2 ]-&gt; 0x71fe24863110<br>Hook start<br>args[2]=0x7ffead4209a8<br><span class="hljs-built_in">return</span> original value:0x0<br></code></pre></td></tr></table></figure>
+
+<p>已经成功勾取并修改了返回值，APP输入任意字符都可以显示成功。</p>
+<h3 id="勾取secret"><a href="#勾取secret" class="headerlink" title="勾取secret"></a>勾取secret</h3><p>我们遍历libfoo的导入表，找到strncmp的调用，随后attach到strncmp。在上面的伪代码中可以看到，<code>!strncmp(v3, s2, 0x17u)</code>在调用时会传入数据长度0x17，也就是十进制数23，因此我们筛选出调用参数长度为23的strncmp即可，因此加了if去确定，随后”test_len_23_for_frida_u”时一段长度为23的随意的字符串，目的是为了继续做筛选，根据我们填入的字符串值去反向推导。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.a.b&#x27;</span>);<br>    func.<span class="hljs-property">a</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;;<br>	func.<span class="hljs-property">b</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.<span class="hljs-property">c</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	<span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">x</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-comment">//得到libfoo中所有关于strncmp的调用</span><br>		<span class="hljs-keyword">var</span> strncmp = <span class="hljs-literal">undefined</span>;<br>		<span class="hljs-keyword">var</span> imports = <span class="hljs-title class_">Module</span>.<span class="hljs-title function_">enumerateImportsSync</span>(<span class="hljs-string">&quot;libfoo.so&quot;</span>);<br><br>		<span class="hljs-keyword">for</span>( <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; imports.<span class="hljs-property">length</span>; i++) &#123;<br>			<span class="hljs-keyword">if</span>(imports[i].<span class="hljs-property">name</span> == <span class="hljs-string">&quot;strncmp&quot;</span>) &#123;<br>				strncmp = imports[i].<span class="hljs-property">address</span>;<br>				<span class="hljs-keyword">break</span>;<br>			&#125;<br>		&#125;;<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(strncmp);<br>		<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(strncmp, &#123;<br>			<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>				<span class="hljs-keyword">if</span>(args[<span class="hljs-number">2</span>].<span class="hljs-title function_">toInt32</span>() == <span class="hljs-number">23</span> &amp;&amp; <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(args[<span class="hljs-number">0</span>],<span class="hljs-number">23</span>) == <span class="hljs-string">&quot;test_len_23_for_frida_u&quot;</span>)&#123;<br>					<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;[*] Secret string at &quot;</span> + args[<span class="hljs-number">1</span>] + <span class="hljs-string">&quot;: &quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(args[<span class="hljs-number">1</span>],<span class="hljs-number">23</span>));<br>				&#125;<br>			&#125;,<br>		&#125;);<br>	&#125;, <span class="hljs-number">1000</span>);	<br>&#125;);<br><br></code></pre></td></tr></table></figure>
+
+<p>运行<code>frida -U -f owasp.mstg.uncrackable2 -l frida_script.js</code></p>
+<p>然后再输入<code>test_len_23_for_frida_u</code>点击verify即可</p>
+<p><img src="/images/image-20231207190649721.png" srcset="/img/loading.gif" lazyload></p>
+<p>随后就可以在控制台看到secret字符串。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[SM-N976N::owasp.mstg.uncrackable2 ]-&gt; 0x71feb22a5270<br>[*] Secret string at 0x7ffead420940: Thanks <span class="hljs-keyword">for</span> all the fish<br></code></pre></td></tr></table></figure>
+
+<h2 id="Android-UnCrackable-L3"><a href="#Android-UnCrackable-L3" class="headerlink" title="Android UnCrackable L3"></a>Android UnCrackable L3</h2><h3 id="分析逻辑-2"><a href="#分析逻辑-2" class="headerlink" title="分析逻辑"></a>分析逻辑</h3><h4 id="MainActivity-1"><a href="#MainActivity-1" class="headerlink" title="MainActivity"></a>MainActivity</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.uncrackable3;<br><br><span class="hljs-keyword">import</span> android.app.AlertDialog;<br><span class="hljs-keyword">import</span> android.content.DialogInterface;<br><span class="hljs-keyword">import</span> android.os.AsyncTask;<br><span class="hljs-keyword">import</span> android.os.Bundle;<br><span class="hljs-keyword">import</span> android.os.Debug;<br><span class="hljs-keyword">import</span> android.os.SystemClock;<br><span class="hljs-keyword">import</span> android.support.v7.app.AppCompatActivity;<br><span class="hljs-keyword">import</span> android.util.Log;<br><span class="hljs-keyword">import</span> android.view.View;<br><span class="hljs-keyword">import</span> android.widget.EditText;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><span class="hljs-keyword">import</span> java.util.zip.ZipEntry;<br><span class="hljs-keyword">import</span> java.util.zip.ZipFile;<br><span class="hljs-keyword">import</span> sg.vantagepoint.util.IntegrityCheck;<br><span class="hljs-keyword">import</span> sg.vantagepoint.util.RootDetection;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AppCompatActivity</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">TAG</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UnCrackable3&quot;</span>;<br>    <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-variable">tampered</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">xorkey</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;pizzapizzapizzapizzapizz&quot;</span>;<br>    <span class="hljs-keyword">private</span> CodeCheck check;<br>    Map&lt;String, Long&gt; crc;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">native</span> <span class="hljs-type">long</span> <span class="hljs-title function_">baz</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">(<span class="hljs-type">byte</span>[] bArr)</span>;<br><br>    <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: private */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">showDialog</span><span class="hljs-params">(String str)</span> &#123;<br>        <span class="hljs-type">AlertDialog</span> <span class="hljs-variable">create</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AlertDialog</span>.Builder(<span class="hljs-built_in">this</span>).create();<br>        create.setTitle(str);<br>        create.setMessage(<span class="hljs-string">&quot;This is unacceptable. The app is now going to exit.&quot;</span>);<br>        create.setButton(-<span class="hljs-number">3</span>, <span class="hljs-string">&quot;OK&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DialogInterface</span>.OnClickListener() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable3.MainActivity.1</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.content.DialogInterface.OnClickListener</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClick</span><span class="hljs-params">(DialogInterface dialogInterface, <span class="hljs-type">int</span> i)</span> &#123;<br>                System.exit(<span class="hljs-number">0</span>);<br>            &#125;<br>        &#125;);<br>        create.setCancelable(<span class="hljs-literal">false</span>);<br>        create.show();<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">verifyLibs</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">this</span>.crc = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>();<br>        <span class="hljs-built_in">this</span>.crc.put(<span class="hljs-string">&quot;armeabi-v7a&quot;</span>, Long.valueOf(Long.parseLong(getResources().getString(owasp.mstg.uncrackable3.R.string.armeabi_v7a))));<br>        <span class="hljs-built_in">this</span>.crc.put(<span class="hljs-string">&quot;arm64-v8a&quot;</span>, Long.valueOf(Long.parseLong(getResources().getString(owasp.mstg.uncrackable3.R.string.arm64_v8a))));<br>        <span class="hljs-built_in">this</span>.crc.put(<span class="hljs-string">&quot;x86&quot;</span>, Long.valueOf(Long.parseLong(getResources().getString(owasp.mstg.uncrackable3.R.string.x86))));<br>        <span class="hljs-built_in">this</span>.crc.put(<span class="hljs-string">&quot;x86_64&quot;</span>, Long.valueOf(Long.parseLong(getResources().getString(owasp.mstg.uncrackable3.R.string.x86_64))));<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ZipFile</span> <span class="hljs-variable">zipFile</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ZipFile</span>(getPackageCodePath());<br>            <span class="hljs-keyword">for</span> (Map.Entry&lt;String, Long&gt; entry : <span class="hljs-built_in">this</span>.crc.entrySet()) &#123;<br>                <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;lib/&quot;</span> + entry.getKey() + <span class="hljs-string">&quot;/libfoo.so&quot;</span>;<br>                <span class="hljs-type">ZipEntry</span> <span class="hljs-variable">entry2</span> <span class="hljs-operator">=</span> zipFile.getEntry(str);<br>                Log.v(TAG, <span class="hljs-string">&quot;CRC[&quot;</span> + str + <span class="hljs-string">&quot;] = &quot;</span> + entry2.getCrc());<br>                <span class="hljs-keyword">if</span> (entry2.getCrc() != entry.getValue().longValue()) &#123;<br>                    tampered = <span class="hljs-number">31337</span>;<br>                    Log.v(TAG, str + <span class="hljs-string">&quot;: Invalid checksum = &quot;</span> + entry2.getCrc() + <span class="hljs-string">&quot;, supposed to be &quot;</span> + entry.getValue());<br>                &#125;<br>            &#125;<br>            <span class="hljs-type">ZipEntry</span> <span class="hljs-variable">entry3</span> <span class="hljs-operator">=</span> zipFile.getEntry(<span class="hljs-string">&quot;classes.dex&quot;</span>);<br>            Log.v(TAG, <span class="hljs-string">&quot;CRC[classes.dex] = &quot;</span> + entry3.getCrc());<br>            <span class="hljs-keyword">if</span> (entry3.getCrc() != baz()) &#123;<br>                tampered = <span class="hljs-number">31337</span>;<br>                Log.v(TAG, <span class="hljs-string">&quot;classes.dex: crc = &quot;</span> + entry3.getCrc() + <span class="hljs-string">&quot;, supposed to be &quot;</span> + baz());<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException unused) &#123;<br>            Log.v(TAG, <span class="hljs-string">&quot;Exception&quot;</span>);<br>            System.exit(<span class="hljs-number">0</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>    <span class="hljs-comment">/* JADX WARN: Type inference failed for: r0v2, types: [sg.vantagepoint.uncrackable3.MainActivity$2] */</span><br>    <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.support.v7.app.AppCompatActivity, android.support.v4.app.FragmentActivity, android.support.v4.app.SupportActivity, android.app.Activity</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle bundle)</span> &#123;<br>        verifyLibs();<br>        init(xorkey.getBytes());<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">AsyncTask</span>&lt;Void, String, String&gt;() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable3.MainActivity.2</span><br>            <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.os.AsyncTask</span><br>            <span class="hljs-keyword">public</span> String <span class="hljs-title function_">doInBackground</span><span class="hljs-params">(Void... voidArr)</span> &#123;<br>                <span class="hljs-keyword">while</span> (!Debug.isDebuggerConnected()) &#123;<br>                    SystemClock.sleep(<span class="hljs-number">100L</span>);<br>                &#125;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>            &#125;<br><br>            <span class="hljs-comment">/* JADX INFO: Access modifiers changed from: protected */</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.os.AsyncTask</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onPostExecute</span><span class="hljs-params">(String str)</span> &#123;<br>                MainActivity.<span class="hljs-built_in">this</span>.showDialog(<span class="hljs-string">&quot;Debugger detected!&quot;</span>);<br>                System.exit(<span class="hljs-number">0</span>);<br>            &#125;<br>        &#125;.execute(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br>        <span class="hljs-keyword">if</span> (RootDetection.checkRoot1() || RootDetection.checkRoot2() || RootDetection.checkRoot3() || IntegrityCheck.isDebuggable(getApplicationContext()) || tampered != <span class="hljs-number">0</span>) &#123;<br>            showDialog(<span class="hljs-string">&quot;Rooting or tampering detected.&quot;</span>);<br>        &#125;<br>        <span class="hljs-built_in">this</span>.check = <span class="hljs-keyword">new</span> <span class="hljs-title class_">CodeCheck</span>();<br>        <span class="hljs-built_in">super</span>.onCreate(bundle);<br>        setContentView(owasp.mstg.uncrackable3.R.layout.activity_main);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">verify</span><span class="hljs-params">(View view)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> ((EditText) findViewById(owasp.mstg.uncrackable3.R.id.edit_text)).getText().toString();<br>        <span class="hljs-type">AlertDialog</span> <span class="hljs-variable">create</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AlertDialog</span>.Builder(<span class="hljs-built_in">this</span>).create();<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.check.check_code(obj)) &#123;<br>            create.setTitle(<span class="hljs-string">&quot;Success!&quot;</span>);<br>            create.setMessage(<span class="hljs-string">&quot;This is the correct secret.&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            create.setTitle(<span class="hljs-string">&quot;Nope...&quot;</span>);<br>            create.setMessage(<span class="hljs-string">&quot;That&#x27;s not it. Try again.&quot;</span>);<br>        &#125;<br>        create.setButton(-<span class="hljs-number">3</span>, <span class="hljs-string">&quot;OK&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DialogInterface</span>.OnClickListener() &#123; <span class="hljs-comment">// from class: sg.vantagepoint.uncrackable3.MainActivity.3</span><br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// android.content.DialogInterface.OnClickListener</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClick</span><span class="hljs-params">(DialogInterface dialogInterface, <span class="hljs-type">int</span> i)</span> &#123;<br>                dialogInterface.dismiss();<br>            &#125;<br>        &#125;);<br>        create.show();<br>    &#125;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        System.loadLibrary(<span class="hljs-string">&quot;foo&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>首先检查各种版本的so，使用crc校验，随后将xorkey传入本地init方法进行初始化，然后创建异步任务检测是否处于debug状态，然后检测是否root。</p>
+<p>verify方法主要逻辑是调用check_code方法去验证输入的secret是否正确。</p>
+<h4 id="CodeCheck-1"><a href="#CodeCheck-1" class="headerlink" title="CodeCheck"></a>CodeCheck</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.uncrackable3;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CodeCheck</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">TAG</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;CodeCheck&quot;</span>;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">native</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">bar</span><span class="hljs-params">(<span class="hljs-type">byte</span>[] bArr)</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">check_code</span><span class="hljs-params">(String str)</span> &#123;<br>        <span class="hljs-keyword">return</span> bar(str.getBytes());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>校验secret的逻辑，调用了本地的bar方法，bar方法的IDA反汇编逻辑如下（32位）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> __cdecl <span class="hljs-title function_">Java_sg_vantagepoint_uncrackable3_CodeCheck_bar</span><span class="hljs-params">(<span class="hljs-type">int</span> a1, <span class="hljs-type">int</span> a2, <span class="hljs-type">int</span> a3)</span><br>&#123;<br>  <span class="hljs-type">int</span> v4; <span class="hljs-comment">// esi</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v5; <span class="hljs-comment">// eax</span><br>  <span class="hljs-type">int</span> *i; <span class="hljs-comment">// ecx</span><br>  <span class="hljs-type">bool</span> v7; <span class="hljs-comment">// zf</span><br>  <span class="hljs-type">char</span> result; <span class="hljs-comment">// al</span><br>  __int128 v9; <span class="hljs-comment">// [esp+0h] [ebp-3Ch] BYREF</span><br>  <span class="hljs-type">int</span> v10; <span class="hljs-comment">// [esp+10h] [ebp-2Ch]</span><br>  <span class="hljs-type">int</span> v11; <span class="hljs-comment">// [esp+14h] [ebp-28h]</span><br>  <span class="hljs-type">char</span> v12; <span class="hljs-comment">// [esp+18h] [ebp-24h]</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v13; <span class="hljs-comment">// [esp+28h] [ebp-14h]</span><br><br>  v13 = __readgsdword(<span class="hljs-number">0x14</span>u);<br>  v9 = <span class="hljs-number">0LL</span>;<br>  v11 = <span class="hljs-number">0</span>;<br>  v10 = <span class="hljs-number">0</span>;<br>  v12 = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> ( dword_6038 == <span class="hljs-number">2</span> )<br>  &#123;<br>    sub_FA0((<span class="hljs-type">int</span>)&amp;v9);<br>    v4 = (*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, _DWORD))(*(_DWORD *)a1 + <span class="hljs-number">736</span>))(a1, a3, <span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">if</span> ( (*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>))(*(_DWORD *)a1 + <span class="hljs-number">684</span>))(a1, a3) == <span class="hljs-number">24</span> )<br>    &#123;<br>      v5 = <span class="hljs-number">0</span>;<br>      <span class="hljs-keyword">for</span> ( i = &amp;dword_601C; *(_BYTE *)(v4 + v5) == (*((_BYTE *)&amp;v9 + v5) ^ *(_BYTE *)i); i = (<span class="hljs-type">int</span> *)((<span class="hljs-type">char</span> *)i + <span class="hljs-number">1</span>) )<br>      &#123;<br>        v7 = ++v5 == <span class="hljs-number">24</span>;<br>        <span class="hljs-keyword">if</span> ( v5 &gt;= <span class="hljs-number">0x18</span> )<br>        &#123;<br>          result = <span class="hljs-number">1</span>;<br>          <span class="hljs-keyword">if</span> ( v7 )<br>            <span class="hljs-keyword">return</span> result;<br>          <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>后面我们着重对上述反汇编代码进行分析。</p>
+<p>首先校验dword_6038的值是不是2，如果不是2证明初始化过程存在绕过或者错误，init函数以及验证环境中是否存在frida或者xposed关键字的子线程中都存在++dword_6038：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> __noreturn <span class="hljs-title function_">sub_3080</span><span class="hljs-params">()</span><br>&#123;<br>  FILE *v0; <span class="hljs-comment">// esi</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *v1; <span class="hljs-comment">// eax</span><br>  <span class="hljs-type">char</span> s[<span class="hljs-number">528</span>]; <span class="hljs-comment">// [esp+1Ch] [ebp-210h] BYREF</span><br><br>  v0 = fopen(<span class="hljs-string">&quot;/proc/self/maps&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>);<br>  <span class="hljs-keyword">if</span> ( v0 )<br>  &#123;<br>    <span class="hljs-keyword">do</span><br>    &#123;<br>      <span class="hljs-keyword">while</span> ( !fgets(s, <span class="hljs-number">512</span>, v0) )<br>      &#123;<br>        fclose(v0);<br>        usleep(<span class="hljs-number">0x1F4</span>u);<br>        v0 = fopen(<span class="hljs-string">&quot;/proc/self/maps&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>);<br>        <span class="hljs-keyword">if</span> ( !v0 )<br>          <span class="hljs-keyword">goto</span> LABEL_7;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">while</span> ( !<span class="hljs-built_in">strstr</span>(s, <span class="hljs-string">&quot;frida&quot;</span>) &amp;&amp; !<span class="hljs-built_in">strstr</span>(s, <span class="hljs-string">&quot;xposed&quot;</span>) );<br>    v1 = <span class="hljs-string">&quot;Tampering detected! Terminating...&quot;</span>;<br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>LABEL_7:<br>    v1 = <span class="hljs-string">&quot;Error opening /proc/self/maps! Terminating...&quot;</span>;<br>  &#125;<br>  __android_log_print(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;UnCrackable3&quot;</span>, v1);<br>  goodbye();<br>&#125;<br><br><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-title function_">sub_3180</span><span class="hljs-params">()</span><br>&#123;<br>  <span class="hljs-type">int</span> newthread[<span class="hljs-number">6</span>]; <span class="hljs-comment">// [esp+Ch] [ebp-18h] BYREF</span><br><br>  newthread[<span class="hljs-number">1</span>] = __readgsdword(<span class="hljs-number">0x14</span>u);<br>  pthread_create((<span class="hljs-type">pthread_t</span> *)newthread, <span class="hljs-number">0</span>, (<span class="hljs-type">void</span> *(*)(<span class="hljs-type">void</span> *))sub_3080, <span class="hljs-number">0</span>); <span class="hljs-comment">//创建sub_3080函数的子线程，该线程用于检测/proc/self/maps中是否存在frida或者xposed关键字</span><br>  dword_6020 = <span class="hljs-number">0</span>;<br>  dword_601C = <span class="hljs-number">0</span>;<br>  dword_6028 = <span class="hljs-number">0</span>;<br>  dword_6024 = <span class="hljs-number">0</span>;<br>  byte_6034 = <span class="hljs-number">0</span>;<br>  dword_6030 = <span class="hljs-number">0</span>;<br>  dword_602C = <span class="hljs-number">0</span>;<br>  ++dword_6038; <span class="hljs-comment">//初始化检测线程的验证</span><br>  <span class="hljs-keyword">return</span> __readgsdword(<span class="hljs-number">0x14</span>u);<br>&#125;<br><br><span class="hljs-type">int</span> __cdecl <span class="hljs-title function_">Java_sg_vantagepoint_uncrackable3_MainActivity_init</span><span class="hljs-params">(<span class="hljs-type">int</span> a1, <span class="hljs-type">int</span> a2, <span class="hljs-type">int</span> a3)</span><br>&#123;<br>  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *v4; <span class="hljs-comment">// esi</span><br>  <span class="hljs-type">int</span> result; <span class="hljs-comment">// eax</span><br><br>  sub_3250();<br>  v4 = (<span class="hljs-type">const</span> <span class="hljs-type">char</span> *)(*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, _DWORD))(*(_DWORD *)a1 + <span class="hljs-number">736</span>))(a1, a3, <span class="hljs-number">0</span>);<br>  <span class="hljs-built_in">strncpy</span>((<span class="hljs-type">char</span> *)&amp;dword_601C, v4, <span class="hljs-number">0x18</span>u);<br>  result = (*(<span class="hljs-type">int</span> (__cdecl **)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *, <span class="hljs-type">int</span>))(*(_DWORD *)a1 + <span class="hljs-number">768</span>))(a1, a3, v4, <span class="hljs-number">2</span>);<br>  ++dword_6038; <span class="hljs-comment">//初始化的验证</span><br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>随后调用sub_FA0对另一个异或的key进行初始化，我们进入这个函数发现有两千多行的伪代码，实际对入参操作的只有最后一段：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">_DWORD *__cdecl <span class="hljs-title function_">sub_FA0</span><span class="hljs-params">(<span class="hljs-type">int</span> a1)</span><br>&#123;<br><span class="hljs-comment">// ...省略前2000+行</span><br>LABEL_501:<br>  *(_DWORD *)off_5FA0 = result;<br>  <span class="hljs-keyword">if</span> ( result )<br>  &#123;<br>    result = (_DWORD *)a1;<br>    *(_DWORD *)(a1 + <span class="hljs-number">4</span>) = <span class="hljs-number">0</span>;<br>    *(_DWORD *)a1 = <span class="hljs-number">0</span>;<br>    *(_DWORD *)(a1 + <span class="hljs-number">12</span>) = <span class="hljs-number">0</span>;<br>    *(_DWORD *)(a1 + <span class="hljs-number">8</span>) = <span class="hljs-number">0</span>;<br>    *(_BYTE *)(a1 + <span class="hljs-number">24</span>) = <span class="hljs-number">0</span>;<br>    *(_OWORD *)a1 = xmmword_3480; <span class="hljs-comment">// xmmword_3480 xmmword 15131D5A1903000D1549170F1311081Dh</span><br>    *(_DWORD *)(a1 + <span class="hljs-number">16</span>) = <span class="hljs-number">0x005A0E08</span>;<br>    *(_DWORD *)(a1 + <span class="hljs-number">20</span>) = <span class="hljs-number">0x14130817</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>后面初始化一下用户输入的值a3的字符串长度是否为24，不是24直接返回（secret的长度为24）。</p>
+<p>后面进入了最重要的逻辑，一个for循环：<code>for ( i = &amp;dword_601C; *(_BYTE *)(v4 + v5) == (*((_BYTE *)&amp;v9 + v5) ^ *(_BYTE *)i); i = (int *)((char *)i + 1) )</code></p>
+<p>初始化的时候调用了<code>strncpy((char *)&amp;dword_601C, v4, 0x18u);</code>因此合理推测，dword_601C中存储的是xorkey也就是”pizzapizzapizzapizzapizz”；异或操作的另一个值v9就是sub_FA0中初始化的a1的值。</p>
+<p>其实到这里我们已经知道了大概的逻辑，将用户的输入与”pizzapizzapizzapizzapizz”和v9的异或结果比较（其中v9的前16个8bit组为0x15131D5A1903000D1549170F1311081D，紧接着4个8bit组为0x005A0E08，最后4个0x14130817，由于x86架构下数据存储为小端序，即低地址为低位，那么v9的值就是<code>1D 08 11 13 0F 17 49 15 0D 00 03 19 5A 1D 13 15 08 0E 5A 00 17 08 13 14</code>），如果24个值比较完成都一致就返回1表示校验成功，否则返回0表示secret错误。两个异或的key我们都得到了，便可以直接静态分析出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">otherkey = <span class="hljs-built_in">bytes</span>.fromhex(<span class="hljs-string">&quot;1D 08 11 13 0F 17 49 15 0D 00 03 19 5A 1D 13 15 08 0E 5A 00 17 08 13 14&quot;</span>)<br>pizza = <span class="hljs-string">b&#x27;pizzapizzapizzapizzapizz&#x27;</span><br>secret = <span class="hljs-built_in">bytes</span>(a ^ b <span class="hljs-keyword">for</span> (a, b) <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(pizza, otherkey))<br><span class="hljs-built_in">print</span>(secret)<br></code></pre></td></tr></table></figure>
+
+<p>结果为：<code>b&#39;making owasp great again&#39;</code></p>
+<h4 id="IntegrityCheck"><a href="#IntegrityCheck" class="headerlink" title="IntegrityCheck"></a>IntegrityCheck</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.util;<br><br><span class="hljs-keyword">import</span> android.content.Context;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IntegrityCheck</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isDebuggable</span><span class="hljs-params">(Context context)</span> &#123;<br>        <span class="hljs-keyword">return</span> (context.getApplicationContext().getApplicationInfo().flags &amp; <span class="hljs-number">2</span>) != <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>跟前面一样，检测是否为debug模式</p>
+<h4 id="RootDetection"><a href="#RootDetection" class="headerlink" title="RootDetection"></a>RootDetection</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> sg.vantagepoint.util;<br><br><span class="hljs-keyword">import</span> android.os.Build;<br><span class="hljs-keyword">import</span> java.io.File;<br><br><span class="hljs-comment">/* loaded from: classes.dex */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RootDetection</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">checkRoot1</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">for</span> (String str : System.getenv(<span class="hljs-string">&quot;PATH&quot;</span>).split(<span class="hljs-string">&quot;:&quot;</span>)) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(str, <span class="hljs-string">&quot;su&quot;</span>).exists()) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">checkRoot2</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> Build.TAGS;<br>        <span class="hljs-keyword">return</span> str != <span class="hljs-literal">null</span> &amp;&amp; str.contains(<span class="hljs-string">&quot;test-keys&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">checkRoot3</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">for</span> (String str : <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;/system/app/Superuser.apk&quot;</span>, <span class="hljs-string">&quot;/system/xbin/daemonsu&quot;</span>, <span class="hljs-string">&quot;/system/etc/init.d/99SuperSUDaemon&quot;</span>, <span class="hljs-string">&quot;/system/bin/.ext/.su&quot;</span>, <span class="hljs-string">&quot;/system/etc/.has_su_daemon&quot;</span>, <span class="hljs-string">&quot;/system/etc/.installed_su_daemon&quot;</span>, <span class="hljs-string">&quot;/dev/com.koushikdutta.superuser.daemon/&quot;</span>&#125;) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(str).exists()) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>root探测与前两个一样，只是名字稍微变了一下，依然可以采用hook检测函数替换返回值的方法进行绕过。</p>
+<h3 id="Frida脚本-1"><a href="#Frida脚本-1" class="headerlink" title="Frida脚本"></a>Frida脚本</h3><h4 id="绕过root检测"><a href="#绕过root检测" class="headerlink" title="绕过root检测"></a>绕过root检测</h4><p>与之前的一样，修改返回值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.util.RootDetection&#x27;</span>);<br>    func.<span class="hljs-property">checkRoot1</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;;<br>	func.<span class="hljs-property">checkRoot2</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.<span class="hljs-property">checkRoot3</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h4 id="绕过maps中frida关键字的检测"><a href="#绕过maps中frida关键字的检测" class="headerlink" title="绕过maps中frida关键字的检测"></a>绕过maps中frida关键字的检测</h4><p>如果我们直接尝试绕过root检测就会发现frida会报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">Process crashed: Trace/BPT <span class="hljs-built_in">trap</span><br><br>***<br>*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***<br>Build fingerprint: <span class="hljs-string">&#x27;samsung/d2que/d2q:9/QP1A.190711.020/900211026:user/release-keys&#x27;</span><br>Revision: <span class="hljs-string">&#x27;0&#x27;</span><br>ABI: <span class="hljs-string">&#x27;x86_64&#x27;</span><br>pid: 4754, tid: 4782, name: tg.uncrackable3  &gt;&gt;&gt; owasp.mstg.uncrackable3 &lt;&lt;&lt;<br><span class="hljs-string">signal 6 (SIGABRT), code -6 (SI_TKILL), fault addr --------</span><br><span class="hljs-string">    rax 0000000000000000  rbx 0000709cb2a17280  rcx 0000709d4c4409f7  rdx 0000000000000006</span><br><span class="hljs-string">    r8  0000000000000031  r9  0000000000000031  r10 0000000000000000  r11 0000000000000202</span><br><span class="hljs-string">    r12 0000709cb2a1bb62  r13 0000709cb2a1bb68  r14 0000709cb2a1bb50  r15 0000709cb2a1bb60</span><br><span class="hljs-string">    rdi 0000000000001292  rsi 00000000000012ae</span><br><span class="hljs-string">    rbp 0000709ccbc14018  rsp 0000709cb2a17268  rip 0000709d4c4409f7</span><br><span class="hljs-string"></span><br><span class="hljs-string">backtrace:</span><br><span class="hljs-string">    #00 pc 00000000000809f7  /system/lib64/libc.so (offset 0x80000) (tgkill+7)</span><br><span class="hljs-string">    #01 pc 000000000000374a  /data/app/owasp.mstg.uncrackable3-t4sbiQd8Jfn7fu2UNT3j1g==/lib/x86_64/libfoo.so (goodbye()+10)</span><br><span class="hljs-string">    #02 pc 000000000000389a  /data/app/owasp.mstg.uncrackable3-t4sbiQd8Jfn7fu2UNT3j1g==/lib/x86_64/libfoo.so</span><br><span class="hljs-string">    #03 pc 0000000000093dcb  /system/lib64/libc.so (offset 0x80000) (__pthread_start(void*)+27)</span><br><span class="hljs-string">    #04 pc 000000000002c0dd  /system/lib64/libc.so (offset 0x2c000) (__start_thread+61)</span><br></code></pre></td></tr></table></figure>
+
+<p>调用了goodbye直接结束了</p>
+<p>于是重新回到静态代码的分析，frida的检测逻辑如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> __noreturn <span class="hljs-title function_">sub_3080</span><span class="hljs-params">()</span><br>&#123;<br>  FILE *v0; <span class="hljs-comment">// esi</span><br>  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *v1; <span class="hljs-comment">// eax</span><br>  <span class="hljs-type">char</span> s[<span class="hljs-number">528</span>]; <span class="hljs-comment">// [esp+1Ch] [ebp-210h] BYREF</span><br><br>  v0 = fopen(<span class="hljs-string">&quot;/proc/self/maps&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>);<br>  <span class="hljs-keyword">if</span> ( v0 )<br>  &#123;<br>    <span class="hljs-keyword">do</span><br>    &#123;<br>      <span class="hljs-keyword">while</span> ( !fgets(s, <span class="hljs-number">512</span>, v0) )<br>      &#123;<br>        fclose(v0);<br>        usleep(<span class="hljs-number">0x1F4</span>u);<br>        v0 = fopen(<span class="hljs-string">&quot;/proc/self/maps&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>);<br>        <span class="hljs-keyword">if</span> ( !v0 )<br>          <span class="hljs-keyword">goto</span> LABEL_7;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">while</span> ( !<span class="hljs-built_in">strstr</span>(s, <span class="hljs-string">&quot;frida&quot;</span>) &amp;&amp; !<span class="hljs-built_in">strstr</span>(s, <span class="hljs-string">&quot;xposed&quot;</span>) );<br>    v1 = <span class="hljs-string">&quot;Tampering detected! Terminating...&quot;</span>;<br>  &#125;<br>  <span class="hljs-keyword">else</span><br>  &#123;<br>LABEL_7:<br>    v1 = <span class="hljs-string">&quot;Error opening /proc/self/maps! Terminating...&quot;</span>;<br>  &#125;<br>  __android_log_print(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;UnCrackable3&quot;</span>, v1);<br>  goodbye();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="绕过frida检测方法1"><a href="#绕过frida检测方法1" class="headerlink" title="绕过frida检测方法1"></a>绕过frida检测方法1</h5><p>我们可以看到直接使用libc的标准库函数strstr检测maps中是否有frida和xposed的关键字，那么我们就可以hook底层的strstr函数，当期望判断是否含有frida时直接返回没有即可，参考<a target="_blank" rel="noopener" href="https://codeshare.frida.re/@enovella/anti-frida-bypass/">Frida CodeShare</a>：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">var haystack = <span class="hljs-string">&quot;&quot;</span>;<br>var needle = <span class="hljs-string">&quot;&quot;</span>;<br>var frida = <span class="hljs-literal">false</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Interceptor</span>.</span></span>attach(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Module</span>.</span></span>find<span class="hljs-constructor">ExportByName(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;strstr&quot;</span>)</span>, &#123;<br>    onEnter: <span class="hljs-keyword">function</span>(args) &#123;<br>        haystack = args<span class="hljs-literal">[<span class="hljs-number">0</span>]</span>;<br>        needle = args<span class="hljs-literal">[<span class="hljs-number">1</span>]</span>;<br>        frida = <span class="hljs-constructor">Boolean(0)</span>;<br>        haystack = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Memory</span>.</span></span>read<span class="hljs-constructor">Utf8String(<span class="hljs-params">haystack</span>)</span>;<br>        needle = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Memory</span>.</span></span>read<span class="hljs-constructor">Utf8String(<span class="hljs-params">needle</span>)</span>;<br>        <span class="hljs-keyword">if</span> (haystack.index<span class="hljs-constructor">Of(<span class="hljs-string">&quot;frida&quot;</span>)</span> !== -<span class="hljs-number">1</span><span class="hljs-operator"> || </span>haystack.index<span class="hljs-constructor">Of(<span class="hljs-string">&quot;xposed&quot;</span>)</span> !== -<span class="hljs-number">1</span>) &#123;<br>            frida = <span class="hljs-constructor">Boolean(1)</span>;<br>        &#125;<br>    &#125;,<br>    onLeave: <span class="hljs-keyword">function</span>(retval) &#123;<br>        <span class="hljs-keyword">if</span> (frida) &#123;<br>            retval.replace(<span class="hljs-number">0</span>);<br>        &#125;<br>        return retval;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h5 id="绕过frida检测方法2"><a href="#绕过frida检测方法2" class="headerlink" title="绕过frida检测方法2"></a>绕过frida检测方法2</h5><p>参考<a target="_blank" rel="noopener" href="https://enovella.github.io/android/reverse/2017/05/20/android-owasp-crackmes-level-3.html">Android OWASP crackmes: Write-up UnCrackable Level 3 - Computer Issues (enovella.github.io)</a>的方法，绕过frida检测还可以不创建检测线程（太妙了）。由于检测frida的线程和反调试线程是通过pthread创建的，并且调用过程中特征为参数1和参数3都是0（<code>pthread_create(&amp;v2, 0, (void *(*)(void *))sub_3220, 0);</code>，<code>pthread_create((pthread_t *)newthread, 0, (void *(*)(void *))sub_3080, 0);</code>），我们可以hook线程创建函数，检测到第一个参数和第三个参数为0时调用一个始终返回0的线程：</p>
+<ul>
+<li>从libc函数pthread_create中获取本地指针。</li>
+<li>用这个指针创建一个本地函数。</li>
+<li>定义一个本地回调并重载此方法。</li>
+<li>使用带有replace模式的Interceptor注入替换。</li>
+<li>如果我们检测到pthread_create想要产生检测frida或者调试的线程，那么我们将执行回调，并且总是返回0，模拟Frida不在进程的地址空间中。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript">   <span class="hljs-comment">// int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);</span><br><span class="hljs-keyword">var</span> p_pthread_create = <span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;pthread_create&quot;</span>);<br><span class="hljs-keyword">var</span> pthread_create = <span class="hljs-keyword">new</span> <span class="hljs-title class_">NativeFunction</span>( p_pthread_create, <span class="hljs-string">&quot;int&quot;</span>, [<span class="hljs-string">&quot;pointer&quot;</span>, <span class="hljs-string">&quot;pointer&quot;</span>, <span class="hljs-string">&quot;pointer&quot;</span>, <span class="hljs-string">&quot;pointer&quot;</span>]);<br><span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;NativeFunction pthread_create() replaced @ &quot;</span> + pthread_create);<br><br><span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">replace</span>( p_pthread_create, <span class="hljs-keyword">new</span> <span class="hljs-title class_">NativeCallback</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">ptr0, ptr1, ptr2, ptr3</span>) &#123;<br>	<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;pthread_create() overloaded&quot;</span>);<br>	<span class="hljs-keyword">var</span> ret = <span class="hljs-title function_">ptr</span>(<span class="hljs-number">0</span>);<br>	<span class="hljs-keyword">if</span> (ptr1.<span class="hljs-title function_">isNull</span>() &amp;&amp; ptr3.<span class="hljs-title function_">isNull</span>()) &#123;<br>		<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;loading fake pthread_create because ptr1 and ptr3 are equal to 0!&quot;</span>);<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;loading real pthread_create()&quot;</span>);<br>		ret = <span class="hljs-title function_">pthread_create</span>(ptr0,ptr1,ptr2,ptr3);<br>	&#125;<br><br>	<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;ret: &quot;</span> + ret);<br><br>&#125;, <span class="hljs-string">&quot;int&quot;</span>, [<span class="hljs-string">&quot;pointer&quot;</span>, <span class="hljs-string">&quot;pointer&quot;</span>, <span class="hljs-string">&quot;pointer&quot;</span>, <span class="hljs-string">&quot;pointer&quot;</span>]));<br></code></pre></td></tr></table></figure>
+
+<p>运行frida绕过和root检测绕过脚本就可以进入输入secret页面：</p>
+<p><img src="/images/image-20231214160641224.png" srcset="/img/loading.gif" lazyload></p>
+<p>输入静态分析的key：</p>
+<p><img src="/images/image-20231214155830206.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="绕过secret检测逻辑"><a href="#绕过secret检测逻辑" class="headerlink" title="绕过secret检测逻辑"></a>绕过secret检测逻辑</h4><p>跟L2中的逻辑类似，只是要多一个frida检测的绕过</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs arcade">Java.perform(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> func = Java.use(<span class="hljs-string">&#x27;sg.vantagepoint.util.RootDetection&#x27;</span>);<br>    func.checkRoot1.implementation = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;;<br>	func.checkRoot2.implementation = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.checkRoot3.implementation = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	setTimeout(<span class="hljs-keyword">function</span> <span class="hljs-title function_">x</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">var</span> func_addr = Module.findExportByName(<span class="hljs-string">&quot;libfoo.so&quot;</span>,<span class="hljs-string">&quot;Java_sg_vantagepoint_uncrackable3_CodeCheck_bar&quot;</span>);<br>		<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(func_addr);<br>		Interceptor.attach(func_addr, &#123;<br>			<span class="hljs-comment">//onEnter: function(args)顾名思义就是进入该函数前要执行的代码，其中args是传入的参数，一般so层函数第一个参数都是JniEnv，第二个参数是jclass，从第三个参数开始才是我们java层传入的参数</span><br>			onEnter: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>				<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Hook start&quot;</span>);<br>				<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;args[2]=&quot;</span> + args[<span class="hljs-number">2</span>]); <span class="hljs-comment">//打印我们java层第一个传入的参数，这里是字节数组指针地址byte[] bArr</span><br>			&#125;,<br>			<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>)&#123; <span class="hljs-comment">//onLeave: function(retval)是该函数执行结束要执行的代码，其中retval参数即是返回值</span><br>				<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;return original value:&quot;</span>+retval); <span class="hljs-comment">//打印原始返回值</span><br>				retval.<span class="hljs-built_in">replace</span>(<span class="hljs-number">1</span>);<br>			&#125;<br>		&#125;);<br>	&#125;, <span class="hljs-number">1000</span>);<br>&#125;);<br><span class="hljs-keyword">var</span> haystack = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">var</span> needle = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">var</span> frida = <span class="hljs-literal">false</span>;<br>Interceptor.attach(Module.findExportByName(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;strstr&quot;</span>), &#123;<br>    <span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>        haystack = args[<span class="hljs-number">0</span>];<br>        needle = args[<span class="hljs-number">1</span>];<br>        frida = <span class="hljs-built_in">Boolean</span>(<span class="hljs-number">0</span>);<br>        haystack = Memory.readUtf8String(haystack);<br>        needle = Memory.readUtf8String(needle);<br>        <span class="hljs-keyword">if</span> (haystack.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;frida&quot;</span>) !== <span class="hljs-number">-1</span> || haystack.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;xposed&quot;</span>) !== <span class="hljs-number">-1</span>) &#123;<br>            frida = <span class="hljs-built_in">Boolean</span>(<span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;,<br>    <span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>        <span class="hljs-keyword">if</span> (frida) &#123;<br>            retval.<span class="hljs-built_in">replace</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> retval;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/images/image-20231214161006657.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="动态获取异或的key（静态分析中的v9的值）"><a href="#动态获取异或的key（静态分析中的v9的值）" class="headerlink" title="动态获取异或的key（静态分析中的v9的值）"></a>动态获取异或的key（静态分析中的v9的值）</h4><p>勾取sub_FA0的入参v9，打印出v9的值，上述分析的都是32位程序，因此sub_FA0的偏移地址是0xFA0，下面的代码是在64位系统中运行的，因此偏移量设置为64位lib的值0x12C0，可以根据实际情况调整add的偏移量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;sg.vantagepoint.util.RootDetection&#x27;</span>);<br>  func.<span class="hljs-property">checkRoot1</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;;<br>  func.<span class="hljs-property">checkRoot2</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;;<br>  func.<span class="hljs-property">checkRoot3</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;;<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">System</span> = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&quot;java.lang.System&quot;</span>);<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">Runtime</span> = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&quot;java.lang.Runtime&quot;</span>);<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">SystemLoad</span>_2 = <span class="hljs-title class_">System</span>.<span class="hljs-property">loadLibrary</span>.<span class="hljs-title function_">overload</span>(<span class="hljs-string">&quot;java.lang.String&quot;</span>);<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">VMStack</span> = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&quot;dalvik.system.VMStack&quot;</span>);<br>  <br>  <span class="hljs-title class_">SystemLoad</span>_2.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">library</span>) &#123;<br>	  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Loading dynamic library =&gt; &quot;</span> + library);<br>	  <span class="hljs-keyword">try</span> &#123;<br>		<span class="hljs-keyword">const</span> loaded = <span class="hljs-title class_">Runtime</span>.<span class="hljs-title function_">getRuntime</span>().<span class="hljs-title function_">loadLibrary0</span>( <span class="hljs-title class_">VMStack</span>.<span class="hljs-title function_">getCallingClassLoader</span>(), library);<br>		<span class="hljs-keyword">if</span>(library.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&quot;foo&quot;</span>)) &#123;<br>		  <span class="hljs-comment">//function that gets the xored value </span><br>		  <span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findBaseAddress</span>(<span class="hljs-string">&quot;libfoo.so&quot;</span>).<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;0x000012c0&#x27;</span>),&#123; <span class="hljs-comment">//ida分析的是32位的程序，32位应该是add(&#x27;0x00000fa0&#x27;)，由于本次虚拟机是64位，因此相关的函数地址为0x12c0</span><br>			<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>)&#123;<br>			  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;getting other_key value&quot;</span>);<br>			  <span class="hljs-variable language_">this</span>.<span class="hljs-property">other_key_address</span> = args[<span class="hljs-number">0</span>];<br>			&#125;,<br>			<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>)&#123;<br>			  <span class="hljs-keyword">var</span> other_key = <span class="hljs-keyword">new</span> <span class="hljs-title class_">NativePointer</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">other_key_address</span>);<br>			  <span class="hljs-keyword">var</span> arr = other_key.<span class="hljs-title function_">readByteArray</span>(<span class="hljs-number">24</span>);<br>			  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr);<br>			&#125;<br>		  &#125;);<br>		&#125;<br>		<span class="hljs-keyword">return</span> loaded;<br>	  &#125; <span class="hljs-keyword">catch</span>(ex) &#123;<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(ex);<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(ex.<span class="hljs-property">stack</span>);<br>	  &#125;<br>  &#125;;<br>&#125;);<br><span class="hljs-keyword">var</span> haystack = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">var</span> needle = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">var</span> frida = <span class="hljs-literal">false</span>;<br><span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;strstr&quot;</span>), &#123;<br>    <span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>        haystack = args[<span class="hljs-number">0</span>];<br>        needle = args[<span class="hljs-number">1</span>];<br>        frida = <span class="hljs-title class_">Boolean</span>(<span class="hljs-number">0</span>);<br>        haystack = <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(haystack);<br>        needle = <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(needle);<br>        <span class="hljs-keyword">if</span> (haystack.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&quot;frida&quot;</span>) !== -<span class="hljs-number">1</span> || haystack.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&quot;xposed&quot;</span>) !== -<span class="hljs-number">1</span>) &#123;<br>            frida = <span class="hljs-title class_">Boolean</span>(<span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;,<br>    <span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>        <span class="hljs-keyword">if</span> (frida) &#123;<br>            retval.<span class="hljs-title function_">replace</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> retval;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>结果与我们静态分析的结果一致：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">[SM-N976N::owasp.mstg.uncrackable3 ]-&gt; Loading dynamic library =&gt; foo<br>getting other_key value<br>           0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF<br>00000000  1d 08 11 13 0f 17 49 15 0d 00 03 19 5a 1d 13 15  ......I.....Z...<br>00000010  08 0e 5a 00 17 08 13 14                          ..Z.....<br></code></pre></td></tr></table></figure>
+
+<h2 id="L4"><a href="#L4" class="headerlink" title="L4"></a>L4</h2><p>暂时没分析出来，等后续水平提升了继续。分析了一下加载过程中的一些调用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Java</span>.<span class="hljs-title function_">perform</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> func = <span class="hljs-title class_">Java</span>.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;b.a.a.b&#x27;</span>);<br>	func.<span class="hljs-property">j</span>.<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	func.<span class="hljs-property">a</span>.<span class="hljs-title function_">overload</span>().<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;;<br>	func.<span class="hljs-property">e</span>.<span class="hljs-title function_">overload</span>().<span class="hljs-property">implementation</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;;<br>	<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;readlinkat&quot;</span>), &#123;<br>		<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>			<span class="hljs-variable language_">this</span>.<span class="hljs-property">readlinkat_addr</span> = args[<span class="hljs-number">1</span>];<br>			<span class="hljs-variable language_">this</span>.<span class="hljs-property">readlinkat_buf</span> = args[<span class="hljs-number">2</span>];<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;readlinkat =&gt;&quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(args[<span class="hljs-number">1</span>]))<br>		&#125;,<br>		<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>			<span class="hljs-comment">//console.log(&quot;readlinkat buf: &quot;+retval.toInt32() +&quot; :&quot;+ Memory.readUtf8String(this.readlinkat_buf));</span><br>			<span class="hljs-keyword">if</span>(retval.<span class="hljs-title function_">toInt32</span>() == <span class="hljs-number">14</span>)&#123;<br>				<span class="hljs-variable language_">this</span>.<span class="hljs-property">readlinkat_buf</span>.<span class="hljs-title function_">writeUtf8String</span>(<span class="hljs-string">&quot;anon_inode:[eventfd]&quot;</span>);<br>				retval.<span class="hljs-title function_">replace</span>(<span class="hljs-number">20</span>);<br>				<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;readlinkat buf modifyd: &quot;</span>+retval.<span class="hljs-title function_">toInt32</span>() +<span class="hljs-string">&quot; :&quot;</span>+ <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">readlinkat_buf</span>));<br>			&#125;<br>			<span class="hljs-keyword">return</span> retval;<br>		&#125;<br>	&#125;);<br>	<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;open&quot;</span>), &#123;<br>		<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;open =&gt;&quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(args[<span class="hljs-number">0</span>]))<br>		&#125;,<br>		<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;open ret=&gt;&quot;</span> + retval.<span class="hljs-title function_">toInt32</span>());<br>			<span class="hljs-keyword">return</span> retval;<br>		&#125;<br>	&#125;);<br>	<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;openat&quot;</span>), &#123;<br>		<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;openat =&gt;&quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(args[<span class="hljs-number">0</span>]))<br>		&#125;,<br>		<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;openat ret=&gt;&quot;</span> + retval.<span class="hljs-title function_">toInt32</span>());<br>			<span class="hljs-keyword">return</span> retval;<br>		&#125;<br>	&#125;);<br>	<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;faccessat&quot;</span>), &#123;<br>		<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>			<span class="hljs-variable language_">this</span>.<span class="hljs-property">faccessat</span> = args[<span class="hljs-number">1</span>];<br>		&#125;,<br>		<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;faccessat =&gt;&quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">faccessat</span>))<br>			<span class="hljs-keyword">return</span> retval;<br>		&#125;<br>	&#125;);<br>	<span class="hljs-title class_">Interceptor</span>.<span class="hljs-title function_">attach</span>(<span class="hljs-title class_">Module</span>.<span class="hljs-title function_">findExportByName</span>(<span class="hljs-string">&quot;libc.so&quot;</span>, <span class="hljs-string">&quot;snprintf&quot;</span>), &#123;<br>		<span class="hljs-attr">onEnter</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) &#123;<br>			<span class="hljs-variable language_">this</span>.<span class="hljs-property">snprintf_addr</span> = args[<span class="hljs-number">0</span>];<br>		&#125;,<br>		<span class="hljs-attr">onLeave</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">retval</span>) &#123;<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;snprintf =&gt;&quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">snprintf_addr</span>));<br>			<span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">writeUtf8String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">snprintf_addr</span>, <span class="hljs-string">&quot;/proc/self/task/123/status&quot;</span>);<br>			<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;snprintf modified =&gt;&quot;</span> + <span class="hljs-title class_">Memory</span>.<span class="hljs-title function_">readUtf8String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">snprintf_addr</span>));<br>			<span class="hljs-keyword">return</span> retval;<br>		&#125;<br>	&#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OWASP Android UnCrackable系列练习记录</div>
+      <div>https://chujian521.github.io/blog/2023/12/06/OWASP-Android-UnCrackable系列练习记录/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2023/12/24/Flyme-root%E8%8E%B7%E5%8F%96%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8shell%E5%91%BD%E4%BB%A4%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85/" title="Flyme root获取及一些实用shell命令工具安装">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flyme root获取及一些实用shell命令工具安装</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/12/01/%E5%8A%A8%E6%80%81%E9%92%A9%E5%AD%90%E5%B7%A5%E5%85%B7Frida%E7%9A%84%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" title="动态钩子工具Frida的入门学习">
+                        <span class="hidden-mobile">动态钩子工具Frida的入门学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/12/06/OWASP-Android-UnCrackable%E7%B3%BB%E5%88%97%E7%BB%83%E4%B9%A0%E8%AE%B0%E5%BD%95/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>-->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

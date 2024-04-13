@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/dandan.png">
+  <link rel="icon" href="/images/dandan.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Encounter">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="TEE的全称Trusted Execution Environment，它是移动设备（智能手机、平板电脑、智能电视）CPU上的一块区域。TEE 为运行在其中的应用程序提供了一个隔离的环境以保护应用程序和数据免受其他软件的攻击。TEE 常用于处理敏感的数据，如密码、密钥、生物识别数据等。前面在阅读安全白皮书时也提到了可信区域（HarmonyOS）&#x2F;安全隔区（IOS）的概念，本质上就是本文介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android可信执行环境学习">
+<meta property="og:url" content="https://chujian521.github.io/blog/2023/11/27/Android%E5%8F%AF%E4%BF%A1%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="X&#39;s blog">
+<meta property="og:description" content="TEE的全称Trusted Execution Environment，它是移动设备（智能手机、平板电脑、智能电视）CPU上的一块区域。TEE 为运行在其中的应用程序提供了一个隔离的环境以保护应用程序和数据免受其他软件的攻击。TEE 常用于处理敏感的数据，如密码、密钥、生物识别数据等。前面在阅读安全白皮书时也提到了可信区域（HarmonyOS）&#x2F;安全隔区（IOS）的概念，本质上就是本文介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chujian521.github.io/images/fj73.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/tee.png">
+<meta property="og:image" content="https://chujian521.github.io/images/image-20231127200648421.png">
+<meta property="og:image" content="https://chujian521.github.io/images/tee_ta_ca.jpg">
+<meta property="article:published_time" content="2023-11-27T09:08:10.000Z">
+<meta property="article:modified_time" content="2023-11-28T08:45:50.000Z">
+<meta property="article:author" content="Encounter">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chujian521.github.io/images/fj73.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Android可信执行环境学习 - X&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chujian521.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"88d6a072634686f804175a1f3d287260","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?88d6a072634686f804175a1f3d287260";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>X&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Android可信执行环境学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-27 17:08" pubdate>
+          2023年11月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Android可信执行环境学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>TEE的全称Trusted Execution Environment，它是移动设备（智能手机、平板电脑、智能电视）CPU上的一块区域。TEE 为运行在其中的应用程序提供了一个隔离的环境以保护应用程序和数据免受其他软件的攻击。TEE 常用于处理敏感的数据，如密码、密钥、生物识别数据等。前面在阅读安全白皮书时也提到了可信区域（HarmonyOS）&#x2F;安全隔区（IOS）的概念，本质上就是本文介绍的可信执行环境。</strong></p>
+<p><img src="/images/fj73.jpg" srcset="/img/loading.gif" lazyload></p>
+<span id="more"></span>
+
+<h2 id="TEE简介"><a href="#TEE简介" class="headerlink" title="TEE简介"></a>TEE简介</h2><h3 id="TEE与REE"><a href="#TEE与REE" class="headerlink" title="TEE与REE"></a>TEE与REE</h3><p>可信执行环境（Trusted Execution Environment，TEE） 是一种具有运算和储存功能，能提供安全性和完整性保护的独立处理环境。其基本思想是：在硬件中为敏感数据单独分配一块隔离的内存，所有敏感数据的计算均在这块内存中进行，并且除了经过授权的接口外，硬件中的其他部分不能访问这块隔离的内存中的信息，以此来实现敏感数据的隐私计算。</p>
+<p>富执行环境 (Rich Execution Environment，REE) 指的是操作系统运行时的环境中，可以运行如 Android、IOS 等通用的操作系统。REE 是一个容易受到攻击的开放环境，如敏感数据的窃取、移动支付盗用等等。而 TEE 是中央处理器上的一个安全区域，能够保证敏感数据在隔离和可信的环境内被处理，从而免受来自 REE 中的软件攻击。此外，与其他的安全执行环境相比，TEE 可以端到端地保护 可信应用(Trusted Application，TA)的完整性和机密性，能够提供更强的处理能力和更大的内存空间。TEE用于敏感数据的安全存储、安全通信、可信UI的绘制、安全的加密策略等，而这些策略的承载者，就是TA。TEE 内部为 REE 中的软件提供了接口，使得 REE 中的软件可以调用 TEE 对数据进行处理，但不会泄露敏感数据。</p>
+<p><img src="/images/tee.png" srcset="/img/loading.gif" lazyload alt="REE调用TEE的接口进行安全数据处理"></p>
+<h3 id="TEE的定义"><a href="#TEE的定义" class="headerlink" title="TEE的定义"></a>TEE的定义</h3><p>Mohamed Sabt 等人在2015年的文章<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7345265">Trusted Execution Environment: What It is, and What It is Not | IEEE Conference Publication | IEEE Xplore</a>中对 TEE 进行了崭新的更一般化的定义，提出了TEE的精确定义，并分析了TEE的核心特性。</p>
+<p>分离内核是 TEE 的基础组件和先决条件，安全要求主要由四个主要安全策略组成：</p>
+<ul>
+<li><em>Data (spatial) separation</em>. 一个分区内的数据不能由其他分区读取或修改；</li>
+<li><em>Sanitization (temporal separation)</em>. 共享资源不能用于将信息泄漏到其他分区；</li>
+<li><em>Control of information flow</em>. 除非明确允许，否则分区之间不能进行通信；</li>
+<li><em>Fault isolation</em>. 一个分区中的安全漏洞不能扩散到其他分区。</li>
+</ul>
+<p>可信执行环境(Trusted Execution Environment, TEE)是一种在分离内核上运行的防篡改处理环境。它保证了执行代码的真实性、运行时状态(如CPU寄存器、内存和敏感I&#x2F;O)的完整性，以及存储在持久性内存上的代码、数据和运行时状态的机密性。能够向第三方提供证明其可信性的远程证明。TEE的内容不是静态的;它可以安全地更新。TEE可以抵抗所有软件攻击，也可以抵抗对系统主存进行的物理攻击。利用后门安全缺陷进行的攻击是不可能的。</p>
+<p><img src="/images/image-20231127200648421.png" srcset="/img/loading.gif" lazyload alt="An overview of TEE building blocks"></p>
+<h3 id="TEE发展"><a href="#TEE发展" class="headerlink" title="TEE发展"></a>TEE发展</h3><p>TEE 技术最早可以追溯到 2006 年。开放移动终端平台（Open Mobile Terminal Platform ，以下简称 OMTP）)率先提出一个针对移动终端的双系统安全解决方案，即在同一个终端系统下同时部署两个操作系统，其中一个是常规的操作系统，另一个是隔离的安全操作系统。其中，安全操作系统运行在隔离的硬件环境中，专门处理敏感信息以保障其安全性。</p>
+<p>在 OMTP 方案的基础上，ARM 公司提出了一种硬件虚拟化技术 TrustZone 及其相关的硬件实现方案，并于 2008 年第一次发布了 Trustzone 技术白皮书。目前 ARM 是移动端最具影响力的方案供应商，其 TEE 技术也在行业内处于主导地位：高通的骁龙系列，海思麒麟，联发科 ，三星等移动端主流处理器的芯片均基于 ARM 结构，并且它们采用的 TEE 技术也基于 ARM 结构。除此之外，还有一种比较主流的可信执行环境产品是 Intel 公司推出的 SGX(Software Guard Extensions)。</p>
+<p>2010 年 7 月，Global Platform（以下简称 GP）正式提出了 TEE 的概念，并从 2011 年开始起草制定相关的 TEE 规范标准，针对 TEE 系统设计了一系列规范，对应用接口，应用流程，安全存储，身份认证等功能进行了规范化。GP 是跨行业的国际标准组织，致力于制定和发布基于硬件安全的技术标准。GP 组织制定和发布的国际标准被称为 GP 标准。此外 GP 组织还设立了 TEE 检测认证体系，对 TEE 产品进行功能检测并颁发证书，国际上大多数基于 TEE 技术的 Trust OS 都遵循了 GP 的标准规范。</p>
+<p>国内，银联自 2012 年起与产业链合作开始制定包括 TEE 硬件、TEE 操作系统、TEE 基础服务和应用等各个层面的规范标准，并且于 2015 年通过技术管理委员会的审核发布银联 TEEI 规范。2017 年初，人民银行开始制定 TEE 各层面的需求类规范。2020 年 7 月，中国信通院发布联合 20 家单位共同参与制定的标准《基于可信执行环境的数据计算平台 技术要求与测试方法》。</p>
+<h2 id="CA与TA的通信（OP-TEE为例）"><a href="#CA与TA的通信（OP-TEE为例）" class="headerlink" title="CA与TA的通信（OP-TEE为例）"></a>CA与TA的通信（OP-TEE为例）</h2><h3 id="OP-TEE"><a href="#OP-TEE" class="headerlink" title="OP-TEE"></a>OP-TEE</h3><p><a target="_blank" rel="noopener" href="https://optee.readthedocs.io/en/latest/general/about.html">About OP-TEE — OP-TEE documentation documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OP-TEE/">OP-TEE (github.com)</a></p>
+<p>OP-TEE是一个可信任的执行环境(Trusted Execution Environment, TEE)，它设计与运行在Arm上的非安全Linux内核一起。OP-TEE实现TEE内部核心API v1.3.1，这是公开给受信任应用程序的API，以及TEE客户端API v1.0，这是描述如何与TEE通信的API。这些API定义在GlobalPlatform API规范中。</p>
+<p>OP-TEE 主要设计为依靠 Arm TrustZone 技术作为 底层硬件隔离机制。但是，它的结构是 与任何适合 TEE 概念和目标的隔离技术兼容， 例如作为虚拟机运行或在专用 CPU 上运行。</p>
+<p>OP-TEE的主要设计目标是：</p>
+<blockquote>
+<ul>
+<li><strong>隔离</strong> - TEE 提供与非安全操作系统的隔离，并且 使用 底层硬件支持，</li>
+<li><strong>占地面积小</strong> - TEE 应保持足够小，可以驻留在 在基于 Arm 的系统上发现的合理数量的片上存储器，</li>
+<li><strong>便携性</strong> - TEE 旨在轻松插入不同的 架构和可用的硬件，并且必须支持各种设置，例如 多个客户端操作系统或多个 TEE。</li>
+</ul>
+</blockquote>
+<h3 id="通信交互接口"><a href="#通信交互接口" class="headerlink" title="通信交互接口"></a>通信交互接口</h3><p><img src="/images/tee_ta_ca.jpg" srcset="/img/loading.gif" lazyload alt="tee_ta_ca"></p>
+<h4 id="CA-API"><a href="#CA-API" class="headerlink" title="CA API"></a>CA API</h4><p>TEE客户端API描述并定义了在富操作环境(REE)中运行的客户端应该如何与TEE通信。为了识别要使用的可信应用程序(TA)，客户端提供一个UUID。所有TA都公开一个或多个函数。这些函数对应于所谓的commandID，也是由客户端发送的。</p>
+<p>原则上，命令按此顺序调用：</p>
+<ul>
+<li>TEEC_InitializeContext：对变量Context进行初始化配置，用来建立CA和TEE的联系，向TEE申请共享内存地址用于存放数据。</li>
+<li>TEEC_OpenSession：建立一个CA和TA间的session，用于CA和UUID指定的TA进行通信，是CA连接TA的起始点。</li>
+<li>TEEC_InvokeCommand：依靠打开的session，将传送命令请求给TA，并将必要的指令执行参数一并发送给TA。</li>
+<li>TEEC_CloseSession：关闭session，关闭CA和TA之间的通道。</li>
+<li>TEEC_FinalizeContext：释放Context，结束CA与TEE的连接。</li>
+</ul>
+<p>在会话建立之后，经常会连续调用几次TEEC_InvokeCommand(…)。</p>
+<h4 id="TA-API"><a href="#TA-API" class="headerlink" title="TA API"></a>TA API</h4><p><a target="_blank" rel="noopener" href="https://optee.readthedocs.io/en/latest/building/trusted_applications.html">Trusted Applications — OP-TEE documentation documentation</a></p>
+<ul>
+<li>TA_CreateEntryPoint：为CA建立接入点，使得TA可以被CA调用。</li>
+<li>TA_OpenSessionEntryPoint：建立CA与TA之间的通讯通道，作为CA连接TA的起点。</li>
+<li>TA_InvokeCommandEntryPoint：接收CA传送的指令和参数，并在这TEE侧执行。</li>
+<li>TA_CloseSessionEntryPoint：关闭CA与TA的通讯通道</li>
+<li>TA_DestroyEntryPoint：移除CA的接入点，结束TA的功能。</li>
+</ul>
+<h3 id="安全分析"><a href="#安全分析" class="headerlink" title="安全分析"></a>安全分析</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZheWK5WB5Qa7I9deY9uH7A">【看雪议题分享】深入Android 可信应用漏洞挖掘</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Android可信执行环境学习</div>
+      <div>https://chujian521.github.io/blog/2023/11/27/Android可信执行环境学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Encounter</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2023/12/01/%E5%8A%A8%E6%80%81%E9%92%A9%E5%AD%90%E5%B7%A5%E5%85%B7Frida%E7%9A%84%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" title="动态钩子工具Frida的入门学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">动态钩子工具Frida的入门学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/" title="一次Android APP脱壳记录">
+                        <span class="hidden-mobile">一次Android APP脱壳记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="SOHUCS" sid='https://chujian521.github.io/blog/2023/11/27/Android%E5%8F%AF%E4%BF%A1%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%AD%A6%E4%B9%A0/'></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#SOHUCS', function() {
+      Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+        window.changyan.api.config({"appid":"cywkrFUjM","appkey":"4ccd03889a49ffa3059780af8bbbc0e2"})
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+  <!--浏览器整蛊标题-->
+  <script type="text/javascript" src="\js\funnyTitle.js"></script>
+  <!--动态线条背景
+  <script type="text/javascript"
+    color="255,69,0" opacity='0.7' zIndex="-1" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>-->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":300,"height":600},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
