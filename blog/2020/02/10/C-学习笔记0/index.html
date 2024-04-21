@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://chujian521.github.io/images/Cplus0-2.png">
 <meta property="og:image" content="https://chujian521.github.io/images/Cplus0-3.png">
 <meta property="article:published_time" content="2020-02-10T07:53:13.000Z">
-<meta property="article:modified_time" content="2020-02-11T09:26:46.000Z">
+<meta property="article:modified_time" content="2024-04-20T08:57:06.126Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary_large_image">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.1k 字
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          15 分钟
+          18 分钟
         
       </span>
     
@@ -337,7 +337,14 @@
 <li>函数的返回值必须明确列出，如果不写返回值编译器会默认为int</li>
 </ul>
 <h2 id="0-2-命名空间-namespace"><a href="#0-2-命名空间-namespace" class="headerlink" title="0-2 命名空间(namespace)"></a>0-2 命名空间(namespace)</h2><p>所谓namespace，是指标识符的各种可见范围。C++标准程序库中的所有标识符都被定义于一个名为std的namespace中。<br>一 ：<iostream>和&lt;iostream.h&gt;格式不一样，前者没有后缀，实际上，在你的编译器include文件夹里面可以看到，二者是两个文件，打开文件就会发现，里面的代码是不一样的。后缀为.h的头文件c++标准已经明确提出不支持了，早些的实现将标准库功能定义在全局空间里，声明在带.h后缀的头文件里，c++标准为了和C区别开，也为了正确使用命名空间，规定头文件不使用后缀.h。 因此，当使用&lt;iostream.h&gt;时，相当于在c中调用库函数，使用的是全局命名空间，也就是早期的c++实现；当使用<iostream>的时候，该头文件没有定义全局命名空间，必须使用namespace std；这样才能正确使用cout。<br>二： 由于namespace的概念，使用C++标准程序库的任何标识符时，可以有三种选择：<br>1、直接指定标识符。例如std::iostream而不是iostream。完整语句如下： std::cout &lt;&lt; std::hex &lt;&lt; 3.4 &lt;&lt; std::endl;<br>2、使用using关键字。 using std::cout; using std::endl; using std::cin; 以上程序可以写成 cout &lt;&lt; std::hex &lt;&lt; 3.4 &lt;&lt; endl;<br>3、最方便的就是使用using namespace std **（一般不用）**; 例如： using namespace std;这样命名空间std内定义的所有标识符都有效（曝光）。就好像它们被声明为全局变量一样。那么以上语句可以如下写: cout &lt;&lt;hex &lt;&lt; 3.4 &lt;&lt; endl;**因为标准库非常的庞大，所以程序员在选择的类的名称或函数名时就很有可能和标准库中的某个名字相同。**所以为了避免这种情况所造成的名字冲突，就把标准库中的一切都被放在名字空间std中。但这又会带来了一个新问题。无数原有的C++代码都依赖于使用了多年的伪标准库中的功能，他们都是在全局空间下的。所以就有了&lt;iostream.h&gt;和<iostream>等等这样的头文件，一个是为了兼容以前的C++代码，一个是为了支持新的标准。命名空间std封装的是标准程序库的名称，标准程序库为了和以前的头文件区别，一般不加”.h”。</p>
-<h4 id="有无命名空间的区别："><a href="#有无命名空间的区别：" class="headerlink" title="有无命名空间的区别："></a>有无命名空间的区别：</h4><p><img src="/images/Cplus0-0.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="有无命名空间的区别："><a href="#有无命名空间的区别：" class="headerlink" title="有无命名空间的区别："></a>有无命名空间的区别：</h3><p><img src="/images/Cplus0-0.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="作用域运算符"><a href="#作用域运算符" class="headerlink" title="作用域运算符"></a>作用域运算符</h3><p>在C ++中，作用域运算符为::，它可以用于以下目的：</p>
+<p>1.当存在具有相同名称的局部变量时，要访问全局变量：<code>::变量名</code>访问全局变量</p>
+<p>2.在类之外定义函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span>  </span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std; <br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>  <br>&#123; <br><span class="hljs-keyword">public</span>:  <br> <br>   <span class="hljs-comment">// 仅声名</span><br>   <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span>; <br>&#125;; <br> <br><span class="hljs-comment">// 在类外定义函数使用 :: </span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">A::fun</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123; <br>   cout &lt;&lt; <span class="hljs-string">&quot;fun() called&quot;</span>; <br>&#125; <br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span><br><span class="hljs-function"></span>&#123; <br>   A a; <br>   a.<span class="hljs-built_in">fun</span>(); <br>   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>3.访问一个类的静态变量：<code>类名::静态变量名</code></p>
+<p>4.如果存在多继承，两个祖先类存在相同的变量名，可以使用作用域运算符进行区分</p>
 <h2 id="0-3-编译C-程序"><a href="#0-3-编译C-程序" class="headerlink" title="0-3 编译C++程序"></a>0-3 编译C++程序</h2><h3 id="步骤如下："><a href="#步骤如下：" class="headerlink" title="步骤如下："></a>步骤如下：</h3><p><img src="/images/Cplus0-1.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="0-4-处理错误"><a href="#0-4-处理错误" class="headerlink" title="0-4 处理错误"></a>0-4 处理错误</h2><h3 id="4-1-错误分类"><a href="#4-1-错误分类" class="headerlink" title="4.1 错误分类"></a>4.1 错误分类</h3><ul>
 <li>Syntax Error（语法错误）</li>
