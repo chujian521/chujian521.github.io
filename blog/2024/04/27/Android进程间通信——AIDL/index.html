@@ -24,8 +24,10 @@
 <meta property="og:description" content="AIDL（Android Interface Definition Language）是Android中用于定义客户端和服务端之间通信接口的一种接口定义语言。它允许你定义客户端和服务的通信协议，用于在不同的进程间或同一进程的不同组件间进行数据传递。AIDL通过定义接口和数据类型，让Android应用中的组件能够跨进程通信（IPC），即所谓的远程方法调用（Remote Procedure Call,">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/5e595c67d8816947aea8d391817e327154f898db.jpg">
+<meta property="og:image" content="https://chujian521.github.io/images/binder.png">
+<meta property="og:image" content="https://chujian521.github.io/images/binderframework.png">
 <meta property="article:published_time" content="2024-04-27T06:18:37.000Z">
-<meta property="article:modified_time" content="2024-04-27T12:05:14.150Z">
+<meta property="article:modified_time" content="2024-05-02T07:48:16.849Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          2k 字
         
       </span>
     
@@ -262,7 +264,7 @@
         
         
         
-          13 分钟
+          17 分钟
         
       </span>
     
@@ -317,7 +319,12 @@
 <p><img src="/images/5e595c67d8816947aea8d391817e327154f898db.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
 <span id="more"></span>
 
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>Android中，不同的应用和组件通常运行在各自的进程中，为了让这些分隔的组件能够相互通信，Android中提供了AIDL作为定义通信接口的工具。当需要使用AIDL的时候，需要定义一个接口，接口中包含可供客户端调用的方法。Android构建系统会根据这个AIDL接口文件生成Java接口代码，然后服务端实现这个接口，客户端通过绑定服务并调用这些接口中定义的方法来实现跨进程通信。</p>
+<h2 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h2><p>整个Linux系统分为用户空间和内核空间 用户空间的资源是独立的 内核空间的资源是共享的。Binder可以通过应用mmap技术（Linux通过将一个虚拟内存区域与磁盘上的对象关联起来，以初始化这个虚拟内存区域的内容，这个过程称为内存映射mmap）将内核空间的虚拟地址和server端的虚拟地址映射到同一块物理内存上：</p>
+<p><img src="/images/binder.png" srcset="/img/loading.gif" lazyload></p>
+<p>binder的框架图如下：</p>
+<p><img src="/images/binderframework.png" srcset="/img/loading.gif" lazyload alt="binderframework"></p>
+<h2 id="AIDL工作原理"><a href="#AIDL工作原理" class="headerlink" title="AIDL工作原理"></a>AIDL工作原理</h2><p>由于跨进程之间通信的复杂性，Android层面上为开发者提供了AIDL工具，方便开发者开发接口</p>
+<p>Android中，不同的应用和组件通常运行在各自的进程中，为了让这些分隔的组件能够相互通信，Android中提供了AIDL作为定义通信接口的工具。当需要使用AIDL的时候，需要定义一个接口，接口中包含可供客户端调用的方法。Android构建系统会根据这个AIDL接口文件生成Java接口代码，然后服务端实现这个接口，客户端通过绑定服务并调用这些接口中定义的方法来实现跨进程通信。</p>
 <p>使用AIDL进行IPC通信大致有以下步骤：</p>
 <ol>
 <li><strong>定义接口</strong>：首先，你需要定义一个接口，这个接口描述了远程服务提供的方法。这个接口使用 AIDL 语言编写，其中包含了需要在不同进程之间进行通信的方法签名。</li>
@@ -348,6 +355,8 @@
 </ul>
 <h3 id="什么是stub"><a href="#什么是stub" class="headerlink" title="什么是stub"></a>什么是stub</h3><p>stub在AIDL中充当了消息传递的桥梁，负责将客户端的请求传递给服务端，并将服务端的响应传递回客户端。<br>简单的来说就是AIDL的出站口</p>
 <h3 id="什么是proxy"><a href="#什么是proxy" class="headerlink" title="什么是proxy"></a>什么是proxy</h3><p>proxy在AIDL中充当了客户端与服务端交互的代理角色。它实现了AIDL接口，并负责将客户端的方法调用转发给stub对象，以便客户端与服务端进行跨进程通信。<br>简单的来说就是AIDL的进站口</p>
+<h3 id="oneway关键字"><a href="#oneway关键字" class="headerlink" title="oneway关键字"></a>oneway关键字</h3><p><code>oneway</code>关键字用于修改远程调用的行为，应用该关键字远程调用不会阻塞，是异步调用。当客户端调用服务端的方法并且不需要获取其返回结果时，使用异步调用可以提升客户端的执行效率。</p>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>AIDL方法是在服务端的Binder线程池中执行，多个客户端同时进行链接且操作数据时可能存在多个线程同时访问的情况，因此我们需要在服务端的AIDL方法中处理多线程同步问题。</p>
 <h2 id="谷歌文档"><a href="#谷歌文档" class="headerlink" title="谷歌文档"></a>谷歌文档</h2><p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/develop/background-work/services/aidl?hl=zh-cn#Defining">Android 接口定义语言 (AIDL)  | Background work  | Android Developers (google.cn)</a></p>
 
                 
