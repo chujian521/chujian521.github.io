@@ -1,5 +1,6 @@
-https://chujian521.github.io/blog/2024/04/27/Android%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E2%80%94%E2%80%94AIDL/
+https://chujian521.github.io/blog/2024/06/01/Android-%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0/
 https://chujian521.github.io/blog/2024/05/19/Android-%E7%A1%AC%E4%BB%B6%E6%8A%BD%E8%B1%A1%E5%B1%82HAL%E5%AD%A6%E4%B9%A0/
+https://chujian521.github.io/blog/2024/04/27/Android%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E2%80%94%E2%80%94AIDL/
 https://chujian521.github.io/blog/2024/04/13/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/
 https://chujian521.github.io/blog/2020/02/10/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B00/
 https://chujian521.github.io/blog/2023/11/25/%E4%B8%80%E6%AC%A1Android-APP%E8%84%B1%E5%A3%B3%E8%AE%B0%E5%BD%95/
