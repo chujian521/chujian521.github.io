@@ -27,8 +27,12 @@
 <meta property="og:image" content="https://chujian521.github.io/images/Android_Architecture.png">
 <meta property="og:image" content="https://chujian521.github.io/images/android-stack.svg">
 <meta property="og:image" content="https://chujian521.github.io/images/generic-kernel-image-architecture.png">
+<meta property="og:image" content="https://chujian521.github.io/images/boot1.png">
+<meta property="og:image" content="https://chujian521.github.io/images/boot2.png">
+<meta property="og:image" content="https://chujian521.github.io/images/boot3.png">
+<meta property="og:image" content="https://chujian521.github.io/images/boot4.png">
 <meta property="article:published_time" content="2024-06-01T07:13:06.000Z">
-<meta property="article:modified_time" content="2024-06-01T11:55:09.923Z">
+<meta property="article:modified_time" content="2024-06-02T07:42:55.335Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary_large_image">
@@ -254,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          3.9k 字
         
       </span>
     
@@ -265,7 +269,7 @@
         
         
         
-          21 分钟
+          33 分钟
         
       </span>
     
@@ -329,7 +333,7 @@
 <p>下面这张架构图将上图的应用程序层更细分为了普通的Android应用（应用商店下载的应用）、特权应用（使用Android和系统API组合创建的应用，详情见<a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/core/config/perms-allowlist?hl=zh-cn">特许权限许可名单  | Android Open Source Project (google.cn)</a>）、设备制造商应用（结合使用 Android API、系统 API 并直接访问 Android 框架实现而创建的应用。由于设备制造商可能会直接访问 Android 框架中的不稳定的 API，因此这些应用必须预安装在设备上，并且只能在设备的系统软件更新时进行更新。）</p>
 <h4 id="Android应用开发四大组件"><a href="#Android应用开发四大组件" class="headerlink" title="Android应用开发四大组件"></a>Android应用开发四大组件</h4><ol>
 <li>活动（Activity）：用户操作的可视化界面，可以理解为前台能看到的界面都是活动</li>
-<li>服务（Service）：后台处理耗时的一些逻辑，服务的运行不依赖用户界面，分为startService和bindService，</li>
+<li>服务（Service）：后台处理耗时的一些逻辑，服务的运行不依赖用户界面，分为startService（不交互用，与activity没有关联，不受影响，独立运行）和bindService（可以交互，与activity存在关联，退出activity时必须调用unbindService方法）</li>
 <li>广播接收者（Broadcast Receive）：接受外部信息</li>
 <li>内容提供者（Content Provider）：保存和获取数据</li>
 </ol>
@@ -341,7 +345,34 @@
 <p>可以注意到下面这张图，在HAL层以下还有一层原生守护程序和库，该层中的原生守护程序包括 <code>init</code>、<code>healthd</code>、<code>logd</code> 和 <code>storaged</code>。这些守护程序直接与内核或其他接口进行交互，并且不依赖于基于用户空间的 HAL 实现。该层中的原生库包括 <code>libc</code>、<code>liblog</code>、<code>libutils</code>、<code>libbinder</code> 和 <code>libselinux</code>。这些原生库直接与内核或其他接口进行交互，并且不依赖于基于用户空间的 HAL 实现。</p>
 <h3 id="Linux内核层（Linux-Kernel）"><a href="#Linux内核层（Linux-Kernel）" class="headerlink" title="Linux内核层（Linux Kernel）"></a>Linux内核层（Linux Kernel）</h3><p>Android 内核基于上游 <a target="_blank" rel="noopener" href="https://www.kernel.org/">Linux 长期支持 (LTS) 内核</a>。在 Google，LTS 内核会与 Android 专用补丁结合，形成所谓的“Android 通用内核 (ACK)”。较新的 ACK（版本 5.4 及更高版本）也称为 GKI 内核。GKI 内核支持将与硬件无关的通用核心内核代码和 <a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/core/architecture/kernel/modules?hl=zh-cn#gki-modules">GKI 模块</a>与硬件专用<a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/core/architecture/kernel/modules?hl=zh-cn#vendor-modules">供应商模块</a>分离开来。</p>
 <p><img src="/images/generic-kernel-image-architecture.png" srcset="/img/loading.gif" lazyload alt="GKI 架构"></p>
+<h2 id="系统启动过程"><a href="#系统启动过程" class="headerlink" title="系统启动过程"></a>系统启动过程</h2><h3 id="Boot-ROM："><a href="#Boot-ROM：" class="headerlink" title="Boot ROM："></a>Boot ROM：</h3><p>此步骤称为上电和系统启动。这意味着每当我们按下电源按钮时，Boot ROM 代码就会从 ROM 中硬连线的预定义位置开始执行。 Boot ROM 将 BootLoader 加载到 RAM 中并开始执行。</p>
+<p><img src="/images/boot1.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="BootLoader："><a href="#BootLoader：" class="headerlink" title="BootLoader："></a>BootLoader：</h3><p> Bootloader是低级代码，包含告诉设备如何启动并找到系统内核的指令。引导加载程序是制造商放置锁和限制的地方。</p>
+<p>引导加载程序是在任何操作系统开始运行之前执行的代码。 BootLoader 分两个阶段执行：</p>
+<ol>
+<li>在第一阶段，它检测外部 RAM 并加载有助于第二阶段的程序。</li>
+<li>在第二阶段，引导加载程序设置运行内核所需的网络、内存等。</li>
+</ol>
+<p>内核内核启动后，它会启动设置缓存、受保护的内存、调度、加载驱动程序、启动内核守护程序、挂载根文件系统、初始化输入&#x2F;输出、启动中断、初始化进程表。内核是最低级别的易于替换的软件，与我们设备中的硬件交互。当内核完成系统设置时，它首先会在系统文件中查找“init”并启动根进程或系统的第一个进程。</p>
+<p><img src="/images/boot2.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Init"><a href="#Init" class="headerlink" title="Init"></a>Init</h3><p> Init是第一个进程，或者我们可以说它是所有进程的祖父。</p>
+<p>Init 进程有 2 个职责：</p>
+<ul>
+<li>挂载 &#x2F;sys、&#x2F;dev 或 &#x2F;proc 等目录</li>
+<li>运行 &#x2F;init.rc 脚本。 init.rc 负责系统的初始设置。</li>
+</ul>
+<p>init 进程将设置所有本机服务，与常规 Linux 系统启动类似。</p>
+<p><img src="/images/boot3.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Zygote-和-Dalvik-VM"><a href="#Zygote-和-Dalvik-VM" class="headerlink" title="Zygote 和 Dalvik VM"></a>Zygote 和 Dalvik VM</h3><p>Zygote是一个虚拟机进程，在系统启动时启动。当app_process启动Zygote时，它首先创建Dalvik虚拟机，然后调用Zygote的main()方法。Zygote通过&#x2F;dev&#x2F;socket&#x2F; Zygote收到启动应用程序的请求，一旦收到请求，它就会触发fork()调用。<br>当一个进程是一个分支时，它会创建一个自己的克隆。它在另一个存储空间复制自己，效率很高。当这种情况发生在Zygote上时，它会创建一个精确而干净的新Dalvik虚拟机作为线程，预加载任何应用程序所需的所有必要类和资源。这使得创建VM和加载资源的过程非常有效。</p>
+<p>它支持跨Dalvik VM的代码共享，这有助于实现最小的启动时间。</p>
+<h3 id="系统服务"><a href="#系统服务" class="headerlink" title="系统服务"></a>系统服务</h3><p>Zygote 预加载所有必需的 Java 类和资源后，它启动系统服务。系统服务是Android系统的核心。首先发生的事情是服务器将加载一个名为 android_servers 的本机库，该库提供本机功能的接口。</p>
+<p>然后调用将设置本机服务的本机init方法。设置本机服务后，它会创建服务器线程。该线程将按照必要的启动顺序启动系统中剩余的服务。</p>
+<p>每个服务都在 SystemServer 中的单独 Dalvik 线程中运行。</p>
+<p>一旦系统服务在内存中启动并运行，Android就完成了启动过程，此时“ACTION_BOOT_COMPLETED”标准广播动作将被触发。</p>
+<p><img src="/images/boot4.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/core/architecture?hl=zh-cn">架构概览  | Android Open Source Project (google.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://source.android.com/docs/automotive/power/boot_time?hl=zh-cn">管理启动时间 |  Android Open Source Project (google.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.linkedin.com/pulse/android-booting-process-from-power-p-srinivas-rao">https://www.linkedin.com/pulse/android-booting-process-from-power-p-srinivas-rao</a></p>
 
                 
               </div>
