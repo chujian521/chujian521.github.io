@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chujian521.github.io/images/fj74.jpg">
 <meta property="article:published_time" content="2024-04-13T03:35:26.000Z">
-<meta property="article:modified_time" content="2024-04-21T03:08:59.798Z">
+<meta property="article:modified_time" content="2024-12-21T08:36:31.544Z">
 <meta property="article:author" content="Encounter">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k 字
+          6.1k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          32 分钟
+          51 分钟
         
       </span>
     
@@ -407,7 +407,7 @@
 <p>v.size()：判断v中元素的个数</p>
 <p>v.push_back(var)：向v的尾部添加值为var的元素</p>
 <p>v[n]：返回v中第n个位置上的元素引用</p>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>C++ 在 C 语言的基础上增加了面向对象编程，C++ 支持面向对象程序设计。类是 C++ 的核心特性，通常被称为用户定义的类型。类用于指定对象的形式，是一种用户自定义的数据类型，它是一种封装了数据和函数的组合。类中的数据称为成员变量，函数称为成员函数。类可以被看作是一种模板，可以用来创建具有相同属性和行为的多个对象。</p>
+<h2 id="C-面向对象"><a href="#C-面向对象" class="headerlink" title="C++ 面向对象"></a>C++ 面向对象</h2><p>C++ 在 C 语言的基础上增加了面向对象编程，C++ 支持面向对象程序设计。类是 C++ 的核心特性，通常被称为用户定义的类型。类用于指定对象的形式，是一种用户自定义的数据类型，它是一种封装了数据和函数的组合。类中的数据称为成员变量，函数称为成员函数。类可以被看作是一种模板，可以用来创建具有相同属性和行为的多个对象。</p>
 <h3 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h3><p>定义一个类需要使用关键字 <strong>class</strong>，然后指定类的名称，并类的主体是包含在一对花括号中，主体包含类的成员变量和成员函数。定义一个类，本质上是定义一个数据类型的蓝图，它定义了类的对象包括了什么，以及可以在这个对象上执行哪些操作。类成员可以被定义为 public、private 或 protected。默认情况下是定义为 private（如果使用struct构造类，默认情况下定义为public）。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">classname</span><br>&#123;<br>    Access specifiers: <span class="hljs-comment">// 访问修饰符 private/pubilc/protected</span><br>        Data members/variables  <span class="hljs-comment">// 变量</span><br>        <span class="hljs-function">Member <span class="hljs-title">functions</span><span class="hljs-params">()</span></span>&#123;&#125;    <span class="hljs-comment">// 方法</span><br>&#125;; <span class="hljs-comment">// 分号结束一个类</span><br></code></pre></td></tr></table></figure>
 
@@ -440,6 +440,40 @@
 <h3 id="指向类的指针"><a href="#指向类的指针" class="headerlink" title="指向类的指针"></a>指向类的指针</h3><p>一个指向 C++ 类的指针与指向结构的指针类似，访问指向类的指针的成员，需要使用成员访问运算符 **-&gt;**，就像访问指向结构的指针一样。与所有的指针一样，必须在使用指针之前，对指针进行初始化。在 C++ 中，指向类的指针指向一个类的对象，与普通的指针相似，指向类的指针可以用于访问对象的成员变量和成员函数。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> data;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Data: &quot;</span> &lt;&lt; data &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 创建类对象</span><br>    MyClass obj;<br>    obj.data = <span class="hljs-number">42</span>;<br>    <span class="hljs-comment">// 声明和初始化指向类的指针</span><br>    MyClass *ptr = &amp;obj;<br>    <br>    <span class="hljs-comment">// 动态分配内存创建类对象</span><br>    <span class="hljs-comment">// MyClass *ptr = new MyClass;</span><br>    <span class="hljs-comment">// ptr-&gt;data = 42;</span><br>    <br>    <span class="hljs-comment">// 通过指针访问成员变量</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Data via pointer: &quot;</span> &lt;&lt; ptr-&gt;data &lt;&lt; std::endl;<br><br>    <span class="hljs-comment">// 通过指针调用成员函数</span><br>    ptr-&gt;<span class="hljs-built_in">display</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>面向对象程序设计中最重要的一个概念是继承。继承允许我们依据另一个类来定义一个类，这使得创建和维护一个应用程序变得更容易。这样做，也达到了重用代码功能和提高执行时间的效果。</p>
+<p>当创建一个类时，不需要重新编写新的数据成员和成员函数，只需要指定新建的类集成一个现有的类，现有的类被称为基类，新建的类被称为派生类。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> 派生类名: 访问修饰符 基类<br></code></pre></td></tr></table></figure>
+
+<p>访问修饰符包括public、protected、private，不声明默认为private</p>
+<p>继承时访问标识符的作用主要是控制父类成员在子类中的可见性和访问权限。具体行为是：</p>
+<ul>
+<li><strong><code>public</code> 继承</strong>：父类的 <code>public</code> 成员保持 <code>public</code>，<code>protected</code> 成员保持 <code>protected</code>，<code>private</code> 成员无法访问。</li>
+<li><strong><code>protected</code> 继承</strong>：父类的 <code>public</code> 成员变为 <code>protected</code>，<code>protected</code> 成员保持 <code>protected</code>，<code>private</code> 成员无法访问。</li>
+<li><strong><code>private</code> 继承</strong>：父类的 <code>public</code> 和 <code>protected</code> 成员都变为 <code>private</code>，<code>private</code> 成员无法访问。</li>
+</ul>
+<h4 id="多继承"><a href="#多继承" class="headerlink" title="多继承"></a>多继承</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> &lt;派生类名&gt;:&lt;继承方式<span class="hljs-number">1</span>&gt;&lt;基类名<span class="hljs-number">1</span>&gt;,&lt;继承方式<span class="hljs-number">2</span>&gt;&lt;基类名<span class="hljs-number">2</span>&gt;,…<br>&#123;<br>&lt;派生类类体&gt;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>C++允许在同一作用域中的某个函数和运算符指定多个定义，分别称为函数重载和运算符重载。重载声明是指一个与之前已经在该作用域内声明过的函数或方法具有相同名称的声明，但是它们的参数列表和定义（实现）不相同。</p>
+<h4 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h4><p>在同一个作用域可以声明几个功能类似的同名函数，但是这些参数的形式参数（参数类型、个数、顺序等）必须不同，不能仅通过返回值类型不同去重载函数。</p>
+<h4 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h4><p>重载的运算符是带有特殊名称的函数，函数名是由关键字 operator 和其后要重载的运算符符号构成的。与其他函数一样，重载运算符有一个返回类型和一个参数列表。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs C++">Human <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Human&amp; b) &#123;<br>    Human human;<br>    human.age = <span class="hljs-keyword">this</span>-&gt;age + b.age;<br>    human.weight = <span class="hljs-keyword">this</span>-&gt;weight + b.weight;<br>    <span class="hljs-keyword">return</span> human;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>当类之间存在层次结构，并且类之间是通过继承关联时，就会用到多态，多态意味着调用成员函数时会根据调用函数的对象的类型来执行不同的函数。</p>
+<p>如果在子类中重写父类的方法，在子类调用该方法时想执行子类重写的方法，就需要把父类中的对应函数用</p>
+<p>virtual关键字修饰，这样的函数被称作虚函数，在派生类中重新定义基类中定义的虚函数时，会告诉编译器不要静态链接到该函数。我们想根据调用的对象类型去选择调用的函数，这种擦做叫做动态链接货哦这后期绑定。</p>
+<h4 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Shape</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 纯虚函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 析构函数通常会声明为虚函数</span><br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Shape</span>() = <span class="hljs-keyword">default</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>我们可能想在基类定义虚函数，但是又不想给虚函数有意义的实现，就可以直接定义虚函数&#x3D;0，告诉编译器函数没有主体，上面的虚函数是纯虚函数。</p>
+<p>纯虚函数的特点：</p>
+<ol>
+<li><strong>抽象类</strong>：包含纯虚函数的类是抽象类，不能被实例化。</li>
+<li><strong>强制派生类实现</strong>：派生类如果继承自包含纯虚函数的类，必须在派生类中实现这些纯虚函数，除非派生类本身也是抽象类。</li>
+<li><strong>可以有成员变量</strong>：纯虚函数的类仍然可以有成员变量、构造函数和其他成员函数。</li>
+<li><strong>虚析构函数</strong>：如果类含有纯虚函数，并且类可能会被继承，通常会在类中定义虚析构函数，以确保正确释放资源。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Shape</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 纯虚函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 析构函数通常会声明为虚函数</span><br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Shape</span>() = <span class="hljs-keyword">default</span>;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Circle</span> : <span class="hljs-keyword">public</span> Shape &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 必须实现 draw 函数</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Drawing a Circle&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Square</span> : <span class="hljs-keyword">public</span> Shape &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 必须实现 draw 函数</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Drawing a Square&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// Shape s; // 错误，无法实例化抽象类</span><br>    <br>    Shape* shape1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Circle</span>();<br>    Shape* shape2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Square</span>();<br>    <br>    shape1-&gt;<span class="hljs-built_in">draw</span>();  <span class="hljs-comment">// 输出: Drawing a Circle</span><br>    shape2-&gt;<span class="hljs-built_in">draw</span>();  <span class="hljs-comment">// 输出: Drawing a Square</span><br><br>    <span class="hljs-keyword">delete</span> shape1;<br>    <span class="hljs-keyword">delete</span> shape2;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>在 C++11 及其后续版本中，**<code>override</code>** 关键字用于标明派生类中的虚函数是对基类虚函数的重写。虽然加上 <code>override</code> 不是强制性的，但推荐使用，它能提供更强的类型检查，帮助你捕获潜在的错误。</p>
 
                 
               </div>
